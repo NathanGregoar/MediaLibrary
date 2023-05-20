@@ -1,5 +1,12 @@
 FROM php:7.4-apache
 
+# Installation des dépendances requises pour l'extension MySQLi
+RUN apt-get update && \
+    apt-get install -y \
+        libmysqli-dev \
+        && \
+    docker-php-ext-install mysqli
+
 # Installation de l'extension MySQLi
 RUN docker-php-ext-install mysqli
 
