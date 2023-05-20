@@ -1,17 +1,12 @@
+# Utilisez l'image de base PHP Apache
 FROM php:7.4-apache
 
-# Installation des dépendances requises pour l'extension MySQLi
-RUN apt-get update && \
-    apt-get install -y \
-        libmysqli-dev \
-        && \
-    docker-php-ext-install mysqli
+# Copiez le contenu du répertoire web dans le répertoire de travail du conteneur
+COPY ./web /var/www/html
 
-# Installation de l'extension MySQLi
-RUN docker-php-ext-install mysqli
+# Installez les dépendances requises pour l'extension MySQLi
+RUN apt-get update && apt-get install -y libmysqli-dev \
+    && docker-php-ext-install mysqli
 
-# Copie des fichiers PHP de votre application
-COPY . /var/www/html
-
-# Répertoire de travail
-WORKDIR /var/www/html
+# Exposez le port 80 pour le serveur Apache
+EXPOSE 80

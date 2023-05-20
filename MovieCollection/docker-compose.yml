@@ -14,7 +14,7 @@ services:
 
   web:
     build:
-      context: ./web
+      context: .
       dockerfile: Dockerfile
     restart: always
     ports:
