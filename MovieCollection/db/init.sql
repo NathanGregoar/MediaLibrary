@@ -8,3 +8,6 @@ CREATE TABLE IF NOT EXISTS films (
   director VARCHAR(255) NOT NULL,
   release_year INT NOT NULL
 );
+
+GRANT ALL PRIVILEGES ON movie_collection.* TO 'nathan'@'%' IDENTIFIED BY '444719';
+FLUSH PRIVILEGES;

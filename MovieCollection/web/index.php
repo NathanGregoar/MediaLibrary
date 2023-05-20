@@ -8,8 +8,8 @@
 
     <?php
     $host = 'db';
-    $user = 'root';
-    $password = 'root';
+    $user = 'nathan';
+    $password = '444719';
     $database = 'movie_collection';
 
     $connection = new mysqli($host, $user, $password, $database);

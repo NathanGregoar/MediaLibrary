@@ -7,6 +7,8 @@ services:
     environment:
       MYSQL_ROOT_PASSWORD: root
       MYSQL_DATABASE: movie_collection
+      MYSQL_USER: nathan
+      MYSQL_PASSWORD: 444719
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
 
