@@ -10,7 +10,7 @@
     $host = 'db';
     $user = 'nathan';
     $password = '444719';
-    $database = 'movie_collection';
+    $database = 'movie_collection';    
 
     $connection = new mysqli($host, $user, $password, $database);
 
