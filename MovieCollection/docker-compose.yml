@@ -19,3 +19,7 @@ services:
       - 80:80
     volumes:
       - ./web:/var/www/html
+    depends_on:
+      - db
+    environment:
+      - PHP_EXTENSIONS=mysqli
