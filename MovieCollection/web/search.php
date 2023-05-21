@@ -2,79 +2,7 @@
 <html>
 <head>
     <title>Rechercher des Films</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .navbar {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin-bottom: 20px;
-        }
-
-        .navbar a {
-            margin-right: 10px;
-            text-decoration: none;
-            color: #333;
-        }
-
-        h1 {
-            margin-bottom: 20px;
-        }
-
-        .search-bar {
-            margin-bottom: 20px;
-        }
-
-        .movies-list {
-            margin-bottom: 20px;
-        }
-
-        .movie-item {
-            background-color: #f0f0f0;
-            padding: 10px;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            display: flex;
-        }
-
-        .movie-item img {
-            max-width: 150px;
-            margin-right: 10px;
-        }
-
-        .movie-details {
-            flex-grow: 1;
-        }
-
-        .movie-details h3 {
-            margin: 0;
-            margin-bottom: 5px;
-        }
-
-        .movie-details p {
-            margin: 0;
-            margin-bottom: 10px;
-        }
-
-        .movie-item .delete-btn {
-            background-color: #dc3545;
-            color: #fff;
-            border: none;
-            padding: 5px 10px;
-            border-radius: 4px;
-            cursor: pointer;
-            float: right;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="style.css">
 </head>
 <body>
     <div class="container">
@@ -87,10 +15,11 @@
 
         <div class="search-bar">
             <form method="GET">
-                <input type="text" name="search" placeholder="Rechercher un film">
-                <input type="submit" value="Rechercher">
+                <input type="text" name="search" placeholder="Rechercher un film" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="submit" value="Rechercher" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
             </form>
         </div>
+
 
         <?php
         $host = 'db';
