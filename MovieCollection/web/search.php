@@ -34,13 +34,17 @@
 
         if ($result->num_rows > 0) {
             echo '<table>';
-            echo '<tr><th>Titre</th><th>Réalisateur</th><th>Année de sortie</th></tr>';
+            echo '<tr><th>Titre</th><th>Réalisateur</th><th>Année de sortie</th><th>Actions</th></tr>';
 
             while ($row = $result->fetch_assoc()) {
                 echo '<tr>';
                 echo '<td>' . $row['title'] . '</td>';
                 echo '<td>' . $row['director'] . '</td>';
                 echo '<td>' . $row['release_year'] . '</td>';
+                echo '<td>';
+                echo '<button class="update-button">Modifier</button>';
+                echo '<button class="delete-button">Supprimer</button>';
+                echo '</td>';
                 echo '</tr>';
             }
 
