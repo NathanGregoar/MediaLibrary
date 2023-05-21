@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ma Collection de Films</title>
+    <title>Ajouter un Film</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -59,7 +59,7 @@
             font-weight: bold;
         }
 
-        input[type="text"], input[type="number"] {
+        input[type="text"] {
             width: 100%;
             padding: 8px;
             border: 1px solid #ccc;
@@ -80,26 +80,6 @@
         input[type="submit"]:hover {
             background-color: #0056b3;
         }
-
-        ul {
-            list-style-type: none;
-            padding: 0;
-        }
-
-        li {
-            margin-bottom: 5px;
-        }
-
-        .movie-info {
-            font-style: italic;
-            color: #777;
-        }
-
-        .movie-delete {
-            color: #ff0000;
-            text-decoration: none;
-            margin-left: 5px;
-        }
     </style>
 </head>
 <body>
@@ -109,7 +89,7 @@
             <a href="search.php">Consulter les Films</a>
         </div>
 
-        <h1>Ma Collection de Films</h1>
+        <h1>Ajouter un Film</h1>
 
         <?php
         $host = 'db';
@@ -123,91 +103,36 @@
             die('Erreur de connexion : ' . $connection->connect_error);
         }
 
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $title = trim($_POST['title']);
-            $director = trim($_POST['director']);
-            $releaseYear = trim($_POST['release_year']);
+        // Ajout d'un film
+        if (isset($_POST['title'])) {
+            $title = $connection->real_escape_string($_POST['title']);
+            $director = $_POST['director'] != '' ? "'" . $connection->real_escape_string($_POST['director']) . "'" : 'NULL';
+            $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : 'NULL';
 
-            if (empty($title)) {
-                echo '<div class="alert alert-error">Veuillez renseigner le titre du film.</div>';
+            $insertSql = "INSERT INTO films (title, director, release_year) VALUES ('$title', $director, $releaseYear)";
+
+            if ($connection->query($insertSql) === TRUE) {
+                echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
             } else {
-                $title = $connection->real_escape_string($title);
-                $director = $connection->real_escape_string($director);
-                $releaseYear = $connection->real_escape_string($releaseYear);
-
-                if (empty($director)) {
-                    $director = '/';
-                }
-                if (empty($releaseYear)) {
-                    $releaseYear = '/';
-                }
-
-                $checkDuplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = '$director' AND release_year = '$releaseYear'";
-                $duplicateResult = $connection->query($checkDuplicateSql);
-
-                if ($duplicateResult->num_rows > 0) {
-                    echo '<div class="alert alert-error">Ce film existe déjà dans la collection.</div>';
-                } else {
-                    $insertSql = "INSERT INTO films (title, director, release_year) VALUES ('$title', '$director', '$releaseYear')";
-
-                    if ($connection->query($insertSql) === TRUE) {
-                        echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
-                    } else {
-                        echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
-                    }
-                }
-            }
-        }
-
-        if (isset($_GET['delete'])) {
-            $filmId = $_GET['delete'];
-
-            $deleteSql = "DELETE FROM films WHERE id = $filmId";
-
-            if ($connection->query($deleteSql) === TRUE) {
-                echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
-            } else {
-                echo '<div class="alert alert-error">Erreur lors de la suppression du film : ' . $connection->error . '</div>';
+                echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
             }
         }
         ?>
 
-        <h2>Ajouter un Film</h2>
-        <form method="POST" action="<?php echo $_SERVER['PHP_SELF']; ?>">
+        <form method="POST">
             <label for="title">Titre :</label>
-            <input type="text" name="title" required><br>
+            <input type="text" id="title" name="title" required>
 
             <label for="director">Réalisateur :</label>
-            <input type="text" name="director"><br>
+            <input type="text" id="director" name="director">
 
             <label for="release_year">Année de sortie :</label>
-            <input type="number" name="release_year"><br>
+            <input type="text" id="release_year" name="release_year">
 
-            <input type="submit" value="Ajouter le Film">
+            <input type="submit" value="Ajouter">
         </form>
 
-        <h2>Mes Films</h2>
-
         <?php
-        $sql = "SELECT * FROM films";
-        $result = $connection->query($sql);
-
-        if ($result->num_rows > 0) {
-            echo '<ul>';
-
-            while ($row = $result->fetch_assoc()) {
-                $director = $row['director'] != '/' ? $row['director'] : '';
-                $releaseYear = $row['release_year'] != '/' ? $row['release_year'] : '';
-
-                echo '<li><strong>' . $row['title'] . '</strong> <span class="movie-info">(' . $director . ', ' . $releaseYear . ')</span>';
-                echo '<a class="movie-delete" href="?delete=' . $row['id'] . '">Supprimer</a></li>';
-            }
-
-            echo '</ul>';
-        } else {
-            echo '<p>Aucun film trouvé.</p>';
-        }
-
         $connection->close();
         ?>
     </div>
