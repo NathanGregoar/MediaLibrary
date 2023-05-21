@@ -177,7 +177,7 @@
             $releaseYear = $row['release_year'];
 
             // Appel à l'API OMDB pour récupérer les informations du film
-            $apiUrl = "http://www.omdbapi.com/?apikey=YOUR_API_KEY&t=" . urlencode($title);
+            $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
             $response = file_get_contents($apiUrl);
             $data = json_decode($response, true);
 
