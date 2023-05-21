@@ -23,25 +23,33 @@
         $director = $_POST['director'];
         $releaseYear = $_POST['release_year'];
 
-        $sql = "INSERT INTO films (title, director, release_year) VALUES ('$title', '$director', '$releaseYear')";
+        $sql = "INSERT INTO films (title, director, release_year) VALUES (?, ?, ?)";
+        $stmt = $connection->prepare($sql);
+        $stmt->bind_param('sss', $title, $director, $releaseYear);
 
-        if ($connection->query($sql) === TRUE) {
+        if ($stmt->execute()) {
             echo '<p>Film ajouté avec succès !</p>';
         } else {
-            echo '<p>Erreur lors de l\'ajout du film : ' . $connection->error . '</p>';
+            echo '<p>Erreur lors de l\'ajout du film : ' . $stmt->error . '</p>';
         }
+
+        $stmt->close();
     }
 
     if (isset($_GET['delete'])) {
         $filmId = $_GET['delete'];
 
-        $deleteSql = "DELETE FROM films WHERE id = '$filmId'";
+        $deleteSql = "DELETE FROM films WHERE id = ?";
+        $stmt = $connection->prepare($deleteSql);
+        $stmt->bind_param('i', $filmId);
 
-        if ($connection->query($deleteSql) === TRUE) {
+        if ($stmt->execute()) {
             echo '<p>Film supprimé avec succès !</p>';
         } else {
-            echo '<p>Erreur lors de la suppression du film : ' . $connection->error . '</p>';
+            echo '<p>Erreur lors de la suppression du film : ' . $stmt->error . '</p>';
         }
+
+        $stmt->close();
     }
     ?>
 
