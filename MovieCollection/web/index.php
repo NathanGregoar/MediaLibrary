@@ -20,9 +20,27 @@
             color: #721c24;
             border: 1px solid #f5c6cb;
         }
+
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="index.php">Ajouter un Film</a>
+        <a href="search.php">Consulter les Films</a>
+    </div>
+
     <h1>Ma Collection de Films</h1>
 
     <?php
@@ -42,20 +60,29 @@
         $director = trim($_POST['director']);
         $releaseYear = trim($_POST['release_year']);
 
-        if (empty($title) || empty($director) || empty($releaseYear)) {
-            echo '<div class="alert alert-error">Veuillez remplir tous les champs.</div>';
+        if (empty($title)) {
+            echo '<div class="alert alert-error">Veuillez renseigner le titre du film.</div>';
         } else {
             $title = $connection->real_escape_string($title);
             $director = $connection->real_escape_string($director);
-            $releaseYear = intval($releaseYear);
+            $releaseYear = $connection->real_escape_string($releaseYear);
 
-            $checkDuplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = '$director' AND release_year = $releaseYear";
+            if (empty($director) && empty($releaseYear)) {
+                $director = '/';
+                $releaseYear = '/';
+            } else if (empty($director)) {
+                $director = '/';
+            } else if (empty($releaseYear)) {
+                $releaseYear = '/';
+            }
+
+            $checkDuplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = '$director' AND release_year = '$releaseYear'";
             $duplicateResult = $connection->query($checkDuplicateSql);
 
             if ($duplicateResult->num_rows > 0) {
                 echo '<div class="alert alert-error">Ce film existe déjà dans la collection.</div>';
             } else {
-                $insertSql = "INSERT INTO films (title, director, release_year) VALUES ('$title', '$director', $releaseYear)";
+                $insertSql = "INSERT INTO films (title, director, release_year) VALUES ('$title', '$director', '$releaseYear')";
 
                 if ($connection->query($insertSql) === TRUE) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
@@ -85,10 +112,10 @@
         <input type="text" name="title" required><br>
 
         <label for="director">Réalisateur :</label>
-        <input type="text" name="director" required><br>
+        <input type="text" name="director"><br>
 
         <label for="release_year">Année de sortie :</label>
-        <input type="number" name="release_year" required><br>
+        <input type="number" name="release_year"><br>
 
         <input type="submit" value="Ajouter le Film">
     </form>
@@ -96,15 +123,8 @@
     <h2>Mes Films</h2>
 
     <?php
-    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
-
-    $searchSql = "SELECT * FROM films";
-    if (!empty($search)) {
-        $search = $connection->real_escape_string($search);
-        $searchSql .= " WHERE title LIKE '%$search%'";
-    }
-
-    $result = $connection->query($searchSql);
+    $sql = "SELECT * FROM films";
+    $result = $connection->query($sql);
 
     if ($result->num_rows > 0) {
         echo '<ul>';

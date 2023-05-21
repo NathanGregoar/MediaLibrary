@@ -2,8 +2,27 @@
 <html>
 <head>
     <title>Recherche de Films</title>
+    <style>
+        .navbar {
+            background-color: #f8f9fa;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+
+        .navbar a {
+            margin-right: 10px;
+            text-decoration: none;
+            color: #000;
+            font-weight: bold;
+        }
+    </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="index.php">Ajouter un Film</a>
+        <a href="search.php">Consulter les Films</a>
+    </div>
+
     <h1>Recherche de Films</h1>
 
     <form method="GET" action="<?php echo $_SERVER['PHP_SELF']; ?>">
@@ -38,7 +57,7 @@
         echo '<ul>';
 
         while ($row = $result->fetch_assoc()) {
-            echo '<li>' . $row['title'] . ' (' . $row['director'] . ', ' . $row['release_year'] . ')</li>';
+            echo '<li>' . $row['title'] . ' (' . ($row['director'] != '/' ? $row['director'] : '') . ', ' . ($row['release_year'] != '/' ? $row['release_year'] : '') . ')</li>';
         }
 
         echo '</ul>';
