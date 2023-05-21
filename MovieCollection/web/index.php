@@ -2,6 +2,25 @@
 <html>
 <head>
     <title>Ma Collection de Films</title>
+    <style>
+        .alert {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .alert-success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .alert-error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+    </style>
 </head>
 <body>
     <h1>Ma Collection de Films</h1>
@@ -19,37 +38,44 @@
     }
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $title = $_POST['title'];
-        $director = $_POST['director'];
-        $releaseYear = $_POST['release_year'];
+        $title = trim($_POST['title']);
+        $director = trim($_POST['director']);
+        $releaseYear = trim($_POST['release_year']);
 
-        $sql = "INSERT INTO films (title, director, release_year) VALUES (?, ?, ?)";
-        $stmt = $connection->prepare($sql);
-        $stmt->bind_param('sss', $title, $director, $releaseYear);
-
-        if ($stmt->execute()) {
-            echo '<p>Film ajouté avec succès !</p>';
+        if (empty($title) || empty($director) || empty($releaseYear)) {
+            echo '<div class="alert alert-error">Veuillez remplir tous les champs.</div>';
         } else {
-            echo '<p>Erreur lors de l\'ajout du film : ' . $stmt->error . '</p>';
-        }
+            $title = $connection->real_escape_string($title);
+            $director = $connection->real_escape_string($director);
+            $releaseYear = intval($releaseYear);
 
-        $stmt->close();
+            $checkDuplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = '$director' AND release_year = $releaseYear";
+            $duplicateResult = $connection->query($checkDuplicateSql);
+
+            if ($duplicateResult->num_rows > 0) {
+                echo '<div class="alert alert-error">Ce film existe déjà dans la collection.</div>';
+            } else {
+                $insertSql = "INSERT INTO films (title, director, release_year) VALUES ('$title', '$director', $releaseYear)";
+
+                if ($connection->query($insertSql) === TRUE) {
+                    echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
+                } else {
+                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+                }
+            }
+        }
     }
 
     if (isset($_GET['delete'])) {
         $filmId = $_GET['delete'];
 
-        $deleteSql = "DELETE FROM films WHERE id = ?";
-        $stmt = $connection->prepare($deleteSql);
-        $stmt->bind_param('i', $filmId);
+        $deleteSql = "DELETE FROM films WHERE id = $filmId";
 
-        if ($stmt->execute()) {
-            echo '<p>Film supprimé avec succès !</p>';
+        if ($connection->query($deleteSql) === TRUE) {
+            echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
         } else {
-            echo '<p>Erreur lors de la suppression du film : ' . $stmt->error . '</p>';
+            echo '<div class="alert alert-error">Erreur lors de la suppression du film : ' . $connection->error . '</div>';
         }
-
-        $stmt->close();
     }
     ?>
 
@@ -70,8 +96,15 @@
     <h2>Mes Films</h2>
 
     <?php
-    $sql = "SELECT * FROM films";
-    $result = $connection->query($sql);
+    $search = isset($_GET['search']) ? trim($_GET['search']) : '';
+
+    $searchSql = "SELECT * FROM films";
+    if (!empty($search)) {
+        $search = $connection->real_escape_string($search);
+        $searchSql .= " WHERE title LIKE '%$search%'";
+    }
+
+    $result = $connection->query($searchSql);
 
     if ($result->num_rows > 0) {
         echo '<ul>';
