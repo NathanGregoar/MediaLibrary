@@ -43,10 +43,26 @@
             padding: 10px;
             margin-bottom: 10px;
             border-radius: 4px;
+            display: flex;
         }
 
-        .movie-item span {
-            font-weight: bold;
+        .movie-item img {
+            max-width: 150px;
+            margin-right: 10px;
+        }
+
+        .movie-details {
+            flex-grow: 1;
+        }
+
+        .movie-details h3 {
+            margin: 0;
+            margin-bottom: 5px;
+        }
+
+        .movie-details p {
+            margin: 0;
+            margin-bottom: 10px;
         }
 
         .movie-item .delete-btn {
@@ -100,37 +116,49 @@
             }
         }
 
-        // Recherche de films
-        $searchQuery = '';
-
+        // Affichage des films correspondant à la recherche
         if (isset($_GET['search'])) {
-            $searchQuery = $connection->real_escape_string($_GET['search']);
+            $searchTerm = $connection->real_escape_string($_GET['search']);
+            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
+            $searchResult = $connection->query($searchSql);
 
-            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchQuery%' OR director LIKE '%$searchQuery%' OR release_year LIKE '%$searchQuery%'";
-            $result = $connection->query($searchSql);
-
-            if ($result->num_rows > 0) {
+            if ($searchResult->num_rows > 0) {
                 echo '<h2>Résultats de la recherche :</h2>';
                 echo '<div class="movies-list">';
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $searchResult->fetch_assoc()) {
                     $id = $row['id'];
                     $title = $row['title'];
                     $director = $row['director'];
                     $releaseYear = $row['release_year'];
 
+                    // Appel à l'API OMDB pour récupérer les informations du film
+                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+                    $response = file_get_contents($apiUrl);
+                    $data = json_decode($response, true);
+
+                    // Vérifier si la requête a réussi et si l'affiche est disponible
+                    if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
+                        $poster = $data['Poster'];
+                    } else {
+                        $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
+                    }
+
                     echo '<div class="movie-item">';
-                    echo '<span>Titre :</span> ' . $title . '<br>';
-                    echo '<span>Réalisateur :</span> ' . ($director != 'NULL' ? $director : '') . '<br>';
-                    echo '<span>Année de sortie :</span> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '<br>';
+                    echo '<img src="' . $poster . '" alt="' . $title . '">';
+                    echo '<div class="movie-details">';
+                    echo '<h3>' . $title . '</h3>';
+                    echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
+                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
 
                     echo '<form method="POST" style="display:inline">';
                     echo '<input type="hidden" name="delete" value="' . $id . '">';
                     echo '<input type="submit" value="Supprimer" class="delete-btn">';
                     echo '</form>';
 
-                    echo '</div>';
+                    echo '</div>'; // .movie-details
+                    echo '</div>'; // .movie-item
                 }
-                echo '</div>';
+                echo '</div>'; // .movies-list
             } else {
                 echo '<div class="alert">Aucun résultat trouvé pour votre recherche.</div>';
             }
@@ -148,19 +176,34 @@
             $director = $row['director'];
             $releaseYear = $row['release_year'];
 
+            // Appel à l'API OMDB pour récupérer les informations du film
+            $apiUrl = "http://www.omdbapi.com/?apikey=YOUR_API_KEY&t=" . urlencode($title);
+            $response = file_get_contents($apiUrl);
+            $data = json_decode($response, true);
+
+            // Vérifier si la requête a réussi et si l'affiche est disponible
+            if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
+                $poster = $data['Poster'];
+            } else {
+                $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
+            }
+
             echo '<div class="movie-item">';
-            echo '<span>Titre :</span> ' . $title . '<br>';
-            echo '<span>Réalisateur :</span> ' . ($director != 'NULL' ? $director : '') . '<br>';
-            echo '<span>Année de sortie :</span> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '<br>';
+            echo '<img src="' . $poster . '" alt="' . $title . '">';
+            echo '<div class="movie-details">';
+            echo '<h3>' . $title . '</h3>';
+            echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
+            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
 
             echo '<form method="POST" style="display:inline">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
             echo '<input type="submit" value="Supprimer" class="delete-btn">';
             echo '</form>';
 
-            echo '</div>';
+            echo '</div>'; // .movie-details
+            echo '</div>'; // .movie-item
         }
-        echo '</div>';
+        echo '</div>'; // .movies-list
 
         $connection->close();
         ?>
