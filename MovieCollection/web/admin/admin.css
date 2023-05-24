@@ -5,6 +5,7 @@ body {
     padding: 0;
     display: flex;
     justify-content: center;
+    background-color: #f2f2f2;
   }
   
   .container {
@@ -16,7 +17,8 @@ body {
   .left-section {
     flex: 1;
     padding: 20px;
-    background-color: #f2f2f2;
+    background-color: #fff;
+    border-right: 1px solid #ccc;
   }
   
   .right-section {
