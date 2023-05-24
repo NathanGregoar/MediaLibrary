@@ -1,5 +1,8 @@
 body {
     font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ecf2f9;
 }
 
 .container {
@@ -9,7 +12,7 @@ body {
 }
 
 .navbar {
-    background-color: #f1f1f1;
+    background-color: #86c1ff;
     padding: 10px;
     margin-bottom: 20px;
 }
@@ -17,12 +20,13 @@ body {
 .navbar a {
     text-decoration: none;
     margin-right: 10px;
-    color: #333;
+    color: white;
     font-weight: bold;
 }
 
 h1 {
     margin-bottom: 20px;
+    color: #333;
 }
 
 form {
@@ -33,12 +37,16 @@ label {
     display: block;
     margin-bottom: 10px;
     font-weight: bold;
+    color: #333;
 }
 
 input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
 }
 
 input[type="submit"] {
@@ -59,6 +67,7 @@ td {
     padding: 8px;
     text-align: left;
     border-bottom: 1px solid #ddd;
+    color: #333;
 }
 
 tr:hover {
@@ -120,7 +129,7 @@ tr:hover {
     display: flex;
     align-items: center;
     margin-bottom: 10px;
-    background-color: #f0f0f0;
+    background: linear-gradient(#86c1ff, #1c79c0);
     padding: 10px;
     border-radius: 4px;
 }
@@ -137,11 +146,13 @@ tr:hover {
 .movie-details h3 {
     margin: 0;
     margin-bottom: 5px;
+    color: white;
 }
 
 .movie-details p {
     margin: 0;
     margin-bottom: 10px;
+    color: white;
 }
 
 .movie-item .delete-btn {
