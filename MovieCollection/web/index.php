@@ -30,13 +30,22 @@
             $title = $connection->real_escape_string($_POST['title']);
             $director = $_POST['director'] != '' ? "'" . $connection->real_escape_string($_POST['director']) . "'" : 'NULL';
             $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : 'NULL';
+            $externalHardDrive = $_POST['external_hard_drive'] != '' ? "'" . $connection->real_escape_string($_POST['external_hard_drive']) . "'" : 'NULL';
 
-            $insertSql = "INSERT INTO films (title, director, release_year) VALUES ('$title', $director, $releaseYear)";
+            // Vérifier les doublons
+            $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = $director AND release_year = $releaseYear";
+            $duplicateResult = $connection->query($duplicateSql);
 
-            if ($connection->query($insertSql) === TRUE) {
-                echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
+            if ($duplicateResult->num_rows > 0) {
+                echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
-                echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive) VALUES ('$title', $director, $releaseYear, $externalHardDrive)";
+
+                if ($connection->query($insertSql) === TRUE) {
+                    echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
+                } else {
+                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+                }
             }
         }
         ?>
@@ -50,6 +59,9 @@
 
             <label for="release_year">Année de sortie :</label>
             <input type="text" id="release_year" name="release_year">
+
+            <label for="external_hard_drive">Numéro du disque dur externe :</label>
+            <input type="text" id="external_hard_drive" name="external_hard_drive">
 
             <input type="submit" value="Ajouter">
         </form>
