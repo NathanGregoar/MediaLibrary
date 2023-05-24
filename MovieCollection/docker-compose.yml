@@ -22,4 +22,5 @@ services:
     volumes:
       - ./web:/var/www/html
     depends_on:
-      - db
+      db:
+        condition: service_healthy
