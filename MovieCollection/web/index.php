@@ -7,8 +7,12 @@
 <body>
     <div class="container">
         <div class="section-links">
-            <a href="film/film.php" class="section-link">Section Films</a>
-            <a href="serie/serie.php" class="section-link">Section Séries</a>
+            <a href="film/film.php" class="section-link">
+                <span class="section-link-text">Section Films</span>
+            </a>
+            <a href="serie/serie.php" class="section-link">
+                <span class="section-link-text">Section Séries</span>
+            </a>
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
         </div>
     </div>
