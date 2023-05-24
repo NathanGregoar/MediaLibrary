@@ -5,10 +5,10 @@
     <link rel="stylesheet" type="text/css" href="admin.css">
 </head>
 <body>
+    <div class="navbar">
+        <a href="../index.php">Accueil</a>
+    </div>
     <div class="container">
-        <div class="navbar">
-            <a href="../index.php">Accueil</a>
-        </div>
         <div class="left-section">
             <?php
             // Configuration de la base de données
