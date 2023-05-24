@@ -7,11 +7,17 @@ body {
     justify-content: center;
     min-height: 100vh; /* Ajout de la hauteur minimale pour le corps */
   }
+  
+  .navbar {
+    background-color: #86c1ff;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
 
   .navbar a {
     text-decoration: none;
     margin-right: 10px;
-    color: #86c1ff;
+    color: white;
     font-weight: bold;
   }
 
