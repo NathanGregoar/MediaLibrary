@@ -164,7 +164,35 @@
         <input type="submit" value="Modifier">
     </form>
 
+    <!-- Affichage de la structure de la base de données -->
+    <h2>Structure de la base de données</h2>
     <?php
+    $sql = "SHOW TABLES";
+    $result = $conn->query($sql);
+
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $table = $row['Tables_in_' . $database];
+            echo "<h3>$table</h3>";
+            echo "<ul>";
+
+            $sql_columns = "SHOW COLUMNS FROM $table";
+            $result_columns = $conn->query($sql_columns);
+
+            if ($result_columns->num_rows > 0) {
+                while ($row_columns = $result_columns->fetch_assoc()) {
+                    echo "<li>" . $row_columns['Field'] . " (" . $row_columns['Type'] . ")</li>";
+                }
+            } else {
+                echo "<li>Aucune colonne trouvée.</li>";
+            }
+
+            echo "</ul>";
+        }
+    } else {
+        echo "Aucune table trouvée dans la base de données.";
+    }
+
     // Fermeture de la connexion à la base de données
     $conn->close();
     ?>
