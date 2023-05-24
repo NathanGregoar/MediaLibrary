@@ -8,7 +8,7 @@
     <div class="container">
         <div class="navbar">
             <a href="../index.php">Accueil</a>
-            <a href="serie.php">Ajouter un Livre</a>
+            <a href="livre.php">Ajouter un Livre</a>
         </div>
     </div>
 </body>
