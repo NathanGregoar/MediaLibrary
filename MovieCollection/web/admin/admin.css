@@ -57,22 +57,33 @@ body {
   /* Ajoutez d'autres styles CSS selon vos besoins */
   
 
-/* Styles spécifiques pour les formulaires */
-form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
+  /* Styles spécifiques pour le formulaire de la partie de gauche */
+.left-section form {
+    width: 100%;
+    max-width: 400px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   }
   
-  form label {
+  .left-section form h2 {
+    margin-bottom: 20px;
+    font-size: 20px;
+    color: #333;
+    text-align: center;
+  }
+  
+  .left-section form label {
+    display: block;
     margin-bottom: 10px;
     font-weight: bold;
-    color: #333;
+    color: #555;
   }
   
-  form input[type="text"],
-  form select {
+  .left-section form input[type="text"],
+  .left-section form select {
     width: 100%;
     padding: 10px;
     margin-bottom: 15px;
@@ -82,7 +93,7 @@ form {
     font-size: 14px;
   }
   
-  form input[type="submit"] {
+  .left-section form input[type="submit"] {
     width: 100%;
     padding: 12px;
     background-color: #4caf50;
@@ -96,11 +107,11 @@ form {
     cursor: pointer;
   }
   
-  form input[type="submit"]:hover {
+  .left-section form input[type="submit"]:hover {
     background-color: #45a049;
   }
   
-  form .error-message {
+  .left-section form .error-message {
     color: red;
     margin-top: 5px;
     text-align: center;
