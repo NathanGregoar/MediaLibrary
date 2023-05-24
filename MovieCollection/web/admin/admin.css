@@ -1,39 +1,38 @@
 /* Styles généraux */
 body {
-    font-family: Arial, sans-serif;
-    margin: 20px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  
-  h2 {
-    margin-top: 40px;
-    text-align: center;
-  }
-  
-  form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin-bottom: 20px;
-  }
-  
-  input[type="submit"] {
-    margin-top: 10px;
-  }
-  
-  ul {
-    list-style-type: none;
-    padding: 0;
-    text-align: center;
-  }
-  
-  /* Styles spécifiques pour la structure de la base de données */
-  h3 {
-    margin-top: 20px;
-    text-align: center;
-  }
-  
-  /* Ajoutez d'autres styles CSS selon vos besoins */
-  
+  font-family: Arial, sans-serif;
+  margin: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+h2 {
+  margin-top: 40px;
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+input[type="submit"] {
+  margin-top: 10px;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
+  text-align: center;
+}
+
+/* Styles spécifiques pour la structure de la base de données */
+h3 {
+  margin-top: 20px;
+  text-align: center;
+}
+
+/* Ajoutez d'autres styles CSS selon vos besoins */
