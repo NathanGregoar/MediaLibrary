@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Rechercher des Films</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="film.css">
 </head>
 <body>
     <div class="container">

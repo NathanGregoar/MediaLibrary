@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Accueil - Movie Collection</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="accueil.css">
 </head>
 <body>
     <div class="container">
