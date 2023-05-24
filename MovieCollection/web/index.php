@@ -1,3 +1,15 @@
+<?php
+    if (isset($_POST['code'])) {
+        $code = $_POST['code'];
+        if ($code == '444719') {
+            header('Location: admin/admin.php');
+            exit();
+        } else {
+            echo '<div class="alert alert-error">Le code est incorrect. Veuillez réessayer.</div>';
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -6,19 +18,8 @@
 </head>
 <body>
     <div class="admin-section">
-        <?php
-        if (isset($_POST['code'])) {
-            $code = $_POST['code'];
-            if ($code == '444719') {
-                header('Location: admin/admin.php');
-                exit();
-            } else {
-                echo '<div class="alert alert-error">Le code est incorrect. Veuillez réessayer.</div>';
-            }
-        }
-        ?>
         <form method="POST" class="admin-form">
-            <label for="code">Code d'accès :</label>
+            <label for="code">Admin :</label>
             <input type="password" id="code" name="code" required>
             <input type="submit" value="Se connecter">
         </form>
