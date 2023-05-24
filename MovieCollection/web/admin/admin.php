@@ -2,6 +2,7 @@
 <html>
 <head>
     <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="admin.css">
 </head>
 <body>
     <?php
