@@ -11,7 +11,7 @@
             if (isset($_POST['code'])) {
                 $code = $_POST['code'];
                 if ($code == '444719') {
-                    header('Location: admin.php');
+                    header('Location: admin/admin.php');
                     exit();
                 } else {
                     echo '<div class="alert alert-error">Le code est incorrect. Veuillez réessayer.</div>';
