@@ -133,7 +133,7 @@
         <label for="colonne_type">Type de la colonne:</label>
         <select name="colonne_type">
             <option value="INT(6)">INT(6)</option>
-            <option value="VARCHAR(255)">VARCHAR(255)</option>
+            <option value="VARCHAR(255)" selected>VARCHAR(255)</option>
             <option value="DATE">DATE</option>
             <!-- Ajoutez d'autres options de type de colonne si nécessaire -->
         </select>
@@ -164,7 +164,7 @@
         <label for="nouveau_type">Nouveau type:</label>
         <select name="nouveau_type">
             <option value="INT(6)">INT(6)</option>
-            <option value="VARCHAR(255)">VARCHAR(255)</option>
+            <option value="VARCHAR(255)" selected>VARCHAR(255)</option>
             <option value="DATE">DATE</option>
             <!-- Ajoutez d'autres options de type de colonne si nécessaire -->
         </select>
