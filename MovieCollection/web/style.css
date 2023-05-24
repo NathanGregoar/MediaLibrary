@@ -152,3 +152,61 @@ tr:hover {
     border-radius: 4px;
     cursor: pointer;
 }
+
+/* Style for index.php */
+
+body {
+    background-color: #f1f1f1;
+}
+
+h1 {
+    text-align: center;
+    margin-top: 50px;
+    margin-bottom: 30px;
+    color: #333;
+}
+
+.intro-text {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+.featured-section {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 4px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    margin-bottom: 30px;
+}
+
+.featured-section h2 {
+    margin-bottom: 10px;
+}
+
+.featured-section p {
+    margin-bottom: 20px;
+}
+
+.featured-section .btn {
+    display: inline-block;
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.featured-section .btn:hover {
+    background-color: #45a049;
+}
+
+.featured-section .btn:active {
+    background-color: #3e8e41;
+}
+
+.featured-section .btn:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
+}

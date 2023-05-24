@@ -2,12 +2,12 @@
 <html>
 <head>
     <title>Rechercher des Films</title>
-    <link rel="stylesheet" type="text/css" href="style.css">
+    <link rel="stylesheet" type="text/css" href="../style.css">
 </head>
 <body>
     <div class="container">
         <div class="navbar">
-            <a href="index.php">Ajouter un Film</a>
+            <a href="film.php">Ajouter un Film</a>
             <a href="search.php">Consulter les Films</a>
         </div>
 
