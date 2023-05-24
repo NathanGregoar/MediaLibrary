@@ -59,6 +59,7 @@
                     $title = $row['title'];
                     $director = $row['director'];
                     $releaseYear = $row['release_year'];
+                    $externalHardDrive = $row['external_hard_drive'];
 
                     // Appel à l'API OMDB pour récupérer les informations du film
                     $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
@@ -78,6 +79,7 @@
                     echo '<h3>' . $title . '</h3>';
                     echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
                     echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+                    echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
 
                     echo '<form method="POST" style="display:inline">';
                     echo '<input type="hidden" name="delete" value="' . $id . '">';
@@ -104,6 +106,7 @@
             $title = $row['title'];
             $director = $row['director'];
             $releaseYear = $row['release_year'];
+            $externalHardDrive = $row['external_hard_drive'];
 
             // Appel à l'API OMDB pour récupérer les informations du film
             $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
@@ -123,6 +126,7 @@
             echo '<h3>' . $title . '</h3>';
             echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
             echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
 
             echo '<form method="POST" style="display:inline">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
