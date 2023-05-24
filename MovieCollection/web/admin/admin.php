@@ -131,7 +131,12 @@
         <label for="colonne_name">Nom de la colonne:</label>
         <input type="text" name="colonne_name" required>
         <label for="colonne_type">Type de la colonne:</label>
-        <input type="text" name="colonne_type" required>
+        <select name="colonne_type">
+            <option value="INT(6)">INT(6)</option>
+            <option value="VARCHAR(255)">VARCHAR(255)</option>
+            <option value="DATE">DATE</option>
+            <!-- Ajoutez d'autres options de type de colonne si nécessaire -->
+        </select>
         <input type="submit" value="Ajouter">
     </form>
 
@@ -157,7 +162,12 @@
         <label for="nouveau_nom">Nouveau nom:</label>
         <input type="text" name="nouveau_nom" required>
         <label for="nouveau_type">Nouveau type:</label>
-        <input type="text" name="nouveau_type" required>
+        <select name="nouveau_type">
+            <option value="INT(6)">INT(6)</option>
+            <option value="VARCHAR(255)">VARCHAR(255)</option>
+            <option value="DATE">DATE</option>
+            <!-- Ajoutez d'autres options de type de colonne si nécessaire -->
+        </select>
         <input type="submit" value="Modifier">
     </form>
 
