@@ -29,7 +29,7 @@
 
                 // Création de la table
                 $sql = "CREATE TABLE $table_name (
-                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY,
+                    id INT(6) UNSIGNED AUTO_INCREMENT PRIMARY KEY;
                 )";
 
                 if ($conn->query($sql) === TRUE) {
