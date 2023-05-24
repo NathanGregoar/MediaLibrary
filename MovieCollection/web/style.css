@@ -153,60 +153,42 @@ tr:hover {
     cursor: pointer;
 }
 
-/* Style for index.php */
+/* Style personnalisé pour la page d'accueil */
 
-body {
-    background-color: #f1f1f1;
+.intro-section {
+    text-align: center;
+    margin-top: 100px;
+    margin-bottom: 50px;
 }
 
-h1 {
-    text-align: center;
-    margin-top: 50px;
-    margin-bottom: 30px;
+.intro-section h2 {
+    font-size: 24px;
     color: #333;
-}
-
-.intro-text {
-    text-align: center;
-    margin-bottom: 30px;
-    color: #555;
-}
-
-.featured-section {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 4px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-bottom: 30px;
-}
-
-.featured-section h2 {
-    margin-bottom: 10px;
-}
-
-.featured-section p {
     margin-bottom: 20px;
 }
 
-.featured-section .btn {
+.intro-section p {
+    font-size: 18px;
+    color: #555;
+    margin-bottom: 40px;
+}
+
+.section-links {
+    display: flex;
+    justify-content: center;
+}
+
+.section-link {
     display: inline-block;
-    padding: 10px 20px;
+    padding: 20px 30px;
     background-color: #4CAF50;
     color: white;
-    border: none;
-    border-radius: 4px;
     text-decoration: none;
+    font-weight: bold;
+    border-radius: 4px;
+    margin: 0 10px;
 }
 
-.featured-section .btn:hover {
+.section-link:hover {
     background-color: #45a049;
-}
-
-.featured-section .btn:active {
-    background-color: #3e8e41;
-}
-
-.featured-section .btn:focus {
-    outline: none;
-    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.5);
 }
