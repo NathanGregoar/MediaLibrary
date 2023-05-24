@@ -8,6 +8,19 @@ body {
     min-height: 100vh; /* Ajout de la hauteur minimale pour le corps */
   }
   
+  .navbar {
+    background-color: #86c1ff;
+    padding: 10px;
+    margin-bottom: 20px;
+  }
+
+  .navbar a {
+    text-decoration: none;
+    margin-right: 10px;
+    color: white;
+    font-weight: bold;
+  }
+
   .container {
     display: flex;
     width: 100%;
