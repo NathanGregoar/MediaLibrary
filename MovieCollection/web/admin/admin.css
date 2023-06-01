@@ -1,5 +1,5 @@
 /* Styles généraux */
-body {
+  body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
@@ -7,11 +7,12 @@ body {
     justify-content: center;
     min-height: 100vh; /* Ajout de la hauteur minimale pour le corps */
   }
-  
+
   .navbar {
     background-color: #86c1ff;
     padding: 10px;
     margin-bottom: 20px;
+    width: 100%; /* Occupe toute la largeur horizontalement */
   }
 
   .navbar a {
@@ -23,23 +24,22 @@ body {
 
   .container {
     display: flex;
+    flex-direction: column; /* Empile les sections verticalement */
     width: 100%;
-    height: 100%; /* Modification de la hauteur à 100% */
   }
   
   .left-section {
-    flex: 1;
-    padding: 20px;
-    background-color: #f2f2f2;
-    height: 100%; /* Modification de la hauteur à 100% */
-    overflow: auto; /* Ajout de la propriété overflow */
+      flex: 1 0 50%; /* Occupe la moitié verticale */
+      padding: 20px;
+      background-color: #f2f2f2;
+      overflow-y: auto; /* Ajout de la barre de défilement */
   }
-  
+
   .right-section {
-    flex: 1;
-    padding: 20px;
-    background-color: #fff;
-    overflow-y: auto;
+      flex: 1 0 50%; /* Occupe la moitié verticale */
+      padding: 20px;
+      background-color: #fff;
+      overflow-y: auto; /* Ajout de la barre de défilement */
   }
   
   h2 {
@@ -135,7 +135,9 @@ body {
   }
   
   #commit-section {
-    margin-bottom: 20px;
+    width: 100%;
+    background-color: #fff;
+    padding: 20px;
   }
   
   .commit-list {
