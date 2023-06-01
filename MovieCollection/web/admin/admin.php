@@ -236,6 +236,7 @@
                 for ($i = 0; $i < 10 && isset($commits[$i]['commit']['message']); $i++) {
                     $commitTitle = $commits[$i]['commit']['message'];
                     $commitDescription = $commits[$i]['commit']['message'];
+                    $commitDescription = substr($commitDescription, strpos($commitDescription, "\n") + 1); // Ignorer la première ligne du message
                     echo "<li class='commit-item'><strong class='commit-title'>{$commitTitle}</strong><br>{$commitDescription}</li>";
                 }
                 echo "</ul>";
