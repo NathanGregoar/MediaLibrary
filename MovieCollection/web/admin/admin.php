@@ -213,8 +213,7 @@
             ?>
         </div>
     </div>
-    <section id="commit-section">
-        <!-- Liste des 10 derniers commits d'un repository -->
+    <!-- <section id="commit-section">
         <h1>10 derniers commits</h1>
 
         <?php
@@ -244,6 +243,6 @@
                 echo "<p>Impossible de récupérer les commits.</p>";
             }
         ?>
-    </section>
+    </section> -->
 </body>
 </html>
