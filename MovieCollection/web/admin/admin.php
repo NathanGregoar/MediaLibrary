@@ -214,32 +214,32 @@
         </div>
 
             <!-- Liste des 10 derniers commits d'un repository -->
-            <h2>Liste des 10 derniers commits</h2>
+            <h1>10 derniers commits</h1>
+
             <?php
-            // Configuration du repository
-            $repository_path = '/home/MovieCollection/MovieCollection/web';
+                $repositoryOwner = "NathanGregoar"; // Remplacez par le nom du propriétaire du référentiel
+                $repositoryName = "MovieCollection"; // Remplacez par le nom du référentiel
 
-            // Fonction pour récupérer les 10 derniers commits
-            function getLatestCommits($repository_path, $limit = 10) {
-                $output = shell_exec("cd $repository_path && git log --pretty=format:'%h - %s (%cr)' -n $limit");
+                $url = "https://api.github.com/repos/{$repositoryOwner}/{$repositoryName}/commits";
+                $options = [
+                    "http" => [
+                        "header" => "User-Agent: PHP"
+                    ]
+                ];
+                $context = stream_context_create($options);
+                $response = file_get_contents($url, false, $context);
+                $commits = json_decode($response, true);
 
-                $commits = explode("\n", $output);
-
-                return $commits;
-            }
-
-            // Récupération des 10 derniers commits
-            $commits = getLatestCommits($repository_path, 10);
-
-            if (count($commits) > 0) {
-                echo "<ul>";
-                foreach ($commits as $commit) {
-                    echo "<li>$commit</li>";
+                if ($commits) {
+                    echo "<ul>";
+                    for ($i = 0; $i < 10 && isset($commits[$i]['commit']['message']); $i++) {
+                        $commitMessage = $commits[$i]['commit']['message'];
+                        echo "<li>{$commitMessage}</li>";
+                    }
+                    echo "</ul>";
+                } else {
+                    echo "<p>Impossible de récupérer les commits.</p>";
                 }
-                echo "</ul>";
-            } else {
-                echo "Aucun commit trouvé dans le repository.";
-            }
             ?>
 
     </div>
