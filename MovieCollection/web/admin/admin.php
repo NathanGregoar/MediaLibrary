@@ -217,7 +217,7 @@
             <h2>Liste des 10 derniers commits</h2>
             <?php
             // Configuration du repository
-            $repository_path = '/chemin/vers/le/repository';
+            $repository_path = '/home/MovieCollection/MovieCollection/web';
 
             // Fonction pour récupérer les 10 derniers commits
             function getLatestCommits($repository_path, $limit = 10) {
