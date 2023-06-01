@@ -236,7 +236,7 @@
                 for ($i = 0; $i < 10 && isset($commits[$i]['commit']['message']); $i++) {
                     $commitTitle = $commits[$i]['commit']['message'];
                     $commitDescription = $commits[$i]['commit']['message'];
-                    echo "<li class='commit-item'><strong class='commit-title'>{$commitTitle}</strong><br><span class='commit-description'>{$commitDescription}</span></li>";
+                    echo "<li class='commit-item'><strong class='commit-title'>{$commitTitle}</strong><br>{$commitDescription}</li>";
                 }
                 echo "</ul>";
             } else {
