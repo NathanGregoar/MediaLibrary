@@ -11,6 +11,7 @@ services:
       MYSQL_PASSWORD: 444719
     volumes:
       - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
+      - db_data:/var/lib/mysql  # Ajout du volume pour la persistance des données
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
@@ -29,3 +30,6 @@ services:
     depends_on:
       db:
         condition: service_healthy
+
+volumes:
+  db_data:  # Définition du volume pour la persistance des données
