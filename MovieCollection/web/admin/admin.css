@@ -134,3 +134,24 @@ body {
     font-size: 12px;
   }
   
+  #commit-section {
+    margin-bottom: 20px;
+  }
+  
+  .commit-list {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  .commit-item {
+    margin-bottom: 10px;
+  }
+  
+  .commit-title {
+    font-weight: bold;
+  }
+  
+  .commit-description {
+    margin-top: 5px;
+  }
+  
