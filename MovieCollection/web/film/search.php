@@ -105,7 +105,7 @@
         $allMoviesCount = $allMoviesResult->num_rows;
         echo '<p>Total des films enregistrés : ' . $allMoviesCount . '</p>';
 
-        echo '<h2>Liste complète des films :</h2>';
+        echo '<h2>Liste complète des films (' . $allMoviesCount . ') :</h2>';
         echo '<div class="movies-list">';
         while ($row = $allMoviesResult->fetch_assoc()) {
             $id = $row['id'];
