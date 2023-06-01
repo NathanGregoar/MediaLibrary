@@ -21,7 +21,6 @@
             </form>
         </div>
 
-
         <?php
         $host = 'db';
         $user = 'nathan';
@@ -52,7 +51,10 @@
             $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
             $searchResult = $connection->query($searchSql);
 
-            if ($searchResult->num_rows > 0) {
+            $searchCount = $searchResult->num_rows;
+            echo '<p>' . $searchCount . ' résultat(s) de la recherche :</p>';
+
+            if ($searchCount > 0) {
                 echo '<h2>Résultats de la recherche :</h2>';
                 echo '<div class="movies-list">';
                 while ($row = $searchResult->fetch_assoc()) {
@@ -99,6 +101,9 @@
         // Affichage de tous les films
         $allMoviesSql = "SELECT * FROM films";
         $allMoviesResult = $connection->query($allMoviesSql);
+
+        $allMoviesCount = $allMoviesResult->num_rows;
+        echo '<p>Total des films enregistrés : ' . $allMoviesCount . '</p>';
 
         echo '<h2>Liste complète des films :</h2>';
         echo '<div class="movies-list">';
