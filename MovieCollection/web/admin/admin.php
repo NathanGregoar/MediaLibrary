@@ -212,6 +212,36 @@
             $conn->close();
             ?>
         </div>
+
+            <!-- Liste des 10 derniers commits d'un repository -->
+            <h2>Liste des 10 derniers commits</h2>
+            <?php
+            // Configuration du repository
+            $repository_path = '/chemin/vers/le/repository';
+
+            // Fonction pour récupérer les 10 derniers commits
+            function getLatestCommits($repository_path, $limit = 10) {
+                $output = shell_exec("cd $repository_path && git log --pretty=format:'%h - %s (%cr)' -n $limit");
+
+                $commits = explode("\n", $output);
+
+                return $commits;
+            }
+
+            // Récupération des 10 derniers commits
+            $commits = getLatestCommits($repository_path, 10);
+
+            if (count($commits) > 0) {
+                echo "<ul>";
+                foreach ($commits as $commit) {
+                    echo "<li>$commit</li>";
+                }
+                echo "</ul>";
+            } else {
+                echo "Aucun commit trouvé dans le repository.";
+            }
+            ?>
+
     </div>
 </body>
 </html>
