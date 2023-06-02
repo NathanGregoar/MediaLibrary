@@ -64,7 +64,7 @@
                     $externalHardDrive = $row['external_hard_drive'];
 
                     // Appel à l'API OMDB pour récupérer les informations du film
-                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title) . "&director=" . urlencode($director);
                     $response = file_get_contents($apiUrl);
                     $data = json_decode($response, true);
 
@@ -113,7 +113,7 @@
             $externalHardDrive = $row['external_hard_drive'];
 
             // Appel à l'API OMDB pour récupérer les informations du film
-            $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+            $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title) . "&director=" . urlencode($director);
             $response = file_get_contents($apiUrl);
             $data = json_decode($response, true);
 
