@@ -80,7 +80,7 @@
                     echo '<div class="movie-details">';
                     echo '<h3>' . $title . '</h3>';
                     echo '<p><strong>Réalisateur :</strong> ' . ($director != '' ? $director : '/') . '</p>';
-                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : '/e') . '</p>';
+                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : '/') . '</p>';
                     echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != '' ? $externalHardDrive : '/') . '</p>';
 
                     echo '<form method="POST" style="display:inline">';
@@ -129,7 +129,7 @@
             echo '<div class="movie-details">';
             echo '<h3>' . $title . '</h3>';
             echo '<p><strong>Réalisateur :</strong> ' . ($director != '' ? $director : '/') . '</p>';
-            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : '/e') . '</p>';
+            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : '/') . '</p>';
             echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != '' ? $externalHardDrive : '/') . '</p>';
 
             echo '<form method="POST" style="display:inline">';
