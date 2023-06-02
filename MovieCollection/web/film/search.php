@@ -33,30 +33,6 @@
             die('Erreur de connexion : ' . $connection->connect_error);
         }
 
-        function displayMovieItem($row, $poster) {
-            $id = $row['id'];
-            $title = $row['title'];
-            $director = $row['director'];
-            $releaseYear = $row['release_year'];
-            $externalHardDrive = $row['external_hard_drive'];
-
-            echo '<div class="movie-item">';
-            echo '<img src="' . $poster . '" alt="' . $title . '">';
-            echo '<div class="movie-details">';
-            echo '<h3>' . $title . '</h3>';
-            echo '<p><strong>Réalisateur :</strong> ' . ($director ?: '/') . '</p>';
-            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear ?: '/') . '</p>';
-            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive ?: '/') . '</p>';
-
-            echo '<form method="POST" style="display:inline">';
-            echo '<input type="hidden" name="delete" value="' . $id . '">';
-            echo '<input type="submit" value="Supprimer" class="delete-btn">';
-            echo '</form>';
-
-            echo '</div>'; // .movie-details
-            echo '</div>'; // .movie-item
-        }
-
         // Suppression d'un film
         if (isset($_POST['delete'])) {
             $deleteId = $connection->real_escape_string($_POST['delete']);
@@ -81,7 +57,11 @@
                 echo '<h2>Résultats de la recherche (' . $searchCount . ') :</h2>';
                 echo '<div class="movies-list">';
                 while ($row = $searchResult->fetch_assoc()) {
+                    $id = $row['id'];
                     $title = $row['title'];
+                    $director = $row['director'];
+                    $releaseYear = $row['release_year'];
+                    $externalHardDrive = $row['external_hard_drive'];
 
                     // Appel à l'API OMDB pour récupérer les informations du film
                     $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
@@ -95,7 +75,21 @@
                         $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
                     }
 
-                    displayMovieItem($row, $poster);
+                    echo '<div class="movie-item">';
+                    echo '<img src="' . $poster . '" alt="' . $title . '">';
+                    echo '<div class="movie-details">';
+                    echo '<h3>' . $title . '</h3>';
+                    echo '<p><strong>Réalisateur :</strong> ' . ($director != '' ? $director : '/') . '</p>';
+                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : '/') . '</p>';
+                    echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != '' ? $externalHardDrive : '/') . '</p>';
+
+                    echo '<form method="POST" style="display:inline">';
+                    echo '<input type="hidden" name="delete" value="' . $id . '">';
+                    echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                    echo '</form>';
+
+                    echo '</div>'; // .movie-details
+                    echo '</div>'; // .movie-item
                 }
                 echo '</div>'; // .movies-list
             } else {
@@ -112,7 +106,11 @@
         echo '<h2>Liste complète des films (' . $allMoviesCount . ') :</h2>';
         echo '<div class="movies-list">';
         while ($row = $allMoviesResult->fetch_assoc()) {
+            $id = $row['id'];
             $title = $row['title'];
+            $director = $row['director'];
+            $releaseYear = $row['release_year'];
+            $externalHardDrive = $row['external_hard_drive'];
 
             // Appel à l'API OMDB pour récupérer les informations du film
             $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
@@ -126,7 +124,21 @@
                 $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
             }
 
-            displayMovieItem($row, $poster);
+            echo '<div class="movie-item">';
+            echo '<img src="' . $poster . '" alt="' . $title . '">';
+            echo '<div class="movie-details">';
+            echo '<h3>' . $title . '</h3>';
+            echo '<p><strong>Réalisateur :</strong> ' . ($director != '' ? $director : '/') . '</p>';
+            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : '/') . '</p>';
+            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != '' ? $externalHardDrive : '/') . '</p>';
+
+            echo '<form method="POST" style="display:inline">';
+            echo '<input type="hidden" name="delete" value="' . $id . '">';
+            echo '<input type="submit" value="Supprimer" class="delete-btn">';
+            echo '</form>';
+
+            echo '</div>'; // .movie-details
+            echo '</div>'; // .movie-item
         }
         echo '</div>'; // .movies-list
 
