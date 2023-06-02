@@ -62,9 +62,10 @@
             <div class="form-group">
                 <label for="langue_serie">Langue de la série :</label>
                 <select id="langue_serie" name="langue_serie">
-                    <option value="Français">Français</option>
+                    <option value="Français" selected>Français</option>
                     <option value="Anglais">Anglais</option>
                     <option value="Coréen">Coréen</option>
+                    <option value="Autre">Autre</option>
                 </select>
             </div>
 
