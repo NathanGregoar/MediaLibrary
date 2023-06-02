@@ -66,7 +66,7 @@
                 while ($row = $filmsResult->fetch_assoc()) {
                     $filmId = $row['id'];
                     $filmTitle = $row['title'];
-                    echo "<li><a href='film.php?id=$filmId'>$filmTitle</a></li>";
+                    echo "<li><a href='../film/film_search.php?id=$filmId'>$filmTitle</a></li>";
                 }
                 echo "</ul>";
                 $foundResults = true;
