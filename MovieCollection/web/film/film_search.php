@@ -116,6 +116,9 @@
             $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title) . "&director=" . urlencode($director);
             $response = file_get_contents($apiUrl);
             $data = json_decode($response, true);
+            echo '<pre>';
+            print_r($data);
+            echo '</pre>';
 
             // Vérifier si la requête a réussi et si l'affiche est disponible
             if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
