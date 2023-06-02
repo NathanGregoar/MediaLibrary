@@ -21,7 +21,7 @@
         </div>
 
         <?php
-        $servername = "localhost";
+        $servername = "db";
         $username = "nathan";
         $password = "444719";
         $dbname = "movie_collection";
