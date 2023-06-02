@@ -12,7 +12,6 @@ body {
   background-color: #86c1ff;
   padding: 10px;
   margin-bottom: 20px;
-  width: 100%; /* Occupe toute la largeur horizontalement */
 }
 
 .navbar a {
@@ -24,22 +23,23 @@ body {
 
 .container {
   display: flex;
-  flex-direction: column; /* Empile les sections verticalement */
   width: 100%;
+  height: 100%; /* Modification de la hauteur à 100% */
 }
 
 .left-section {
-    flex: 1 0 50%; /* Occupe la moitié verticale */
-    padding: 20px;
-    background-color: #f2f2f2;
-    overflow-y: auto; /* Ajout de la barre de défilement */
+  flex: 1;
+  padding: 20px;
+  background-color: #f2f2f2;
+  height: 100%; /* Modification de la hauteur à 100% */
+  overflow: auto; /* Ajout de la propriété overflow */
 }
 
 .right-section {
-    flex: 1 0 50%; /* Occupe la moitié verticale */
-    padding: 20px;
-    background-color: #fff;
-    overflow-y: auto; /* Ajout de la barre de défilement */
+  flex: 1;
+  padding: 20px;
+  background-color: #fff;
+  overflow-y: auto;
 }
 
 h2 {
@@ -133,27 +133,3 @@ h3 {
   text-align: center;
   font-size: 12px;
 }
-
-/* #commit-section {
-  width: 100%;
-  background-color: #fff;
-  padding: 20px;
-}
-
-.commit-list {
-  list-style-type: none;
-  padding: 0;
-}
-
-.commit-item {
-  margin-bottom: 10px;
-}
-
-.commit-title {
-  font-weight: bold;
-}
-
-.commit-description {
-  margin-top: 5px;
-}
- */
