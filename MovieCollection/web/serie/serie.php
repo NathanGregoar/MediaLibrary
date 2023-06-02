@@ -9,7 +9,7 @@
         <div class="navbar">
             <a href="../index.php">Accueil</a>
             <a href="serie.php">Ajouter une Serie</a>
-            <a href="search_serie.php">Consulter les Séries</a>
+            <a href="serie_search.php">Consulter les Séries</a>
         </div>
 
         <h1>Ajouter une Série</h1>
