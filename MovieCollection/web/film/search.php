@@ -79,9 +79,9 @@
                     echo '<img src="' . $poster . '" alt="' . $title . '">';
                     echo '<div class="movie-details">';
                     echo '<h3>' . $title . '</h3>';
-                    echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
-                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
-                    echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
+                    echo '<p><strong>Réalisateur :</strong> ' . ($director != '' ? $director : 'Non spécifié') . '</p>';
+                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : 'Non spécifiée') . '</p>';
+                    echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != '' ? $externalHardDrive : 'Non spécifié') . '</p>';
 
                     echo '<form method="POST" style="display:inline">';
                     echo '<input type="hidden" name="delete" value="' . $id . '">';
@@ -128,9 +128,9 @@
             echo '<img src="' . $poster . '" alt="' . $title . '">';
             echo '<div class="movie-details">';
             echo '<h3>' . $title . '</h3>';
-            echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
-            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
-            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
+            echo '<p><strong>Réalisateur :</strong> ' . ($director != '' ? $director : 'Non spécifié') . '</p>';
+            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != '' ? $releaseYear : 'Non spécifiée') . '</p>';
+            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != '' ? $externalHardDrive : 'Non spécifié') . '</p>';
 
             echo '<form method="POST" style="display:inline">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
