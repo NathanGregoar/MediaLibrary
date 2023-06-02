@@ -88,3 +88,52 @@ input[type="submit"].btn-submit {
     color: #0c5460;
     border-color: #bee5eb;
 }
+
+/* Ajoutez ces styles après les styles existants dans votre fichier serie.css */
+
+h2 {
+    margin-bottom: 10px;
+    color: #333;
+}
+
+.movies-list {
+    margin-bottom: 20px;
+}
+
+.movie-item {
+    background: linear-gradient(to bottom, #86c1ff, #659cef);
+    padding: 10px;
+    border-radius: 4px;
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.movie-item img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.movie-details {
+    flex-grow: 1;
+}
+
+.movie-details h3 {
+    margin-bottom: 5px;
+    color: white;
+}
+
+.movie-details p {
+    margin-bottom: 10px;
+    color: white;
+}
+
+.movie-item .delete-btn {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
