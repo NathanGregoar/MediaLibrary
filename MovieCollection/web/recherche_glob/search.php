@@ -79,7 +79,7 @@
                 while ($row = $seriesResult->fetch_assoc()) {
                     $serieId = $row['id'];
                     $serieTitle = $row['title'];
-                    echo "<li><a href='serie.php?id=$serieId'>$serieTitle</a></li>";
+                    echo "<li><a href='../serie/serie_search.php?search=$searchTerm'>$serieTitle</a></li>";
                 }
                 echo "</ul>";
                 $foundResults = true;
@@ -92,7 +92,7 @@
                 while ($row = $livresResult->fetch_assoc()) {
                     $livreId = $row['id'];
                     $livreTitle = $row['title'];
-                    echo "<li><a href='livre.php?id=$livreId'>$livreTitle</a></li>";
+                    echo "<li><a href='../livre/livre.php'>$livreTitle</a></li>";
                 }
                 echo "</ul>";
                 $foundResults = true;
@@ -105,7 +105,7 @@
                 while ($row = $concertsResult->fetch_assoc()) {
                     $concertId = $row['id'];
                     $concertArtist = $row['artist'];
-                    echo "<li><a href='concert.php?id=$concertId'>$concertArtist</a></li>";
+                    echo "<li><a href='../concert/concert.php'>$concertArtist</a></li>";
                 }
                 echo "</ul>";
                 $foundResults = true;
@@ -118,7 +118,7 @@
                 while ($row = $documentairesResult->fetch_assoc()) {
                     $documentaireId = $row['id'];
                     $documentaireTitle = $row['title'];
-                    echo "<li><a href='documentaire.php?id=$documentaireId'>$documentaireTitle</a></li>";
+                    echo "<li><a href='../documentaire/documentaire.php'>$documentaireTitle</a></li>";
                 }
                 echo "</ul>";
                 $foundResults = true;
