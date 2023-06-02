@@ -36,28 +36,85 @@
         if (isset($_GET['search'])) {
             $searchTerm = $_GET['search'];
 
-            // Requête de recherche dans les tables films, series, livres, concerts et documentaires
-            $sql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'
-                    UNION
-                    SELECT * FROM series WHERE title LIKE '%$searchTerm%'
-                    UNION
-                    SELECT * FROM livres WHERE title LIKE '%$searchTerm%'
-                    UNION
-                    SELECT * FROM concerts WHERE artist LIKE '%$searchTerm%'
-                    UNION
-                    SELECT * FROM documentaires WHERE title LIKE '%$searchTerm%'
-                    ORDER BY title";
+            // Requête de recherche dans la table films
+            $filmsSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
+            $filmsResult = $conn->query($filmsSql);
 
-            $result = $conn->query($sql);
+            // Requête de recherche dans la table series
+            $seriesSql = "SELECT * FROM series WHERE title LIKE '%$searchTerm%'";
+            $seriesResult = $conn->query($seriesSql);
 
-            if ($result->num_rows > 0) {
-                echo "<h2>Résultats de la recherche :</h2>";
+            // Requête de recherche dans la table livres
+            $livresSql = "SELECT * FROM livres WHERE title LIKE '%$searchTerm%'";
+            $livresResult = $conn->query($livresSql);
+
+            // Requête de recherche dans la table concerts
+            $concertsSql = "SELECT * FROM concerts WHERE artist LIKE '%$searchTerm%'";
+            $concertsResult = $conn->query($concertsSql);
+
+            // Requête de recherche dans la table documentaires
+            $documentairesSql = "SELECT * FROM documentaires WHERE title LIKE '%$searchTerm%'";
+            $documentairesResult = $conn->query($documentairesSql);
+
+            // Affichage des résultats
+            $foundResults = false;
+
+            // Résultats de la table films
+            if ($filmsResult->num_rows > 0) {
+                echo "<h2>Résultats de recherche - Films :</h2>";
                 echo "<ul>";
-                while ($row = $result->fetch_assoc()) {
+                while ($row = $filmsResult->fetch_assoc()) {
                     echo "<li>" . $row['title'] . "</li>";
                 }
                 echo "</ul>";
-            } else {
+                $foundResults = true;
+            }
+
+            // Résultats de la table series
+            if ($seriesResult->num_rows > 0) {
+                echo "<h2>Résultats de recherche - Séries :</h2>";
+                echo "<ul>";
+                while ($row = $seriesResult->fetch_assoc()) {
+                    echo "<li>" . $row['title'] . "</li>";
+                }
+                echo "</ul>";
+                $foundResults = true;
+            }
+
+            // Résultats de la table livres
+            if ($livresResult->num_rows > 0) {
+                echo "<h2>Résultats de recherche - Livres :</h2>";
+                echo "<ul>";
+                while ($row = $livresResult->fetch_assoc()) {
+                    echo "<li>" . $row['title'] . "</li>";
+                }
+                echo "</ul>";
+                $foundResults = true;
+            }
+
+            // Résultats de la table concerts
+            if ($concertsResult->num_rows > 0) {
+                echo "<h2>Résultats de recherche - Concerts :</h2>";
+                echo "<ul>";
+                while ($row = $concertsResult->fetch_assoc()) {
+                    echo "<li>" . $row['artist'] . "</li>";
+                }
+                echo "</ul>";
+                $foundResults = true;
+            }
+
+            // Résultats de la table documentaires
+            if ($documentairesResult->num_rows > 0) {
+                echo "<h2>Résultats de recherche - Documentaires :</h2>";
+                echo "<ul>";
+                while ($row = $documentairesResult->fetch_assoc()) {
+                    echo "<li>" . $row['title'] . "</li>";
+                }
+                echo "</ul>";
+                $foundResults = true;
+            }
+
+            if (!$foundResults) {
                 echo "<p>Aucun résultat trouvé pour la recherche : $searchTerm</p>";
             }
         }
