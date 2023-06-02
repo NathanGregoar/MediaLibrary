@@ -8,7 +8,7 @@
     <div class="container">
         <div class="navbar">
             <a href="../index.php">Accueil</a>
-            <a href="serie.php">Ajouter une Serie</a>
+            <a href="serie.php">Ajouter une Série</a>
             <a href="serie_search.php">Consulter les Séries</a>
         </div>
 
@@ -68,10 +68,10 @@
             <input type="checkbox" id="complete_season" name="complete_season">
 
             <label for="episode_count">Nombre d'épisodes :</label>
-            <input type="text" id="episode_count" name="episode_count">
+            <input type="number" id="episode_count" name="episode_count">
 
             <label for="season_number">Numéro de saison :</label>
-            <input type="text" id="season_number" name="season_number">
+            <input type="number" id="season_number" name="season_number">
 
             <label for="external_hard_drive">Numéro du disque dur externe :</label>
             <input type="text" id="external_hard_drive" name="external_hard_drive">
@@ -82,6 +82,7 @@
         <?php
         $connection->close();
         ?>
+
     </div>
 </body>
 </html>
