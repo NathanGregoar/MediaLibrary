@@ -54,29 +54,41 @@
         ?>
 
         <form method="POST">
-            <label for="title">Titre :</label>
-            <input type="text" id="title" name="title" required>
+            <div class="form-group">
+                <label for="title">Titre :</label>
+                <input type="text" id="title" name="title" required>
+            </div>
 
-            <label for="langue_serie">Langue de la série :</label>
-            <select id="langue_serie" name="langue_serie">
-                <option value="Français">Français</option>
-                <option value="Anglais">Anglais</option>
-                <option value="Coréen">Coréen</option>
-            </select>
+            <div class="form-group">
+                <label for="langue_serie">Langue de la série :</label>
+                <select id="langue_serie" name="langue_serie">
+                    <option value="Français">Français</option>
+                    <option value="Anglais">Anglais</option>
+                    <option value="Coréen">Coréen</option>
+                </select>
+            </div>
 
-            <label for="complete_season">Saison complète :</label>
-            <input type="checkbox" id="complete_season" name="complete_season">
+            <div class="form-group">
+                <label for="complete_season">Saison complète :</label>
+                <input type="checkbox" id="complete_season" name="complete_season">
+            </div>
 
-            <label for="episode_count">Nombre d'épisodes :</label>
-            <input type="number" id="episode_count" name="episode_count">
+            <div class="form-group">
+                <label for="episode_count">Nombre d'épisodes :</label>
+                <input type="number" id="episode_count" name="episode_count">
+            </div>
 
-            <label for="season_number">Numéro de saison :</label>
-            <input type="number" id="season_number" name="season_number">
+            <div class="form-group">
+                <label for="season_number">Numéro de saison :</label>
+                <input type="number" id="season_number" name="season_number">
+            </div>
 
-            <label for="external_hard_drive">Numéro du disque dur externe :</label>
-            <input type="text" id="external_hard_drive" name="external_hard_drive">
+            <div class="form-group">
+                <label for="external_hard_drive">Numéro du disque dur externe :</label>
+                <input type="text" id="external_hard_drive" name="external_hard_drive">
+            </div>
 
-            <input type="submit" value="Ajouter">
+            <input type="submit" value="Ajouter" class="btn-submit">
         </form>
 
         <?php
