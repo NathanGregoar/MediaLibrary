@@ -2,7 +2,7 @@
 <html>
 <head>
     <title>Rechercher des Séries</title>
-    <link rel="stylesheet" type="text/css" href="film.css">
+    <link rel="stylesheet" type="text/css" href="serie.css">
 </head>
 <body>
     <div class="container">
