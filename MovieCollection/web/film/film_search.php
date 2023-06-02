@@ -9,7 +9,7 @@
         <div class="navbar">
             <a href="../index.php">Accueil</a>
             <a href="film.php">Ajouter un Film</a>
-            <a href="search.php">Consulter les Films</a>
+            <a href="film_search.php">Consulter les Films</a>
         </div>
 
         <h1>Rechercher des Films</h1>

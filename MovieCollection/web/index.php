@@ -42,6 +42,9 @@
             <a href="documentaire/documentaire.php" class="section-link">
                 <span class="section-link-text">Documentaires</span>
             </a>
+            <a href="recherche_glob/search.php" class="section-link">
+                <span class="section-link-text">Recherche globale</span>
+            </a>
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
         </div>
     </div>
