@@ -10,8 +10,8 @@ services:
       MYSQL_USER: nathan
       MYSQL_PASSWORD: 444719
     volumes:
-      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql
-      - db_data:/var/lib/mysql  # Ajout du volume pour la persistance des données
+      - ./db/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+      - db_data:/var/lib/mysql
     healthcheck:
       test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
       interval: 5s
