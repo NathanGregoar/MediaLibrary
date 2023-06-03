@@ -14,7 +14,7 @@
 <html>
 <head>
     <title>Accueil - Movie Collection</title>
-    <link rel="stylesheet" type="text/css" href="accueil.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <div class="admin-section">
@@ -50,3 +50,4 @@
     </div>
 </body>
 </html>
+

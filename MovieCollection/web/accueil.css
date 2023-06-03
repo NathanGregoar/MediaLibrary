@@ -1,22 +1,50 @@
-body {
-    font-family: Arial, sans-serif;
+/* Reset des marges et paddings */
+* {
     margin: 0;
     padding: 0;
-    background-color: #ecf2f9;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+}
+
+.admin-section {
+    background-color: #333;
+    text-align: right;
+    padding: 10px;
+    width: 100%;
+}
+
+.admin-section::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.admin-form label {
+    color: #fff;
+    font-size: 14px;
+}
+
+.admin-form input[type="password"] {
+    padding: 5px;
+    border: 1px solid #ccc;
+}
+
+.admin-form input[type="submit"] {
+    background-color: #99ccff;
+    color: #fff;
+    padding: 5px 10px;
+    border: none;
+    cursor: pointer;
 }
 
 .container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
     height: 100vh;
-}
-
-.title {
-    font-size: 36px;
-    color: #333;
-    margin-bottom: 30px;
 }
 
 .section-links {
@@ -24,73 +52,46 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     max-width: 800px;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
 }
 
 .section-link {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(#86c1ff, #1c79c0);
-    color: white;
     text-decoration: none;
-    font-weight: bold;
-    font-size: 24px;
-    border-radius: 4px;
+    color: #007bff;
+    background-color: #f0f8ff;
     padding: 20px;
-    transition: background-color 0.3s ease;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .section-link:hover {
-    background: linear-gradient(#63a8ff, #1c79c0);
+    background-color: #cce5ff;
+    color: #333; /* Nouvelle couleur pour améliorer la visibilité */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
 .section-link-text {
-    margin: 0;
+    margin-left: 10px;
 }
 
-@media screen and (max-width: 600px) {
-    .title {
-        font-size: 28px;
+/* Media queries pour rendre la page responsive */
+@media screen and (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        height: auto;
+        padding: 20px;
     }
-}
-
-.admin-section {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    margin-bottom: 30px;
-    background-color: #8f8f8f46;
-    border-radius: 10px;
-    padding: 6px;
-}
-
-.admin-form {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-}
-
-.admin-form label {
-    margin-bottom: 10px;
-    font-weight: bold;
-}
-
-.admin-form input[type="password"] {
-    width: 300px;
-    padding: 10px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-
-.admin-form input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
+    
+    .section-links {
+        max-width: none;
+        width: 100%;
+    }
 }
 
 .alert {
