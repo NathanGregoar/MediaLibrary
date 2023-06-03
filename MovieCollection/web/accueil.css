@@ -2,11 +2,13 @@
 * {
     margin: 0;
     padding: 0;
+    box-sizing: border-box; /* Inclure les bordures et le padding dans le calcul de la taille des éléments */
 }
 
 body {
     font-family: Arial, sans-serif;
     background-color: #f4f4f4;
+    overflow: hidden; /* Empêcher le défilement */
 }
 
 .admin-section {
@@ -14,6 +16,7 @@ body {
     text-align: right;
     padding: 10px;
     width: 100%;
+    box-sizing: border-box;
 }
 
 .admin-section::after {
@@ -44,7 +47,10 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100vh;
+    min-height: 100vh; /* Utiliser min-height au lieu de height pour s'adapter à la taille du contenu */
+    overflow: auto; /* Activer le défilement si le contenu dépasse la taille de l'écran */
+    padding: 20px;
+    box-sizing: border-box;
 }
 
 .section-links {
@@ -85,9 +91,8 @@ body {
     .container {
         flex-direction: column;
         height: auto;
-        padding: 20px;
     }
-    
+
     .section-links {
         max-width: none;
         width: 100%;
