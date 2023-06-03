@@ -12,7 +12,6 @@ body {
 }
 
 .admin-section {
-    position: relative;
     background-color: #333;
     text-align: right;
     padding: 10px;
@@ -48,8 +47,8 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    overflow: auto;
+    min-height: 100vh; /* Utiliser min-height au lieu de height pour s'adapter à la taille du contenu */
+    overflow: auto; /* Activer le défilement si le contenu dépasse la taille de l'écran */
     padding: 20px;
     box-sizing: border-box;
 }
@@ -79,7 +78,7 @@ body {
 
 .section-link:hover {
     background-color: #cce5ff;
-    color: #333;
+    color: #333; /* Nouvelle couleur pour améliorer la visibilité */
     box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
 }
 
@@ -101,11 +100,8 @@ body {
 }
 
 .alert {
-    position: absolute;
-    top: 0;
-    left: 0;
     padding: 10px;
-    margin: 10px;
+    margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 4px;
 }
