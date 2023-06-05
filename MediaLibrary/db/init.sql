@@ -1,11 +1,11 @@
-CREATE DATABASE IF NOT EXISTS media_library;
+CREATE DATABASE IF NOT EXISTS movie_collection;
 
-USE media_library;
+USE movie_collection;
 
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   username VARCHAR(50) NOT NULL,
-  password VARCHAR(255) NOT NULL
+  password_hash VARCHAR(255) NOT NULL
 );
 
 CREATE TABLE IF NOT EXISTS films (
@@ -14,7 +14,6 @@ CREATE TABLE IF NOT EXISTS films (
   director VARCHAR(255) DEFAULT '/',
   release_year INT DEFAULT 0,
   external_hard_drive INT DEFAULT NULL
-  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS series (
@@ -25,7 +24,6 @@ CREATE TABLE IF NOT EXISTS series (
   episode_count INT DEFAULT 0,
   season_number INT DEFAULT 0,
   external_hard_drive INT DEFAULT NULL
-  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS livres (
@@ -36,14 +34,12 @@ CREATE TABLE IF NOT EXISTS livres (
   genre VARCHAR(255) DEFAULT NULL,
   tome_count INT DEFAULT 1,
   external_hard_drive INT DEFAULT NULL
-  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS concerts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   artist VARCHAR(255) NOT NULL,
   external_hard_drive INT DEFAULT NULL
-  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS documentaires (
@@ -51,8 +47,7 @@ CREATE TABLE IF NOT EXISTS documentaires (
   title VARCHAR(255) NOT NULL,
   topic VARCHAR(255) DEFAULT NULL,
   external_hard_drive INT DEFAULT NULL
-  created_by INT
 );
 
-GRANT ALL PRIVILEGES ON media_library.* TO 'nathan'@'%' IDENTIFIED BY '444719';
+GRANT ALL PRIVILEGES ON movie_collection.* TO 'nathan'@'%' IDENTIFIED BY '444719';
 FLUSH PRIVILEGES;
