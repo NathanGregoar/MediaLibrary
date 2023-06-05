@@ -1,15 +1,21 @@
 /* Styles pour les formulaires de connexion et d'inscription */
 form {
     width: 300px;
+    height: 300px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    background-color: #f2f2f2;
+    border-radius: 10px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
   
   label {
     margin-bottom: 10px;
+    font-size: 16px;
+    font-weight: bold;
   }
   
   input[type="text"],
@@ -17,6 +23,8 @@ form {
     padding: 10px;
     margin-bottom: 20px;
     width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
   }
   
   input[type="submit"] {
@@ -24,11 +32,13 @@ form {
     background-color: #4caf50;
     color: white;
     border: none;
+    border-radius: 4px;
     cursor: pointer;
   }
   
   p {
     text-align: center;
+    font-size: 14px;
   }
   
   a {
@@ -38,15 +48,24 @@ form {
   /* Styles spécifiques à la page de connexion */
   h1 {
     text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
   }
   
   /* Styles spécifiques à la page d'inscription */
   h1 {
     text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
   }
   
   /* Styles spécifiques à la page d'accueil */
   h1 {
     text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
   }
   
