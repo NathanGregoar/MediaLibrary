@@ -29,10 +29,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: accueil/index.php");
             exit();
         } else {
-            echo "Mot de passe incorrect.";
+            $errorMessage = "Mot de passe incorrect.";
         }
     } else {
-        echo "Cet utilisateur n'existe pas.";
+        $errorMessage = "Cet utilisateur n'existe pas.";
     }
 }
 ?>
@@ -40,10 +40,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Connexion</title>
-    <link rel="stylesheet" type="text/css" href="auth.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Connexion</h1>
+    <?php if (isset($errorMessage)) { ?>
+        <p class="error-message"><?php echo $errorMessage; ?></p>
+    <?php } ?>
     <form method="POST" action="">
         <label>Pseudo:</label>
         <input type="text" name="username" required><br>

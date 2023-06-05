@@ -22,7 +22,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $query = "SELECT * FROM users WHERE username = '$username'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
-        echo "Ce pseudo est déjà utilisé.";
+        $errorMessage = "Ce pseudo est déjà utilisé.";
     } else {
         // Insérer l'utilisateur dans la base de données
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             header("Location: accueil/index.php");
             exit();
         } else {
-            echo "Erreur lors de l'inscription : " . mysqli_error($conn);
+            $errorMessage = "Erreur lors de l'inscription : " . mysqli_error($conn);
         }
     }
 }
@@ -44,10 +44,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Inscription</title>
-    <link rel="stylesheet" type="text/css" href="auth.css">
+    <link rel="stylesheet" type="text/css" href="styles.css">
 </head>
 <body>
     <h1>Inscription</h1>
+    <?php if (isset($errorMessage)) { ?>
+        <p class="error-message"><?php echo $errorMessage; ?></p>
+    <?php } ?>
     <form method="POST" action="">
         <label>Pseudo:</label>
         <input type="text" name="username" required><br>
