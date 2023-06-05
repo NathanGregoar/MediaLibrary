@@ -1,20 +1,16 @@
 /* Styles pour les formulaires de connexion et d'inscription */
 form {
     width: 300px;
-    height: 300px;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    background-color: #f2f2f2;
-    border-radius: 10px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
   }
   
   label {
     margin-bottom: 10px;
-    font-size: 16px;
+    font-size: 18px;
     font-weight: bold;
   }
   
@@ -38,11 +34,12 @@ form {
   
   p {
     text-align: center;
-    font-size: 14px;
+    font-size: 16px;
   }
   
   a {
     color: #4caf50;
+    text-decoration: none;
   }
   
   /* Styles spécifiques à la page de connexion */
