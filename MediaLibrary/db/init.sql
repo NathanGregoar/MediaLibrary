@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS films (
   director VARCHAR(255) DEFAULT '/',
   release_year INT DEFAULT 0,
   external_hard_drive INT DEFAULT NULL
+  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS series (
@@ -24,6 +25,7 @@ CREATE TABLE IF NOT EXISTS series (
   episode_count INT DEFAULT 0,
   season_number INT DEFAULT 0,
   external_hard_drive INT DEFAULT NULL
+  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS livres (
@@ -34,12 +36,14 @@ CREATE TABLE IF NOT EXISTS livres (
   genre VARCHAR(255) DEFAULT NULL,
   tome_count INT DEFAULT 1,
   external_hard_drive INT DEFAULT NULL
+  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS concerts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   artist VARCHAR(255) NOT NULL,
   external_hard_drive INT DEFAULT NULL
+  created_by INT
 );
 
 CREATE TABLE IF NOT EXISTS documentaires (
@@ -47,6 +51,7 @@ CREATE TABLE IF NOT EXISTS documentaires (
   title VARCHAR(255) NOT NULL,
   topic VARCHAR(255) DEFAULT NULL,
   external_hard_drive INT DEFAULT NULL
+  created_by INT
 );
 
 GRANT ALL PRIVILEGES ON media_library.* TO 'nathan'@'%' IDENTIFIED BY '444719';
