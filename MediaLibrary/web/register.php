@@ -5,7 +5,7 @@ require('config.php');
 function checkLoggedIn() {
     session_start();
     if (isset($_SESSION['username'])) {
-        header("Location: accueil/index.php");
+        header("Location: index.php");
         exit();
     }
 }
@@ -27,13 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insérer l'utilisateur dans la base de données
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $insertQuery = "INSERT INTO users (username, password_hash) VALUES ('$username', '$hashedPassword')";
+        $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";
         if (mysqli_query($conn, $insertQuery)) {
-            // Connexion automatique après l'inscription
-            session_start();
-            $_SESSION['username'] = $username;
-            header("Location: accueil/index.php");
-            exit();
+            echo "Inscription réussie !";
         } else {
             echo "Erreur lors de l'inscription : " . mysqli_error($conn);
         }
@@ -44,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Inscription</title>
-    <link rel="stylesheet" type="text/css" href="auth.css">
 </head>
 <body>
     <h1>Inscription</h1>

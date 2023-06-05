@@ -14,3 +14,14 @@ checkLoggedIn();
 
 $username = $_SESSION['username'];
 ?>
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Accueil</title>
+</head>
+<body>
+    <h1>Bienvenue, <?php echo $username; ?> !</h1>
+    <p>Ceci est la page d'accueil.</p>
+    <a href="film.php">Aller à la page des films</a>
+</body>
+</html>

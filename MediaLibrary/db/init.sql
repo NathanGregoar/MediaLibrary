@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS movie_collection;
+CREATE DATABASE IF NOT EXISTS media_library;
 
-USE movie_collection;
+USE media_library;
 
 CREATE TABLE IF NOT EXISTS users (
   id INT AUTO_INCREMENT PRIMARY KEY,
@@ -49,5 +49,5 @@ CREATE TABLE IF NOT EXISTS documentaires (
   external_hard_drive INT DEFAULT NULL
 );
 
-GRANT ALL PRIVILEGES ON movie_collection.* TO 'nathan'@'%' IDENTIFIED BY '444719';
+GRANT ALL PRIVILEGES ON media_library.* TO 'nathan'@'%' IDENTIFIED BY '444719';
 FLUSH PRIVILEGES;
