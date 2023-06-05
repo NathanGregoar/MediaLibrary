@@ -1,7 +1,7 @@
 <?php
 $host = 'db';
-$username = 'nathan';
-$password = '444719';
+$username = 'root';
+$password = 'root';
 $dbName = 'media_library';
 
 // Connexion à la base de données
