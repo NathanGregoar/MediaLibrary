@@ -27,9 +27,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insérer l'utilisateur dans la base de données
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $insertQuery = "INSERT INTO users (username, password) VALUES ('$username', '$hashedPassword')";
+        $insertQuery = "INSERT INTO users (username, password_hash) VALUES ('$username', '$hashedPassword')";
         if (mysqli_query($conn, $insertQuery)) {
-            echo "Inscription réussie !";
+            // Connexion automatique après l'inscription
+            session_start();
+            $_SESSION['username'] = $username;
+            header("Location: index.php");
+            exit();
         } else {
             echo "Erreur lors de l'inscription : " . mysqli_error($conn);
         }
