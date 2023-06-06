@@ -1,5 +1,5 @@
 <?php
-require('config.php');
+require('utils/config.php');
 
 // Fonction de vérification si l'utilisateur est déjà connecté
 function checkLoggedIn() {

@@ -1,5 +1,5 @@
 <?php
-require_once '../auth.php';
+require_once '../utils/auth.php';
 
 // Vérification si le bouton de déconnexion a été cliqué
 if (isset($_POST['logout'])) {
