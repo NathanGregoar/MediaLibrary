@@ -32,7 +32,7 @@ $username = $_SESSION['username'];
     </header>
 
     <div class="container">
-        <h2 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h2>
+        <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <div class="section-links">
             <a href="film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
@@ -54,4 +54,5 @@ $username = $_SESSION['username'];
     </div>
 </body>
 </html>
+
 

@@ -13,9 +13,15 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: flex-start;
     height: 100vh;
     padding: 20px;
+}
+
+.welcome-message {
+    font-size: 48px;
+    margin-top: 0;
+    text-align: center;
 }
 
 .section-links {
