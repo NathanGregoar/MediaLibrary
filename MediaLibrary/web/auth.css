@@ -6,88 +6,77 @@ form {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-}
-
-label {
+  }
+  
+  label {
     margin-bottom: 10px;
     font-size: 18px;
     font-weight: bold;
-}
-
-input[type="text"],
-input[type="password"] {
+  }
+  
+  input[type="text"],
+  input[type="password"] {
     padding: 10px;
     margin-bottom: 20px;
     width: 100%;
     border: 1px solid #ccc;
     border-radius: 4px;
-}
-
-input[type="submit"] {
+  }
+  
+  input[type="submit"] {
     padding: 10px 20px;
     background-color: #4caf50;
     color: white;
     border: none;
     border-radius: 4px;
     cursor: pointer;
-}
-
-p {
+  }
+  
+  p {
     text-align: center;
     font-size: 16px;
-}
-
-a {
+  }
+  
+  a {
     color: #4caf50;
     text-decoration: none;
-}
-
-/* Styles pour les messages d'erreur et de succès */
-.message-container {
-    width: 300px;
-    margin: 0 auto;
-    text-align: center;
-    margin-bottom: 10px;
-}
-
-.error-message {
-    padding: 10px;
-    background-color: #ff9999;
+  }
+  
+  /* Styles pour les messages d'erreur */
+  .error-message {
     color: #ff0000;
     font-size: 14px;
-    border: 1px solid #ff0000;
-    border-radius: 4px;
-}
-
-.success-message {
-    padding: 10px;
-    background-color: #ccffcc;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles pour les messages de succès */
+  .success-message {
     color: #008000;
     font-size: 14px;
-    border: 1px solid #008000;
-    border-radius: 4px;
-}
-
-/* Styles spécifiques à la page de connexion */
-.login-form h1 {
+    margin-bottom: 10px;
+  }
+  
+  /* Styles spécifiques à la page de connexion */
+  h1 {
     text-align: center;
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
-}
-
-/* Styles spécifiques à la page d'inscription */
-.register-form h1 {
+  }
+  
+  /* Styles spécifiques à la page d'inscription */
+  h1 {
     text-align: center;
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
-}
-
-/* Styles spécifiques à la page d'accueil */
-.home-page h1 {
+  }
+  
+  /* Styles spécifiques à la page d'accueil */
+  h1 {
     text-align: center;
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
-}
+  }
+  

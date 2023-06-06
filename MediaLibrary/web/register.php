@@ -49,7 +49,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h1>Inscription</h1>
     <?php if (isset($errorMessage)) { ?>
-        <div class="error-message"><?php echo $errorMessage; ?></div>
+        <p class="error-message"><?php echo $errorMessage; ?></p>
     <?php } ?>
     <form method="POST" action="">
         <label>Pseudo:</label>
