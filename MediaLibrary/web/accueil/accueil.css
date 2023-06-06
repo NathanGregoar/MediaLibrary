@@ -7,7 +7,6 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ecf2f9;
-    overflow: hidden; /* Empêche le défilement vertical */
 }
 
 .container {
@@ -15,10 +14,9 @@ body {
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    min-height: 100vh;
     padding: 20px;
     box-sizing: border-box;
-    overflow: auto; /* Ajoute un défilement interne si nécessaire */
 }
 
 .welcome-message {
@@ -28,11 +26,12 @@ body {
 }
 
 .section-links {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
     gap: 20px;
     max-width: 800px;
-    margin-top: 20px; /* Ajoute un espace entre le message et les sections */
+    margin-top: 20px;
 }
 
 .section-link {
