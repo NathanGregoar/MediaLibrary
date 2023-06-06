@@ -21,16 +21,14 @@ $username = $_SESSION['username'];
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Accueil - MediaLibrary</title>
+    <title>Accueil</title>
     <link rel="stylesheet" type="text/css" href="accueil.css">
 </head>
 <body>
     <header>
-        <div class="container">
-            <form method="post" action="" class="logout-form">
-                <input type="submit" name="logout" value="Déconnexion">
-            </form>
-        </div>
+        <form method="post" action="" class="logout-form">
+            <input type="submit" name="logout" value="Déconnexion">
+        </form>
     </header>
 
     <div class="container">
@@ -56,3 +54,4 @@ $username = $_SESSION['username'];
     </div>
 </body>
 </html>
+
