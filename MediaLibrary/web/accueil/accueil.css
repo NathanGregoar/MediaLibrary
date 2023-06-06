@@ -29,6 +29,7 @@ body {
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     max-width: 800px;
+    margin: 20px auto;
 }
 
 .section-link {
