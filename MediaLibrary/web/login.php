@@ -23,7 +23,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
         $user = mysqli_fetch_assoc($result);
-        if (password_verify($password, $user['password'])) {
+        if (password_verify($password, $user['password_hash'])) {
             session_start();
             $_SESSION['username'] = $username;
             header("Location: index.php");
@@ -45,7 +45,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <body>
     <h1>Connexion</h1>
     <?php if (isset($errorMessage)) { ?>
-        <p class="error-message"><?php echo $errorMessage; ?></p>
+        <div class="error-message"><?php echo $errorMessage; ?></div>
     <?php } ?>
     <form method="POST" action="">
         <label>Pseudo:</label>
