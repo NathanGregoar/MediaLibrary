@@ -27,7 +27,6 @@ $username = $_SESSION['username'];
 <body>
     <header>
         <div class="container">
-            <h1 class="title">MediaLibrary</h1>
             <form method="post" action="" class="logout-form">
                 <input type="submit" name="logout" value="Déconnexion">
             </form>
@@ -36,7 +35,6 @@ $username = $_SESSION['username'];
 
     <div class="container">
         <h2 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h2>
-        <p class="description">Ceci est la page d'accueil.</p>
         <div class="section-links">
             <a href="film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
