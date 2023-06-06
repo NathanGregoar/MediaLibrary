@@ -42,6 +42,20 @@ form {
     text-decoration: none;
   }
   
+  /* Styles pour les messages d'erreur */
+  .error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles pour les messages de succès */
+  .success-message {
+    color: #008000;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
   /* Styles spécifiques à la page de connexion */
   h1 {
     text-align: center;
