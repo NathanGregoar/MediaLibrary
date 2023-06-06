@@ -4,7 +4,7 @@ session_start();
 // Fonction de vérification si l'utilisateur est connecté
 function checkLoggedIn() {
     if (!isset($_SESSION['username'])) {
-        header("Location: login.php");
+        header("Location: ../login.php");
         exit();
     }
 }
