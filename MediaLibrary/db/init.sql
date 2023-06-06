@@ -13,7 +13,9 @@ CREATE TABLE IF NOT EXISTS films (
   title VARCHAR(255) NOT NULL,
   director VARCHAR(255) DEFAULT '/',
   release_year INT DEFAULT 0,
-  external_hard_drive INT DEFAULT NULL
+  external_hard_drive INT DEFAULT NULL,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS series (
@@ -23,7 +25,9 @@ CREATE TABLE IF NOT EXISTS series (
   complete_season BOOLEAN DEFAULT 0,
   episode_count INT DEFAULT 0,
   season_number INT DEFAULT 0,
-  external_hard_drive INT DEFAULT NULL
+  external_hard_drive INT DEFAULT NULL,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS livres (
@@ -33,20 +37,26 @@ CREATE TABLE IF NOT EXISTS livres (
   publication_year INT DEFAULT 0,
   genre VARCHAR(255) DEFAULT NULL,
   tome_count INT DEFAULT 1,
-  external_hard_drive INT DEFAULT NULL
+  external_hard_drive INT DEFAULT NULL,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS concerts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   artist VARCHAR(255) NOT NULL,
-  external_hard_drive INT DEFAULT NULL
+  external_hard_drive INT DEFAULT NULL,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
 );
 
 CREATE TABLE IF NOT EXISTS documentaires (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
   topic VARCHAR(255) DEFAULT NULL,
-  external_hard_drive INT DEFAULT NULL
+  external_hard_drive INT DEFAULT NULL,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
 );
 
 GRANT ALL PRIVILEGES ON media_library.* TO 'nathan'@'%' IDENTIFIED BY '444719';
