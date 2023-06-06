@@ -5,7 +5,7 @@ require('config.php');
 function checkLoggedIn() {
     session_start();
     if (isset($_SESSION['username'])) {
-        header("Location: index.php");
+        header("Location: accueil/index.php");
         exit();
     }
 }
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (password_verify($password, $user['password'])) {
             session_start();
             $_SESSION['username'] = $username;
-            header("Location: index.php");
+            header("Location: accueil/index.php");
             exit();
         } else {
             $errorMessage = "Mot de passe incorrect.";

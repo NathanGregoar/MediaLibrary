@@ -5,7 +5,7 @@ require('config.php');
 function checkLoggedIn() {
     session_start();
     if (isset($_SESSION['username'])) {
-        header("Location: index.php");
+        header("Location: accueil/index.php");
         exit();
     }
 }
@@ -32,7 +32,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             // Connexion automatique après l'inscription
             session_start();
             $_SESSION['username'] = $username;
-            header("Location: index.php");
+            header("Location: accueil/index.php");
             exit();
         } else {
             $errorMessage = "Erreur lors de l'inscription : " . mysqli_error($conn);

@@ -22,6 +22,6 @@ $username = $_SESSION['username'];
 <body>
     <h1>Bienvenue, <?php echo $username; ?> !</h1>
     <p>Ceci est la page d'accueil.</p>
-    <a href="film.php">Aller à la page des films</a>
+    <a href="../film/film.php">Aller à la page des films</a>
 </body>
 </html>
