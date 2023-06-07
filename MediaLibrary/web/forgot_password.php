@@ -17,10 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $message = "Votre nouveau mot de passe est : " . $newPassword;
             $headers = "From: nathan.gregoar@yahoo.fr";
 
-            mail($email, $subject, $message, $headers);
+            // Utilisez les entêtes MIME pour spécifier le contenu HTML de l'e-mail
+            $headers .= "\r\nContent-Type: text/html; charset=UTF-8";
 
-            header("Location: login.php?reset=success");
-            exit();
+            // Utilisez la fonction mail() pour envoyer l'e-mail
+            $mailSent = mail($email, $subject, $message, $headers);
+
+            if ($mailSent) {
+                header("Location: login.php?reset=success");
+                exit();
+            } else {
+                $errorMessage = "Une erreur s'est produite lors de l'envoi de l'e-mail de réinitialisation.";
+            }
         } else {
             $errorMessage = "Erreur lors de la réinitialisation du mot de passe : " . mysqli_error($conn);
         }
@@ -38,7 +46,6 @@ function generateRandomPassword($length = 10) {
     return $password;
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
