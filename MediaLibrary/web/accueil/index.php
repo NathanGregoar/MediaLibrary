@@ -56,8 +56,8 @@ $email = $_SESSION['email'];
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
 
             <?php
-            // Vérification si l'utilisateur est "Nathan"
-            if ($username === "Nathan") {
+            // Vérification si l'utilisateur est "Nathan" et l'adresse e-mail est "nathan.gregoar@yahoo.fr"
+            if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
                 echo '<a href="../admin.php" class="section-link">';
                 echo '<span class="section-link-text">Section Admin</span>';
                 echo '</a>';
@@ -67,6 +67,3 @@ $email = $_SESSION['email'];
     </div>
 </body>
 </html>
-
-
-
