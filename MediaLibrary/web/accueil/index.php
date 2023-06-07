@@ -34,7 +34,6 @@ $email = $_SESSION['email'];
 
     <div class="container">
         <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
-        <p>Votre adresse e-mail : <?php echo $email; ?></p>
         <div class="section-links">
             <a href="../film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
@@ -58,7 +57,7 @@ $email = $_SESSION['email'];
 
             <?php
             // Vérification si l'utilisateur est "Nathan"
-            if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
+            if ($username === "Nathan") {
                 echo '<a href="../admin.php" class="section-link">';
                 echo '<span class="section-link-text">Section Admin</span>';
                 echo '</a>';
@@ -68,3 +67,6 @@ $email = $_SESSION['email'];
     </div>
 </body>
 </html>
+
+
+
