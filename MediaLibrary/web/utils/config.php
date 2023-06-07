@@ -5,7 +5,7 @@ $password = '444719';
 $dbName = 'media_library';
 
 // Connexion à la base de données
-$conn = mysqli_connect($host, $username, $password, $dbName);
+$conn = mysqli_connect($host, $username, $password_hash, $dbName);
 
 // Vérification de la connexion
 if (!$conn) {
