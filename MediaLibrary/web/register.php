@@ -65,6 +65,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         <input type="submit" value="S'inscrire">
     </form>
-    <p><a href="login.php">Retour à la page de connexion</a></p>
+    <p>Déjà inscrit ? <a href="login.php">Se connecter</a></p>
 </body>
 </html>
