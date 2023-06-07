@@ -38,7 +38,7 @@ require_once '../utils/auth.php';
             $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : 'NULL';
 
             // Récupérer l'ID de l'utilisateur connecté à partir des informations de session
-            $loggedInUserId = $_SESSION['user_id'];
+            $loggedInUserId = getLoggedInUserId();
             echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
 
             // Vérifier les doublons
@@ -48,14 +48,18 @@ require_once '../utils/auth.php';
             if ($duplicateResult->num_rows > 0) {
                 echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
-                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES ('$title', $director, $releaseYear, $externalHardDrive, $loggedInUserId)";
+                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
+                $stmt = $connection->prepare($insertSql);
+                $stmt->bind_param("ssiii", $title, $director, $releaseYear, $externalHardDrive, $loggedInUserId);
 
-                if ($connection->query($insertSql) === TRUE) {
+                if ($stmt->execute()) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
                     echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
                 } else {
-                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $stmt->error . '</div>';
                 }
+
+                $stmt->close();
             }
         }
         ?>
@@ -79,6 +83,7 @@ require_once '../utils/auth.php';
         <?php
         $connection->close();
         ?>
+
     </div>
 </body>
 </html>
