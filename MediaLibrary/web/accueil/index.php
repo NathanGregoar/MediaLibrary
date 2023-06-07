@@ -34,7 +34,7 @@ $username = $_SESSION['username'];
     <div class="container">
         <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <div class="section-links">
-            <a href="film/film.php" class="section-link">
+            <a href="../film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
             </a>
             <a href="serie/serie.php" class="section-link">
