@@ -35,7 +35,7 @@ require_once '../utils/auth.php';
             $title = $connection->real_escape_string($_POST['title']);
             $director = $_POST['director'] != '' ? "'" . $connection->real_escape_string($_POST['director']) . "'" : 'NULL';
             $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : 'NULL';
-            $externalHardDrive = $_POST['external_hard_drive'] != '' ? "'" . $connection->real_escape_string($_POST['external_hard_drive']) . "'" : 'NULL';
+            $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : null;
 
             // Obtenir l'ID de l'utilisateur connecté
             $loggedInUserId = getLoggedInUserId();
