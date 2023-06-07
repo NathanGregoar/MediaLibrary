@@ -22,7 +22,7 @@ $username = $_SESSION['username'];
 <html>
 <head>
     <title>Accueil</title>
-    <link rel="stylesheet" type="text/css" href="accueil.css">
+    <link rel="stylesheet" type="text/css" href="./accueil.css">
 </head>
 <body>
     <header>

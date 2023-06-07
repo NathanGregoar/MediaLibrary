@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 <html>
 <head>
     <title>Inscription</title>
-    <link rel="stylesheet" type="text/css" href="auth.css">
+    <link rel="stylesheet" type="text/css" href="./auth.css">
 </head>
 <body>
     <h1>Inscription</h1>
