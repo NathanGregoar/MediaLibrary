@@ -48,7 +48,7 @@ require_once '../utils/auth.php';
                 echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
                 // Préparer la requête d'insertion
-                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
+                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES ('$title', $director, $releaseYear, $externalHardDrive, " . ($loggedInUserId !== null ? $loggedInUserId : "NULL") . ")";
 
                 // Préparer la déclaration
                 $stmt = $connection->prepare($insertSql);

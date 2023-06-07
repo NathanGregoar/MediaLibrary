@@ -15,10 +15,13 @@ checkLoggedIn();
 $username = $_SESSION['username'];
 
 function getLoggedInUserId() {
-    // Insérez ici votre logique pour obtenir l'ID de l'utilisateur connecté
-    // Par exemple, vous pouvez utiliser une session ou un système d'authentification
-
-    // Retourner l'ID de l'utilisateur connecté
-    return $_SESSION['user_id'];
+    // Vérifiez si l'ID de l'utilisateur connecté est stocké dans la session
+    if (isset($_SESSION['user_id'])) {
+        // Retournez l'ID de l'utilisateur connecté
+        return $_SESSION['user_id'];
+    } else {
+        // Si l'ID de l'utilisateur n'est pas disponible, retournez null
+        return null;
+    }
 }
 ?>
