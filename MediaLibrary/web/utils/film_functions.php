@@ -1,8 +1,8 @@
 <?php
 // Fonctions pour la gestion des films
 
-function getAllFilms($connection) {
-    $allMoviesSql = "SELECT * FROM films";
+function getAllFilms($connection, $userId) {
+    $allMoviesSql = "SELECT * FROM films WHERE user_id = $userId";
     $allMoviesResult = $connection->query($allMoviesSql);
 
     $films = [];
@@ -13,8 +13,8 @@ function getAllFilms($connection) {
     return $films;
 }
 
-function searchFilms($connection, $searchTerm) {
-    $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
+function searchFilms($connection, $searchTerm, $userId) {
+    $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND user_id = $userId";
     $searchResult = $connection->query($searchSql);
 
     $films = [];
