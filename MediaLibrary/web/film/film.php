@@ -29,7 +29,7 @@ require_once '../utils/config.php';
         // Ajout d'un film
         if (isset($_POST['title'])) {
             $title = $connection->real_escape_string($_POST['title']);
-            $director = $_POST['director'] != '' ? $connection->real_escape_string($_POST['director']) : 'NULL';
+            $director = $_POST['director'] != '' ? "'" . $connection->real_escape_string($_POST['director']) . "'" : 'NULL';
             $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : 'NULL';
             $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : 'NULL';
 
