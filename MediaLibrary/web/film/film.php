@@ -39,7 +39,6 @@ require_once '../utils/auth.php';
 
             // Récupérer l'ID de l'utilisateur connecté à partir des informations de session
             $loggedInUserId = getLoggedInUserId();
-            echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
 
             // Vérifier les doublons
             $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = $director AND release_year = $releaseYear";
@@ -54,7 +53,6 @@ require_once '../utils/auth.php';
 
                 if ($insertStmt->execute()) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
-                    echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
                 } else {
                     echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
                 }
