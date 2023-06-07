@@ -39,6 +39,7 @@ require_once '../utils/auth.php';
 
             // Récupérer l'ID de l'utilisateur connecté à partir des informations de session
             $loggedInUserId = $_SESSION['user_id'];
+            echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
 
             // Vérifier les doublons
             $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = $director AND release_year = $releaseYear";
