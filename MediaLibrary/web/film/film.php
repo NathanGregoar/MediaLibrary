@@ -49,17 +49,15 @@ require_once '../utils/auth.php';
                 echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
                 $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
-                $stmt = $connection->prepare($insertSql);
-                $stmt->bind_param("ssiii", $title, $director, $releaseYear, $externalHardDrive, $loggedInUserId);
+                $insertStmt = $connection->prepare($insertSql);
+                $insertStmt->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUserId);
 
-                if ($stmt->execute()) {
+                if ($insertStmt->execute()) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
                     echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
                 } else {
-                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $stmt->error . '</div>';
+                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
                 }
-
-                $stmt->close();
             }
         }
         ?>
@@ -83,7 +81,6 @@ require_once '../utils/auth.php';
         <?php
         $connection->close();
         ?>
-
     </div>
 </body>
 </html>
