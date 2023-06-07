@@ -16,6 +16,7 @@ if (isset($_POST['logout'])) {
 checkLoggedIn();
 
 $username = $_SESSION['username'];
+$email = $_SESSION['email'];
 ?>
 
 <!DOCTYPE html>
@@ -55,8 +56,8 @@ $username = $_SESSION['username'];
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
 
             <?php
-            // Vérification si l'utilisateur est "Nathan"
-            if ($username === "Nathan") {
+            // Vérification si l'adresse e-mail est "nathan.gregoar@yahoo.fr"
+            if ($email === "nathan.gregoar@yahoo.fr") {
                 echo '<a href="../admin.php" class="section-link">';
                 echo '<span class="section-link-text">Section Admin</span>';
                 echo '</a>';
