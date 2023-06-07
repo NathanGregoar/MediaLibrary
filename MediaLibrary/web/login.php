@@ -36,6 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,6 +48,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php if (isset($errorMessage)) { ?>
         <p class="error-message"><?php echo $errorMessage; ?></p>
     <?php } ?>
+    <?php if (isset($_GET['reset']) && $_GET['reset'] === 'success') { ?>
+        <p class="success-message">Votre mot de passe a été réinitialisé avec succès. Veuillez vérifier votre adresse e-mail.</p>
+    <?php } ?>
     <form method="POST" action="">
         <label>Pseudo:</label>
         <input type="text" name="username" required><br>
@@ -57,5 +61,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <input type="submit" value="Se connecter">
     </form>
     <p>Pas encore inscrit ? <a href="register.php">S'inscrire</a></p>
+    <p>Mot de passe oublié ? <a href="forgot_password.php">Réinitialiser le mot de passe</a></p>
 </body>
 </html>
