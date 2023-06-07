@@ -35,10 +35,10 @@ require_once '../utils/auth.php';
             $title = $connection->real_escape_string($_POST['title']);
             $director = $_POST['director'] != '' ? "'" . $connection->real_escape_string($_POST['director']) . "'" : 'NULL';
             $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : 'NULL';
-            $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : null;
+            $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : 'NULL';
 
-            // Obtenir l'ID de l'utilisateur connecté
-            $loggedInUserId = getLoggedInUserId();
+            // Récupérer l'ID de l'utilisateur connecté à partir des informations de session
+            $loggedInUserId = $_SESSION['user_id'];
 
             // Vérifier les doublons
             $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = $director AND release_year = $releaseYear";
@@ -47,17 +47,14 @@ require_once '../utils/auth.php';
             if ($duplicateResult->num_rows > 0) {
                 echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
-                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
-                $insertStatement = $connection->prepare($insertSql);
-                $insertStatement->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUserId);
+                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES ('$title', $director, $releaseYear, $externalHardDrive, $loggedInUserId)";
 
-                if ($insertStatement->execute()) {
+                if ($connection->query($insertSql) === TRUE) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
+                    echo '<div class="alert">ID de l\'utilisateur connecté : ' . $loggedInUserId . '</div>';
                 } else {
                     echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
                 }
-
-                $insertStatement->close();
             }
         }
         ?>
