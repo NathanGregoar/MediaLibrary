@@ -71,12 +71,12 @@ $loggedInUserId = getLoggedInUserId();
         }
 
         // Affichage de tous les films ajoutés par l'utilisateur connecté
-        $allMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUserId";
-        $allMoviesResult = $connection->query($allMoviesSql);
+        $userMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUserId";
+        $userMoviesResult = $connection->query($userMoviesSql);
 
-        echo '<h2>Liste complète des films :</h2>';
+        echo '<h2>Vos films :</h2>';
         echo '<div class="movies-list">';
-        while ($row = $allMoviesResult->fetch_assoc()) {
+        while ($row = $userMoviesResult->fetch_assoc()) {
             // Affichage des détails du film...
         }
         echo '</div>'; // .movies-list
