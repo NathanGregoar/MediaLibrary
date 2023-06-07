@@ -15,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (mysqli_query($conn, $updateQuery)) {
             $subject = "Réinitialisation du mot de passe";
             $message = "Votre nouveau mot de passe est : " . $newPassword;
-            $headers = "From: your_email@example.com";
+            $headers = "From: nathan.gregoar@yahoo.fr";
 
             mail($email, $subject, $message, $headers);
 
