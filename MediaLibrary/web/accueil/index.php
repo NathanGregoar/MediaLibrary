@@ -1,23 +1,3 @@
-<?php
-require_once '../utils/auth.php';
-
-// Vérification si le bouton de déconnexion a été cliqué
-if (isset($_POST['logout'])) {
-    // Suppression de toutes les variables de session
-    session_unset();
-    // Destruction de la session
-    session_destroy();
-    // Redirection vers la page de connexion
-    header("Location: ../login.php");
-    exit();
-}
-
-// Vérification si l'utilisateur est connecté
-checkLoggedIn();
-
-$username = $_SESSION['username'];
-?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,9 +33,16 @@ $username = $_SESSION['username'];
                 <span class="section-link-text">Section Manhwa / Manga</span>
             </a>
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
+
+            <?php
+            // Vérification si l'utilisateur est "Nathan"
+            if ($username === "Nathan") {
+                echo '<a href="../admin.php" class="section-link">';
+                echo '<span class="section-link-text">Section Admin</span>';
+                echo '</a>';
+            }
+            ?>
         </div>
     </div>
 </body>
 </html>
-
-
