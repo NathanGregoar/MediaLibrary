@@ -2,6 +2,25 @@
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
 require_once '../utils/film_functions.php';
+
+// Récupérer l'identifiant de l'utilisateur connecté
+$userId = getLoggedInUserId();
+
+// Vérifier si l'identifiant de l'utilisateur est valide
+if ($userId === null) {
+    // Gérer le cas où l'identifiant de l'utilisateur n'est pas disponible
+    echo 'Erreur : Impossible de récupérer l\'identifiant de l\'utilisateur connecté.';
+    exit;
+}
+
+// Vérifier si une recherche a été effectuée
+if (isset($_GET['search'])) {
+    $searchTerm = $_GET['search'];
+    $films = searchFilms($conn, $searchTerm, $userId);
+} else {
+    // Récupérer tous les films de l'utilisateur connecté
+    $films = getAllFilms($conn, $userId);
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,30 +47,42 @@ require_once '../utils/film_functions.php';
         </div>
 
         <?php
-        $connection = mysqli_connect($host, $username, $password, $dbName);
+        if (count($films) > 0) {
+            echo '<h2>Liste complète des films :</h2>';
+            echo '<div class="movies-list">';
+            foreach ($films as $film) {
+                $id = $film['id'];
+                $title = $film['title'];
+                $director = $film['director'];
+                $releaseYear = $film['release_year'];
+                $externalHardDrive = $film['external_hard_drive'];
 
-        if (!$connection) {
-            die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
-        }
+                // Appel à l'API OMDB pour récupérer les informations du film
+                $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+                $response = file_get_contents($apiUrl);
+                $data = json_decode($response, true);
 
-        // Suppression d'un film
-        if (isset($_POST['delete'])) {
-            $deleteId = $connection->real_escape_string($_POST['delete']);
-            deleteFilm($connection, $deleteId);
-        }
+                // Vérifier si la requête a réussi et si l'affiche est disponible
+                if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
+                    $poster = $data['Poster'];
+                } else {
+                    $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
+                }
 
-        // Affichage des films correspondant à la recherche
-        if (isset($_GET['search'])) {
-            $searchTerm = $connection->real_escape_string($_GET['search']);
-            $films = searchFilms($connection, $searchTerm);
-            displayFilms($films);
+                echo '<div class="movie-item">';
+                echo '<img src="' . $poster . '" alt="' . $title . '">';
+                echo '<div class="movie-details">';
+                echo '<h3>' . $title . '</h3>';
+                echo '<p><strong>Réalisateur :</strong> ' . $director . '</p>';
+                echo '<p><strong>Année de sortie :</strong> ' . $releaseYear . '</p>';
+                echo '<p><strong>Disque dur externe :</strong> ' . $externalHardDrive . '</p>';
+                echo '</div>';
+                echo '</div>';
+            }
+            echo '</div>';
         } else {
-            // Affichage de tous les films
-            $films = getAllFilms($connection);
-            displayFilms($films);
+            echo '<p>Aucun film trouvé.</p>';
         }
-
-        $connection->close();
         ?>
     </div>
 </body>
