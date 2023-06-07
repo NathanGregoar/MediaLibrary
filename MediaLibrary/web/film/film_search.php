@@ -1,13 +1,6 @@
 <?php
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
-
-// Vérification si l'utilisateur est connecté
-checkLoggedIn();
-
-// Récupérer l'ID de l'utilisateur connecté
-$loggedInUserId = getLoggedInUserId();
-
 ?>
 
 <!DOCTYPE html>
@@ -33,6 +26,7 @@ $loggedInUserId = getLoggedInUserId();
             </form>
         </div>
 
+
         <?php
         $connection = mysqli_connect($host, $username, $password, $dbName);
 
@@ -43,7 +37,7 @@ $loggedInUserId = getLoggedInUserId();
         // Suppression d'un film
         if (isset($_POST['delete'])) {
             $deleteId = $connection->real_escape_string($_POST['delete']);
-            $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = $loggedInUserId";
+            $deleteSql = "DELETE FROM films WHERE id = $deleteId";
 
             if ($connection->query($deleteSql) === TRUE) {
                 echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
@@ -55,14 +49,46 @@ $loggedInUserId = getLoggedInUserId();
         // Affichage des films correspondant à la recherche
         if (isset($_GET['search'])) {
             $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = $loggedInUserId";
+            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
                 echo '<h2>Résultats de la recherche :</h2>';
                 echo '<div class="movies-list">';
                 while ($row = $searchResult->fetch_assoc()) {
-                    // Affichage des détails du film...
+                    $id = $row['id'];
+                    $title = $row['title'];
+                    $director = $row['director'];
+                    $releaseYear = $row['release_year'];
+                    $externalHardDrive = $row['external_hard_drive'];
+
+                    // Appel à l'API OMDB pour récupérer les informations du film
+                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+                    $response = file_get_contents($apiUrl);
+                    $data = json_decode($response, true);
+
+                    // Vérifier si la requête a réussi et si l'affiche est disponible
+                    if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
+                        $poster = $data['Poster'];
+                    } else {
+                        $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
+                    }
+
+                    echo '<div class="movie-item">';
+                    echo '<img src="' . $poster . '" alt="' . $title . '">';
+                    echo '<div class="movie-details">';
+                    echo '<h3>' . $title . '</h3>';
+                    echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
+                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+                    echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
+
+                    echo '<form method="POST" style="display:inline">';
+                    echo '<input type="hidden" name="delete" value="' . $id . '">';
+                    echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                    echo '</form>';
+
+                    echo '</div>'; // .movie-details
+                    echo '</div>'; // .movie-item
                 }
                 echo '</div>'; // .movies-list
             } else {
@@ -70,14 +96,46 @@ $loggedInUserId = getLoggedInUserId();
             }
         }
 
-        // Affichage de tous les films ajoutés par l'utilisateur connecté
-        $userMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUserId";
-        $userMoviesResult = $connection->query($userMoviesSql);
+        // Affichage de tous les films
+        $allMoviesSql = "SELECT * FROM films";
+        $allMoviesResult = $connection->query($allMoviesSql);
 
-        echo '<h2>Vos films :</h2>';
+        echo '<h2>Liste complète des films :</h2>';
         echo '<div class="movies-list">';
-        while ($row = $userMoviesResult->fetch_assoc()) {
-            // Affichage des détails du film...
+        while ($row = $allMoviesResult->fetch_assoc()) {
+            $id = $row['id'];
+            $title = $row['title'];
+            $director = $row['director'];
+            $releaseYear = $row['release_year'];
+            $externalHardDrive = $row['external_hard_drive'];
+
+            // Appel à l'API OMDB pour récupérer les informations du film
+            $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+            $response = file_get_contents($apiUrl);
+            $data = json_decode($response, true);
+
+            // Vérifier si la requête a réussi et si l'affiche est disponible
+            if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
+                $poster = $data['Poster'];
+            } else {
+                $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
+            }
+
+            echo '<div class="movie-item">';
+            echo '<img src="' . $poster . '" alt="' . $title . '">';
+            echo '<div class="movie-details">';
+            echo '<h3>' . $title . '</h3>';
+            echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
+            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
+
+            echo '<form method="POST" style="display:inline">';
+            echo '<input type="hidden" name="delete" value="' . $id . '">';
+            echo '<input type="submit" value="Supprimer" class="delete-btn">';
+            echo '</form>';
+
+            echo '</div>'; // .movie-details
+            echo '</div>'; // .movie-item
         }
         echo '</div>'; // .movies-list
 
