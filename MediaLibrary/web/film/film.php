@@ -47,15 +47,24 @@ require_once '../utils/auth.php';
             if ($duplicateResult->num_rows > 0) {
                 echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
-                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES ('$title', $director, $releaseYear, $externalHardDrive, ";
-                $insertSql .= $loggedInUserId !== null ? $loggedInUserId : "NULL";
-                $insertSql .= ")";
+                // Préparer la requête d'insertion
+                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
 
-                if ($connection->query($insertSql) === TRUE) {
+                // Préparer la déclaration
+                $stmt = $connection->prepare($insertSql);
+
+                // Lier les paramètres
+                $stmt->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUserId);
+
+                // Exécuter la requête
+                if ($stmt->execute()) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
                 } else {
-                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $stmt->error . '</div>';
                 }
+
+                // Fermer la déclaration
+                $stmt->close();
             }
         }
         ?>

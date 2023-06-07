@@ -19,7 +19,6 @@ function getLoggedInUserId() {
     // Par exemple, vous pouvez utiliser une session ou un système d'authentification
 
     // Retourner l'ID de l'utilisateur connecté
-    return $loggedInUserId;
+    return $_SESSION['user_id'];
 }
-
 ?>
