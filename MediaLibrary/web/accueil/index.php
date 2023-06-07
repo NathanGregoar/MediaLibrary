@@ -49,6 +49,9 @@ $username = $_SESSION['username'];
             <a href="documentaire/documentaire.php" class="section-link">
                 <span class="section-link-text">Section Documentaires</span>
             </a>
+            <a href="documentaire/documentaire.php" class="section-link">
+                <span class="section-link-text">Section Manhwa / Manga</span>
+            </a>
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
         </div>
     </div>
