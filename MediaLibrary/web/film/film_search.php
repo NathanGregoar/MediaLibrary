@@ -1,6 +1,13 @@
 <?php
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
+
+// Vérification si l'utilisateur est connecté
+checkLoggedIn();
+
+// Récupérer l'ID de l'utilisateur connecté
+$loggedInUserId = getLoggedInUserId();
+
 ?>
 
 <!DOCTYPE html>
@@ -37,7 +44,7 @@ require_once '../utils/config.php';
         // Suppression d'un film
         if (isset($_POST['delete'])) {
             $deleteId = $connection->real_escape_string($_POST['delete']);
-            $deleteSql = "DELETE FROM films WHERE id = $deleteId";
+            $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = $loggedInUserId";
 
             if ($connection->query($deleteSql) === TRUE) {
                 echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
@@ -49,7 +56,7 @@ require_once '../utils/config.php';
         // Affichage des films correspondant à la recherche
         if (isset($_GET['search'])) {
             $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
+            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = $loggedInUserId";
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
@@ -96,13 +103,13 @@ require_once '../utils/config.php';
             }
         }
 
-        // Affichage de tous les films
-        $allMoviesSql = "SELECT * FROM films";
-        $allMoviesResult = $connection->query($allMoviesSql);
+        // Affichage de tous les films ajoutés par l'utilisateur connecté
+        $userMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUserId";
+        $userMoviesResult = $connection->query($userMoviesSql);
 
-        echo '<h2>Liste complète des films :</h2>';
+        echo '<h2>Vos films :</h2>';
         echo '<div class="movies-list">';
-        while ($row = $allMoviesResult->fetch_assoc()) {
+        while ($row = $userMoviesResult->fetch_assoc()) {
             $id = $row['id'];
             $title = $row['title'];
             $director = $row['director'];
