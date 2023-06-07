@@ -13,4 +13,13 @@ function checkLoggedIn() {
 checkLoggedIn();
 
 $username = $_SESSION['username'];
+
+function getLoggedInUserId() {
+    // Insérez ici votre logique pour obtenir l'ID de l'utilisateur connecté
+    // Par exemple, vous pouvez utiliser une session ou un système d'authentification
+
+    // Retourner l'ID de l'utilisateur connecté
+    return $loggedInUserId;
+}
+
 ?>
