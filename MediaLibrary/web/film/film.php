@@ -1,5 +1,6 @@
 <?php
 require_once '../utils/auth.php';
+require_once '../utils/config.php';
 ?>
 
 <!DOCTYPE html>
@@ -11,23 +12,18 @@ require_once '../utils/auth.php';
 <body>
     <div class="container">
         <div class="navbar">
-            <a href="../index.php">Accueil</a>
-            <a href="film.php">Ajouter un Film</a>
-            <a href="search.php">Consulter les Films</a>
+            <a href="../accueil/index.php">Accueil</a>
+            <a href="./film.php">Ajouter un Film</a>
+            <a href="./film_search.php">Consulter les Films</a>
         </div>
 
         <h1>Ajouter un Film</h1>
 
         <?php
-        $host = 'db';
-        $user = 'nathan';
-        $password = '444719';
-        $database = 'media_library';
+        $connection = mysqli_connect($host, $username, $password, $dbName);
 
-        $connection = new mysqli($host, $user, $password, $database);
-
-        if ($connection->connect_error) {
-            die('Erreur de connexion : ' . $connection->connect_error);
+        if (!$connection) {
+            die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
         }
 
         // Ajout d'un film
