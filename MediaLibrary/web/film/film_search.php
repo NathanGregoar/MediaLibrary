@@ -7,7 +7,7 @@ require_once '../utils/config.php';
 <html>
 <head>
     <title>Rechercher des Films</title>
-    <link rel="stylesheet" type="text/css" href="film.css">
+    <link rel="stylesheet" type="text/css" href="./film.css">
 </head>
 <body>
     <div class="container">
