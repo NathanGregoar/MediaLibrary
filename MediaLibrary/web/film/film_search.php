@@ -1,6 +1,13 @@
 <?php
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
+
+// Vérification si l'utilisateur est connecté
+checkLoggedIn();
+
+// Récupérer l'ID de l'utilisateur connecté
+$loggedInUserId = getLoggedInUserId();
+
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +33,6 @@ require_once '../utils/config.php';
             </form>
         </div>
 
-
         <?php
         $connection = mysqli_connect($host, $username, $password, $dbName);
 
@@ -37,7 +43,7 @@ require_once '../utils/config.php';
         // Suppression d'un film
         if (isset($_POST['delete'])) {
             $deleteId = $connection->real_escape_string($_POST['delete']);
-            $deleteSql = "DELETE FROM films WHERE id = $deleteId";
+            $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = $loggedInUserId";
 
             if ($connection->query($deleteSql) === TRUE) {
                 echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
@@ -49,46 +55,14 @@ require_once '../utils/config.php';
         // Affichage des films correspondant à la recherche
         if (isset($_GET['search'])) {
             $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%'";
+            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = $loggedInUserId";
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
                 echo '<h2>Résultats de la recherche :</h2>';
                 echo '<div class="movies-list">';
                 while ($row = $searchResult->fetch_assoc()) {
-                    $id = $row['id'];
-                    $title = $row['title'];
-                    $director = $row['director'];
-                    $releaseYear = $row['release_year'];
-                    $externalHardDrive = $row['external_hard_drive'];
-
-                    // Appel à l'API OMDB pour récupérer les informations du film
-                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-                    $response = file_get_contents($apiUrl);
-                    $data = json_decode($response, true);
-
-                    // Vérifier si la requête a réussi et si l'affiche est disponible
-                    if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                        $poster = $data['Poster'];
-                    } else {
-                        $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-                    }
-
-                    echo '<div class="movie-item">';
-                    echo '<img src="' . $poster . '" alt="' . $title . '">';
-                    echo '<div class="movie-details">';
-                    echo '<h3>' . $title . '</h3>';
-                    echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
-                    echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
-                    echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
-
-                    echo '<form method="POST" style="display:inline">';
-                    echo '<input type="hidden" name="delete" value="' . $id . '">';
-                    echo '<input type="submit" value="Supprimer" class="delete-btn">';
-                    echo '</form>';
-
-                    echo '</div>'; // .movie-details
-                    echo '</div>'; // .movie-item
+                    // Affichage des détails du film...
                 }
                 echo '</div>'; // .movies-list
             } else {
@@ -96,46 +70,14 @@ require_once '../utils/config.php';
             }
         }
 
-        // Affichage de tous les films
-        $allMoviesSql = "SELECT * FROM films";
+        // Affichage de tous les films ajoutés par l'utilisateur connecté
+        $allMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUserId";
         $allMoviesResult = $connection->query($allMoviesSql);
 
         echo '<h2>Liste complète des films :</h2>';
         echo '<div class="movies-list">';
         while ($row = $allMoviesResult->fetch_assoc()) {
-            $id = $row['id'];
-            $title = $row['title'];
-            $director = $row['director'];
-            $releaseYear = $row['release_year'];
-            $externalHardDrive = $row['external_hard_drive'];
-
-            // Appel à l'API OMDB pour récupérer les informations du film
-            $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-            $response = file_get_contents($apiUrl);
-            $data = json_decode($response, true);
-
-            // Vérifier si la requête a réussi et si l'affiche est disponible
-            if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                $poster = $data['Poster'];
-            } else {
-                $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-            }
-
-            echo '<div class="movie-item">';
-            echo '<img src="' . $poster . '" alt="' . $title . '">';
-            echo '<div class="movie-details">';
-            echo '<h3>' . $title . '</h3>';
-            echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
-            echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
-            echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
-
-            echo '<form method="POST" style="display:inline">';
-            echo '<input type="hidden" name="delete" value="' . $id . '">';
-            echo '<input type="submit" value="Supprimer" class="delete-btn">';
-            echo '</form>';
-
-            echo '</div>'; // .movie-details
-            echo '</div>'; // .movie-item
+            // Affichage des détails du film...
         }
         echo '</div>'; // .movies-list
 
