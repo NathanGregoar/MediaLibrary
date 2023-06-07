@@ -1,11 +1,22 @@
 <?php
 require('utils/config.php');
 
+// Fonction de vérification si l'utilisateur est déjà connecté
+function checkLoggedIn() {
+    session_start();
+    if (isset($_SESSION['username'])) {
+        header("Location: accueil/index.php");
+        exit();
+    }
+}
+
+// Vérification si l'utilisateur est déjà connecté
+checkLoggedIn();
+
 // Traitement de l'inscription
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $_POST['username'];
     $password = $_POST['password'];
-    $email = $_POST['email'];
 
     // Vérifier si l'utilisateur existe déjà dans la base de données
     $query = "SELECT * FROM users WHERE username = '$username'";
@@ -16,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Insérer l'utilisateur dans la base de données
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
 
-        $insertQuery = "INSERT INTO users (username, password_hash, email) VALUES ('$username', '$hashedPassword', '$email')";
+        $insertQuery = "INSERT INTO users (username, password_hash) VALUES ('$username', '$hashedPassword')";
         if (mysqli_query($conn, $insertQuery)) {
             // Connexion automatique après l'inscription
             session_start();
@@ -29,7 +40,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 }
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -48,11 +58,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <label>Mot de passe:</label>
         <input type="password" name="password" required><br>
 
-        <label>Adresse e-mail:</label>
-        <input type="email" name="email" required><br>
-
         <input type="submit" value="S'inscrire">
     </form>
-    <p><a href="login.php">Retour à la page de connexion</a></p>
+    <p>Déjà inscrit ? <a href="login.php">Se connecter</a></p>
 </body>
 </html>
