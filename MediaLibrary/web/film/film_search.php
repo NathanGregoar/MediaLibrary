@@ -1,33 +1,13 @@
 <?php
-require_once '../utils/db_connection.php';
-require_once '../utils/film_functions.php';
 require_once '../utils/auth.php';
-
-// Récupérer l'identifiant de l'utilisateur connecté
-$userId = getLoggedInUserId();
-
-// Vérifier si l'identifiant de l'utilisateur est valide
-if ($userId === null) {
-    // Gérer le cas où l'identifiant de l'utilisateur n'est pas disponible
-    echo 'Erreur : Impossible de récupérer l\'identifiant de l\'utilisateur connecté.';
-    exit;
-}
-
-// Vérifier si une recherche a été effectuée
-if (isset($_POST['search'])) {
-    $searchTerm = $_POST['searchTerm'];
-    $films = searchFilms($connection, $searchTerm, $userId);
-} else {
-    // Récupérer tous les films de l'utilisateur connecté
-    $films = getAllFilms($connection, $userId);
-}
-
-// Afficher les films
+require_once '../utils/config.php';
+require_once '../utils/film_functions.php';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Résultats de recherche des films</title>
+    <title>Rechercher des Films</title>
     <link rel="stylesheet" type="text/css" href="./film.css">
 </head>
 <body>
@@ -38,26 +18,41 @@ if (isset($_POST['search'])) {
             <a href="./film_search.php">Consulter les Films</a>
         </div>
 
-        <h1>Résultats de recherche des films</h1>
+        <h1>Rechercher des Films</h1>
 
-        <div class="search-section">
-            <form method="POST" action="">
-                <input type="text" name="searchTerm" placeholder="Rechercher un film">
-                <input type="submit" name="search" value="Rechercher">
+        <div class="search-bar">
+            <form method="GET">
+                <input type="text" name="search" placeholder="Rechercher un film" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
+                <input type="submit" value="Rechercher" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
             </form>
         </div>
 
         <?php
-        // Afficher les films
-        if (isset($_POST['search'])) {
-            echo '<h2>Résultats de recherche :</h2>';
-        } else {
-            echo '<h2>Tous les films :</h2>';
-        }
-        
-        displayFilms($films);
-        ?>
+        $connection = mysqli_connect($host, $username, $password, $dbName);
 
+        if (!$connection) {
+            die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
+        }
+
+        // Suppression d'un film
+        if (isset($_POST['delete'])) {
+            $deleteId = $connection->real_escape_string($_POST['delete']);
+            deleteFilm($connection, $deleteId);
+        }
+
+        // Affichage des films correspondant à la recherche
+        if (isset($_GET['search'])) {
+            $searchTerm = $connection->real_escape_string($_GET['search']);
+            $films = searchFilms($connection, $searchTerm);
+            displayFilms($films);
+        } else {
+            // Affichage de tous les films
+            $films = getAllFilms($connection);
+            displayFilms($films);
+        }
+
+        $connection->close();
+        ?>
     </div>
 </body>
 </html>
