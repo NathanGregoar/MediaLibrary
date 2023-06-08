@@ -60,6 +60,41 @@ if (isset($_POST['edit'])) {
 
     // Afficher le formulaire de modification
     $edit_message = "Afficher le formulaire de modification ici pour la ligne avec l'ID $row_id.";
+    $form_fields = array(); // Tableau pour stocker les champs du formulaire
+
+    // Récupérer les informations de la colonne sélectionnée
+    $column_info = mysqli_fetch_fields($result_data);
+
+    foreach ($column_info as $column) {
+        // Ajouter chaque champ du formulaire en utilisant les informations de la colonne
+        $field_name = $column->name;
+        $field_type = $column->type;
+        $field_value = ''; // Valeur initiale du champ
+
+        // Récupérer la valeur de la colonne pour la ligne à modifier à partir de la base de données
+
+        // Créer le champ du formulaire en fonction du type de la colonne
+        if ($field_type === MYSQLI_TYPE_INT) {
+            // Champ de type entier
+            $form_fields[] = '<label>' . $field_name . ':</label><input type="number" name="' . $field_name . '" value="' . $field_value . '" required>';
+        } elseif ($field_type === MYSQLI_TYPE_DECIMAL || $field_type === MYSQLI_TYPE_FLOAT || $field_type === MYSQLI_TYPE_DOUBLE) {
+            // Champ de type décimal/flottant
+            $form_fields[] = '<label>' . $field_name . ':</label><input type="number" step="any" name="' . $field_name . '" value="' . $field_value . '" required>';
+        } else {
+            // Champ de type texte
+            $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $field_value . '" required>';
+        }
+    }
+
+    // Générer le code HTML pour le formulaire de modification
+    $edit_form_html = '<form method="post" action="" class="edit-form">';
+    foreach ($form_fields as $field_html) {
+        $edit_form_html .= $field_html . '<br>';
+    }
+    $edit_form_html .= '<input type="hidden" name="table_selected" value="' . $table_selected . '">';
+    $edit_form_html .= '<input type="hidden" name="row_id" value="' . $row_id . '">';
+    $edit_form_html .= '<button type="submit" name="update" class="btn-update">Mettre à jour</button>';
+    $edit_form_html .= '</form>';
 }
 ?>
 
@@ -123,7 +158,12 @@ if (isset($_POST['edit'])) {
 <?php } ?>
 <?php if (isset($edit_message)) { ?>
     <div class="alert info"><?php echo $edit_message; ?></div>
-    <!-- Ajoutez ici le formulaire de modification -->
+<?php } ?>
+<?php if (isset($edit_form_html)) { ?>
+    <div class="edit-form-container">
+        <h2>Modifier la ligne avec l'ID <?php echo $row_id; ?></h2>
+        <?php echo $edit_form_html; ?>
+    </div>
 <?php } ?>
 </body>
 </html>
