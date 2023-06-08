@@ -37,6 +37,27 @@ if (!empty($table_selected)) {
         }
     }
 }
+
+// Suppression d'une ligne de données
+if (isset($_POST['delete'])) {
+    $row_id = $_POST['row_id'];
+    $sql_delete = "DELETE FROM $table_selected WHERE id = $row_id";
+    if (mysqli_query($conn, $sql_delete)) {
+        echo "<script>alert('La ligne de données a été supprimée avec succès.');</script>";
+        header("Refresh:0"); // Rafraîchir la page après la suppression
+    } else {
+        echo "<script>alert('Erreur lors de la suppression de la ligne de données. Veuillez réessayer.');</script>";
+    }
+}
+
+// Formulaire de modification
+if (isset($_POST['edit'])) {
+    $row_id = $_POST['row_id'];
+    // Récupérer les données de la ligne à modifier à partir de la base de données
+
+    // Afficher le formulaire de modification
+    echo "<script>alert('Afficher le formulaire de modification ici pour la ligne avec l'ID $row_id.');</script>";
+}
 ?>
 
 <!DOCTYPE html>
