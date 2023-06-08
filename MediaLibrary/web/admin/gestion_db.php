@@ -23,7 +23,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
         <a href="./admin.php">Accueil admin</a>
-        <a href="./gestion_db.php">Gestion DB</a>
+        <a href="./gestion_db.php" style="color: #ff0000;">Gestion DB</a>
         <a href="./gestion_donnees.php">Gestion données</a>
     </div>
     <div class="container">
