@@ -46,7 +46,8 @@ if (isset($_POST['delete'])) {
     $sql_delete = "DELETE FROM $table_selected WHERE id = $row_id";
     if (mysqli_query($conn, $sql_delete)) {
         $delete_message = "La ligne de données a été supprimée avec succès.";
-        header("Refresh:2"); // Rafraîchir la page après 2 secondes
+        // Recharger la table pour afficher les modifications/suppressions
+        header("Refresh:0");
     } else {
         $delete_message = "Erreur lors de la suppression de la ligne de données. Veuillez réessayer.";
     }
@@ -122,6 +123,7 @@ if (isset($_POST['edit'])) {
 <?php } ?>
 <?php if (isset($edit_message)) { ?>
     <div class="alert info"><?php echo $edit_message; ?></div>
+    <!-- Ajoutez ici le formulaire de modification -->
 <?php } ?>
 </body>
 </html>
