@@ -15,23 +15,18 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Accueil</title>
-    <link rel="stylesheet" type="text/css" href="./accueil.css">
+    <title>Admin</title>
+    <link rel="stylesheet" type="text/css" href="./admin.css">
 </head>
 <body>
     <div class="container">
+        <h1 class="welcome-message">Bienvenue sur la page Admin, <?php echo $username; ?> !</h1>
         <div class="section-links">
-            <a href="gestion_db.php" class="section-link">
+            <a href="./gestion_db.php" class="section-link">
                 <span class="section-link-text">Gestion base de donnée</span>
             </a>
-            <a href="gestion_donnees.php" class="section-link">
+            <a href="./gestion_donnees.php" class="section-link">
                 <span class="section-link-text">Gestion des données</span>
-            </a>
-            <a href="structure_db.php" class="section-link">
-                <span class="section-link-text">Structure base de donnée</span>
-            </a>
-            <a href="contenu_db.php" class="section-link">
-                <span class="section-link-text">Contenu base de donnée</span>
             </a>
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
         </div>
