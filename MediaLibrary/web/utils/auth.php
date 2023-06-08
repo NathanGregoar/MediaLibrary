@@ -54,11 +54,11 @@ function getLoggedInUser() {
 }
 
 // Mettre à jour la fonction getLoggedInUserId() pour récupérer l'adresse e-mail de l'utilisateur
-function getLoggedInUserId() {
-    if (isset($_SESSION['user_id'])) {
-        return $_SESSION['user_id'];
+function getLoggedInUser() {
+    if (isset($_SESSION['user'])) {
+        return $_SESSION['user'];
     } else {
-        // Effectuer la logique pour récupérer l'ID de l'utilisateur et son e-mail à partir de la base de données
+        // Effectuer la logique pour récupérer les informations de l'utilisateur à partir de la base de données
         $host = 'db';
         $user = 'nathan';
         $password = '444719';
@@ -72,7 +72,7 @@ function getLoggedInUserId() {
 
         $loggedInUsername = $_SESSION['username'];
 
-        $query = "SELECT id, email FROM users WHERE username = ?";
+        $query = "SELECT * FROM users WHERE username = ?";
         $stmt = $connection->prepare($query);
         $stmt->bind_param("s", $loggedInUsername);
         $stmt->execute();
@@ -80,12 +80,12 @@ function getLoggedInUserId() {
 
         if ($result->num_rows > 0) {
             $row = $result->fetch_assoc();
-            $loggedInUserId = $row['id'];
-            $_SESSION['user_id'] = $loggedInUserId; // Stocker l'ID de l'utilisateur en session pour les prochaines requêtes
+            $loggedInUser = $row;
+            $_SESSION['user'] = $loggedInUser; // Stocker les informations de l'utilisateur en session pour les prochaines requêtes
             $_SESSION['email'] = $row['email']; // Stocker l'e-mail de l'utilisateur en session pour les prochaines requêtes
             $stmt->close();
             $connection->close();
-            return $loggedInUserId;
+            return $loggedInUser;
         } else {
             $stmt->close();
             $connection->close();
