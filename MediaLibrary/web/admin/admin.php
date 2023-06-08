@@ -22,6 +22,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <div class="container">
         <h1 class="welcome-message">Bienvenue sur la page Admin, <?php echo $username; ?> !</h1>
         <div class="section-links">
+            <a href="../accueil/index.php" class="section-link">
+                <span class="section-link-text">Accueil</span>
+            </a>
             <a href="./gestion_db.php" class="section-link">
                 <span class="section-link-text">Gestion base de donnée</span>
             </a>

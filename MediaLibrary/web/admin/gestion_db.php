@@ -17,7 +17,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
 <html>
 <head>
     <title>Gestion de la base de données</title>
-    <link rel="stylesheet" type="text/css" href="admin.css">
+    <link rel="stylesheet" type="text/css" href="./gestion_db.css">
 </head>
 <body>
     <div class="navbar">
