@@ -1,16 +1,25 @@
 <?php
 require_once '../utils/auth.php';
+
+$username = $_SESSION['username'];
+$email = $_SESSION['email'];
+
+// Vérification si l'utilisateur est autorisé à accéder à la page d'administration
+if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
+    // Redirection vers la page d'accueil
+    header("Location: ../accueil/index.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Admin</title>
+    <title>Accueil</title>
     <link rel="stylesheet" type="text/css" href="./accueil.css">
 </head>
 <body>
     <div class="container">
-        <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <div class="section-links">
             <a href="../film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
