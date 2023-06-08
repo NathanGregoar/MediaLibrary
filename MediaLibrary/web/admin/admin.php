@@ -1,37 +1,14 @@
 <?php
 require_once '../utils/auth.php';
-
-// Vérification si le bouton de déconnexion a été cliqué
-if (isset($_POST['logout'])) {
-    // Suppression de toutes les variables de session
-    session_unset();
-    // Destruction de la session
-    session_destroy();
-    // Redirection vers la page de connexion
-    header("Location: ../login.php");
-    exit();
-}
-
-// Vérification si l'utilisateur est connecté
-checkLoggedIn();
-
-$username = $_SESSION['username'];
-$email = $_SESSION['email'];
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Accueil</title>
+    <title>Admin</title>
     <link rel="stylesheet" type="text/css" href="./accueil.css">
 </head>
 <body>
-    <header>
-        <form method="post" action="" class="logout-form">
-            <input type="submit" name="logout" value="Déconnexion">
-        </form>
-    </header>
-
     <div class="container">
         <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <div class="section-links">
@@ -54,15 +31,6 @@ $email = $_SESSION['email'];
                 <span class="section-link-text">Section Manhwa / Manga</span>
             </a>
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
-
-            <?php
-            // Vérification si l'utilisateur est "Nathan" et son adresse e-mail est "nathan.gregoar@yahoo.fr"
-            if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
-                echo '<a href="../admin/admin.php" class="section-link">';
-                echo '<span class="section-link-text">Section Admin</span>';
-                echo '</a>';
-            }
-            ?>
         </div>
     </div>
 </body>
