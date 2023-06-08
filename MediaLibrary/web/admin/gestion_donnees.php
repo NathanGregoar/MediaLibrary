@@ -62,14 +62,14 @@ if (isset($_POST['edit'])) {
 
     if ($result_row && mysqli_num_rows($result_row) > 0) {
         $row = mysqli_fetch_assoc($result_row);
-        $fetch_fields = $result_row->fetch_fields();
+        $fetch_fields = mysqli_fetch_fields($result_row);
 
         // Générer les champs du formulaire de modification avec les valeurs actuelles
         $form_fields = array();
-        $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
         foreach ($row as $field_name => $field_value) {
             if ($field_name !== 'id') {
-                $field_type = $field_info[$field_name]->type;
+                $field_info = mysqli_fetch_field_direct($result_row, array_search($field_name, array_column($fetch_fields, 'name')));
+                $field_type = $field_info->type;
                 $escaped_value = htmlspecialchars($field_value);
 
                 if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
@@ -87,26 +87,20 @@ if (isset($_POST['edit'])) {
     }
 }
 
-// Mise à jour des données
+// Traitement de la mise à jour des données
 if (isset($_POST['update'])) {
     $row_id = $_POST['row_id'];
 
-    // Construction de la requête de mise à jour en utilisant les valeurs des champs du formulaire
+    // Récupérer les nouvelles valeurs des champs à partir des données soumises dans le formulaire
     $update_values = array();
     foreach ($_POST as $field_name => $field_value) {
         if ($field_name !== 'row_id' && $field_name !== 'update') {
-            $field_type = mysqli_fetch_field_direct($result_row, array_search($field_name, array_column($result_row->fetch_fields(), 'name')))->type;
-            $escaped_value = mysqli_real_escape_string($conn, $field_value);
-
-            if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
-                // Champ de type entier
-                $update_values[] = $field_name . ' = ' . $escaped_value;
-            } else {
-                // Champ de type texte
-                $update_values[] = $field_name . ' = "' . $escaped_value . '"';
-            }
+            $field_value = mysqli_real_escape_string($conn, $field_value);
+            $update_values[] = "$field_name = '$field_value'";
         }
     }
+
+    // Mettre à jour les données dans la base de données
     $sql_update = "UPDATE $table_selected SET " . implode(', ', $update_values) . " WHERE id = $row_id";
     if (mysqli_query($conn, $sql_update)) {
         $update_message = "La ligne de données a été mise à jour avec succès.";
@@ -115,74 +109,122 @@ if (isset($_POST['update'])) {
         $update_message = "Erreur lors de la mise à jour de la ligne de données. Veuillez réessayer.";
     }
 }
+
+ob_end_flush(); // Activer le buffer de sortie
 ?>
 
 <!DOCTYPE html>
 <html>
+
 <head>
+    <meta charset="UTF-8">
     <title>Gestion des données</title>
-    <link rel="stylesheet" type="text/css" href="./gestion_donnees.css">
+    <style>
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .table-selector {
+            margin-bottom: 20px;
+        }
+
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .data-table th,
+        .data-table td {
+            border: 1px solid #ccc;
+            padding: 8px;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+        }
+
+        .edit-form {
+            margin-top: 20px;
+        }
+
+        .btn-update {
+            margin-top: 10px;
+        }
+
+        .message {
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #f2f2f2;
+        }
+    </style>
 </head>
+
 <body>
-<div class="navbar">
-    <a href="./admin.php">Retour à l'administration</a>
-</div>
-<div class="container">
-    <div class="content">
-        <h2>Gérer les données</h2>
-        <form method="post" action="" class="form-container">
-            <label for="table_selected">Table:</label>
-            <select name="table_selected" onchange="this.form.submit()">
-                <option value="">Sélectionner une table</option>
-                <?php foreach ($tables as $table) { ?>
-                    <option value="<?php echo $table; ?>" <?php if ($table === $table_selected) echo 'selected'; ?>><?php echo $table; ?></option>
-                <?php } ?>
+    <div class="container">
+        <h2>Gestion des données</h2>
+        <form method="post" action="">
+            <label for="table">Sélectionner une table :</label>
+            <select name="table_selected" id="table">
+                <option value="">-- Sélectionner --</option>
+                <?php
+                foreach ($tables as $table) {
+                    $selected = ($table_selected === $table) ? 'selected' : '';
+                    echo "<option value='$table' $selected>$table</option>";
+                }
+                ?>
             </select>
+            <button type="submit" name="submit" value="submit">Afficher les données</button>
         </form>
 
-        <?php if (!empty($table_selected)) { ?>
-            <h2>Données de la table "<?php echo $table_selected; ?>"</h2>
-            <?php if (empty($data)) { ?>
-                <p>Aucune donnée trouvée.</p>
-            <?php } else { ?>
-                <table>
+        <?php if (!empty($table_selected)) : ?>
+            <h3>Table : <?php echo $table_selected; ?></h3>
+
+            <?php if (!empty($data)) : ?>
+                <table class="data-table">
                     <tr>
-                        <?php foreach (array_keys($data[0]) as $column_name) { ?>
-                            <th><?php echo $column_name; ?></th>
-                        <?php } ?>
+                        <?php
+                        $table_headers = array_keys($data[0]);
+                        foreach ($table_headers as $header) {
+                            echo "<th>$header</th>";
+                        }
+                        ?>
                         <th>Actions</th>
                     </tr>
-                    <?php foreach ($data as $row) { ?>
+                    <?php foreach ($data as $row) : ?>
                         <tr>
-                            <?php foreach ($row as $value) { ?>
+                            <?php foreach ($row as $value) : ?>
                                 <td><?php echo $value; ?></td>
-                            <?php } ?>
+                            <?php endforeach; ?>
                             <td>
-                                <form method="post" action="" class="data-actions">
-                                    <input type="hidden" name="table_selected" value="<?php echo $table_selected; ?>">
+                                <form method="post" action="">
                                     <input type="hidden" name="row_id" value="<?php echo $row['id']; ?>">
-                                    <button type="submit" name="edit" class="btn-edit">Modifier</button>
-                                    <button type="submit" name="delete" class="btn-delete">Supprimer</button>
+                                    <button type="submit" name="delete">Supprimer</button>
+                                    <button type="submit" name="edit">Modifier</button>
                                 </form>
                             </td>
                         </tr>
-                    <?php } ?>
+                    <?php endforeach; ?>
                 </table>
-            <?php } ?>
-        <?php } ?>
+            <?php else : ?>
+                <p>Aucune donnée disponible pour cette table.</p>
+            <?php endif; ?>
+
+            <?php if (isset($delete_message)) : ?>
+                <div class="message"><?php echo $delete_message; ?></div>
+            <?php endif; ?>
+
+            <?php if (isset($edit_form_html)) : ?>
+                <h3>Modifier une ligne de données</h3>
+                <?php echo $edit_form_html; ?>
+            <?php endif; ?>
+
+            <?php if (isset($update_message)) : ?>
+                <div class="message"><?php echo $update_message; ?></div>
+            <?php endif; ?>
+
+        <?php endif; ?>
     </div>
-</div>
-<?php if (isset($delete_message)) { ?>
-    <div class="alert success"><?php echo $delete_message; ?></div>
-<?php } ?>
-<?php if (isset($edit_form_html)) { ?>
-    <div class="edit-form-container">
-        <h2>Modifier la ligne de données</h2>
-        <?php echo $edit_form_html; ?>
-    </div>
-<?php } ?>
-<?php if (isset($update_message)) { ?>
-    <div class="alert success"><?php echo $update_message; ?></div>
-<?php } ?>
 </body>
+
 </html>
