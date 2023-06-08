@@ -53,4 +53,7 @@ function getLoggedInUser() {
         }
     }
 }
+
+// Récupérer l'utilisateur connecté lors de l'inclusion du fichier auth.php
+getLoggedInUser();
 ?>
