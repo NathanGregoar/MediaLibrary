@@ -8,6 +8,7 @@
   .navbar a {
     color: #fff;
     text-decoration: none;
+    margin-right: 10px;
   }
   
   /* Styles pour la mise en page en deux colonnes */

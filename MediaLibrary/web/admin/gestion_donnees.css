@@ -20,6 +20,7 @@ body {
   .navbar a {
     color: #fff;
     text-decoration: none;
+    margin-right: 10px;
   }
   
   .container {
