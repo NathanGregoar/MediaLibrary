@@ -40,9 +40,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     )";
 
                     if (mysqli_query($conn, $sql)) {
-                        echo "La table $table_name a été ajoutée avec succès.";
+                        echo '<div class="alert success">La table '.$table_name.' a été ajoutée avec succès.</div>';
                     } else {
-                        echo "Erreur lors de la création de la table: " . mysqli_error($conn);
+                        echo '<div class="alert error">Erreur lors de la création de la table: ' . mysqli_error($conn) . '</div>';
                     }
                     break;
 
@@ -53,9 +53,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     $sql = "DROP TABLE $table_name";
 
                     if (mysqli_query($conn, $sql)) {
-                        echo "La table $table_name a été supprimée avec succès.";
+                        echo '<div class="alert success">La table '.$table_name.' a été supprimée avec succès.</div>';
                     } else {
-                        echo "Erreur lors de la suppression de la table: " . mysqli_error($conn);
+                        echo '<div class="alert error">Erreur lors de la suppression de la table: ' . mysqli_error($conn) . '</div>';
                     }
                     break;
 
@@ -68,9 +68,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     $sql = "ALTER TABLE $table_name ADD COLUMN $colonne_name $colonne_type";
 
                     if (mysqli_query($conn, $sql)) {
-                        echo "La colonne $colonne_name a été ajoutée avec succès à la table $table_name.";
+                        echo '<div class="alert success">La colonne '.$colonne_name.' a été ajoutée avec succès à la table '.$table_name.'.</div>';
                     } else {
-                        echo "Erreur lors de l'ajout de la colonne: " . mysqli_error($conn);
+                        echo '<div class="alert error">Erreur lors de l\'ajout de la colonne: ' . mysqli_error($conn) . '</div>';
                     }
                     break;
 
@@ -82,9 +82,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     $sql = "ALTER TABLE $table_name DROP COLUMN $colonne_name";
 
                     if (mysqli_query($conn, $sql)) {
-                        echo "La colonne $colonne_name a été supprimée avec succès de la table $table_name.";
+                        echo '<div class="alert success">La colonne '.$colonne_name.' a été supprimée avec succès de la table '.$table_name.'.</div>';
                     } else {
-                        echo "Erreur lors de la suppression de la colonne: " . mysqli_error($conn);
+                        echo '<div class="alert error">Erreur lors de la suppression de la colonne: ' . mysqli_error($conn) . '</div>';
                     }
                     break;
 
@@ -98,14 +98,14 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     $sql = "ALTER TABLE $table_name CHANGE COLUMN $colonne_name $nouveau_nom $nouveau_type";
 
                     if (mysqli_query($conn, $sql)) {
-                        echo "La colonne $colonne_name a été modifiée avec succès dans la table $table_name.";
+                        echo '<div class="alert success">La colonne '.$colonne_name.' a été modifiée avec succès dans la table '.$table_name.'.</div>';
                     } else {
-                        echo "Erreur lors de la modification de la colonne: " . mysqli_error($conn);
+                        echo '<div class="alert error">Erreur lors de la modification de la colonne: ' . mysqli_error($conn) . '</div>';
                     }
                     break;
 
                 default:
-                    echo "Action non valide.";
+                    echo '<div class="alert error">Action non valide.</div>';
                     break;
             }
         }

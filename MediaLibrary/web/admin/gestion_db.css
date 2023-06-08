@@ -75,3 +75,19 @@
   
   /* Ajoutez d'autres styles CSS personnalisés selon vos besoins */
   
+  /* Styles pour les alertes */
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .alert.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+  }
+  
+  .alert.error {
+    background-color: #f2dede;
+    color: #a94442;
+  }
+  
