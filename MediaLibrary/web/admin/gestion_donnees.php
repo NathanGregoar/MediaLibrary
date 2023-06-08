@@ -7,6 +7,8 @@ require_once '../utils/config.php';
 $username = $_SESSION['username'];
 $email = $_SESSION['email'];
 
+$table_selected = isset($_GET['table_selected']) ? $_GET['table_selected'] : $table_selected;
+
 // Vérification si l'utilisateur est autorisé à accéder à la page de gestion des données
 if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     // Redirection vers la page d'accueil
@@ -68,7 +70,7 @@ if (isset($_POST['edit'])) {
         $form_fields = array();
         $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
         foreach ($row as $field_name => $field_value) {
-            if ($field_name !== 'id') {
+            if ($field_name !== 'id' && $field_name !== 'added_by') {
                 $field_type = $field_info[$field_name]->type;
                 $escaped_value = htmlspecialchars($field_value);
 
@@ -115,10 +117,11 @@ if (isset($_POST['save'])) {
 
     if (mysqli_query($conn, $sql_update)) {
         $update_message = "Les modifications ont été enregistrées avec succès.";
-        header("Refresh:0"); // Recharger la page
+        header("Refresh:0; url=./gestion_donnees.php?table_selected=" . urlencode($table_selected));
+        exit();
     } else {
         $update_message = "Erreur lors de l'enregistrement des modifications. Veuillez réessayer.";
-    }
+    }    
 }
 
 ob_end_flush(); // Activer à nouveau le buffer de sortie
