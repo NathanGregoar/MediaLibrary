@@ -66,9 +66,10 @@ if (isset($_POST['edit'])) {
 
         // Générer les champs du formulaire de modification avec les valeurs actuelles
         $form_fields = array();
+        $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
         foreach ($row as $field_name => $field_value) {
             if ($field_name !== 'id') {
-                $field_type = mysqli_fetch_field_direct($result_row, array_search($field_name, array_column($fetch_fields, 'name')))->type;
+                $field_type = $field_info[$field_name]->type;
                 $escaped_value = htmlspecialchars($field_value);
 
                 if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
