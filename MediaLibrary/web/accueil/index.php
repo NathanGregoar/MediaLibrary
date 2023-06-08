@@ -35,7 +35,7 @@ $email = $_SESSION['email'];
     <div class="container">
         <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <p>Username: <?php echo $username; ?></p>
-        <p>Email: <?php echo $email; ?></p>
+        <p>Email: <?php echo $_SESSION['email']; ?></p>
         <div class="section-links">
             <a href="../film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
