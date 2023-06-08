@@ -179,19 +179,22 @@ ob_end_flush(); // Activer à nouveau le buffer de sortie
                 </table>
             <?php } ?>
         <?php } ?>
+        
+        <?php if (isset($edit_form_html)) { ?>
+            <div class="edit-form-container">
+                <h2>Modifier la ligne de données</h2>
+                <?php echo $edit_form_html; ?>
+            </div>
+        <?php } ?>
+        
     </div>
 </div>
 <?php if (isset($delete_message)) { ?>
     <div class="alert success"><?php echo $delete_message; ?></div>
-<?php } ?>
-<?php if (isset($edit_form_html)) { ?>
-    <div class="edit-form-container">
-        <h2>Modifier la ligne de données</h2>
-        <?php echo $edit_form_html; ?>
-    </div>
 <?php } ?>
 <?php if (isset($update_message)) { ?>
     <div class="alert success"><?php echo $update_message; ?></div>
 <?php } ?>
 </body>
 </html>
+
