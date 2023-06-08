@@ -1,4 +1,10 @@
 /* Styles pour la barre de navigation */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
 .navbar {
     background-color: #333;
     color: #fff;
