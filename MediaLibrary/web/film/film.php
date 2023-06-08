@@ -34,7 +34,7 @@ require_once '../utils/config.php';
             $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : 'NULL';
 
             // Récupérer l'ID de l'utilisateur connecté à partir des informations de session
-            $loggedInUserId = getLoggedInUserId();
+            $loggedInUser = getLoggedInUser();
 
             // Vérifier les doublons
             $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = $director AND release_year = $releaseYear";
@@ -45,7 +45,7 @@ require_once '../utils/config.php';
             } else {
                 $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
                 $insertStmt = $connection->prepare($insertSql);
-                $insertStmt->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUserId);
+                $insertStmt->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUser);
 
                 if ($insertStmt->execute()) {
                     echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
