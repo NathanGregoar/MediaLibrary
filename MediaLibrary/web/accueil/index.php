@@ -57,7 +57,7 @@ $email = $_SESSION['email'];
 
             <?php
             // Vérification si l'utilisateur est "Nathan"
-            if ($username === "Nathan") {
+            if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
                 echo '<a href="../admin.php" class="section-link">';
                 echo '<span class="section-link-text">Section Admin</span>';
                 echo '</a>';
