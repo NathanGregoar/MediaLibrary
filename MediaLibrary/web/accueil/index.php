@@ -12,9 +12,6 @@ if (isset($_POST['logout'])) {
     exit();
 }
 
-// Vérification si l'utilisateur est connecté
-checkLoggedIn();
-
 $username = $_SESSION['username'];
 $email = $_SESSION['email'];
 ?>
