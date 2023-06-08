@@ -51,6 +51,9 @@ if (!empty($table_selected)) {
 </div>
 <div class="container">
     <div class="left-section">
+        
+    </div>
+    <div class="right-section">
         <h2>Gérer les données</h2>
         <form method="post" action="">
             <label for="table_selected">Table:</label>
@@ -83,31 +86,6 @@ if (!empty($table_selected)) {
                 </table>
             <?php } ?>
         <?php } ?>
-    </div>
-    <div class="right-section">
-        <h2>Structure de la base de données</h2>
-        <?php
-        foreach ($tables as $table) {
-            echo "<h3>$table</h3>";
-            echo "<ul>";
-
-            $sql_columns = "SHOW COLUMNS FROM $table";
-            $result_columns = mysqli_query($conn, $sql_columns);
-
-            if (mysqli_num_rows($result_columns) > 0) {
-                while ($row_columns = mysqli_fetch_assoc($result_columns)) {
-                    echo "<li>" . $row_columns['Field'] . " (" . $row_columns['Type'] . ")</li>";
-                }
-            } else {
-                echo "<li>Aucune colonne trouvée.</li>";
-            }
-
-            echo "</ul>";
-        }
-
-        // Fermeture de la connexion à la base de données
-        mysqli_close($conn);
-        ?>
     </div>
 </div>
 </body>
