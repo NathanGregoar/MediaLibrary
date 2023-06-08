@@ -62,23 +62,13 @@ if (isset($_POST['edit'])) {
 
     if ($result_row && mysqli_num_rows($result_row) > 0) {
         $row = mysqli_fetch_assoc($result_row);
-        $fetch_fields = $result_row->fetch_fields();
 
         // Générer les champs du formulaire de modification avec les valeurs actuelles
         $form_fields = array();
-        $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
         foreach ($row as $field_name => $field_value) {
             if ($field_name !== 'id') {
-                $field_type = $field_info[$field_name]->type;
                 $escaped_value = htmlspecialchars($field_value);
-
-                if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
-                    // Champ de type entier
-                    $form_fields[] = '<label>' . $field_name . ':</label><input type="number" name="' . $field_name . '" value="' . $escaped_value . '" required>';
-                } else {
-                    // Champ de type texte
-                    $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $escaped_value . '" required>';
-                }
+                $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $escaped_value . '" required>';
             }
         }
 
