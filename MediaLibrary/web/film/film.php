@@ -1,6 +1,55 @@
 <?php
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
+
+// Vérification si l'utilisateur est connecté
+checkLoggedIn();
+
+// Récupérer l'utilisateur connecté
+$loggedInUser = getLoggedInUser();
+
+// Vérifier si l'utilisateur a le droit d'ajouter un film
+if (!$loggedInUser['can_add_film']) {
+    die('Vous n\'avez pas le droit d\'ajouter un film.');
+}
+
+// Connexion à la base de données
+$connection = mysqli_connect($host, $username, $password, $dbName);
+
+if (!$connection) {
+    die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
+}
+
+// Ajout d'un film
+if (isset($_POST['title'])) {
+    $title = $connection->real_escape_string($_POST['title']);
+    $director = $_POST['director'] != '' ? $connection->real_escape_string($_POST['director']) : null;
+    $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : null;
+    $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : null;
+
+    // Vérifier les doublons
+    $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = " . ($director !== null ? "'$director'" : "NULL") . " AND release_year = " . ($releaseYear !== null ? "'$releaseYear'" : "NULL");
+    $duplicateResult = $connection->query($duplicateSql);
+
+    if ($duplicateResult->num_rows > 0) {
+        echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
+    } else {
+        $addedBy = $loggedInUser['id'];
+
+        $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
+        $insertStmt = $connection->prepare($insertSql);
+        $insertStmt->bind_param("sssii", $title, $director, $releaseYear, $externalHardDrive, $addedBy);
+
+        if ($insertStmt->execute()) {
+            echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
+        } else {
+            echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+        }
+    }
+}
+
+// Fermer la connexion à la base de données
+$connection->close();
 ?>
 
 <!DOCTYPE html>
@@ -19,43 +68,6 @@ require_once '../utils/config.php';
 
         <h1>Ajouter un Film</h1>
 
-        <?php
-        $connection = mysqli_connect($host, $username, $password, $dbName);
-
-        if (!$connection) {
-            die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
-        }
-
-        // Ajout d'un film
-        if (isset($_POST['title'])) {
-            $title = $connection->real_escape_string($_POST['title']);
-            $director = $_POST['director'] != '' ? $connection->real_escape_string($_POST['director']) : 'NULL';
-            $releaseYear = $_POST['release_year'] != '' ? $connection->real_escape_string($_POST['release_year']) : 'NULL';
-            $externalHardDrive = $_POST['external_hard_drive'] != '' ? intval($_POST['external_hard_drive']) : 'NULL';
-
-            // Récupérer l'ID de l'utilisateur connecté à partir des informations de session
-            $loggedInUser = getLoggedInUser();
-
-            // Vérifier les doublons
-            $duplicateSql = "SELECT * FROM films WHERE title = '$title' AND director = $director AND release_year = $releaseYear";
-            $duplicateResult = $connection->query($duplicateSql);
-
-            if ($duplicateResult->num_rows > 0) {
-                echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
-            } else {
-                $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
-                $insertStmt = $connection->prepare($insertSql);
-                $insertStmt->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUser);
-
-                if ($insertStmt->execute()) {
-                    echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
-                } else {
-                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
-                }
-            }
-        }
-        ?>
-
         <form method="POST">
             <label for="title">Titre :</label>
             <input type="text" id="title" name="title" required>
@@ -71,10 +83,6 @@ require_once '../utils/config.php';
 
             <input type="submit" value="Ajouter">
         </form>
-
-        <?php
-        $connection->close();
-        ?>
     </div>
 </body>
 </html>
