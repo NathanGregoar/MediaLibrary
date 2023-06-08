@@ -89,7 +89,16 @@ if (isset($_POST['update'])) {
     $update_values = array();
     foreach ($_POST as $field_name => $field_value) {
         if ($field_name !== 'row_id' && $field_name !== 'update') {
-            $update_values[] = $field_name . ' = "' . mysqli_real_escape_string($conn, $field_value) . '"';
+            $field_type = mysqli_fetch_field_direct($result_row, array_search($field_name, array_column($result_row->fetch_fields(), 'name')))->type;
+            $escaped_value = mysqli_real_escape_string($conn, $field_value);
+
+            if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
+                // Champ de type entier
+                $update_values[] = $field_name . ' = ' . $escaped_value;
+            } else {
+                // Champ de type texte
+                $update_values[] = $field_name . ' = "' . $escaped_value . '"';
+            }
         }
     }
     $sql_update = "UPDATE $table_selected SET " . implode(', ', $update_values) . " WHERE id = $row_id";
