@@ -58,7 +58,6 @@ if (isset($_POST['edit'])) {
 
     // Récupérer les données de la ligne à modifier à partir de la base de données
     $sql_row = "SELECT * FROM $table_selected WHERE id = $row_id";
-    echo $sql_row; // Débogage - Afficher la requête SQL
     $result_row = mysqli_query($conn, $sql_row);
 
     if ($result_row && mysqli_num_rows($result_row) > 0) {
@@ -87,14 +86,14 @@ if (isset($_POST['edit'])) {
         }
 
         // Affichage du formulaire de modification
-        echo '<form action="" method="post">';
-        echo implode('<br>', $form_fields);
-        echo '<input type="hidden" name="table_selected" value="' . $table_selected . '">';
-        echo '<input type="hidden" name="row_id" value="' . $row_id . '">';
-        echo '<input type="submit" name="save" value="Enregistrer">';
-        echo '</form>';
+        $edit_form_html = '<form action="" method="post" class="edit-form">';
+        $edit_form_html .= implode('<br>', $form_fields);
+        $edit_form_html .= '<input type="hidden" name="table_selected" value="' . $table_selected . '">';
+        $edit_form_html .= '<input type="hidden" name="row_id" value="' . $row_id . '">';
+        $edit_form_html .= '<input type="submit" name="save" value="Enregistrer">';
+        $edit_form_html .= '</form>';
     } else {
-        echo "Erreur lors de la récupération des données de la ligne à modifier.";
+        $edit_form_html = "Erreur lors de la récupération des données de la ligne à modifier.";
     }
 }
 
@@ -113,10 +112,10 @@ if (isset($_POST['save'])) {
 
     // Générer la requête de mise à jour
     $sql_update = "UPDATE $table_selected SET " . implode(', ', $updated_values) . " WHERE id = $row_id";
-    echo $sql_update; // Débogage - Afficher la requête SQL
 
     if (mysqli_query($conn, $sql_update)) {
         $update_message = "Les modifications ont été enregistrées avec succès.";
+        header("Refresh:0"); // Recharger la page
     } else {
         $update_message = "Erreur lors de l'enregistrement des modifications. Veuillez réessayer.";
     }
@@ -180,14 +179,14 @@ ob_end_flush(); // Activer à nouveau le buffer de sortie
             <?php } ?>
         <?php } ?>
     </div>
-    
+
     <?php if (isset($edit_form_html)) { ?>
         <div class="edit-form-container">
             <h2>Modifier la ligne de données</h2>
             <?php echo $edit_form_html; ?>
         </div>
     <?php } ?>
-    
+
 </div>
 <?php if (isset($delete_message)) { ?>
     <div class="alert success"><?php echo $delete_message; ?></div>

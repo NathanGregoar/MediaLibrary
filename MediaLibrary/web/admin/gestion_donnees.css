@@ -120,3 +120,44 @@ body {
     color: #a94442;
   }
   
+
+  .edit-form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+.edit-form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-form label {
+    margin-bottom: 10px;
+}
+
+.edit-form input[type="text"],
+.edit-form input[type="number"] {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+.edit-form input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.edit-form input[type="submit"]:hover {
+    background-color: #45a049;
+}
