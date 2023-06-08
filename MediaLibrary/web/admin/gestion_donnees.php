@@ -1,4 +1,6 @@
 <?php
+ob_start(); // Désactiver le buffer de sortie
+
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
 
@@ -43,10 +45,10 @@ if (isset($_POST['delete'])) {
     $row_id = $_POST['row_id'];
     $sql_delete = "DELETE FROM $table_selected WHERE id = $row_id";
     if (mysqli_query($conn, $sql_delete)) {
-        echo "<script>alert('La ligne de données a été supprimée avec succès.');</script>";
-        header("Refresh:0"); // Rafraîchir la page après la suppression
+        $delete_message = "La ligne de données a été supprimée avec succès.";
+        header("Refresh:2"); // Rafraîchir la page après 2 secondes
     } else {
-        echo "<script>alert('Erreur lors de la suppression de la ligne de données. Veuillez réessayer.');</script>";
+        $delete_message = "Erreur lors de la suppression de la ligne de données. Veuillez réessayer.";
     }
 }
 
@@ -56,7 +58,7 @@ if (isset($_POST['edit'])) {
     // Récupérer les données de la ligne à modifier à partir de la base de données
 
     // Afficher le formulaire de modification
-    echo "<script>alert('Afficher le formulaire de modification ici pour la ligne avec l'ID $row_id.');</script>";
+    $edit_message = "Afficher le formulaire de modification ici pour la ligne avec l'ID $row_id.";
 }
 ?>
 
@@ -115,5 +117,11 @@ if (isset($_POST['edit'])) {
         <?php } ?>
     </div>
 </div>
+<?php if (isset($delete_message)) { ?>
+    <div class="alert success"><?php echo $delete_message; ?></div>
+<?php } ?>
+<?php if (isset($edit_message)) { ?>
+    <div class="alert info"><?php echo $edit_message; ?></div>
+<?php } ?>
 </body>
 </html>
