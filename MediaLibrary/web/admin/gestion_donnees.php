@@ -59,26 +59,30 @@ if (isset($_POST['edit'])) {
     // Récupérer les données de la ligne à modifier à partir de la base de données
     $sql_row = "SELECT * FROM $table_selected WHERE id = $row_id";
     $result_row = mysqli_query($conn, $sql_row);
-    $row = mysqli_fetch_assoc($result_row);
 
-    // Générer les champs du formulaire de modification avec les valeurs actuelles
-    $form_fields = array();
-    foreach ($row as $field_name => $field_value) {
-        if ($field_name !== 'id') {
-            $field_type = mysqli_fetch_field_direct($result_row, array_search($field_name, array_column($result_row->fetch_fields(), 'name')))->type;
+    if ($result_row && mysqli_num_rows($result_row) > 0) {
+        $row = mysqli_fetch_assoc($result_row);
 
-            if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
-                // Champ de type entier
-                $form_fields[] = '<label>' . $field_name . ':</label><input type="number" name="' . $field_name . '" value="' . $field_value . '" required>';
-            } else {
-                // Champ de type texte
-                $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $field_value . '" required>';
+        // Générer les champs du formulaire de modification avec les valeurs actuelles
+        $form_fields = array();
+        foreach ($row as $field_name => $field_value) {
+            if ($field_name !== 'id') {
+                $field_type = mysqli_fetch_field_direct($result_row, array_search($field_name, array_column($result_row->fetch_fields(), 'name')))->type;
+                $escaped_value = htmlspecialchars($field_value);
+
+                if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
+                    // Champ de type entier
+                    $form_fields[] = '<label>' . $field_name . ':</label><input type="number" name="' . $field_name . '" value="' . $escaped_value . '" required>';
+                } else {
+                    // Champ de type texte
+                    $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $escaped_value . '" required>';
+                }
             }
         }
-    }
 
-    // Afficher le formulaire de modification
-    $edit_form_html = '<form method="post" action="" class="edit-form">' . implode('<br>', $form_fields) . '<input type="hidden" name="row_id" value="' . $row_id . '"><button type="submit" name="update" class="btn-update">Mettre à jour</button></form>';
+        // Afficher le formulaire de modification
+        $edit_form_html = '<form method="post" action="" class="edit-form">' . implode('<br>', $form_fields) . '<input type="hidden" name="row_id" value="' . $row_id . '"><button type="submit" name="update" class="btn-update">Mettre à jour</button></form>';
+    }
 }
 
 // Mise à jour des données
