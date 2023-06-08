@@ -129,6 +129,7 @@ ob_end_flush(); // Activer le buffer de sortie
 <head>
     <meta charset="UTF-8">
     <title>Gestion des données</title>
+
 </head>
 <body>
     <h1>Gestion des données</h1>
