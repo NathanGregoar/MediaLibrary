@@ -50,19 +50,16 @@ if (!empty($table_selected)) {
     <a href="./admin.php">Retour à l'administration</a>
 </div>
 <div class="container">
-    <div class="left-section">
-        
-    </div>
-    <div class="right-section">
+    <div class="content">
         <h2>Gérer les données</h2>
-        <form method="post" action="">
+        <form method="post" action="" class="form-container">
             <label for="table_selected">Table:</label>
-            <select name="table_selected">
+            <select name="table_selected" onchange="this.form.submit()">
+                <option value="">Sélectionner une table</option>
                 <?php foreach ($tables as $table) { ?>
                     <option value="<?php echo $table; ?>" <?php if ($table === $table_selected) echo 'selected'; ?>><?php echo $table; ?></option>
                 <?php } ?>
             </select>
-            <input type="submit" value="Afficher">
         </form>
 
         <?php if (!empty($table_selected)) { ?>
@@ -75,12 +72,21 @@ if (!empty($table_selected)) {
                         <?php foreach (array_keys($data[0]) as $column_name) { ?>
                             <th><?php echo $column_name; ?></th>
                         <?php } ?>
+                        <th>Actions</th>
                     </tr>
                     <?php foreach ($data as $row) { ?>
                         <tr>
                             <?php foreach ($row as $value) { ?>
                                 <td><?php echo $value; ?></td>
                             <?php } ?>
+                            <td>
+                                <form method="post" action="" class="data-actions">
+                                    <input type="hidden" name="table_selected" value="<?php echo $table_selected; ?>">
+                                    <input type="hidden" name="row_id" value="<?php echo $row['id']; ?>">
+                                    <button type="submit" name="edit" class="btn-edit">Modifier</button>
+                                    <button type="submit" name="delete" class="btn-delete">Supprimer</button>
+                                </form>
+                            </td>
                         </tr>
                     <?php } ?>
                 </table>
