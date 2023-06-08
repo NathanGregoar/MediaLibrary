@@ -133,7 +133,10 @@ ob_end_flush(); // Activer à nouveau le buffer de sortie
 </head>
 <body>
 <div class="navbar">
-    <a href="./admin.php">Retour à l'administration</a>
+    <a href="../accueil/index.php">Accueil</a>
+    <a href="./admin.php">Accueil admin</a>
+    <a href="./gestion_db.php">Gestion DB</a>
+    <a href="./gestion_donnees.php">Gestion données</a>
 </div>
 <div class="container">
     <div class="content">
