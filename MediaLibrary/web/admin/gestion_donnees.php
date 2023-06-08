@@ -68,7 +68,7 @@ if (isset($_POST['edit'])) {
         $form_fields = array();
         $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
         foreach ($row as $field_name => $field_value) {
-            if ($field_name !== 'id') {
+            if ($field_name !== 'id' && $field_name !== 'added_by') {
                 $field_type = $field_info[$field_name]->type;
                 $escaped_value = htmlspecialchars($field_value);
 
@@ -86,32 +86,32 @@ if (isset($_POST['edit'])) {
         }
 
         // Affichage du formulaire de modification
-        $edit_form_html = '<form action="" method="post" class="edit-form">';
-        $edit_form_html .= implode('<br>', $form_fields);
-        $edit_form_html .= '<input type="hidden" name="table_selected" value="' . $table_selected . '">';
-        $edit_form_html .= '<input type="hidden" name="row_id" value="' . $row_id . '">';
-        $edit_form_html .= '<input type="submit" name="save" value="Enregistrer">';
-        $edit_form_html .= '</form>';
+        echo '<h3>Modifier la ligne de données</h3>';
+        echo '<form method="post" action="">';
+        echo implode('<br>', $form_fields);
+        echo '<input type="hidden" name="row_id" value="' . $row_id . '">';
+        echo '<input type="submit" name="update" value="Enregistrer les modifications">';
+        echo '</form>';
     } else {
-        $edit_form_html = "Erreur lors de la récupération des données de la ligne à modifier.";
+        echo 'La ligne de données sélectionnée n\'existe pas.';
     }
 }
 
 // Enregistrement des modifications
-if (isset($_POST['save'])) {
+if (isset($_POST['update'])) {
     $row_id = $_POST['row_id'];
 
-    // Récupérer les valeurs modifiées à partir du formulaire
-    $updated_values = array();
+    // Construire la requête de mise à jour avec les valeurs des champs modifiés
+    $sql_update = "UPDATE $table_selected SET ";
+    $update_fields = array();
     foreach ($_POST as $field_name => $field_value) {
-        if ($field_name !== 'table_selected' && $field_name !== 'row_id' && $field_name !== 'save') {
+        if ($field_name !== 'row_id' && $field_name !== 'update') {
             $field_value = mysqli_real_escape_string($conn, $field_value);
-            $updated_values[] = "$field_name = '$field_value'";
+            $update_fields[] = $field_name . " = '" . $field_value . "'";
         }
     }
-
-    // Générer la requête de mise à jour
-    $sql_update = "UPDATE $table_selected SET " . implode(', ', $updated_values) . " WHERE id = $row_id";
+    $sql_update .= implode(', ', $update_fields);
+    $sql_update .= " WHERE id = $row_id";
 
     if (mysqli_query($conn, $sql_update)) {
         $update_message = "Les modifications ont été enregistrées avec succès.";
@@ -121,78 +121,68 @@ if (isset($_POST['save'])) {
     }
 }
 
-ob_end_flush(); // Activer à nouveau le buffer de sortie
+ob_end_flush(); // Activer le buffer de sortie
 ?>
-
 
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Gestion des données</title>
-    <link rel="stylesheet" type="text/css" href="./gestion_donnees.css">
 </head>
 <body>
-<div class="navbar">
-    <a href="./admin.php">Retour à l'administration</a>
-</div>
-<div class="container">
-    <div class="content">
-        <h2>Gérer les données</h2>
-        <form method="post" action="" class="form-container">
-            <label for="table_selected">Table:</label>
-            <select name="table_selected" onchange="this.form.submit()">
-                <option value="">Sélectionner une table</option>
-                <?php foreach ($tables as $table) { ?>
-                    <option value="<?php echo $table; ?>" <?php if ($table === $table_selected) echo 'selected'; ?>><?php echo $table; ?></option>
-                <?php } ?>
-            </select>
-        </form>
-
-        <?php if (!empty($table_selected)) { ?>
-            <h2>Données de la table "<?php echo $table_selected; ?>"</h2>
-            <?php if (empty($data)) { ?>
-                <p>Aucune donnée trouvée.</p>
-            <?php } else { ?>
-                <table>
-                    <tr>
-                        <?php foreach (array_keys($data[0]) as $column_name) { ?>
-                            <th><?php echo $column_name; ?></th>
-                        <?php } ?>
-                        <th>Actions</th>
-                    </tr>
-                    <?php foreach ($data as $row) { ?>
-                        <tr>
-                            <?php foreach ($row as $value) { ?>
-                                <td><?php echo $value; ?></td>
-                            <?php } ?>
-                            <td>
-                                <form method="post" action="" class="data-actions">
-                                    <input type="hidden" name="table_selected" value="<?php echo $table_selected; ?>">
-                                    <input type="hidden" name="row_id" value="<?php echo $row['id']; ?>">
-                                    <button type="submit" name="edit" class="btn-edit">Modifier</button>
-                                    <button type="submit" name="delete" class="btn-delete">Supprimer</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php } ?>
-                </table>
-            <?php } ?>
-        <?php } ?>
-    </div>
-
-    <?php if (isset($edit_form_html)) { ?>
-        <div class="edit-form-container">
-            <h2>Modifier la ligne de données</h2>
-            <?php echo $edit_form_html; ?>
-        </div>
+    <h1>Gestion des données</h1>
+    
+    <!-- Affichage du message de suppression -->
+    <?php if (isset($delete_message)) { ?>
+        <p class="error"><?php echo $delete_message; ?></p>
     <?php } ?>
 
-</div>
-<?php if (isset($delete_message)) { ?>
-    <div class="alert success"><?php echo $delete_message; ?></div>
-<?php } ?>
-<?php if (isset($update_message)) { ?>
-    <div class="alert success"><?php echo $update_message; ?></div>
-<?php } ?>
+    <!-- Affichage du message de mise à jour -->
+    <?php if (isset($update_message)) { ?>
+        <p class="success"><?php echo $update_message; ?></p>
+    <?php } ?>
+
+    <!-- Sélection de la table -->
+    <form method="post" action="">
+        <label for="table_selected">Sélectionner une table :</label>
+        <select id="table_selected" name="table_selected">
+            <?php foreach ($tables as $table) { ?>
+                <option value="<?php echo $table; ?>" <?php if ($table_selected === $table) echo 'selected'; ?>><?php echo $table; ?></option>
+            <?php } ?>
+        </select>
+        <input type="submit" value="Afficher les données">
+    </form>
+
+    <!-- Affichage des données de la table sélectionnée -->
+    <?php if (!empty($data)) { ?>
+        <h2>Table : <?php echo $table_selected; ?></h2>
+        <table>
+            <thead>
+                <tr>
+                    <?php foreach ($data[0] as $column_name => $column_value) { ?>
+                        <th><?php echo $column_name; ?></th>
+                    <?php } ?>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($data as $row) { ?>
+                    <tr>
+                        <?php foreach ($row as $field_name => $field_value) { ?>
+                            <td><?php echo $field_value; ?></td>
+                        <?php } ?>
+                        <td>
+                            <form method="post" action="">
+                                <input type="hidden" name="row_id" value="<?php echo $row['id']; ?>">
+                                <input type="submit" name="edit" value="Modifier">
+                                <input type="submit" name="delete" value="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette ligne de données ?')">
+                            </form>
+                        </td>
+                    </tr>
+                <?php } ?>
+            </tbody>
+        </table>
+    <?php } ?>
 </body>
 </html>
