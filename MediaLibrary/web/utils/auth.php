@@ -58,7 +58,7 @@ function getLoggedInUserId() {
     if (isset($_SESSION['user_id'])) {
         return $_SESSION['user_id'];
     } else {
-        // Effectuer la logique pour récupérer l'ID de l'utilisateur à partir de la base de données
+        // Effectuer la logique pour récupérer l'ID de l'utilisateur et son e-mail à partir de la base de données
         $host = 'db';
         $user = 'nathan';
         $password = '444719';
