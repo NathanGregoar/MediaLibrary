@@ -15,6 +15,7 @@ require_once '../utils/config.php';
             <a href="../accueil/index.php">Accueil</a>
             <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
             <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
+            <a href="./livres_possede.php">Consulter les Livres Possédés</a>
         </div>
 
         <h1>Ajouter un Livre Souhaité</h1>

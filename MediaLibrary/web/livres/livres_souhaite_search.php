@@ -30,6 +30,7 @@ $loggedInUser = getLoggedInUser();
             <a href="../accueil/index.php">Accueil</a>
             <a href="./livres_souhaite.php">Ajouter un Livre</a>
             <a href="./livres_souhaites_search.php">Consulter les Livres</a>
+            <a href="./livres_possede.php">Consulter les Livres Possédés</a>
         </div>
 
         <h1>Rechercher des Livres</h1>
