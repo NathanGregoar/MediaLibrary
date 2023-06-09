@@ -101,6 +101,9 @@ $loggedInUser = getLoggedInUser();
                     echo '<input type="submit" value="Supprimer" class="delete-btn">';
                     echo '</form>';
 
+                    // Ajout du bouton "Modifier"
+                    echo '<a href="livre_modifier.php?id=' . $id . '">Modifier</a>';
+
                     echo '</div>'; // .livre-item
                 }
                 echo '</div>'; // .livres-liste
@@ -144,6 +147,9 @@ $loggedInUser = getLoggedInUser();
             echo '<input type="hidden" name="delete" value="' . $id . '">';
             echo '<input type="submit" value="Supprimer" class="delete-btn">';
             echo '</form>';
+
+            // Ajout du bouton "Modifier"
+            echo '<a href="livre_modifier.php?id=' . $id . '">Modifier</a>';
 
             echo '</div>'; // .livre-item
         }
