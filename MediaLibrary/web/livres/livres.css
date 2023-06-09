@@ -101,3 +101,46 @@ tr:hover {
     color: #0c5460;
     border-color: #bee5eb;
 }
+
+.livres-liste {
+    margin-bottom: 20px;
+}
+
+.livre-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    background: linear-gradient(#86c1ff, #1c79c0);
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.livre-item img {
+    max-width: 100px;
+    margin-right: 10px;
+}
+
+.livre-details {
+    flex-grow: 1;
+}
+
+.livre-details h3 {
+    margin: 0;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.livre-details p {
+    margin: 0;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.livre-item .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
