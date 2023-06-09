@@ -9,6 +9,7 @@ $loggedInUser = getLoggedInUser();
 if ($loggedInUser) {
     // Afficher les informations de l'utilisateur
     echo '<h2>Informations de l\'utilisateur :</h2>';
+    echo '<p><strong>ID :</strong> ' . $loggedInUser['id'] . '</p>';
     echo '<p><strong>Nom d\'utilisateur :</strong> ' . $loggedInUser['username'] . '</p>';
     echo '<p><strong>Email :</strong> ' . $_SESSION['email'] . '</p>';
 } else {
