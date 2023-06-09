@@ -42,7 +42,7 @@
         <p>La page que vous recherchez n'existe pas.</p>
         <p>Nous sommes désolés, mais la page demandée n'a pas été trouvée.</p>
         <p>Veuillez vérifier l'URL que vous avez saisie ou cliquez sur le bouton ci-dessous pour retourner à la page d'accueil.</p>
-        <a class="button" href="../accueil/index.php">Retour à la page d'accueil</a>
+        <a class="button" href="../index.php">Retour à la page d'accueil</a>
     </div>
 </body>
 </html>

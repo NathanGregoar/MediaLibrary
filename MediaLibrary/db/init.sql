@@ -9,6 +9,39 @@ CREATE TABLE IF NOT EXISTS users (
   email VARCHAR(255) NOT NULL
 );
 
+CREATE TABLE IF NOT EXISTS livres_souhaites (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titre VARCHAR(255) NOT NULL,
+  auteur VARCHAR(255) DEFAULT '/',
+  numero_tome INT DEFAULT 1,
+  nombre_total_tomes INT DEFAULT 1,
+  prix DECIMAL(10,2) DEFAULT 0.00,
+  format VARCHAR(50) DEFAULT NULL,
+  maison_edition VARCHAR(255) DEFAULT NULL,
+  resume TEXT,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
+);
+
+CREATE TABLE IF NOT EXISTS livres_possedes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  titre VARCHAR(255) NOT NULL,
+  auteur VARCHAR(255) DEFAULT '/',
+  numero_tome INT DEFAULT 1,
+  nombre_total_tomes INT DEFAULT 1,
+  prix DECIMAL(10,2) DEFAULT 0.00,
+  format VARCHAR(50) DEFAULT NULL,
+  maison_edition VARCHAR(255) DEFAULT NULL,
+  resume TEXT,
+  theme VARCHAR(255) DEFAULT NULL,
+  notation_etoile INT DEFAULT NULL,
+  commentaire TEXT,
+  favori BOOLEAN DEFAULT false,
+  notation_piments INT DEFAULT NULL,
+  added_by INT DEFAULT NULL,
+  FOREIGN KEY (added_by) REFERENCES users(id)
+);
+
 CREATE TABLE IF NOT EXISTS films (
   id INT AUTO_INCREMENT PRIMARY KEY,
   title VARCHAR(255) NOT NULL,
@@ -26,18 +59,6 @@ CREATE TABLE IF NOT EXISTS series (
   complete_season BOOLEAN DEFAULT 0,
   episode_count INT DEFAULT 0,
   season_number INT DEFAULT 0,
-  external_hard_drive INT DEFAULT NULL,
-  added_by INT DEFAULT NULL,
-  FOREIGN KEY (added_by) REFERENCES users(id)
-);
-
-CREATE TABLE IF NOT EXISTS livres (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  title VARCHAR(255) NOT NULL,
-  author VARCHAR(255) DEFAULT '/',
-  publication_year INT DEFAULT 0,
-  genre VARCHAR(255) DEFAULT NULL,
-  tome_count INT DEFAULT 1,
   external_hard_drive INT DEFAULT NULL,
   added_by INT DEFAULT NULL,
   FOREIGN KEY (added_by) REFERENCES users(id)
