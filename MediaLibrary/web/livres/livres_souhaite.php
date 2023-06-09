@@ -75,7 +75,11 @@ require_once '../utils/config.php';
             <input type="number" id="prix" name="prix" min="0" step="0.01" readonly>
 
             <label for="format">Format :</label>
-            <input type="text" id="format" name="format">
+            <select id="format" name="format">
+                <option value="broche">Broché</option>
+                <option value="poche">Poche</option>
+                <option value="ebook">E-book</option>
+            </select>
 
             <label for="maison_edition">Maison d'édition :</label>
             <input type="text" id="maison_edition" name="maison_edition">
