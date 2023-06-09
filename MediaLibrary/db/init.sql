@@ -18,7 +18,7 @@ CREATE TABLE IF NOT EXISTS livres_souhaites (
   prix DECIMAL(10,2) DEFAULT 0.00,
   format VARCHAR(50) DEFAULT NULL,
   maison_edition VARCHAR(255) DEFAULT NULL,
-  resume TEXT,
+  resume_livre TEXT,
   added_by INT DEFAULT NULL,
   FOREIGN KEY (added_by) REFERENCES users(id)
 );
@@ -32,12 +32,13 @@ CREATE TABLE IF NOT EXISTS livres_possedes (
   prix DECIMAL(10,2) DEFAULT 0.00,
   format VARCHAR(50) DEFAULT NULL,
   maison_edition VARCHAR(255) DEFAULT NULL,
-  resume TEXT,
+  resume_livre TEXT,
   theme VARCHAR(255) DEFAULT NULL,
   notation_etoile INT DEFAULT NULL,
   commentaire TEXT,
   favori BOOLEAN DEFAULT false,
   notation_piments INT DEFAULT NULL,
+  ecole BOOLEAN DEFAULT false,
   added_by INT DEFAULT NULL,
   FOREIGN KEY (added_by) REFERENCES users(id)
 );
