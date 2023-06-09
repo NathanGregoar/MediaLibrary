@@ -30,8 +30,14 @@ require_once '../utils/config.php';
         if (isset($_POST['titre'])) {
             $titre = $connection->real_escape_string($_POST['titre']);
             $auteur = $_POST['auteur'] != '' ? $connection->real_escape_string($_POST['auteur']) : 'NULL';
+
+            // Récupérer le nombre total de tomes de la série
+            $query = "SELECT COUNT(*) AS total_tomes FROM livres_souhaites WHERE titre = '$titre'";
+            $result = mysqli_query($connection, $query);
+            $row = mysqli_fetch_assoc($result);
+            $nombreTotalTomes = $row['total_tomes'];
+
             $numeroTome = $_POST['numero_tome'] != '' ? intval($_POST['numero_tome']) : 1;
-            $nombreTotalTomes = $_POST['nombre_total_tomes'] != '' ? intval($_POST['nombre_total_tomes']) : 1;
             $prix = $_POST['prix'] != '' ? floatval($_POST['prix']) : 0.00;
             $format = $_POST['format'] != '' ? $connection->real_escape_string($_POST['format']) : 'NULL';
             $maisonEdition = $_POST['maison_edition'] != '' ? $connection->real_escape_string($_POST['maison_edition']) : 'NULL';
@@ -63,10 +69,10 @@ require_once '../utils/config.php';
             <input type="number" id="numero_tome" name="numero_tome" value="1" min="1">
 
             <label for="nombre_total_tomes">Nombre total de tomes :</label>
-            <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="1" min="1">
+            <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="1" min="1" readonly>
 
             <label for="prix">Prix :</label>
-            <input type="number" id="prix" name="prix" min="0" step="0.01">
+            <input type="number" id="prix" name="prix" min="0" step="0.01" readonly>
 
             <label for="format">Format :</label>
             <input type="text" id="format" name="format">
@@ -98,6 +104,7 @@ require_once '../utils/config.php';
                                 if (data.totalItems > 0) {
                                     var book = data.items[0];
                                     $('#auteur').val(book.volumeInfo.authors ? book.volumeInfo.authors[0] : '');
+                                    $('#prix').val(book.saleInfo.listPrice ? book.saleInfo.listPrice.amount : 0);
                                 }
                             }
                         });
