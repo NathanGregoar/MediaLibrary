@@ -67,7 +67,7 @@ $loggedInUser = getLoggedInUser();
                     $prix = $row['prix'];
                     $format = $row['format'];
                     $maison_edition = $row['maison_edition'];
-                    $resume = $row['resume'];
+                    $resume = $row['resume_livre'];
 
                     echo '<div class="livre-item">';
                     echo '<h3>' . $titre . '</h3>';
@@ -107,7 +107,7 @@ $loggedInUser = getLoggedInUser();
             $prix = $row['prix'];
             $format = $row['format'];
             $maison_edition = $row['maison_edition'];
-            $resume = $row['resume'];
+            $resume = $row['resume_livre'];
 
             echo '<div class="livre-item">';
             echo '<h3>' . $titre . '</h3>';
