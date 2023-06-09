@@ -79,6 +79,8 @@ require_once '../utils/config.php';
                 <option value="broche">Broché</option>
                 <option value="poche">Poche</option>
                 <option value="ebook">E-book</option>
+                <option value="relie">Relié</option>
+                <option value="audio">Audio</option>
             </select>
 
             <label for="maison_edition">Maison d'édition :</label>
