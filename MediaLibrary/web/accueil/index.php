@@ -24,13 +24,13 @@ $email = $_SESSION['email'];
 </head>
 <body>
     <header>
-        <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <form method="post" action="" class="logout-form">
             <input type="submit" name="logout" value="Déconnexion">
         </form>
     </header>
 
     <div class="container">
+        <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
         <div class="section-links">
             <a href="../film/film.php" class="section-link">
                 <span class="section-link-text">Section Films</span>
