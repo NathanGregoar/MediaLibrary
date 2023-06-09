@@ -37,7 +37,12 @@ require_once '../utils/config.php';
             $row = mysqli_fetch_assoc($result);
             $nombreTotalTomes = $row['total_tomes'];
 
-            $numeroTome = $_POST['numero_tome'] != '' ? intval($_POST['numero_tome']) : 1;
+            // Récupérer le numéro du tome dans la série
+            $query = "SELECT MAX(numero_tome) AS dernier_tome FROM livres_souhaites WHERE titre = '$titre'";
+            $result = mysqli_query($connection, $query);
+            $row = mysqli_fetch_assoc($result);
+            $numeroTome = $row['dernier_tome'] + 1;
+
             $prix = $_POST['prix'] != '' ? floatval($_POST['prix']) : 0.00;
             $format = $_POST['format'] != '' ? $connection->real_escape_string($_POST['format']) : 'NULL';
             $maisonEdition = $_POST['maison_edition'] != '' ? $connection->real_escape_string($_POST['maison_edition']) : 'NULL';
@@ -66,7 +71,7 @@ require_once '../utils/config.php';
             <input type="text" id="auteur" name="auteur">
 
             <label for="numero_tome">Numéro du tome :</label>
-            <input type="number" id="numero_tome" name="numero_tome" value="1" min="1">
+            <input type="number" id="numero_tome" name="numero_tome" value="1" min="1" readonly>
 
             <label for="nombre_total_tomes">Nombre total de tomes :</label>
             <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="1" min="1" readonly>
@@ -129,6 +134,24 @@ require_once '../utils/config.php';
                             }
                         });
                     }
+                });
+
+                $('#titre, #auteur').blur(function() {
+                    var titre = $('#titre').val();
+                    $.ajax({
+                        url: 'https://www.googleapis.com/books/v1/volumes',
+                        data: { q: 'intitle:' + titre, maxResults: 1 },
+                        dataType: 'json',
+                        success: function(data) {
+                            if (data.totalItems > 0) {
+                                var book = data.items[0];
+                                var serieTomes = book.volumeInfo.seriesInfo ? book.volumeInfo.seriesInfo.booksInSeries : 1;
+                                var dernierTome = book.volumeInfo.seriesInfo ? book.volumeInfo.seriesInfo.bookDisplayNumber : 1;
+                                $('#nombre_total_tomes').val(serieTomes);
+                                $('#numero_tome').val(dernierTome + 1);
+                            }
+                        }
+                    });
                 });
             });
         </script>
