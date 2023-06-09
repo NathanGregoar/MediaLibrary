@@ -1,38 +1,38 @@
 * {
     box-sizing: border-box;
-}
-
-body {
+  }
+  
+  body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #ecf2f9;
-}
-
-.container {
+  }
+  
+  .container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: flex-start;
+    justify-content: center;
     height: 100vh;
     padding: 20px;
-}
-
-.welcome-message {
+  }
+  
+  .welcome-message {
     font-size: 48px;
     margin-top: 0;
     text-align: center;
-}
-
-.section-links {
+  }
+  
+  .section-links {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
     max-width: 800px;
     margin: 20px auto;
-}
-
-.section-link {
+  }
+  
+  .section-link {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -44,25 +44,40 @@ body {
     border-radius: 4px;
     padding: 20px;
     transition: background-color 0.3s ease;
-}
-
-.section-link:hover {
+  }
+  
+  .section-link:hover {
     background: linear-gradient(#63a8ff, #1c79c0);
-}
-
-.section-link-text {
+  }
+  
+  .section-link-text {
     margin: 0;
-}
-
-.logout-form {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-}
-
-@media screen and (max-width: 600px) {
+  }
+  
+  .logout-form {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .logout-form button {
+    background-color: #333;
+    color: #fff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .logout-form button:hover {
+    background-color: #1c79c0;
+  }
+  
+  @media screen and (max-width: 600px) {
     .section-link {
-        font-size: 18px;
-        padding: 15px;
+      font-size: 18px;
+      padding: 15px;
     }
-}
+  }
+  
