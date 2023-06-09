@@ -2,12 +2,19 @@
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
 
-// Vérification si l'utilisateur est connecté
-checkLoggedIn();
-
-// Récupérer l'ID de l'utilisateur connecté
+// Récupérer l'utilisateur connecté
 $loggedInUser = getLoggedInUser();
 
+// Vérifier si l'utilisateur est connecté
+if ($loggedInUser) {
+    // Afficher les informations de l'utilisateur
+    echo '<h2>Informations de l\'utilisateur :</h2>';
+    echo '<p><strong>Nom d\'utilisateur :</strong> ' . $loggedInUser['username'] . '</p>';
+    echo '<p><strong>Email :</strong> ' . $_SESSION['email'] . '</p>';
+} else {
+    // L'utilisateur n'est pas connecté, afficher un message d'erreur ou rediriger vers la page de connexion
+    echo '<p>Vous devez être connecté pour afficher les informations de l\'utilisateur.</p>';
+}
 ?>
 
 <!DOCTYPE html>
