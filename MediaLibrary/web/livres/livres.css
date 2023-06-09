@@ -31,6 +31,9 @@ h1 {
 
 form {
     margin-bottom: 20px;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 10px;
 }
 
 label {
@@ -38,6 +41,7 @@ label {
     margin-bottom: 10px;
     font-weight: bold;
     color: #333;
+    grid-column: span 1;
 }
 
 input[type="text"],
@@ -49,15 +53,13 @@ textarea {
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
+    grid-column: span 1;
 }
 
 input[type="submit"] {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
+    grid-column: span 3;
 }
+
 
 table {
     width: 100%;
