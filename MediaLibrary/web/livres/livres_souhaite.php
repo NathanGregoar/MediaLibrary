@@ -87,8 +87,7 @@ require_once '../utils/config.php';
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('#titre').blur(function() {
-                    var titre = $(this).val();
+                function fetchBookDetails(titre) {
                     if (titre !== '') {
                         $.ajax({
                             url: 'https://www.googleapis.com/books/v1/volumes',
@@ -105,6 +104,16 @@ require_once '../utils/config.php';
                             }
                         });
                     }
+                }
+
+                $('#titre').blur(function() {
+                    var titre = $(this).val();
+                    fetchBookDetails(titre);
+                });
+
+                $('input, textarea').not('#titre').blur(function() {
+                    var titre = $('#titre').val();
+                    fetchBookDetails(titre);
                 });
             });
         </script>
