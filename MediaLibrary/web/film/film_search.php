@@ -64,7 +64,7 @@ if ($loggedInUser) {
         // Affichage des films correspondant à la recherche
         if (isset($_GET['search'])) {
             $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = $loggedInUser";
+            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
@@ -112,7 +112,7 @@ if ($loggedInUser) {
         }
 
         // Affichage de tous les films ajoutés par l'utilisateur connecté
-        $userMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUser";
+        $userMoviesSql = "SELECT * FROM films WHERE added_by = " . $loggedInUser['id'];
         $userMoviesResult = $connection->query($userMoviesSql);
 
         echo '<h2>Vos films :</h2>';
