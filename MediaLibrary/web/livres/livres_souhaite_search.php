@@ -10,14 +10,14 @@ $loggedInUser = getLoggedInUser();
 <html>
 <head>
     <title>Rechercher des Livres</title>
-    <link rel="stylesheet" type="text/css" href="livres.css">
+    <link rel="stylesheet" type="text/css" href="livre.css">
 </head>
 <body>
     <div class="container">
         <div class="navbar">
             <a href="../accueil/index.php">Accueil</a>
-            <a href="./livres_souhaite.php">Ajouter un Livre</a>
-            <a href="./livres_souhaite_search.php">Consulter les Livres</a>
+            <a href="./livre.php">Ajouter un Livre</a>
+            <a href="./livres_souhaites_search.php">Consulter les Livres</a>
         </div>
 
         <h1>Rechercher des Livres</h1>
@@ -28,6 +28,7 @@ $loggedInUser = getLoggedInUser();
                 <input type="submit" value="Rechercher" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
             </form>
         </div>
+
 
         <?php
         $connection = mysqli_connect($host, $username, $password, $dbName);
@@ -59,7 +60,7 @@ $loggedInUser = getLoggedInUser();
                 echo '<div class="livres-liste">';
                 while ($row = $searchResult->fetch_assoc()) {
                     $id = $row['id'];
-                    $titre = $row['titre'];
+                    $titre = stripslashes($row['titre']);
                     $auteur = $row['auteur'];
                     $numero_tome = $row['numero_tome'];
                     $nombre_total_tomes = $row['nombre_total_tomes'];
@@ -91,15 +92,15 @@ $loggedInUser = getLoggedInUser();
             }
         }
 
-        // Affichage de tous les livres souhaités par l'utilisateur connecté
+        // Affichage de tous les livres ajoutés par l'utilisateur connecté
         $userLivresSql = "SELECT * FROM livres_souhaites WHERE added_by = " . $loggedInUser['id'];
         $userLivresResult = $connection->query($userLivresSql);
 
-        echo '<h2>Vos livres souhaités :</h2>';
+        echo '<h2>Vos livres :</h2>';
         echo '<div class="livres-liste">';
         while ($row = $userLivresResult->fetch_assoc()) {
             $id = $row['id'];
-            $titre = $row['titre'];
+            $titre = stripslashes($row['titre']);
             $auteur = $row['auteur'];
             $numero_tome = $row['numero_tome'];
             $nombre_total_tomes = $row['nombre_total_tomes'];
