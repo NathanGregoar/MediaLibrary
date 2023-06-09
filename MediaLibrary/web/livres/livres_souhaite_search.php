@@ -61,13 +61,13 @@ $loggedInUser = getLoggedInUser();
                 while ($row = $searchResult->fetch_assoc()) {
                     $id = $row['id'];
                     $titre = stripslashes($row['titre']);
-                    $auteur = $row['auteur'];
-                    $numero_tome = $row['numero_tome'];
-                    $nombre_total_tomes = $row['nombre_total_tomes'];
-                    $prix = $row['prix'];
-                    $format = $row['format'];
-                    $maison_edition = $row['maison_edition'];
-                    $resume = $row['resume_livre'];
+                    $auteur = stripslashes($row['auteur']);
+                    $numero_tome = stripslashes($row['numero_tome']);
+                    $nombre_total_tomes = stripslashes($row['nombre_total_tomes']);
+                    $prix = stripslashes($row['prix']);
+                    $format = stripslashes($row['format']);
+                    $maison_edition = stripslashes($row['maison_edition']);
+                    $resume = stripslashes($row['resume_livre']);
 
                     echo '<div class="livre-item">';
                     echo '<h3>' . $titre . '</h3>';
@@ -101,13 +101,13 @@ $loggedInUser = getLoggedInUser();
         while ($row = $userLivresResult->fetch_assoc()) {
             $id = $row['id'];
             $titre = stripslashes($row['titre']);
-            $auteur = $row['auteur'];
-            $numero_tome = $row['numero_tome'];
-            $nombre_total_tomes = $row['nombre_total_tomes'];
-            $prix = $row['prix'];
-            $format = $row['format'];
-            $maison_edition = $row['maison_edition'];
-            $resume = $row['resume_livre'];
+            $auteur = stripslashes($row['auteur']);
+            $numero_tome = stripslashes($row['numero_tome']);
+            $nombre_total_tomes = stripslashes($row['nombre_total_tomes']);
+            $prix = stripslashes($row['prix']);
+            $format = stripslashes($row['format']);
+            $maison_edition = stripslashes($row['maison_edition']);
+            $resume = stripslashes($row['resume_livre']);
 
             echo '<div class="livre-item">';
             echo '<h3>' . $titre . '</h3>';
