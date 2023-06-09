@@ -83,6 +83,31 @@ require_once '../utils/config.php';
         <?php
         $connection->close();
         ?>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#titre').blur(function() {
+                    var titre = $(this).val();
+                    if (titre !== '') {
+                        $.ajax({
+                            url: 'https://www.googleapis.com/books/v1/volumes',
+                            data: { q: 'intitle:' + titre, maxResults: 1 },
+                            dataType: 'json',
+                            success: function(data) {
+                                if (data.totalItems > 0) {
+                                    var book = data.items[0];
+                                    $('#auteur').val(book.volumeInfo.authors ? book.volumeInfo.authors[0] : '');
+                                    $('#format').val(book.volumeInfo.printType ? book.volumeInfo.printType : '');
+                                    $('#maison_edition').val(book.volumeInfo.publisher ? book.volumeInfo.publisher : '');
+                                    $('#resume').val(book.volumeInfo.description ? book.volumeInfo.description : '');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
     </div>
 </body>
 </html>
