@@ -30,7 +30,7 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    height: 100vh;
+    height: calc(100vh - 100px); /* Subtract header height */
     padding: 20px;
   }
   
@@ -38,7 +38,7 @@
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 20px;
-    max-width: 100%;
+    max-width: 800px;
     margin: 20px auto;
   }
   
@@ -66,7 +66,7 @@
   
   .logout-form {
     position: fixed;
-    bottom: 20px;
+    top: 20px;
     right: 20px;
   }
   
@@ -82,12 +82,6 @@
   
   .logout-form input[type="submit"]:hover {
     background-color: #1c79c0;
-  }
-  
-  .admin-link {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
   }
   
   @media screen and (max-width: 600px) {
