@@ -13,8 +13,8 @@ require_once '../utils/config.php';
     <div class="container">
         <div class="navbar">
             <a href="../accueil/index.php">Accueil</a>
-            <a href="./livre_souhaite.php">Ajouter un Livre Souhaité</a>
-            <a href="./livre_souhaite_search.php">Consulter les Livres Souhaités</a>
+            <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
+            <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
         </div>
 
         <h1>Ajouter un Livre Souhaité</h1>
