@@ -50,32 +50,43 @@ require_once '../utils/config.php';
                 echo '<div class="alert alert-error">Erreur lors de l\'ajout du livre souhaité : ' . $connection->error . '</div>';
             }
         }
+
+        // Récupération des informations préremplies du formulaire
+        $defaultTitre = isset($_POST['titre']) ? $_POST['titre'] : '';
+        $defaultAuteur = isset($_POST['auteur']) ? $_POST['auteur'] : '';
+        $defaultNumeroTome = isset($_POST['numero_tome']) ? $_POST['numero_tome'] : '1';
+        $defaultNombreTotalTomes = isset($_POST['nombre_total_tomes']) ? $_POST['nombre_total_tomes'] : '1';
+        $defaultPrix = isset($_POST['prix']) ? $_POST['prix'] : '';
+        $defaultFormat = isset($_POST['format']) ? $_POST['format'] : '';
+        $defaultMaisonEdition = isset($_POST['maison_edition']) ? $_POST['maison_edition'] : '';
+        $defaultResume = isset($_POST['resume']) ? $_POST['resume'] : '';
+
         ?>
 
         <form method="POST">
             <label for="titre">Titre :</label>
-            <input type="text" id="titre" name="titre" required>
+            <input type="text" id="titre" name="titre" value="<?php echo $defaultTitre; ?>" required>
 
             <label for="auteur">Auteur :</label>
-            <input type="text" id="auteur" name="auteur">
+            <input type="text" id="auteur" name="auteur" value="<?php echo $defaultAuteur; ?>">
 
             <label for="numero_tome">Numéro du tome :</label>
-            <input type="number" id="numero_tome" name="numero_tome" value="1" min="1">
+            <input type="number" id="numero_tome" name="numero_tome" value="<?php echo $defaultNumeroTome; ?>" min="1">
 
             <label for="nombre_total_tomes">Nombre total de tomes :</label>
-            <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="1" min="1">
+            <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="<?php echo $defaultNombreTotalTomes; ?>" min="1">
 
             <label for="prix">Prix :</label>
-            <input type="number" id="prix" name="prix" min="0" step="0.01">
+            <input type="number" id="prix" name="prix" value="<?php echo $defaultPrix; ?>" min="0" step="0.01">
 
             <label for="format">Format :</label>
-            <input type="text" id="format" name="format">
+            <input type="text" id="format" name="format" value="<?php echo $defaultFormat; ?>">
 
             <label for="maison_edition">Maison d'édition :</label>
-            <input type="text" id="maison_edition" name="maison_edition">
+            <input type="text" id="maison_edition" name="maison_edition" value="<?php echo $defaultMaisonEdition; ?>">
 
             <label for="resume">Résumé :</label>
-            <textarea id="resume" name="resume"></textarea>
+            <textarea id="resume" name="resume"><?php echo $defaultResume; ?></textarea>
 
             <input type="submit" value="Ajouter">
         </form>
@@ -87,7 +98,8 @@ require_once '../utils/config.php';
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
-                function fetchBookDetails(titre) {
+                $('#titre').blur(function() {
+                    var titre = $(this).val();
                     if (titre !== '') {
                         $.ajax({
                             url: 'https://www.googleapis.com/books/v1/volumes',
@@ -100,20 +112,16 @@ require_once '../utils/config.php';
                                     $('#format').val(book.volumeInfo.printType ? book.volumeInfo.printType : '');
                                     $('#maison_edition').val(book.volumeInfo.publisher ? book.volumeInfo.publisher : '');
                                     $('#resume').val(book.volumeInfo.description ? book.volumeInfo.description : '');
+                                } else {
+                                    // Réinitialiser les valeurs préremplies si le livre n'est pas trouvé
+                                    $('#auteur').val('<?php echo $defaultAuteur; ?>');
+                                    $('#format').val('<?php echo $defaultFormat; ?>');
+                                    $('#maison_edition').val('<?php echo $defaultMaisonEdition; ?>');
+                                    $('#resume').val('<?php echo $defaultResume; ?>');
                                 }
                             }
                         });
                     }
-                }
-
-                $('#titre').blur(function() {
-                    var titre = $(this).val();
-                    fetchBookDetails(titre);
-                });
-
-                $('input, textarea').not('#titre').blur(function() {
-                    var titre = $('#titre').val();
-                    fetchBookDetails(titre);
                 });
             });
         </script>
