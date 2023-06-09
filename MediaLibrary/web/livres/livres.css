@@ -31,9 +31,6 @@ h1 {
 
 form {
     margin-bottom: 20px;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 10px;
 }
 
 label {
@@ -60,21 +57,6 @@ input[type="submit"] {
     color: white;
     border: none;
     cursor: pointer;
-    grid-column: span 3;
-}
-
-label[for="numero_tome"],
-label[for="nombre_total_tomes"],
-label[for="prix"] {
-    display: inline-block;
-    width: 100px;
-}
-
-input#numero_tome,
-input#nombre_total_tomes,
-input#prix {
-    width: calc(100% - 100px);
-    margin-left: 10px;
 }
 
 table {
