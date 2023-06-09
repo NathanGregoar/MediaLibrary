@@ -87,9 +87,26 @@ require_once '../utils/config.php';
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
             $(document).ready(function() {
-                $('#titre, #auteur').blur(function() {
+                $('#titre').blur(function() {
+                    var titre = $(this).val();
+                    if (titre !== '') {
+                        $.ajax({
+                            url: 'https://www.googleapis.com/books/v1/volumes',
+                            data: { q: 'intitle:' + titre, maxResults: 1 },
+                            dataType: 'json',
+                            success: function(data) {
+                                if (data.totalItems > 0) {
+                                    var book = data.items[0];
+                                    $('#auteur').val(book.volumeInfo.authors ? book.volumeInfo.authors[0] : '');
+                                }
+                            }
+                        });
+                    }
+                });
+
+                $('#auteur').blur(function() {
                     var titre = $('#titre').val();
-                    var auteur = $('#auteur').val();
+                    var auteur = $(this).val();
                     if (titre !== '' && auteur !== '') {
                         $.ajax({
                             url: 'https://www.googleapis.com/books/v1/volumes',
