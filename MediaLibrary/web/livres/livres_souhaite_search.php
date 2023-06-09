@@ -102,7 +102,7 @@ $loggedInUser = getLoggedInUser();
                     echo '</form>';
 
                     // Ajout du bouton "Modifier"
-                    echo '<a href="livre_modifier.php?id=' . $id . '">Modifier</a>';
+                    echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
 
                     echo '</div>'; // .livre-item
                 }
@@ -149,7 +149,7 @@ $loggedInUser = getLoggedInUser();
             echo '</form>';
 
             // Ajout du bouton "Modifier"
-            echo '<a href="livre_modifier.php?id=' . $id . '">Modifier</a>';
+            echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
 
             echo '</div>'; // .livre-item
         }
