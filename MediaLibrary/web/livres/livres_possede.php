@@ -123,8 +123,6 @@ $loggedInUser = getLoggedInUser();
         // Fermer la connexion à la base de données
         $connection->close();
         ?>
-
-        <p><a href="../deconnexion.php">Déconnexion</a></p>
     </div>
 </body>
 </html>
