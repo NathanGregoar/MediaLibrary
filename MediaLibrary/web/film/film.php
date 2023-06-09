@@ -53,7 +53,7 @@ require_once '../utils/config.php';
                     echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
                 }
             }
-        }        
+        }
         ?>
 
         <form method="POST">
