@@ -2,6 +2,18 @@
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
 
+function getBookCover($title, $author) {
+    $url = 'https://www.googleapis.com/books/v1/volumes?q=intitle:' . urlencode($title) . '+inauthor:' . urlencode($author);
+    $response = file_get_contents($url);
+    $data = json_decode($response, true);
+
+    if ($data && isset($data['items'][0]['volumeInfo']['imageLinks']['thumbnail'])) {
+        return $data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
+    }
+
+    return null;
+}
+
 // Récupérer l'utilisateur connecté
 $loggedInUser = getLoggedInUser();
 ?>
@@ -49,24 +61,10 @@ $loggedInUser = getLoggedInUser();
             }
         }
 
-        // Fonction pour récupérer la couverture du livre à partir de l'API Google Books
-        function getBookCover($isbn)
-        {
-            $url = "https://www.googleapis.com/books/v1/volumes?q=isbn:" . $isbn;
-            $response = file_get_contents($url);
-            $data = json_decode($response, true);
-
-            if (isset($data['items'][0]['volumeInfo']['imageLinks']['thumbnail'])) {
-                return $data['items'][0]['volumeInfo']['imageLinks']['thumbnail'];
-            }
-
-            return null;
-        }
-
         // Affichage des livres correspondant à la recherche
         if (isset($_GET['search'])) {
             $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM livres_souhaites WHERE titre LIKE '%$searchTerm%' OR auteur LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
+            $searchSql = "SELECT * FROM livres_souhaites WHERE titre LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
@@ -74,7 +72,6 @@ $loggedInUser = getLoggedInUser();
                 echo '<div class="livres-liste">';
                 while ($row = $searchResult->fetch_assoc()) {
                     $id = $row['id'];
-                    $isbn = stripslashes($row['isbn']);
                     $titre = stripslashes($row['titre']);
                     $auteur = stripslashes($row['auteur']);
                     $numero_tome = stripslashes($row['numero_tome']);
@@ -85,11 +82,11 @@ $loggedInUser = getLoggedInUser();
                     $resume = stripslashes($row['resume_livre']);
 
                     echo '<div class="livre-item">';
-                    $bookCover = getBookCover($isbn);
+                    echo '<h3>' . $titre . '</h3>';
+                    $bookCover = getBookCover($titre, $auteur);
                     if ($bookCover) {
                         echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
                     }
-                    echo '<h3>' . $titre . '</h3>';
                     echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
                     echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
                     echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
@@ -119,7 +116,6 @@ $loggedInUser = getLoggedInUser();
         echo '<div class="livres-liste">';
         while ($row = $userLivresResult->fetch_assoc()) {
             $id = $row['id'];
-            $isbn = stripslashes($row['isbn']);
             $titre = stripslashes($row['titre']);
             $auteur = stripslashes($row['auteur']);
             $numero_tome = stripslashes($row['numero_tome']);
@@ -130,11 +126,11 @@ $loggedInUser = getLoggedInUser();
             $resume = stripslashes($row['resume_livre']);
 
             echo '<div class="livre-item">';
-            $bookCover = getBookCover($isbn);
+            echo '<h3>' . $titre . '</h3>';
+            $bookCover = getBookCover($titre, $auteur);
             if ($bookCover) {
                 echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
             }
-            echo '<h3>' . $titre . '</h3>';
             echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
             echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
             echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
@@ -152,7 +148,7 @@ $loggedInUser = getLoggedInUser();
         }
         echo '</div>'; // .livres-liste
 
-        $connection->close();
+        mysqli_close($connection);
         ?>
     </div>
 </body>
