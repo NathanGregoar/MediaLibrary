@@ -136,7 +136,7 @@ tr:hover {
     color: white;
 }
 
-.livre-item .delete-btn {
+.delete-btn {
     background-color: #dc3545;
     color: #fff;
     border: none;
@@ -145,7 +145,7 @@ tr:hover {
     cursor: pointer;
 }
 
-.livre-item .btn-edit {
+.btn-edit {
     background-color: #007bff;
     color: #fff;
     border: none;
