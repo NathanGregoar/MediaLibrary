@@ -69,10 +69,10 @@ require_once '../utils/config.php';
             <input type="number" id="numero_tome" name="numero_tome" value="1" min="1">
 
             <label for="nombre_total_tomes">Nombre total de tomes :</label>
-            <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="1" min="1" readonly>
+            <input type="number" id="nombre_total_tomes" name="nombre_total_tomes" value="1" min="1">
 
             <label for="prix">Prix :</label>
-            <input type="number" id="prix" name="prix" min="0" step="0.01" readonly>
+            <input type="number" id="prix" name="prix" min="0" step="0.01">
 
             <label for="format">Format :</label>
             <select id="format" name="format">
@@ -111,6 +111,7 @@ require_once '../utils/config.php';
                                     var book = data.items[0];
                                     $('#auteur').val(book.volumeInfo.authors ? book.volumeInfo.authors[0] : '');
                                     $('#prix').val(book.saleInfo.listPrice ? book.saleInfo.listPrice.amount : 0);
+                                    $('#format').val(book.volumeInfo.printType ? book.volumeInfo.printType : '');
                                 }
                             }
                         });
