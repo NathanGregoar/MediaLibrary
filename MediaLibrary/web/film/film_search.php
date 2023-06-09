@@ -6,7 +6,7 @@ require_once '../utils/config.php';
 checkLoggedIn();
 
 // Récupérer l'ID de l'utilisateur connecté
-$loggedInUserId = getLoggedInUserId();
+$loggedInUser = getLoggedInUser();
 
 ?>
 
@@ -44,7 +44,7 @@ $loggedInUserId = getLoggedInUserId();
         // Suppression d'un film
         if (isset($_POST['delete'])) {
             $deleteId = $connection->real_escape_string($_POST['delete']);
-            $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = $loggedInUserId";
+            $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = $loggedInUser";
 
             if ($connection->query($deleteSql) === TRUE) {
                 echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
@@ -56,7 +56,7 @@ $loggedInUserId = getLoggedInUserId();
         // Affichage des films correspondant à la recherche
         if (isset($_GET['search'])) {
             $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = $loggedInUserId";
+            $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = $loggedInUser";
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
@@ -104,7 +104,7 @@ $loggedInUserId = getLoggedInUserId();
         }
 
         // Affichage de tous les films ajoutés par l'utilisateur connecté
-        $userMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUserId";
+        $userMoviesSql = "SELECT * FROM films WHERE added_by = $loggedInUser";
         $userMoviesResult = $connection->query($userMoviesSql);
 
         echo '<h2>Vos films :</h2>';
