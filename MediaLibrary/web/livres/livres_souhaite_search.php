@@ -10,7 +10,7 @@ $loggedInUser = getLoggedInUser();
 <html>
 <head>
     <title>Rechercher des Livres</title>
-    <link rel="stylesheet" type="text/css" href="livre.css">
+    <link rel="stylesheet" type="text/css" href="livres.css">
 </head>
 <body>
     <div class="container">
