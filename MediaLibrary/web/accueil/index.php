@@ -38,7 +38,7 @@ $email = $_SESSION['email'];
             <a href="serie/serie.php" class="section-link">
                 <span class="section-link-text">Section Séries / Drama</span>
             </a>
-            <a href="livre/livre.php" class="section-link">
+            <a href="../livres/livres_souhaite.php" class="section-link">
                 <span class="section-link-text">Section Livres</span>
             </a>
             <a href="concert/concert.php" class="section-link">
