@@ -7,7 +7,7 @@ require_once '../utils/config.php';
 <html>
 <head>
     <title>Ajouter un Livre Souhaité</title>
-    <link rel="stylesheet" type="text/css" href="./livre.css">
+    <link rel="stylesheet" type="text/css" href="./livres.css">
 </head>
 <body>
     <div class="container">
