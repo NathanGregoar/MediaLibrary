@@ -126,7 +126,7 @@ h1 {
     justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
     gap: 20px;
     width: 100%;
-    max-width: 800px;
+    max-width: 100%;
     align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
   }  
 
