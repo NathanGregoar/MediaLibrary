@@ -22,7 +22,7 @@
     background-color: #333;
     color: #fff;
     padding: 10px 0;
-    width: 100%; /* Nouvelle règle */
+    width: 100%;
   }
   
   .navbar a {
@@ -42,7 +42,7 @@
     font-size: 36px;
     text-align: center;
     margin-top: 20px;
-    margin-bottom: 0; /* Nouvelle règle */
+    margin-bottom: 0;
   }
   
   .form-container {
@@ -51,7 +51,7 @@
     align-items: center;
     justify-content: center;
     width: 100%;
-    max-width: 400px; /* Ajuste la largeur du formulaire selon tes besoins */
+    max-width: 400px;
     margin: 20px auto;
   }
   
