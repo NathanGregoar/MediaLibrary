@@ -45,7 +45,7 @@
     margin-bottom: 0;
   }
   
-  .form-container {
+  .container {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -55,16 +55,16 @@
     margin: 20px auto;
   }
   
-  .form-container form {
+  .container form {
     width: 100%;
   }
   
-  .form-container label {
+  .container label {
     font-weight: bold;
     margin-bottom: 5px;
   }
   
-  .form-container input[type="text"] {
+  .container input[type="text"] {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -73,7 +73,7 @@
     box-sizing: border-box;
   }
   
-  .form-container input[type="submit"] {
+  .container input[type="submit"] {
     padding: 10px 20px;
     background-color: #4caf50;
     color: white;
@@ -82,7 +82,7 @@
     cursor: pointer;
   }
   
-  .form-container input[type="submit"]:hover {
+  .container input[type="submit"]:hover {
     background-color: #45a049;
   }
   
