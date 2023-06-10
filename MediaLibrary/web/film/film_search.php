@@ -96,7 +96,7 @@ $connection->close();
 
                             <form method="POST" style="display:inline">
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                                <input type="submit" value="Supprimer" class="delete-btn">
+                                <input type="submit" value="Supprimer" class="delete-btn" style="background-color: #ff3333;" onmouseover="this.style.backgroundColor='#ff0000';>
                             </form>
                         </div>
                     </div>
@@ -136,7 +136,7 @@ $connection->close();
 
                         <form method="POST" style="display:inline">
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                            <input type="submit" value="Supprimer" class="delete-btn">
+                            <input type="submit" value="Supprimer" class="delete-btn" style="background-color: #ff3333;" onmouseover="this.style.backgroundColor='#ff0000';>
                         </form>
                     </div>
                 </div>
