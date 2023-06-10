@@ -55,6 +55,16 @@ $connection->close();
 
     <h1>Rechercher des Films</h1>
 
+    <div class="alert-container">
+        <?php if ($searchTerm !== '') : ?>
+            <?php if ($numSearchResults > 0) : ?>
+                <div class="alert alert-success">Résultats de la recherche (<?php echo $numSearchResults; ?>) :</div>
+            <?php else : ?>
+                <div class="alert alert-info">Aucun résultat trouvé pour la recherche "<?php echo $searchTerm; ?>"</div>
+            <?php endif; ?>
+        <?php endif; ?>
+    </div>
+
     <div class="container_search">
         <div class="search-bar">
             <form method="GET">
