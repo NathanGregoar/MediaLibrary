@@ -8,8 +8,13 @@ require_once '../utils/config.php';
 <head>
     <title>Ajouter un Film</title>
     <link rel="stylesheet" type="text/css" href="./film.css">
+    <style>
+        body {
+            overflow: hidden;
+        }
+    </style>
 </head>
-<body class="add_movie">
+<body>
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
         <a href="./film.php">Ajouter un Film</a>
