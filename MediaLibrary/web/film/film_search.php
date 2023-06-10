@@ -13,13 +13,13 @@ $loggedInUser = getLoggedInUser();
     <link rel="stylesheet" type="text/css" href="film.css">
 </head>
 <body>
-    <div class="container">
-        <div class="navbar">
-            <a href="../accueil/index.php">Accueil</a>
-            <a href="./film.php">Ajouter un Film</a>
-            <a href="./film_search.php">Consulter les Films</a>
-        </div>
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+        <a href="./film.php">Ajouter un Film</a>
+        <a href="./film_search.php">Consulter les Films</a>
+    </div>
 
+    <div class="container">
         <h1>Rechercher des Films</h1>
 
         <div class="search-bar">
