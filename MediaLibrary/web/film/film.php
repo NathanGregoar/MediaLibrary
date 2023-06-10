@@ -15,10 +15,8 @@ require_once '../utils/config.php';
         <a href="./film.php">Ajouter un Film</a>
         <a href="./film_search.php">Consulter les Films</a>
     </div>
-    
+    <h1>Ajouter un Film</h1>
     <div class="container">
-        <h1>Ajouter un Film</h1>
-
         <?php
         $connection = mysqli_connect($host, $username, $password, $dbName);
 
