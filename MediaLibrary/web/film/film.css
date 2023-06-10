@@ -68,6 +68,7 @@ h1 {
 
 .container form {
   width: 100%;
+  max-width: 800px;
 }
 
 .container label {
@@ -143,6 +144,10 @@ h1 {
   border: 1px solid #ddd;
   border-radius: 4px;
   overflow: hidden;
+}
+
+.movies-list > .movie-card {
+  flex-basis: 25%; /* Chaque carte prendra 25% de la largeur totale */
 }
 
 .movie-item img {
