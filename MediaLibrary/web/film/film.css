@@ -157,6 +157,7 @@ h1 {
     width: 100%;
     max-width: 90%;
     align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
+    background-color: #DCE9F7;
   }  
 
   .movie-item {
