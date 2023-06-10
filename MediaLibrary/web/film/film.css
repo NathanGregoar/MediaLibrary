@@ -115,18 +115,19 @@ h1 {
 }
 
 .movies-list-wrapper {
-    width: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.movies-list {
     display: flex;
-    justify-content: center;
-  }
-  
-  .movies-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* Adjust the minmax value as per your preference */
+    flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
+    justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
     gap: 20px;
     width: 100%;
-    max-width: 1200px; /* Adjust the max-width as per your preference */
-    margin: 20px auto; /* Center the movie cards horizontally */
+    max-width: 800px;
+    align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
   }  
 
 .movie-item {
