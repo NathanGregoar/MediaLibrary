@@ -1,6 +1,29 @@
 <?php
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
+
+if (isset($_GET['title']) && isset($_GET['director'])) {
+    $title = urlencode($_GET['title']);
+    $director = urlencode($_GET['director']);
+    $apiKey = 'YOUR_API_KEY'; // Remplacez par votre clé d'API OMDB
+
+    $url = "http://www.omdbapi.com/?apikey=$apiKey&t=$title&y=$director";
+
+    $response = file_get_contents($url);
+
+    $data = json_decode($response, true);
+
+    if ($data['Response'] == 'True') {
+        $filmInfo = array(
+            'title' => $data['Title'],
+            'director' => $_GET['director'],
+            'releaseYear' => $data['Year'],
+            'externalHardDrive' => 'N/A'
+        );
+
+        echo json_encode($filmInfo);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -8,6 +31,31 @@ require_once '../utils/config.php';
 <head>
     <title>Ajouter un Film</title>
     <link rel="stylesheet" type="text/css" href="./film.css">
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#title').on('blur', function() {
+                var title = $(this).val();
+                var director = $('#director').val();
+
+                if (title !== '' && director !== '') {
+                    $.ajax({
+                        url: 'get_film_info.php',
+                        method: 'GET',
+                        data: { title: title, director: director },
+                        dataType: 'json',
+                        success: function(response) {
+                            if (response) {
+                                $('#director').val(response.director);
+                                $('#release_year').val(response.releaseYear);
+                                $('#external_hard_drive').val(response.externalHardDrive);
+                            }
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </head>
 <body>
     <div class="container">

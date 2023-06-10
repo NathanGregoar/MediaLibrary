@@ -46,10 +46,6 @@
         <h1>Erreur 404</h1>
         <p>Désolé, la page que vous recherchez est introuvable.</p>
         <p>Retournez à <a href="/">la page d'accueil</a> ou essayez une recherche :</p>
-        <form method="GET" action="/">
-            <input type="text" name="q" placeholder="Recherche" required>
-            <input type="submit" value="Rechercher">
-        </form>
     </div>
 </body>
 </html>
