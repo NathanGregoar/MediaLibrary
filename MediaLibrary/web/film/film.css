@@ -126,8 +126,9 @@ h1 {
     justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
     gap: 20px;
     width: 100%;
-    max-width: 700px;
+    max-width: 800px;
     align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
+    padding: 10px 0;
   }  
 
 .movie-item {
