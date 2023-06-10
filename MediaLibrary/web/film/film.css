@@ -122,64 +122,66 @@ h1 {
 
 .movies-list {
     display: flex;
-    flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
-    justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
+    flex-wrap: wrap;
+    justify-content: space-between;
     gap: 20px;
     width: 100%;
     max-width: 800px;
-    align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
-  }  
-
-.movie-item {
-  background-color: #fff;
-  border: 1px solid #ddd;
-  border-radius: 4px;
-  overflow: hidden;
-}
-
-.movie-item img {
-  width: 100%;
-  height: auto;
-  object-fit: cover;
-}
-
-.movie-card {
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.movie-details {
-  padding: 10px;
-}
-
-.movie-details h3 {
-  font-size: 18px;
-  margin-top: 0;
-  margin-bottom: 10px;
-  text-align: center;
-}
-
-.movie-details p {
-  margin-top: 0;
-  margin-bottom: 5px;
-}
-
-.movie-details strong {
-  font-weight: bold;
-}
-
-.delete-btn {
-  padding: 5px 10px;
-  background-color: #ff3333;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  align-self: center;
-}
-
-.delete-btn:hover {
-  background-color: #ff0000;
-}
+    align-items: stretch;
+  }
+  
+  .movie-item {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    overflow: hidden;
+    flex-basis: 25%;
+  }
+  
+  .movie-item img {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .movie-card {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+  
+  .movie-details {
+    padding: 10px;
+  }
+  
+  .movie-details h3 {
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  
+  .movie-details p {
+    margin-top: 0;
+    margin-bottom: 5px;
+  }
+  
+  .movie-details strong {
+    font-weight: bold;
+  }
+  
+  .delete-btn {
+    padding: 5px 10px;
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    align-self: center;
+  }
+  
+  .delete-btn:hover {
+    background-color: #ff0000;
+  }
+  
 
