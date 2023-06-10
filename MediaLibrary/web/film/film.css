@@ -119,6 +119,7 @@
     grid-template-columns: repeat(4, 1fr);
     gap: 20px;
     justify-content: center;
+    width: 100%; /* Ajout de cette ligne pour étendre la grille sur toute la largeur */
   }
   
   .movie-item {
@@ -151,5 +152,18 @@
   
   .movie-details strong {
     font-weight: bold;
+  }
+  
+  .delete-btn {
+    padding: 5px 10px;
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .delete-btn:hover {
+    background-color: #ff0000;
   }
   
