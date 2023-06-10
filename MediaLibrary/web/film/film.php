@@ -5,7 +5,7 @@ require_once '../utils/config.php';
 if (isset($_GET['title']) && isset($_GET['director'])) {
     $title = urlencode($_GET['title']);
     $director = urlencode($_GET['director']);
-    $apiKey = '833e66dd'; // Remplacez par votre clé d'API OMDB
+    $apiKey = 'f1e681ff'; // Remplacez par votre clé d'API OMDB
 
     $url = "http://www.omdbapi.com/?apikey=$apiKey&t=$title&y=$director";
 
