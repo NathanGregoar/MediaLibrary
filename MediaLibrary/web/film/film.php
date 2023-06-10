@@ -41,16 +41,16 @@ require_once '../utils/config.php';
             $duplicateResult = $connection->query($duplicateSql);
         
             if ($duplicateResult->num_rows > 0) {
-                echo '<div class="alert error">Le film existe déjà dans la base de données.</div>';
+                echo '<div class="alert alert-error">Le film existe déjà dans la base de données.</div>';
             } else {
                 $insertSql = "INSERT INTO films (title, director, release_year, external_hard_drive, added_by) VALUES (?, ?, ?, ?, ?)";
                 $insertStmt = $connection->prepare($insertSql);
                 $insertStmt->bind_param("ssisi", $title, $director, $releaseYear, $externalHardDrive, $loggedInUser['id']);
         
                 if ($insertStmt->execute()) {
-                    echo '<div class="alert success">Film ajouté avec succès !</div>';
+                    echo '<div class="alert alert-success">Film ajouté avec succès !</div>';
                 } else {
-                    echo '<div class="alert error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
+                    echo '<div class="alert alert-error">Erreur lors de l\'ajout du film : ' . $connection->error . '</div>';
                 }
             }
         }
