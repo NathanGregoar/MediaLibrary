@@ -42,6 +42,7 @@ $loggedInUser = getLoggedInUser();
             $deleteId = $connection->real_escape_string($_POST['delete']);
             $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
 
+
             if ($connection->query($deleteSql) === TRUE) {
                 echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
             } else {

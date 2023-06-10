@@ -10,13 +10,13 @@ require_once '../utils/config.php';
     <link rel="stylesheet" type="text/css" href="./film.css">
 </head>
 <body>
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+        <a href="./film.php">Ajouter un Film</a>
+        <a href="./film_search.php">Consulter les Films</a>
+    </div>
+    
     <div class="container">
-        <div class="navbar">
-            <a href="../accueil/index.php">Accueil</a>
-            <a href="./film.php">Ajouter un Film</a>
-            <a href="./film_search.php">Consulter les Films</a>
-        </div>
-
         <h1>Ajouter un Film</h1>
 
         <?php
