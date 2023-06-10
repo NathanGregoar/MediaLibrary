@@ -2,7 +2,8 @@
 require('utils/config.php');
 
 // Fonction de vérification si l'utilisateur est déjà connecté
-function checkLoggedIn() {
+function checkLoggedIn()
+{
     session_start();
     if (isset($_SESSION['username'])) {
         header("Location: accueil/index.php");
@@ -20,10 +21,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = $_POST['email'];
 
     // Vérifier si l'utilisateur existe déjà dans la base de données
-    $query = "SELECT * FROM users WHERE username = '$username'";
+    $query = "SELECT * FROM users WHERE username = '$username' OR email = '$email'";
     $result = mysqli_query($conn, $query);
     if (mysqli_num_rows($result) > 0) {
-        $errorMessage = "Ce pseudo est déjà utilisé.";
+        $errorMessage = "Ce pseudo ou cette adresse e-mail est déjà utilisé(e).";
     } else {
         // Insérer l'utilisateur dans la base de données
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
