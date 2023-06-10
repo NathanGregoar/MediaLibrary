@@ -169,7 +169,7 @@ h1 {
   font-weight: bold;
 }
 
-.delete-btn {
+.container input[type="submit"] .delete-btn {
   padding: 5px 10px;
   background-color: #ff3333;
   color: #fff;
@@ -179,7 +179,7 @@ h1 {
   align-self: center;
 }
 
-.delete-btn:hover {
+.container input[type="submit"] .delete-btn:hover {
   background-color: #ff0000;
 }
 
