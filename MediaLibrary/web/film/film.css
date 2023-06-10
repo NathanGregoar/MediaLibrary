@@ -8,6 +8,10 @@
     padding: 0;
     background-color: #ecf2f9;
   }
+
+  body .add_movie{
+    overflow: hidden;
+  }
   
   .container {
     display: flex;
@@ -15,7 +19,6 @@
     align-items: center;
     min-height: 100vh;
     padding: 20px;
-    overflow: hidden;
   }
   
   .navbar {

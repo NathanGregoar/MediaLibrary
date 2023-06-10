@@ -9,7 +9,7 @@ require_once '../utils/config.php';
     <title>Ajouter un Film</title>
     <link rel="stylesheet" type="text/css" href="./film.css">
 </head>
-<body>
+<body class="add_movie">
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
         <a href="./film.php">Ajouter un Film</a>
