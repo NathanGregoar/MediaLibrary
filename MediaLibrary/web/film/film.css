@@ -155,7 +155,7 @@ h1 {
   }
   
   .movie-item img {
-    width: 80%;
+    width: 100%;
     height: 400px; /* Ajuste la hauteur des affiches selon tes besoins */
     object-fit: cover;
   }
