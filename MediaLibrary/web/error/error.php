@@ -1,48 +1,55 @@
 <!DOCTYPE html>
 <html>
 <head>
+    <meta charset="UTF-8">
     <title>Erreur 404 - Page non trouvée</title>
     <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f7f7f7;
+            color: #444;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        
+        .container {
             text-align: center;
         }
-
+        
         h1 {
-            color: #ff0000;
+            font-size: 48px;
+            margin-bottom: 20px;
+            color: #333;
         }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            background-color: #f5f5f5;
+        
+        p {
+            font-size: 18px;
+            margin-bottom: 40px;
         }
-
-        .button {
-            display: inline-block;
-            padding: 10px 20px;
-            background-color: #4caf50;
-            color: #fff;
+        
+        a {
+            color: #007bff;
             text-decoration: none;
-            border-radius: 4px;
-            transition: background-color 0.3s ease;
         }
-
-        .button:hover {
-            background-color: #45a049;
+        
+        a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Erreur 404 - Page non trouvée</h1>
-        <p>La page que vous recherchez n'existe pas.</p>
-        <p>Nous sommes désolés, mais la page demandée n'a pas été trouvée.</p>
-        <p>Veuillez vérifier l'URL que vous avez saisie ou cliquez sur le bouton ci-dessous pour retourner à la page d'accueil.</p>
-        <a class="button" href="../index.php">Retour à la page d'accueil</a>
+        <h1>Erreur 404</h1>
+        <p>Désolé, la page que vous recherchez est introuvable.</p>
+        <p>Retournez à <a href="/">la page d'accueil</a> ou essayez une recherche :</p>
+        <form method="GET" action="/">
+            <input type="text" name="q" placeholder="Recherche" required>
+            <input type="submit" value="Rechercher">
+        </form>
     </div>
 </body>
 </html>
