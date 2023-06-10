@@ -75,6 +75,45 @@ require_once '../utils/config.php';
         <?php
         $connection->close();
         ?>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $('#title').blur(function() {
+                    var title = $(this).val();
+                    if (title !== '') {
+                        $.ajax({
+                            url: 'http://www.omdbapi.com/',
+                            data: { t: title, apiKey: 'YOUR_API_KEY' },
+                            dataType: 'json',
+                            success: function(data) {
+                                if (data.Response === 'True') {
+                                    $('#director').val(data.Director ? data.Director : '');
+                                    $('#release_year').val(data.Year ? data.Year : '');
+                                }
+                            }
+                        });
+                    }
+                });
+        
+                $('#director').blur(function() {
+                    var title = $('#title').val();
+                    var director = $(this).val();
+                    if (title !== '' && director !== '') {
+                        $.ajax({
+                            url: 'http://www.omdbapi.com/',
+                            data: { t: title, director: director, apiKey: 'YOUR_API_KEY' },
+                            dataType: 'json',
+                            success: function(data) {
+                                if (data.Response === 'True') {
+                                    $('#release_year').val(data.Year ? data.Year : '');
+                                }
+                            }
+                        });
+                    }
+                });
+            });
+        </script>
     </div>
 </body>
 </html>
