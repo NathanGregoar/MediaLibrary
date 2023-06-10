@@ -55,7 +55,7 @@ $connection->close();
 
     <h1>Rechercher des Films</h1>
 
-    <div class="container">
+    <div class="container_search">
         <div class="search-bar">
             <form method="GET">
                 <input type="text" name="search" placeholder="Rechercher un film" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
