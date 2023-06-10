@@ -84,7 +84,7 @@ require_once '../utils/config.php';
                     if (title !== '') {
                         $.ajax({
                             url: 'http://www.omdbapi.com/',
-                            data: { t: title, apiKey: 'YOUR_API_KEY' },
+                            data: { t: title, apiKey: 'f1e681ff' },
                             dataType: 'json',
                             success: function(data) {
                                 if (data.Response === 'True') {
@@ -102,7 +102,7 @@ require_once '../utils/config.php';
                     if (title !== '' && director !== '') {
                         $.ajax({
                             url: 'http://www.omdbapi.com/',
-                            data: { t: title, director: director, apiKey: 'YOUR_API_KEY' },
+                            data: { t: title, director: director, apiKey: 'f1e681ff' },
                             dataType: 'json',
                             success: function(data) {
                                 if (data.Response === 'True') {
