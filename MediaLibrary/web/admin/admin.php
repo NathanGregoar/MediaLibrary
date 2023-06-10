@@ -19,8 +19,10 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <link rel="stylesheet" type="text/css" href="./admin.css">
 </head>
 <body>
-    <div class="container">
+    <header>
         <h1 class="welcome-message">Bienvenue sur la page Admin, <?php echo $username; ?> !</h1>
+    </header>
+    <div class="container">
         <div class="section-links">
             <a href="../accueil/index.php" class="section-link">
                 <span class="section-link-text">Accueil</span>
