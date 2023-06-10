@@ -4,6 +4,22 @@ require_once '../utils/config.php';
 
 // Récupérer l'utilisateur connecté
 $loggedInUser = getLoggedInUser();
+
+// Compter le nombre total de films dans la base de données
+$totalMoviesSql = "SELECT COUNT(*) as total FROM films WHERE added_by = " . $loggedInUser['id'];
+$totalMoviesResult = $connection->query($totalMoviesSql);
+$totalMovies = $totalMoviesResult->fetch_assoc()['total'];
+
+// Initialiser le nombre de films après la recherche à 0
+$searchMoviesCount = 0;
+
+// Vérifier si une recherche a été effectuée
+if (isset($_GET['search'])) {
+    // Compter le nombre de films correspondant à la recherche
+    $searchMoviesSql = "SELECT COUNT(*) as count FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
+    $searchMoviesResult = $connection->query($searchMoviesSql);
+    $searchMoviesCount = $searchMoviesResult->fetch_assoc()['count'];
+}
 ?>
 
 <!DOCTYPE html>
@@ -57,7 +73,7 @@ $loggedInUser = getLoggedInUser();
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
-                echo '<h2>Résultats de la recherche :</h2>';
+                echo '<h2>Résultats de la recherche <?php echo $searchMoviesCount; ?>:</h2>';
                 echo '<div class="movies-list">';
                 while ($row = $searchResult->fetch_assoc()) {
                     $id = $row['id'];
@@ -104,7 +120,7 @@ $loggedInUser = getLoggedInUser();
         $userMoviesSql = "SELECT * FROM films WHERE added_by = " . $loggedInUser['id'];
         $userMoviesResult = $connection->query($userMoviesSql);
 
-        echo '<h2>Vos films :</h2>';
+        echo '<h2>Vos films <?php echo $totalMovies; ?>:</h2>';
         echo '<div class="movies-list">';
         while ($row = $userMoviesResult->fetch_assoc()) {
             $id = $row['id'];
