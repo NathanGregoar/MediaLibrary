@@ -142,7 +142,6 @@ $connection->close();
             </div>
         <?php endif; ?>
 
-        <!-- Formulaire de mise à jour -->
         <?php if (isset($_POST['edit']) && $_POST['edit'] === $id) : ?>
             <div class="update-form">
                 <h4>Modifier le film "<?php echo $title; ?>"</h4>
@@ -163,7 +162,6 @@ $connection->close();
     </div>
 
     <script>
-        // Afficher le formulaire de mise à jour lorsque le bouton "Modifier" est cliqué
         const updateForms = document.querySelectorAll('.update-form');
         const editButtons = document.querySelectorAll('input[name="edit"]');
 
