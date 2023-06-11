@@ -12,7 +12,7 @@ $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by 
 // Connexion à la base de données
 $connection = mysqli_connect($host, $username, $password, $dbName);
 if (!$connection) {
-    die('Erreur de connexion à la base de données : ' . $connection->connect_error);
+    die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
 }
 
 // Suppression d'un film
