@@ -10,16 +10,15 @@ require_once '../utils/config.php';
     <link rel="stylesheet" type="text/css" href="./livres.css">
 </head>
 <body>
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+        <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
+        <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
+        <a href="./livres_possede.php">Consulter les Livres Possédés</a>
+    </div>
+
+    <h1>Ajouter un Livre Souhaité</h1>
     <div class="container">
-        <div class="navbar">
-            <a href="../accueil/index.php">Accueil</a>
-            <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
-            <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
-            <a href="./livres_possede.php">Consulter les Livres Possédés</a>
-        </div>
-
-        <h1>Ajouter un Livre Souhaité</h1>
-
         <?php
         $connection = mysqli_connect($host, $username, $password, $dbName);
 
