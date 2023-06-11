@@ -62,11 +62,6 @@ $connection->close();
 <head>
     <title>Rechercher des Films</title>
     <link rel="stylesheet" type="text/css" href="film.css">
-    <style>
-        .update-form {
-            display: none;
-        }
-    </style>
 </head>
 <body>
     <div class="navbar">
@@ -128,89 +123,56 @@ $connection->close();
                     ?>
                     <div class="movie-item">
                         <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
-                        <div class="movie-details">
-                            <h3><?php echo $title; ?></h3>
-                            <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
-                            <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
-                            <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
-
-                            <form method="POST" style="display:inline">
+                        <h3><?php echo $title; ?></h3>
+                        <p>Réalisateur : <?php echo $director; ?></p>
+                        <p>Année de sortie : <?php echo $releaseYear; ?></p>
+                        <p>Disque dur externe : <?php echo $externalHardDrive; ?></p>
+                        <div class="movie-actions">
+                            <form method="POST">
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                                <input type="submit" value="Supprimer" class="delete-btn">
+                                <input type="submit" value="Supprimer" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?')">
                             </form>
-
-                            <form method="POST" style="display:inline">
+                            <form method="POST">
                                 <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                                <input type="submit" value="Modifier" class="edit-btn">
+                                <input type="submit" value="Modifier">
                             </form>
                         </div>
-
-                        <?php if (isset($_POST['edit']) && $_POST['edit'] === $id) : ?>
-                            <div class="update-form">
-                                <h4>Modifier le film "<?php echo $title; ?>"</h4>
-                                <form method="POST">
-                                    <input type="hidden" name="update" value="<?php echo $id; ?>">
-                                    <label for="update-title">Titre :</label>
-                                    <input type="text" name="title" id="update-title" value="<?php echo $title; ?>"><br>
-                                    <label for="update-director">Réalisateur :</label>
-                                    <input type="text" name="director" id="update-director" value="<?php echo $director; ?>"><br>
-                                    <label for="update-release-year">Année de sortie :</label>
-                                    <input type="text" name="release_year" id="update-release-year" value="<?php echo $releaseYear; ?>"><br>
-                                    <label for="update-external-hard-drive">Disque dur externe :</label>
-                                    <input type="text" name="external_hard_drive" id="update-external-hard-drive" value="<?php echo $externalHardDrive; ?>"><br>
-                                    <input type="submit" value="Enregistrer">
-                                </form>
-                            </div>
-                        <?php endif; ?>
-
                     </div>
                 <?php endwhile; ?>
             </div>
         <?php endif; ?>
 
-        <h2>Vos films (<?php echo $numUserMovies; ?>) :</h2>
-        <div class="movies-list">
-            <?php while ($row = $userMoviesResult->fetch_assoc()) : ?>
-                <?php
-                $id = $row['id'];
-                $title = $row['title'];
-                $director = $row['director'];
-                $releaseYear = $row['release_year'];
-                $externalHardDrive = $row['external_hard_drive'];
-
-                // Appel à l'API OMDB pour récupérer les informations du film
-                $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-                $response = file_get_contents($apiUrl);
-                $data = json_decode($response, true);
-
-                // Vérifier si la requête a réussi et si l'affiche est disponible
-                if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                    $poster = $data['Poster'];
-                } else {
-                    $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-                }
-                ?>
-                <div class="movie-item">
-                    <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
-                    <div class="movie-details">
-                        <h3><?php echo $title; ?></h3>
-                        <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
-                        <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
-                        <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
-
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                            <input type="submit" value="Supprimer" class="delete-btn">
-                        </form>
-                        
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                            <input type="submit" value="Modifier" class="edit-btn">
-                        </form>
-                    </div>
-                </div>
-            <?php endwhile; ?>
-        </div>
+        <!-- Formulaire de mise à jour -->
+        <?php if (isset($_POST['edit']) && $_POST['edit'] === $id) : ?>
+            <div class="update-form">
+                <h4>Modifier le film "<?php echo $title; ?>"</h4>
+                <form method="POST">
+                    <input type="hidden" name="update" value="<?php echo $id; ?>">
+                    <label for="update-title">Titre :</label>
+                    <input type="text" name="title" id="update-title" value="<?php echo $title; ?>"><br>
+                    <label for="update-director">Réalisateur :</label>
+                    <input type="text" name="director" id="update-director" value="<?php echo $director; ?>"><br>
+                    <label for="update-release-year">Année de sortie :</label>
+                    <input type="text" name="release_year" id="update-release-year" value="<?php echo $releaseYear; ?>"><br>
+                    <label for="update-external-hard-drive">Disque dur externe :</label>
+                    <input type="text" name="external_hard_drive" id="update-external-hard-drive" value="<?php echo $externalHardDrive; ?>"><br>
+                    <input type="submit" value="Enregistrer">
+                </form>
+            </div>
+        <?php endif; ?>
     </div>
+
+    <script>
+        // Afficher le formulaire de mise à jour lorsque le bouton "Modifier" est cliqué
+        const updateForms = document.querySelectorAll('.update-form');
+        const editButtons = document.querySelectorAll('input[name="edit"]');
+
+        for (let i = 0; i < editButtons.length; i++) {
+            editButtons[i].addEventListener('click', function () {
+                const form = this.parentNode.parentNode.querySelector('.update-form');
+                form.style.display = 'block';
+            });
+        }
+    </script>
 </body>
 </html>
