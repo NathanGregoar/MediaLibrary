@@ -27,6 +27,23 @@ if (isset($_POST['delete'])) {
     }
 }
 
+// Mise à jour d'un film
+if (isset($_POST['update'])) {
+    $updateId = $connection->real_escape_string($_POST['update']);
+    $title = $connection->real_escape_string($_POST['title']);
+    $director = $connection->real_escape_string($_POST['director']);
+    $releaseYear = $connection->real_escape_string($_POST['release_year']);
+    $externalHardDrive = $connection->real_escape_string($_POST['external_hard_drive']);
+
+    $updateSql = "UPDATE films SET title = '$title', director = '$director', release_year = '$releaseYear', external_hard_drive = '$externalHardDrive' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($updateSql) === TRUE) {
+        $updateAlert = '<div class="alert alert-success">Film mis à jour avec succès !</div>';
+    } else {
+        $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du film : ' . $connection->error . '</div>';
+    }
+}
+
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
@@ -45,6 +62,11 @@ $connection->close();
 <head>
     <title>Rechercher des Films</title>
     <link rel="stylesheet" type="text/css" href="film.css">
+    <style>
+        .update-form {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -66,6 +88,10 @@ $connection->close();
 
         <?php if (isset($deleteAlert)) : ?>
             <?php echo $deleteAlert; ?>
+        <?php endif; ?>
+
+        <?php if (isset($updateAlert)) : ?>
+            <?php echo $updateAlert; ?>
         <?php endif; ?>
     </div>
 
@@ -112,6 +138,11 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
+                            
+                            <form method="POST" style="display:inline">
+                                <input type="hidden" name="edit" value="<?php echo $id; ?>">
+                                <input type="submit" value="Modifier" class="edit-btn">
+                            </form>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -151,6 +182,11 @@ $connection->close();
                         <form method="POST" style="display:inline">
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
+                        </form>
+                        
+                        <form method="POST" style="display:inline">
+                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
+                            <input type="submit" value="Modifier" class="edit-btn">
                         </form>
                     </div>
                 </div>
