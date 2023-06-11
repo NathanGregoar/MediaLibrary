@@ -75,123 +75,105 @@ $connection->close();
         <a href="./film_search.php">Consulter les Films</a>
     </div>
 
-    <h1>Rechercher des Films</h1>
+    <div class="container">
+        <h1>Rechercher des Films</h1>
 
-    <div class="alert-container">
-        <?php if ($searchTerm !== '') : ?>
-            <?php if ($numSearchResults > 0) : ?>
-                <div class="alert alert-success">Résultats de la recherche (<?php echo $numSearchResults; ?>) :</div>
-            <?php else : ?>
-                <div class="alert alert-info">Aucun résultat trouvé pour la recherche "<?php echo $searchTerm; ?>"</div>
-            <?php endif; ?>
-        <?php endif; ?>
+        <form method="GET" action="">
+            <input type="text" name="search" placeholder="Titre du film" value="<?php echo $searchTerm; ?>">
+            <input type="submit" value="Rechercher">
+        </form>
 
-        <?php if (isset($deleteAlert)) : ?>
-            <?php echo $deleteAlert; ?>
-        <?php endif; ?>
+        <h2>Résultats de la recherche (<?php echo $numSearchResults; ?>)</h2>
 
-        <?php if (isset($updateAlert)) : ?>
-            <?php echo $updateAlert; ?>
-        <?php endif; ?>
-    </div>
-
-    <div class="container_search">
-        <div class="search-bar">
-            <form method="GET">
-                <input type="text" name="search" placeholder="Rechercher un film" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
-                <input type="submit" value="Rechercher" style="padding: 10px 20px; background-color: #4CAF50; color: white; border: none; border-radius: 4px; cursor: pointer;">
-            </form>
-        </div>
-
-        <?php if ($searchTerm !== '') : ?>
-            <h2>Résultats de la recherche (<?php echo $numSearchResults; ?>) :</h2>
-            <div class="movies-list">
-                <?php while ($row = $searchResult->fetch_assoc()) : ?>
-                    <?php
-                    $id = $row['id'];
-                    $title = $row['title'];
-                    $director = $row['director'];
-                    $releaseYear = $row['release_year'];
-                    $externalHardDrive = $row['external_hard_drive'];
-
-                    // Appel à l'API OMDB pour récupérer les informations du film
-                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-                    $response = file_get_contents($apiUrl);
-                    $data = json_decode($response, true);
-
-                    // Vérifier si la requête a réussi et si l'affiche est disponible
-                    if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                        $poster = $data['Poster'];
-                    } else {
-                        $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-                    }
-                    ?>
-                    <div class="movie-item">
-                        <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
-                        <div class="movie-details">
-                            <h3><?php echo $title; ?></h3>
-                            <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
-                            <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
-                            <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
-
-                            <form method="POST" style="display:inline">
-                                <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                                <input type="submit" value="Supprimer" class="delete-btn">
-                            </form>
-                            
-                            <form method="POST" style="display:inline">
-                                <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                                <input type="submit" value="Modifier" class="edit-btn">
-                            </form>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            </div>
-        <?php endif; ?>
-
-        <h2>Vos films (<?php echo $numUserMovies; ?>) :</h2>
-        <div class="movies-list">
-            <?php while ($row = $userMoviesResult->fetch_assoc()) : ?>
-                <?php
+        <?php
+        if ($numSearchResults > 0) {
+            while ($row = $searchResult->fetch_assoc()) {
                 $id = $row['id'];
                 $title = $row['title'];
                 $director = $row['director'];
                 $releaseYear = $row['release_year'];
                 $externalHardDrive = $row['external_hard_drive'];
-
-                // Appel à l'API OMDB pour récupérer les informations du film
-                $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-                $response = file_get_contents($apiUrl);
-                $data = json_decode($response, true);
-
-                // Vérifier si la requête a réussi et si l'affiche est disponible
-                if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                    $poster = $data['Poster'];
-                } else {
-                    $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-                }
-                ?>
-                <div class="movie-item">
-                    <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
-                    <div class="movie-details">
-                        <h3><?php echo $title; ?></h3>
-                        <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
-                        <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
-                        <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
-
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                            <input type="submit" value="Supprimer" class="delete-btn">
-                        </form>
-                        
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                            <input type="submit" value="Modifier" class="edit-btn">
-                        </form>
-                    </div>
+                $updateFormId = "update-form-$id";
+                $deleteFormId = "delete-form-$id";
+        ?>
+                <div class="film-item">
+                    <h3><?php echo $title; ?></h3>
+                    <p>Réalisateur : <?php echo $director; ?></p>
+                    <p>Année de sortie : <?php echo $releaseYear; ?></p>
+                    <p>Disque dur externe : <?php echo $externalHardDrive; ?></p>
+                    <button onclick="toggleForm('<?php echo $updateFormId; ?>')">Modifier</button>
+                    <button onclick="toggleForm('<?php echo $deleteFormId; ?>')">Supprimer</button>
+                    <form id="<?php echo $updateFormId; ?>" class="update-form" method="POST" action="">
+                        <input type="hidden" name="update" value="<?php echo $id; ?>">
+                        <input type="text" name="title" placeholder="Titre" value="<?php echo $title; ?>">
+                        <input type="text" name="director" placeholder="Réalisateur" value="<?php echo $director; ?>">
+                        <input type="text" name="release_year" placeholder="Année de sortie" value="<?php echo $releaseYear; ?>">
+                        <input type="text" name="external_hard_drive" placeholder="Disque dur externe" value="<?php echo $externalHardDrive; ?>">
+                        <button type="submit">Mettre à jour</button>
+                    </form>
+                    <form id="<?php echo $deleteFormId; ?>" class="delete-form" method="POST" action="">
+                        <input type="hidden" name="delete" value="<?php echo $id; ?>">
+                        <button type="submit">Confirmer la suppression</button>
+                    </form>
                 </div>
-            <?php endwhile; ?>
-        </div>
+        <?php
+            }
+        } else {
+            echo '<p>Aucun résultat trouvé.</p>';
+        }
+        ?>
+
+        <h2>Mes Films (<?php echo $numUserMovies; ?>)</h2>
+
+        <?php
+        if ($numUserMovies > 0) {
+            while ($row = $userMoviesResult->fetch_assoc()) {
+                $id = $row['id'];
+                $title = $row['title'];
+                $director = $row['director'];
+                $releaseYear = $row['release_year'];
+                $externalHardDrive = $row['external_hard_drive'];
+                $updateFormId = "update-form-$id";
+                $deleteFormId = "delete-form-$id";
+        ?>
+                <div class="film-item">
+                    <h3><?php echo $title; ?></h3>
+                    <p>Réalisateur : <?php echo $director; ?></p>
+                    <p>Année de sortie : <?php echo $releaseYear; ?></p>
+                    <p>Disque dur externe : <?php echo $externalHardDrive; ?></p>
+                    <button onclick="toggleForm('<?php echo $updateFormId; ?>')">Modifier</button>
+                    <button onclick="toggleForm('<?php echo $deleteFormId; ?>')">Supprimer</button>
+                    <form id="<?php echo $updateFormId; ?>" class="update-form" method="POST" action="">
+                        <input type="hidden" name="update" value="<?php echo $id; ?>">
+                        <input type="text" name="title" placeholder="Titre" value="<?php echo $title; ?>">
+                        <input type="text" name="director" placeholder="Réalisateur" value="<?php echo $director; ?>">
+                        <input type="text" name="release_year" placeholder="Année de sortie" value="<?php echo $releaseYear; ?>">
+                        <input type="text" name="external_hard_drive" placeholder="Disque dur externe" value="<?php echo $externalHardDrive; ?>">
+                        <button type="submit">Mettre à jour</button>
+                    </form>
+                    <form id="<?php echo $deleteFormId; ?>" class="delete-form" method="POST" action="">
+                        <input type="hidden" name="delete" value="<?php echo $id; ?>">
+                        <button type="submit">Confirmer la suppression</button>
+                    </form>
+                </div>
+        <?php
+            }
+        } else {
+            echo '<p>Aucun film trouvé.</p>';
+        }
+        ?>
+
     </div>
+
+    <script>
+        function toggleForm(formId) {
+            var form = document.getElementById(formId);
+            if (form.style.display === "none") {
+                form.style.display = "block";
+            } else {
+                form.style.display = "none";
+            }
+        }
+    </script>
 </body>
 </html>
