@@ -68,27 +68,28 @@ $connection->close();
         }
     </style>
     <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            // Sélectionnez tous les boutons "Modifier"
-            var editButtons = document.querySelectorAll(".edit-btn");
+        // JavaScript pour afficher/masquer le formulaire de modification
+        var editButtons = document.querySelectorAll('.edit-btn');
+        var overlay = document.querySelector('.overlay');
 
-            // Parcourez chaque bouton "Modifier" et ajoutez un gestionnaire d'événement de clic
-            for (var i = 0; i < editButtons.length; i++) {
-                editButtons[i].addEventListener("click", function(event) {
-                    event.preventDefault();
+        editButtons.forEach(function(button) {
+            button.addEventListener('click', function() {
+                var movieId = button.dataset.movieId;
+                var formContainer = document.getElementById('update-form-' + movieId);
 
-                    // Masquer tous les formulaires de modification existants
-                    var updateForms = document.querySelectorAll(".update-form");
-                    for (var j = 0; j < updateForms.length; j++) {
-                        updateForms[j].style.display = "none";
-                    }
+                formContainer.style.display = 'block';
+                overlay.classList.add('active');
+            });
+        });
 
-                    // Afficher le formulaire de modification correspondant
-                    var movieId = this.dataset.movieId;
-                    var updateForm = document.getElementById("update-form-" + movieId);
-                    updateForm.style.display = "block";
-                });
-            }
+        overlay.addEventListener('click', function() {
+            var formContainers = document.querySelectorAll('.update-form');
+
+            formContainers.forEach(function(container) {
+                container.style.display = 'none';
+            });
+
+            overlay.classList.remove('active');
         });
     </script>
 </head>
