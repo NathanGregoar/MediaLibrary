@@ -69,9 +69,19 @@ $connection->close();
     </style>
     <script>
         function showUpdateForm(movieId) {
-            var formId = "update-form-" + movieId;
-            var form = document.getElementById(formId);
-            form.style.display = "block";
+            var modalId = "modal-" + movieId;
+            var modal = document.getElementById(modalId);
+
+            // Afficher la fenêtre modale
+            modal.style.display = "block";
+            }
+
+            function closeUpdateForm(movieId) {
+            var modalId = "modal-" + movieId;
+            var modal = document.getElementById(modalId);
+
+            // Masquer la fenêtre modale
+            modal.style.display = "none";
         }
     </script>
 </head>
@@ -214,7 +224,9 @@ $connection->close();
             $editExternalHardDrive = $editMovieRow['external_hard_drive'];
         }
         ?>
-        <div class="update-form" id="update-form-<?php echo $editId; ?>">
+        <div id="modal-<?php echo $editId; ?>" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeUpdateForm(<?php echo $editId; ?>)">&times;</span>
             <h2>Modifier le film "<?php echo $editTitle; ?>" :</h2>
             <form method="POST">
                 <input type="hidden" name="update" value="<?php echo $editId; ?>">
