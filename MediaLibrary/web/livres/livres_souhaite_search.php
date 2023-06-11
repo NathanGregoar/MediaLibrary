@@ -25,16 +25,16 @@ $loggedInUser = getLoggedInUser();
     <link rel="stylesheet" type="text/css" href="livres.css">
 </head>
 <body>
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+        <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
+        <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
+        <a href="./livres_possede.php">Consulter les Livres Possédés</a>
+    </div>
+    
+    <h1>Rechercher des Livres</h1>
+
     <div class="container">
-        <div class="navbar">
-            <a href="../accueil/index.php">Accueil</a>
-            <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
-            <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
-            <a href="./livres_possede.php">Consulter les Livres Possédés</a>
-        </div>
-
-        <h1>Rechercher des Livres</h1>
-
         <div class="search-bar">
             <form method="GET">
                 <input type="text" name="search" placeholder="Rechercher un livre" style="width: 100%; padding: 10px; margin-bottom: 10px; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box;">
