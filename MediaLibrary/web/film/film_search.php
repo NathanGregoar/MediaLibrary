@@ -46,6 +46,7 @@ if (isset($_POST['update'])) {
 
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
+echo "Erreur MySQL : " . $connection->error;
 $numSearchResults = $searchResult->num_rows;
 
 // Récupération de tous les films ajoutés par l'utilisateur connecté
