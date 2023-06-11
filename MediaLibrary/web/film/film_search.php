@@ -27,23 +27,6 @@ if (isset($_POST['delete'])) {
     }
 }
 
-// Modification d'un film
-if (isset($_POST['edit'])) {
-    $editId = $connection->real_escape_string($_POST['edit']);
-    $title = $connection->real_escape_string($_POST['title']);
-    $director = $connection->real_escape_string($_POST['director']);
-    $releaseYear = $connection->real_escape_string($_POST['release_year']);
-    $externalHardDrive = $connection->real_escape_string($_POST['external_hard_drive']);
-
-    $updateSql = "UPDATE films SET title = '$title', director = '$director', release_year = '$releaseYear', external_hard_drive = '$externalHardDrive' WHERE id = $editId AND added_by = " . $loggedInUser['id'];
-
-    if ($connection->query($updateSql) === TRUE) {
-        echo '<div class="alert alert-success">Film modifié avec succès !</div>';
-    } else {
-        echo '<div class="alert alert-error">Erreur lors de la modification du film : ' . $connection->error . '</div>';
-    }
-}
-
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
@@ -125,15 +108,6 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
-
-                            <form method="POST" action="modifier_film.php" style="display:inline">
-                                <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                                <input type="hidden" name="title" value="<?php echo $title; ?>">
-                                <input type="hidden" name="director" value="<?php echo $director; ?>">
-                                <input type="hidden" name="release_year" value="<?php echo $releaseYear; ?>">
-                                <input type="hidden" name="external_hard_drive" value="<?php echo $externalHardDrive; ?>">
-                                <input type="submit" value="Modifier" class="edit-btn">
-                            </form>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -173,15 +147,6 @@ $connection->close();
                         <form method="POST" style="display:inline">
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
-                        </form>
-
-                        <form method="POST" action="modifier_film.php" style="display:inline">
-                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                            <input type="hidden" name="title" value="<?php echo $title; ?>">
-                            <input type="hidden" name="director" value="<?php echo $director; ?>">
-                            <input type="hidden" name="release_year" value="<?php echo $releaseYear; ?>">
-                            <input type="hidden" name="external_hard_drive" value="<?php echo $externalHardDrive; ?>">
-                            <input type="submit" value="Modifier" class="edit-btn">
                         </form>
                     </div>
                 </div>
