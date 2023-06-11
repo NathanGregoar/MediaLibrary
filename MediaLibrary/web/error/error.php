@@ -40,12 +40,19 @@
             text-decoration: underline;
         }
     </style>
+
+    <script>
+        function goBack() {
+            window.history.back();
+        }
+    </script>
+
 </head>
 <body>
     <div class="container">
         <h1>Erreur 404</h1>
         <p>Désolé, la page que vous recherchez est introuvable.</p>
-        <p>Retournez à <a href="/">la page d'accueil</a> ou essayez une recherche :</p>
+        <p>Retournez à <a href="javascript:history.back()">la page d'accueil</a> ou essayez une recherche :</p>
     </div>
 </body>
 </html>
