@@ -21,9 +21,9 @@ if (isset($_POST['delete'])) {
     $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
 
     if ($connection->query($deleteSql) === TRUE) {
-        echo '<div class="alert alert-success">Film supprimé avec succès !</div>';
+        $deleteAlert = '<div class="alert alert-success">Film supprimé avec succès !</div>';
     } else {
-        echo '<div class="alert alert-error">Erreur lors de la suppression du film : ' . $connection->error . '</div>';
+        $deleteAlert = '<div class="alert alert-error">Erreur lors de la suppression du film : ' . $connection->error . '</div>';
     }
 }
 
@@ -62,6 +62,10 @@ $connection->close();
             <?php else : ?>
                 <div class="alert alert-info">Aucun résultat trouvé pour la recherche "<?php echo $searchTerm; ?>"</div>
             <?php endif; ?>
+        <?php endif; ?>
+
+        <?php if (isset($deleteAlert)) : ?>
+            <?php echo $deleteAlert; ?>
         <?php endif; ?>
     </div>
 
