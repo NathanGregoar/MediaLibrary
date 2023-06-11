@@ -1,3 +1,62 @@
+<?php
+require_once '../utils/auth.php';
+require_once '../utils/config.php';
+
+// Récupérer l'utilisateur connecté
+$loggedInUser = getLoggedInUser();
+
+// Définition des variables de recherche
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
+
+// Connexion à la base de données
+$connection = mysqli_connect($host, $username, $password, $dbName);
+if (!$connection) {
+    die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
+}
+
+// Suppression d'un film
+if (isset($_POST['delete'])) {
+    $deleteId = $connection->real_escape_string($_POST['delete']);
+    $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($deleteSql) === TRUE) {
+        $deleteAlert = '<div class="alert alert-success">Film supprimé avec succès !</div>';
+    } else {
+        $deleteAlert = '<div class="alert alert-error">Erreur lors de la suppression du film : ' . $connection->error . '</div>';
+    }
+}
+
+// Mise à jour d'un film
+if (isset($_POST['update'])) {
+    $updateId = $connection->real_escape_string($_POST['update']);
+    $title = $connection->real_escape_string($_POST['title']);
+    $director = $connection->real_escape_string($_POST['director']);
+    $releaseYear = $connection->real_escape_string($_POST['release_year']);
+    $externalHardDrive = $connection->real_escape_string($_POST['external_hard_drive']);
+
+    $updateSql = "UPDATE films SET title = '$title', director = '$director', release_year = '$releaseYear', external_hard_drive = '$externalHardDrive' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($updateSql) === TRUE) {
+        $updateAlert = '<div class="alert alert-success">Film mis à jour avec succès !</div>';
+    } else {
+        $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du film : ' . $connection->error . '</div>';
+    }
+}
+
+// Récupération des films correspondant à la recherche
+$searchResult = $connection->query($searchSql);
+$numSearchResults = $searchResult->num_rows;
+
+// Récupération de tous les films ajoutés par l'utilisateur connecté
+$userMoviesSql = "SELECT * FROM films WHERE added_by = " . $loggedInUser['id'];
+$userMoviesResult = $connection->query($userMoviesSql);
+$numUserMovies = $userMoviesResult->num_rows;
+
+// Fermeture de la connexion à la base de données
+$connection->close();
+?>
+
 <!DOCTYPE html>
 <html lang="fr">
 
