@@ -108,6 +108,15 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
+
+                            <form method="POST" action="modifier_film.php" style="display:inline">
+                                <input type="hidden" name="id" value="<?php echo $id; ?>">
+                                <input type="hidden" name="title" value="<?php echo $title; ?>">
+                                <input type="hidden" name="director" value="<?php echo $director; ?>">
+                                <input type="hidden" name="release_year" value="<?php echo $releaseYear; ?>">
+                                <input type="hidden" name="external_hard_drive" value="<?php echo $externalHardDrive; ?>">
+                                <input type="submit" value="Modifier" class="edit-btn">
+                            </form>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -147,6 +156,15 @@ $connection->close();
                         <form method="POST" style="display:inline">
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
+                        </form>
+
+                        <form method="POST" action="modifier_film.php" style="display:inline">
+                            <input type="hidden" name="id" value="<?php echo $id; ?>">
+                            <input type="hidden" name="title" value="<?php echo $title; ?>">
+                            <input type="hidden" name="director" value="<?php echo $director; ?>">
+                            <input type="hidden" name="release_year" value="<?php echo $releaseYear; ?>">
+                            <input type="hidden" name="external_hard_drive" value="<?php echo $externalHardDrive; ?>">
+                            <input type="submit" value="Modifier" class="edit-btn">
                         </form>
                     </div>
                 </div>
