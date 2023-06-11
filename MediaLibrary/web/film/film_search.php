@@ -67,31 +67,6 @@ $connection->close();
             display: none;
         }
     </style>
-    <script>
-        // JavaScript pour afficher/masquer le formulaire de modification
-        var editButtons = document.querySelectorAll('.edit-btn');
-        var overlay = document.querySelector('.overlay');
-
-        editButtons.forEach(function(button) {
-            button.addEventListener('click', function() {
-                var movieId = button.dataset.movieId;
-                var formContainer = document.getElementById('update-form-' + movieId);
-
-                formContainer.style.display = 'block';
-                overlay.classList.add('active');
-            });
-        });
-
-        overlay.addEventListener('click', function() {
-            var formContainers = document.querySelectorAll('.update-form');
-
-            formContainers.forEach(function(container) {
-                container.style.display = 'none';
-            });
-
-            overlay.classList.remove('active');
-        });
-    </script>
 </head>
 <body>
     <div class="navbar">
@@ -148,35 +123,25 @@ $connection->close();
                     if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
                         $poster = $data['Poster'];
                     } else {
-                        $poster = '../assets/no_poster_available.jpg';
+                        $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
                     }
                     ?>
+                    <div class="movie-item">
+                        <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
+                        <div class="movie-details">
+                            <h3><?php echo $title; ?></h3>
+                            <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
+                            <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
+                            <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
 
-                    <div class="movie-card">
-                        <img src="<?php echo $poster; ?>" alt="Poster">
-                        <h3><?php echo $title; ?></h3>
-                        <p>Réalisateur : <?php echo $director; ?></p>
-                        <p>Année de sortie : <?php echo $releaseYear; ?></p>
-                        <p>Disponible sur disque dur externe : <?php echo $externalHardDrive ? 'Oui' : 'Non'; ?></p>
-
-                        <form method="POST" style="display: inline;">
-                            <button type="submit" name="delete" value="<?php echo $id; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?');">Supprimer</button>
-                        </form>
-
-                        <button class="edit-btn" data-movie-id="<?php echo $id; ?>">Modifier</button>
-
-                        <div class="update-form" id="update-form-<?php echo $id; ?>">
-                            <form method="POST">
-                                <input type="hidden" name="update" value="<?php echo $id; ?>">
-                                <label for="title">Titre :</label>
-                                <input type="text" name="title" value="<?php echo $title; ?>"><br>
-                                <label for="director">Réalisateur :</label>
-                                <input type="text" name="director" value="<?php echo $director; ?>"><br>
-                                <label for="release_year">Année de sortie :</label>
-                                <input type="text" name="release_year" value="<?php echo $releaseYear; ?>"><br>
-                                <label for="external_hard_drive">Disponible sur disque dur externe :</label>
-                                <input type="checkbox" name="external_hard_drive" <?php echo $externalHardDrive ? 'checked' : ''; ?>><br>
-                                <input type="submit" value="Mettre à jour">
+                            <form method="POST" style="display:inline">
+                                <input type="hidden" name="delete" value="<?php echo $id; ?>">
+                                <input type="submit" value="Supprimer" class="delete-btn">
+                            </form>
+                            
+                            <form method="POST" style="display:inline">
+                                <input type="hidden" name="edit" value="<?php echo $id; ?>">
+                                <input type="submit" value="Modifier" class="edit-btn">
                             </form>
                         </div>
                     </div>
@@ -184,7 +149,7 @@ $connection->close();
             </div>
         <?php endif; ?>
 
-        <h2>Tous vos films (<?php echo $numUserMovies; ?>) :</h2>
+        <h2>Vos films (<?php echo $numUserMovies; ?>) :</h2>
         <div class="movies-list">
             <?php while ($row = $userMoviesResult->fetch_assoc()) : ?>
                 <?php
@@ -203,35 +168,25 @@ $connection->close();
                 if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
                     $poster = $data['Poster'];
                 } else {
-                    $poster = '../assets/no_poster_available.jpg';
+                    $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
                 }
                 ?>
+                <div class="movie-item">
+                    <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
+                    <div class="movie-details">
+                        <h3><?php echo $title; ?></h3>
+                        <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
+                        <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
+                        <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
 
-                <div class="movie-card">
-                    <img src="<?php echo $poster; ?>" alt="Poster">
-                    <h3><?php echo $title; ?></h3>
-                    <p>Réalisateur : <?php echo $director; ?></p>
-                    <p>Année de sortie : <?php echo $releaseYear; ?></p>
-                    <p>Disponible sur disque dur externe : <?php echo $externalHardDrive ? 'Oui' : 'Non'; ?></p>
-
-                    <form method="POST" style="display: inline;">
-                        <button type="submit" name="delete" value="<?php echo $id; ?>" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce film ?');">Supprimer</button>
-                    </form>
-
-                    <button class="edit-btn" data-movie-id="<?php echo $id; ?>">Modifier</button>
-
-                    <div class="update-form" id="update-form-<?php echo $id; ?>">
-                        <form method="POST">
-                            <input type="hidden" name="update" value="<?php echo $id; ?>">
-                            <label for="title">Titre :</label>
-                            <input type="text" name="title" value="<?php echo $title; ?>"><br>
-                            <label for="director">Réalisateur :</label>
-                            <input type="text" name="director" value="<?php echo $director; ?>"><br>
-                            <label for="release_year">Année de sortie :</label>
-                            <input type="text" name="release_year" value="<?php echo $releaseYear; ?>"><br>
-                            <label for="external_hard_drive">Disponible sur disque dur externe :</label>
-                            <input type="checkbox" name="external_hard_drive" <?php echo $externalHardDrive ? 'checked' : ''; ?>><br>
-                            <input type="submit" value="Mettre à jour">
+                        <form method="POST" style="display:inline">
+                            <input type="hidden" name="delete" value="<?php echo $id; ?>">
+                            <input type="submit" value="Supprimer" class="delete-btn">
+                        </form>
+                        
+                        <form method="POST" style="display:inline">
+                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
+                            <input type="submit" value="Modifier" class="edit-btn">
                         </form>
                     </div>
                 </div>
