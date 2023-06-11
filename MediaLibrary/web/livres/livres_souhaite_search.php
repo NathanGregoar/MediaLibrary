@@ -31,7 +31,7 @@ $loggedInUser = getLoggedInUser();
         <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
         <a href="./livres_possede.php">Consulter les Livres Possédés</a>
     </div>
-    
+
     <h1>Rechercher des Livres</h1>
 
     <div class="container">
@@ -53,7 +53,7 @@ $loggedInUser = getLoggedInUser();
         // Suppression d'un livre
         if (isset($_POST['delete'])) {
             $deleteId = $connection->real_escape_string($_POST['delete']);
-            $deleteSql = "DELETE FROM livres_souhaites WHERE id = $deleteId AND added_by = $loggedInUser";
+            $deleteSql = "DELETE FROM livres_souhaites WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
 
             if ($connection->query($deleteSql) === TRUE) {
                 echo '<div class="alert alert-success">Livre supprimé avec succès !</div>';
