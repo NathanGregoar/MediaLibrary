@@ -138,12 +138,31 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
-                            
+
                             <form method="POST" style="display:inline">
                                 <input type="hidden" name="edit" value="<?php echo $id; ?>">
                                 <input type="submit" value="Modifier" class="edit-btn">
                             </form>
                         </div>
+
+                        <?php if (isset($_POST['edit']) && $_POST['edit'] === $id) : ?>
+                            <div class="update-form">
+                                <h4>Modifier le film "<?php echo $title; ?>"</h4>
+                                <form method="POST">
+                                    <input type="hidden" name="update" value="<?php echo $id; ?>">
+                                    <label for="update-title">Titre :</label>
+                                    <input type="text" name="title" id="update-title" value="<?php echo $title; ?>"><br>
+                                    <label for="update-director">Réalisateur :</label>
+                                    <input type="text" name="director" id="update-director" value="<?php echo $director; ?>"><br>
+                                    <label for="update-release-year">Année de sortie :</label>
+                                    <input type="text" name="release_year" id="update-release-year" value="<?php echo $releaseYear; ?>"><br>
+                                    <label for="update-external-hard-drive">Disque dur externe :</label>
+                                    <input type="text" name="external_hard_drive" id="update-external-hard-drive" value="<?php echo $externalHardDrive; ?>"><br>
+                                    <input type="submit" value="Enregistrer">
+                                </form>
+                            </div>
+                        <?php endif; ?>
+
                     </div>
                 <?php endwhile; ?>
             </div>
