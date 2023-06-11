@@ -67,6 +67,13 @@ $connection->close();
             display: none;
         }
     </style>
+    <script>
+        function showUpdateForm(movieId) {
+            var formId = "update-form-" + movieId;
+            var form = document.getElementById(formId);
+            form.style.display = "block";
+        }
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -144,25 +151,6 @@ $connection->close();
                                 <input type="submit" value="Modifier" class="edit-btn">
                             </form>
                         </div>
-
-                        <?php if (isset($_POST['edit']) && $_POST['edit'] === $id) : ?>
-                            <div class="update-form">
-                                <h4>Modifier le film "<?php echo $title; ?>"</h4>
-                                <form method="POST">
-                                    <input type="hidden" name="update" value="<?php echo $id; ?>">
-                                    <label for="update-title">Titre :</label>
-                                    <input type="text" name="title" id="update-title" value="<?php echo $title; ?>"><br>
-                                    <label for="update-director">Réalisateur :</label>
-                                    <input type="text" name="director" id="update-director" value="<?php echo $director; ?>"><br>
-                                    <label for="update-release-year">Année de sortie :</label>
-                                    <input type="text" name="release_year" id="update-release-year" value="<?php echo $releaseYear; ?>"><br>
-                                    <label for="update-external-hard-drive">Disque dur externe :</label>
-                                    <input type="text" name="external_hard_drive" id="update-external-hard-drive" value="<?php echo $externalHardDrive; ?>"><br>
-                                    <input type="submit" value="Enregistrer">
-                                </form>
-                            </div>
-                        <?php endif; ?>
-
                     </div>
                 <?php endwhile; ?>
             </div>
@@ -212,5 +200,35 @@ $connection->close();
             <?php endwhile; ?>
         </div>
     </div>
+
+    <?php if (isset($_POST['edit'])) : ?>
+        <?php
+        $editId = $_POST['edit'];
+        $editMovieSql = "SELECT * FROM films WHERE id = $editId AND added_by = " . $loggedInUser['id'];
+        $editMovieResult = $connection->query($editMovieSql);
+        if ($editMovieResult->num_rows > 0) {
+            $editMovieRow = $editMovieResult->fetch_assoc();
+            $editTitle = $editMovieRow['title'];
+            $editDirector = $editMovieRow['director'];
+            $editReleaseYear = $editMovieRow['release_year'];
+            $editExternalHardDrive = $editMovieRow['external_hard_drive'];
+        }
+        ?>
+        <div class="update-form" id="update-form-<?php echo $editId; ?>">
+            <h2>Modifier le film "<?php echo $editTitle; ?>" :</h2>
+            <form method="POST">
+                <input type="hidden" name="update" value="<?php echo $editId; ?>">
+                <label for="title">Titre :</label>
+                <input type="text" name="title" value="<?php echo $editTitle; ?>">
+                <label for="director">Réalisateur :</label>
+                <input type="text" name="director" value="<?php echo $editDirector; ?>">
+                <label for="release_year">Année de sortie :</label>
+                <input type="text" name="release_year" value="<?php echo $editReleaseYear; ?>">
+                <label for="external_hard_drive">Disque dur externe :</label>
+                <input type="text" name="external_hard_drive" value="<?php echo $editExternalHardDrive; ?>">
+                <input type="submit" value="Enregistrer les modifications" class="update-btn">
+            </form>
+        </div>
+    <?php endif; ?>
 </body>
 </html>
