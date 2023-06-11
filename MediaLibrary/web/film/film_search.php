@@ -46,7 +46,6 @@ if (isset($_POST['update'])) {
 
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
-echo "Erreur MySQL : " . $connection->error;
 $numSearchResults = $searchResult->num_rows;
 
 // Récupération de tous les films ajoutés par l'utilisateur connecté
@@ -225,9 +224,7 @@ $connection->close();
             $editExternalHardDrive = $editMovieRow['external_hard_drive'];
         }
         ?>
-        <div id="modal-<?php echo $editId; ?>" class="modal">
-        <div class="modal-content">
-            <span class="close" onclick="closeUpdateForm(<?php echo $editId; ?>)">&times;</span>
+        <div class="update-form" id="update-form-<?php echo $editId; ?>">
             <h2>Modifier le film "<?php echo $editTitle; ?>" :</h2>
             <form method="POST">
                 <input type="hidden" name="update" value="<?php echo $editId; ?>">
