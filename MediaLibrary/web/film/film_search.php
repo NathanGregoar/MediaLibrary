@@ -27,23 +27,6 @@ if (isset($_POST['delete'])) {
     }
 }
 
-// Mise à jour d'un film
-if (isset($_POST['update'])) {
-    $updateId = $connection->real_escape_string($_POST['update']);
-    $title = $connection->real_escape_string($_POST['title']);
-    $director = $connection->real_escape_string($_POST['director']);
-    $releaseYear = $connection->real_escape_string($_POST['release_year']);
-    $externalHardDrive = $connection->real_escape_string($_POST['external_hard_drive']);
-
-    $updateSql = "UPDATE films SET title = '$title', director = '$director', release_year = '$releaseYear', external_hard_drive = '$externalHardDrive' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
-
-    if ($connection->query($updateSql) === TRUE) {
-        $updateAlert = '<div class="alert alert-success">Film mis à jour avec succès !</div>';
-    } else {
-        $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du film : ' . $connection->error . '</div>';
-    }
-}
-
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
@@ -155,11 +138,6 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
-
-                            <form method="POST" style="display:inline">
-                                <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                                <input type="submit" value="Modifier" class="edit-btn">
-                            </form>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -200,45 +178,12 @@ $connection->close();
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
                         </form>
-                        
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                            <input type="submit" value="Modifier" class="edit-btn">
-                        </form>
+
                     </div>
                 </div>
             <?php endwhile; ?>
         </div>
     </div>
-
-    <?php if (isset($_POST['edit'])) : ?>
-        <?php
-        $editId = $_POST['edit'];
-        $editMovieSql = "SELECT * FROM films WHERE id = $editId AND added_by = " . $loggedInUser['id'];
-        $editMovieResult = $connection->query($editMovieSql);
-        if ($editMovieResult->num_rows > 0) {
-            $editMovieRow = $editMovieResult->fetch_assoc();
-            $editTitle = $editMovieRow['title'];
-            $editDirector = $editMovieRow['director'];
-            $editReleaseYear = $editMovieRow['release_year'];
-            $editExternalHardDrive = $editMovieRow['external_hard_drive'];
-        }
-        ?>
-        <div class="update-form" id="update-form-<?php echo $editId; ?>">
-            <h2>Modifier le film "<?php echo $editTitle; ?>" :</h2>
-            <form method="POST">
-                <input type="hidden" name="update" value="<?php echo $editId; ?>">
-                <label for="title">Titre :</label>
-                <input type="text" name="title" value="<?php echo $editTitle; ?>">
-                <label for="director">Réalisateur :</label>
-                <input type="text" name="director" value="<?php echo $editDirector; ?>">
-                <label for="release_year">Année de sortie :</label>
-                <input type="text" name="release_year" value="<?php echo $editReleaseYear; ?>">
-                <label for="external_hard_drive">Disque dur externe :</label>
-                <input type="text" name="external_hard_drive" value="<?php echo $editExternalHardDrive; ?>">
-                <input type="submit" value="Enregistrer les modifications" class="update-btn">
-            </form>
-        </div>
     <?php endif; ?>
 </body>
 </html>
