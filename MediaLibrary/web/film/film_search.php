@@ -45,28 +45,6 @@ $connection->close();
 <head>
     <title>Rechercher des Films</title>
     <link rel="stylesheet" type="text/css" href="film.css">
-    <style>
-        .update-form {
-            display: none;
-        }
-    </style>
-    <script>
-        function showUpdateForm(movieId) {
-            var modalId = "modal-" + movieId;
-            var modal = document.getElementById(modalId);
-
-            // Afficher la fenêtre modale
-            modal.style.display = "block";
-            }
-
-            function closeUpdateForm(movieId) {
-            var modalId = "modal-" + movieId;
-            var modal = document.getElementById(modalId);
-
-            // Masquer la fenêtre modale
-            modal.style.display = "none";
-        }
-    </script>
 </head>
 <body>
     <div class="navbar">
