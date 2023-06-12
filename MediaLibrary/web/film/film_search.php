@@ -34,6 +34,76 @@ $userMoviesSql = "SELECT * FROM films WHERE added_by = " . $loggedInUser['id'];
 $userMoviesResult = $connection->query($userMoviesSql);
 $numUserMovies = $userMoviesResult->num_rows;
 
+// Formulaire de modification
+if (isset($_POST['edit'])) {
+    $row_id = $_POST['row_id'];
+
+    // Récupérer les données de la ligne à modifier à partir de la base de données
+    $sql_row = "SELECT * FROM films WHERE id = $row_id AND added_by = " . $loggedInUser['id'];
+    $result_row = $connection->query($sql_row);
+
+    if ($result_row && $result_row->num_rows > 0) {
+        $row = $result_row->fetch_assoc();
+        $fetch_fields = $result_row->fetch_fields();
+
+        // Générer les champs du formulaire de modification avec les valeurs actuelles
+        $form_fields = array();
+        $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
+        foreach ($row as $field_name => $field_value) {
+            if ($field_name !== 'id' && $field_name !== 'added_by') {
+                $field_type = $field_info[$field_name]->type;
+                $escaped_value = htmlspecialchars($field_value);
+
+                if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
+                    // Champ de type entier
+                    $form_fields[] = '<label>' . $field_name . ':</label><input type="number" name="' . $field_name . '" value="' . $escaped_value . '" required>';
+                } elseif (in_array($field_type, [MYSQLI_TYPE_FLOAT, MYSQLI_TYPE_DOUBLE, MYSQLI_TYPE_DECIMAL])) {
+                    // Champ de type décimal
+                    $form_fields[] = '<label>' . $field_name . ':</label><input type="number" step="0.01" name="' . $field_name . '" value="' . $escaped_value . '" required>';
+                } else {
+                    // Autres types de champ (chaîne, date, etc.)
+                    $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $escaped_value . '" required>';
+                }
+            }
+        }
+
+        // Affichage du formulaire de modification
+        $edit_form_html = '<form action="" method="post" class="edit-form">';
+        $edit_form_html .= implode('<br>', $form_fields);
+        $edit_form_html .= '<input type="hidden" name="row_id" value="' . $row_id . '">';
+        $edit_form_html .= '<input type="submit" name="save" value="Enregistrer">';
+        $edit_form_html .= '</form>';
+    } else {
+        $edit_form_html = "Erreur lors de la récupération des données de la ligne à modifier.";
+    }
+}
+
+// Enregistrement des modifications
+if (isset($_POST['save'])) {
+    $row_id = $_POST['row_id'];
+
+    // Récupérer les valeurs modifiées à partir du formulaire
+    $updated_values = array();
+    foreach ($_POST as $field_name => $field_value) {
+        if ($field_name !== 'row_id' && $field_name !== 'save') {
+            $field_value = mysqli_real_escape_string($connection, $field_value);
+            $updated_values[] = "$field_name = '$field_value'";
+        }
+    }
+
+    // Générer la requête de mise à jour
+    $sql_update = "UPDATE films SET " . implode(', ', $updated_values) . " WHERE id = $row_id AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($sql_update) === true) {
+        $update_message = "Les modifications ont été enregistrées avec succès.";
+        header("Refresh:0; url=./film_search.php?" . urlencode($table_selected));
+        exit();
+    } else {
+        $update_message = "Erreur lors de l'enregistrement des modifications. Veuillez réessayer.";
+    }
+}
+
+
 // Fermeture de la connexion à la base de données
 $connection->close();
 ?>
@@ -106,6 +176,7 @@ $connection->close();
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
@@ -142,12 +213,25 @@ $connection->close();
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
                 echo '</form>';
                 echo '</div>';
                 echo '</div>';
             }
             ?>
         </div>
+        <?php if (isset($edit_form_html)) { ?>
+    <div class="edit-form-container">
+        <h2>Modifier la ligne de données</h2>
+        <?php echo $edit_form_html; ?>
+        <form action="" method="post" class="edit-form">
+            <?php echo $edit_form_html; ?>
+            <input type="hidden" name="table_selected" value="<?php echo $table_selected; ?>">
+            <input type="hidden" name="row_id" value="<?php echo $row_id; ?>">
+            <input type="submit" name="save" value="Enregistrer">
+        </form>
+    </div>
+<?php } ?>
     </div>
 </body>
 </html>
