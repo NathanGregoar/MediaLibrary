@@ -191,7 +191,7 @@ $connection->close();
 
     <div id="edit-form-container" style="display: none;">
         <h2>Modifier un film (ID: <span id="edit-movie-id-display"></span>)</h2>
-        <form method="POST" action="update_movie.php">
+        <form method="POST" action="">
             <input type="hidden" name="movie_id" id="edit-movie-id">
             <label for="edit-movie-title">Titre :</label>
             <input type="text" name="title" id="edit-movie-title">
@@ -223,6 +223,9 @@ $connection->close();
             movieDirectorInput.value = movieDirector;
             movieReleaseYearInput.value = movieReleaseYear;
             movieExternalHardDriveInput.value = movieExternalHardDrive;
+
+            var movieIdDisplay = document.getElementById('edit-movie-id-display');
+            movieIdDisplay.textContent = movieId;
         }
     </script>
 </body>
