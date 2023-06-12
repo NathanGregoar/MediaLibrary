@@ -27,6 +27,23 @@ if (isset($_POST['delete'])) {
     }
 }
 
+// Modification d'un film
+if (isset($_POST['edit'])) {
+    $editId = $connection->real_escape_string($_POST['edit']);
+    $editTitle = $connection->real_escape_string($_POST['edit_title']);
+    $editDirector = $connection->real_escape_string($_POST['edit_director']);
+    $editReleaseYear = $connection->real_escape_string($_POST['edit_release_year']);
+    $editExternalHardDrive = $connection->real_escape_string($_POST['edit_external_hard_drive']);
+
+    $editSql = "UPDATE films SET title = '$editTitle', director = '$editDirector', release_year = '$editReleaseYear', external_hard_drive = '$editExternalHardDrive' WHERE id = $editId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($editSql) === TRUE) {
+        $editAlert = '<div class="alert alert-success">Film modifié avec succès !</div>';
+    } else {
+        $editAlert = '<div class="alert alert-error">Erreur lors de la modification du film : ' . $connection->error . '</div>';
+    }
+}
+
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
@@ -68,8 +85,8 @@ $connection->close();
             echo $deleteAlert;
         } ?>
 
-        <?php if (isset($updateAlert)) {
-            echo $updateAlert;
+        <?php if (isset($editAlert)) {
+            echo $editAlert;
         } ?>
     </div>
 
@@ -116,6 +133,8 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
+
+                            <button class="edit-btn" onclick="showEditForm(<?php echo $id; ?>)">Modifier</button>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -156,10 +175,40 @@ $connection->close();
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
                         </form>
+
+                        <button class="edit-btn" onclick="showEditForm(<?php echo $id; ?>)">Modifier</button>
                     </div>
                 </div>
             <?php endwhile; ?>
         </div>
     </div>
+
+    <div id="edit-form" style="display: none;">
+        <h2>Modifier le film</h2>
+        <form method="POST">
+            <input type="hidden" name="edit" id="edit-movie-id" value="">
+            <label for="edit-movie-title">Titre :</label>
+            <input type="text" name="edit-movie-title" id="edit-movie-title" required><br>
+            <label for="edit-movie-director">Réalisateur :</label>
+            <input type="text" name="edit-movie-director" id="edit-movie-director"><br>
+            <label for="edit-movie-release-year">Année de sortie :</label>
+            <input type="text" name="edit-movie-release-year" id="edit-movie-release-year"><br>
+            <label for="edit-movie-external-hard-drive">Disque dur externe :</label>
+            <input type="text" name="edit-movie-external-hard-drive" id="edit-movie-external-hard-drive"><br>
+            <input type="submit" value="Enregistrer les modifications">
+        </form>
+    </div>
+
+    <script>
+        function showEditForm(movieId) {
+            document.getElementById('edit-movie-id').value = movieId;
+            document.getElementById('edit-movie-title').value = document.querySelector(`.movie-item[data-movie-id="${movieId}"] h3`).innerText;
+            document.getElementById('edit-movie-director').value = document.querySelector(`.movie-item[data-movie-id="${movieId}"] p:nth-child(2)`).innerText.replace('Réalisateur : ', '');
+            document.getElementById('edit-movie-release-year').value = document.querySelector(`.movie-item[data-movie-id="${movieId}"] p:nth-child(3)`).innerText.replace('Année de sortie : ', '');
+            document.getElementById('edit-movie-external-hard-drive').value = document.querySelector(`.movie-item[data-movie-id="${movieId}"] p:nth-child(4)`).innerText.replace('Disque dur externe : ', '');
+
+            document.getElementById('edit-form').style.display = 'block';
+        }
+    </script>
 </body>
 </html>
