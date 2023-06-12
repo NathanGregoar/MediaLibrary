@@ -212,27 +212,30 @@ h1 {
   }
   
   .delete-btn {
-  align-self: center;
-  padding: 5px 10px;
-  background-color: #ff3333;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  width: 50%;
-  float: center;
-}
-
-.edit-btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  padding: 5px 10px;
-  cursor: pointer;
-  width: 50%;
-  float: center;
-}
+    align-self: center;
+    padding: 5px 10px;
+    background-color: #ff3333;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+  }
+  
+  .edit-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
+  }
+  
   
   .delete-btn:hover {
     background-color: #ff0000;
