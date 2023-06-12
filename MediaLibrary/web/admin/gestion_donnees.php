@@ -4,128 +4,76 @@ ob_start(); // Désactiver le buffer de sortie
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
 
-$username = $_SESSION['username'];
-$email = $_SESSION['email'];
+// Récupérer l'utilisateur connecté
+$loggedInUser = getLoggedInUser();
 
-$table_selected = isset($_GET['table_selected']) ? $_GET['table_selected'] : $table_selected;
+// Définition des variables de recherche
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
 
-// Vérification si l'utilisateur est autorisé à accéder à la page de gestion des données
-if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
-    // Redirection vers la page d'accueil
-    header("Location: ../accueil/index.php");
-    exit();
+// Connexion à la base de données
+$connection = mysqli_connect($host, $username, $password, $dbName);
+if (!$connection) {
+    die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
 }
 
-// Récupération de la liste des tables de la base de données
-$tables = array();
-$sql_tables = "SHOW TABLES";
-$result_tables = mysqli_query($conn, $sql_tables);
-
-if (mysqli_num_rows($result_tables) > 0) {
-    while ($row_tables = mysqli_fetch_assoc($result_tables)) {
-        $tables[] = $row_tables['Tables_in_' . $dbName];
-    }
-}
-
-// Récupération des données de la table sélectionnée
-$table_selected = isset($_POST['table_selected']) ? $_POST['table_selected'] : '';
-
-$data = array();
-if (!empty($table_selected)) {
-    $sql_data = "SELECT * FROM $table_selected";
-    $result_data = mysqli_query($conn, $sql_data);
-
-    if (mysqli_num_rows($result_data) > 0) {
-        while ($row_data = mysqli_fetch_assoc($result_data)) {
-            $data[] = $row_data;
-        }
-    }
-}
-
-// Suppression d'une ligne de données
+// Suppression d'un film
 if (isset($_POST['delete'])) {
-    $row_id = $_POST['row_id'];
-    $sql_delete = "DELETE FROM $table_selected WHERE id = $row_id";
-    if (mysqli_query($conn, $sql_delete)) {
-        $delete_message = "La ligne de données a été supprimée avec succès.";
-        header("Refresh:0"); // Recharger la page
+    $deleteId = $connection->real_escape_string($_POST['delete']);
+    $deleteSql = "DELETE FROM films WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($deleteSql) === TRUE) {
+        $deleteAlert = '<div class="alert alert-success">Film supprimé avec succès !</div>';
     } else {
-        $delete_message = "Erreur lors de la suppression de la ligne de données. Veuillez réessayer.";
+        $deleteAlert = '<div class="alert alert-error">Erreur lors de la suppression du film : ' . $connection->error . '</div>';
     }
 }
 
-// Formulaire de modification
+// Modification d'un film
 if (isset($_POST['edit'])) {
-    $row_id = $_POST['row_id'];
+    $editId = $connection->real_escape_string($_POST['edit']);
+    $editSql = "SELECT * FROM films WHERE id = $editId AND added_by = " . $loggedInUser['id'];
+    $editResult = $connection->query($editSql);
 
-    // Récupérer les données de la ligne à modifier à partir de la base de données
-    $sql_row = "SELECT * FROM $table_selected WHERE id = $row_id";
-    $result_row = mysqli_query($conn, $sql_row);
+    if ($editResult->num_rows === 1) {
+        $editRow = $editResult->fetch_assoc();
+        $editTitle = $editRow['title'];
+        $editDirector = $editRow['director'];
+        $editReleaseYear = $editRow['release_year'];
+        $editExternalHardDrive = $editRow['external_hard_drive'];
 
-    if ($result_row && mysqli_num_rows($result_row) > 0) {
-        $row = mysqli_fetch_assoc($result_row);
-        $fetch_fields = $result_row->fetch_fields();
+        // Display the edit form at the bottom of the page
+        echo '<div class="edit-form">
+                <h2>Modifier le film :</h2>
+                <form method="POST" action="update_movie.php">
+                    <input type="hidden" name="edit_id" value="' . $editId . '">
+                    <label for="edit_title">Titre :</label>
+                    <input type="text" name="edit_title" id="edit_title" value="' . $editTitle . '">
 
-        // Générer les champs du formulaire de modification avec les valeurs actuelles
-        $form_fields = array();
-        $field_info = array_column($fetch_fields, null, 'name'); // Récupérer les informations des champs dans un tableau associatif
-        foreach ($row as $field_name => $field_value) {
-            if ($field_name !== 'id' && $field_name !== 'added_by') {
-                $field_type = $field_info[$field_name]->type;
-                $escaped_value = htmlspecialchars($field_value);
+                    <label for="edit_director">Réalisateur :</label>
+                    <input type="text" name="edit_director" id="edit_director" value="' . $editDirector . '">
 
-                if (in_array($field_type, [MYSQLI_TYPE_TINY, MYSQLI_TYPE_SHORT, MYSQLI_TYPE_LONG, MYSQLI_TYPE_LONGLONG])) {
-                    // Champ de type entier
-                    $form_fields[] = '<label>' . $field_name . ':</label><input type="number" name="' . $field_name . '" value="' . $escaped_value . '" required>';
-                } elseif (in_array($field_type, [MYSQLI_TYPE_FLOAT, MYSQLI_TYPE_DOUBLE, MYSQLI_TYPE_DECIMAL])) {
-                    // Champ de type décimal
-                    $form_fields[] = '<label>' . $field_name . ':</label><input type="number" step="0.01" name="' . $field_name . '" value="' . $escaped_value . '" required>';
-                } else {
-                    // Autres types de champ (chaîne, date, etc.)
-                    $form_fields[] = '<label>' . $field_name . ':</label><input type="text" name="' . $field_name . '" value="' . $escaped_value . '" required>';
-                }
-            }
-        }
+                    <label for="edit_release_year">Année de sortie :</label>
+                    <input type="text" name="edit_release_year" id="edit_release_year" value="' . $editReleaseYear . '">
 
-        // Affichage du formulaire de modification
-        $edit_form_html = '<form action="" method="post" class="edit-form">';
-        $edit_form_html .= implode('<br>', $form_fields);
-        $edit_form_html .= '<input type="hidden" name="table_selected" value="' . $table_selected . '">';
-        $edit_form_html .= '<input type="hidden" name="row_id" value="' . $row_id . '">';
-        $edit_form_html .= '<input type="submit" name="save" value="Enregistrer">';
-        $edit_form_html .= '</form>';
+                    <label for="edit_external_hard_drive">Disque dur externe :</label>
+                    <input type="text" name="edit_external_hard_drive" id="edit_external_hard_drive" value="' . $editExternalHardDrive . '">
+
+                    <input type="submit" value="Modifier le film" class="edit-btn">
+                </form>
+            </div>';
     } else {
-        $edit_form_html = "Erreur lors de la récupération des données de la ligne à modifier.";
+        $editAlert = '<div class="alert alert-error">Erreur lors de la récupération des informations du film à modifier.</div>';
     }
 }
 
-// Enregistrement des modifications
-if (isset($_POST['save'])) {
-    $row_id = $_POST['row_id'];
+// Récupération des films correspondant à la recherche
+$searchResult = $connection->query($searchSql);
 
-    // Récupérer les valeurs modifiées à partir du formulaire
-    $updated_values = array();
-    foreach ($_POST as $field_name => $field_value) {
-        if ($field_name !== 'table_selected' && $field_name !== 'row_id' && $field_name !== 'save') {
-            $field_value = mysqli_real_escape_string($conn, $field_value);
-            $updated_values[] = "$field_name = '$field_value'";
-        }
-    }
-
-    // Générer la requête de mise à jour
-    $sql_update = "UPDATE $table_selected SET " . implode(', ', $updated_values) . " WHERE id = $row_id";
-
-    if (mysqli_query($conn, $sql_update)) {
-        $update_message = "Les modifications ont été enregistrées avec succès.";
-        header("Refresh:0; url=./gestion_donnees.php?table_selected=" . urlencode($table_selected));
-        exit();
-    } else {
-        $update_message = "Erreur lors de l'enregistrement des modifications. Veuillez réessayer.";
-    }    
-}
-
-ob_end_flush(); // Activer à nouveau le buffer de sortie
+// Buffer de sortie
+ob_end_flush();
 ?>
+
 
 
 <!DOCTYPE html>
