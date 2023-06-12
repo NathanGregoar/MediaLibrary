@@ -190,7 +190,7 @@ $connection->close();
     </div>
 
     <div id="edit-form-container" style="display: none;">
-        <h2>Modifier un film (ID: <span id="edit-movie-id-display"></span>)</h2>
+        <h2>Modifier un film</h2>
         <form method="POST" action="film_search.php">
             <input type="hidden" name="movie_id" id="edit-movie-id">
             <label for="edit-movie-title">Titre :</label>
