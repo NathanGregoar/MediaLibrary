@@ -155,7 +155,7 @@ $connection->close();
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
 
-                            <button class="edit-btn" onclick="showEditForm(<?php echo $id; ?>)">Modifier</button>
+                            <input type="button" value="Modifier" onclick="showEditForm(<?php echo $id; ?>)">
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -197,7 +197,7 @@ $connection->close();
                             <input type="submit" value="Supprimer" class="delete-btn">
                         </form>
 
-                        <button class="edit-btn" onclick="showEditForm(<?php echo $id; ?>)">Modifier</button>
+                        <input type="button" value="Modifier" onclick="showEditForm(<?php echo $id; ?>)">
                     </div>
                 </div>
             <?php endwhile; ?>
