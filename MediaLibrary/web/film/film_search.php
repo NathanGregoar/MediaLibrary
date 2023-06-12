@@ -144,7 +144,7 @@ $connection->close();
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
                 echo '</form>';
-                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ')">Modifier</button>';
+                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $title . '\', \'' . $director . '\', \'' . $releaseYear . '\', \'' . $externalHardDrive . '\')">Modifier</button>';
                 echo '</div>';
                 echo '</div>';
             }
@@ -181,7 +181,7 @@ $connection->close();
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
                 echo '</form>';
-                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ')">Modifier</button>';
+                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $title . '\', \'' . $director . '\', \'' . $releaseYear . '\', \'' . $externalHardDrive . '\')">Modifier</button>';
                 echo '</div>';
                 echo '</div>';
             }
@@ -190,7 +190,7 @@ $connection->close();
     </div>
 
     <div id="edit-form-container" style="display: none;">
-        <h2>Modifier un film</h2>
+        <h2>Modifier un film (ID: <span id="edit-movie-id-display"></span>)</h2>
         <form method="POST" action="update_movie.php">
             <input type="hidden" name="movie_id" id="edit-movie-id">
             <label for="edit-movie-title">Titre :</label>
@@ -206,7 +206,7 @@ $connection->close();
     </div>
 
     <script>
-        function showEditForm(movieId) {
+        function showEditForm(movieId, movieTitle, movieDirector, movieReleaseYear, movieExternalHardDrive) {
             var editFormContainer = document.getElementById('edit-form-container');
             editFormContainer.style.display = 'block';
 
@@ -219,10 +219,10 @@ $connection->close();
             var movieExternalHardDriveInput = document.getElementById('edit-movie-external-hard-drive');
 
             // Remplir le formulaire avec les informations du film correspondant à l'ID
-            movieTitleInput.value = '<?php echo isset($editTitle) ? $editTitle : ''; ?>';
-            movieDirectorInput.value = '<?php echo isset($editDirector) ? $editDirector : ''; ?>';
-            movieReleaseYearInput.value = '<?php echo isset($editReleaseYear) ? $editReleaseYear : ''; ?>';
-            movieExternalHardDriveInput.value = '<?php echo isset($editExternalHardDrive) ? $editExternalHardDrive : ''; ?>';
+            movieTitleInput.value = movieTitle;
+            movieDirectorInput.value = movieDirector;
+            movieReleaseYearInput.value = movieReleaseYear;
+            movieExternalHardDriveInput.value = movieExternalHardDrive;
         }
     </script>
 </body>
