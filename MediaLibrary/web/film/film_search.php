@@ -233,6 +233,7 @@ $connection->close();
     </div>
 
     <script>
+        // Code JavaScript pour gérer la modification des films
         var editButtons = document.getElementsByClassName('edit-btn');
         var editForm = document.getElementById('edit-form');
 
@@ -241,31 +242,27 @@ $connection->close();
                 event.preventDefault();
                 var movieContainer = this.parentNode.parentNode;
                 var movieDetails = movieContainer.getElementsByClassName('movie-details')[0];
+                var editId = movieContainer.querySelector('input[name="edit"]').value;
+                var editTitle = movieDetails.querySelector('.movie-title').textContent;
+                var editDirector = movieDetails.querySelector('.movie-director').textContent.replace('Réalisateur:', '').trim();
+                var editReleaseYear = movieDetails.querySelector('.movie-release-year').textContent.replace('Année de sortie:', '').trim();
+                var editExternalHardDrive = movieDetails.querySelector('.movie-external-hard-drive').textContent.replace('Disque dur externe:', '').trim();
 
-                // Vérifier si l'élément movie-details est présent
-                if (movieDetails) {
-                    var editId = movieContainer.querySelector('input[name="edit"]').value;
-                    var editTitle = movieDetails.getElementsByTagName('h3')[0].textContent;
-                    var editDirector = movieDetails.getElementsByTagName('p')[0].textContent.replace('Réalisateur:', '').trim();
-                    var editReleaseYear = movieDetails.getElementsByTagName('p')[1].textContent.replace('Année de sortie:', '').trim();
-                    var editExternalHardDrive = movieDetails.getElementsByTagName('p')[2].textContent.replace('Disque dur externe:', '').trim();
+                // Préremplir le formulaire de modification avec les détails du film sélectionné
+                editForm.elements.edit_id.value = editId;
+                editForm.elements.edit_title.value = editTitle;
+                editForm.elements.edit_director.value = editDirector;
+                editForm.elements.edit_release_year.value = editReleaseYear;
+                editForm.elements.edit_external_hard_drive.value = editExternalHardDrive;
 
-                    // Préremplir le formulaire de modification avec les détails du film sélectionné
-                    editForm.elements.edit_id.value = editId;
-                    editForm.elements.edit_title.value = editTitle;
-                    editForm.elements.edit_director.value = editDirector;
-                    editForm.elements.edit_release_year.value = editReleaseYear;
-                    editForm.elements.edit_external_hard_drive.value = editExternalHardDrive;
+                // Afficher l'ID du film sous le bouton "Modifier"
+                var editIdDisplay = document.createElement('p');
+                editIdDisplay.textContent = 'ID du film : ' + editId;
+                editIdDisplay.style.marginTop = '5px';
+                this.parentNode.appendChild(editIdDisplay);
 
-                    // Afficher l'ID du film sous le bouton "Modifier"
-                    var editIdDisplay = document.createElement('p');
-                    editIdDisplay.textContent = 'ID du film : ' + editId;
-                    editIdDisplay.style.marginTop = '5px';
-                    this.parentNode.appendChild(editIdDisplay);
-
-                    // Faire défiler jusqu'au formulaire de modification
-                    editForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
+                // Faire défiler jusqu'au formulaire de modification
+                editForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
     </script>
