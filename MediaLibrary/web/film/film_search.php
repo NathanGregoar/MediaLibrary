@@ -41,7 +41,7 @@ if (isset($_POST['edit'])) {
 
 // Mise à jour d'un film
 if (isset($_POST['update'])) {
-    $updateId = $connection->real_escape_string($_POST['update']);
+    $updateId = $connection->real_escape_string($_POST['movie_id']);
     $updateTitle = $connection->real_escape_string($_POST['title']);
     $updateDirector = $connection->real_escape_string($_POST['director']);
     $updateReleaseYear = $connection->real_escape_string($_POST['release_year']);
@@ -191,7 +191,7 @@ $connection->close();
 
     <div id="edit-form-container" style="display: none;">
         <h2>Modifier un film (ID: <span id="edit-movie-id-display"></span>)</h2>
-        <form method="POST" action="">
+        <form method="POST" action="film_search.php">
             <input type="hidden" name="movie_id" id="edit-movie-id">
             <label for="edit-movie-title">Titre :</label>
             <input type="text" name="title" id="edit-movie-title">
@@ -201,7 +201,7 @@ $connection->close();
             <input type="text" name="release_year" id="edit-movie-release-year">
             <label for="edit-movie-external-hard-drive">Disque dur externe :</label>
             <input type="text" name="external_hard_drive" id="edit-movie-external-hard-drive">
-            <input type="submit" value="Enregistrer">
+            <input type="submit" name="update" value="Enregistrer">
         </form>
     </div>
 
