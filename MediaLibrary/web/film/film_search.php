@@ -162,6 +162,6 @@ $connection->close();
             <?php endwhile; ?>
         </div>
     </div>
-    <?php endif; ?>
+    <!-- <?php endif; ?> -->
 </body>
 </html>
