@@ -27,44 +27,6 @@ if (isset($_POST['delete'])) {
     }
 }
 
-// Modification d'un film
-if (isset($_POST['edit'])) {
-    $editId = $connection->real_escape_string($_POST['edit']);
-    $editSql = "SELECT * FROM films WHERE id = $editId AND added_by = " . $loggedInUser['id'];
-    $editResult = $connection->query($editSql);
-
-    if ($editResult->num_rows === 1) {
-        $editRow = $editResult->fetch_assoc();
-        $editTitle = $editRow['title'];
-        $editDirector = $editRow['director'];
-        $editReleaseYear = $editRow['release_year'];
-        $editExternalHardDrive = $editRow['external_hard_drive'];
-
-        // Display the edit form at the bottom of the page
-        echo '<div class="edit-form">
-                <h2>Modifier le film :</h2>
-                <form method="POST" action="update_movie.php">
-                    <input type="hidden" name="edit_id" value="' . $editId . '">
-                    <label for="edit_title">Titre :</label>
-                    <input type="text" name="edit_title" id="edit_title" value="' . $editTitle . '">
-
-                    <label for="edit_director">Réalisateur :</label>
-                    <input type="text" name="edit_director" id="edit_director" value="' . $editDirector . '">
-
-                    <label for="edit_release_year">Année de sortie :</label>
-                    <input type="text" name="edit_release_year" id="edit_release_year" value="' . $editReleaseYear . '">
-
-                    <label for="edit_external_hard_drive">Disque dur externe :</label>
-                    <input type="text" name="edit_external_hard_drive" id="edit_external_hard_drive" value="' . $editExternalHardDrive . '">
-
-                    <input type="submit" value="Modifier le film" class="edit-btn">
-                </form>
-            </div>';
-    } else {
-        $editAlert = '<div class="alert alert-error">Erreur lors de la récupération des informations du film à modifier.</div>';
-    }
-}
-
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
@@ -104,10 +66,6 @@ $connection->close();
 
         <?php if (isset($deleteAlert)) {
             echo $deleteAlert;
-        } ?>
-
-        <?php if (isset($editAlert)) {
-            echo $editAlert;
         } ?>
     </div>
 
@@ -154,12 +112,6 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
-
-                            <form method="POST" style="display:inline">
-                                <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                                <input type="submit" value="Modifier" class="edit-btn" data-movie-id="<?php echo $id; ?>">
-                            </form>
-                            <input type="hidden" name="edit_id" value="<?php echo $id; ?>">
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -201,73 +153,10 @@ $connection->close();
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
                         </form>
-
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="edit" value="<?php echo $id; ?>">
-                            <input type="submit" value="Modifier" class="edit-btn" data-movie-id="<?php echo $id; ?>">
-                        </form>
-                        <input type="hidden" name="edit_id" value="<?php echo $id; ?>">
                     </div>
                 </div>
             <?php endwhile; ?>
         </div>
     </div>
-
-    <div class="movie-details-container">
-        <h2>Détails du film :</h2>
-        <form method="POST" action="update_movie.php" id="edit-form">
-            <input type="hidden" name="edit_id" value="">
-            <label for="edit_title">Titre :</label>
-            <input type="text" name="edit_title" id="edit_title">
-
-            <label for="edit_director">Réalisateur :</label>
-            <input type="text" name="edit_director" id="edit_director">
-
-            <label for="edit_release_year">Année de sortie :</label>
-            <input type="text" name="edit_release_year" id="edit_release_year">
-
-            <label for="edit_external_hard_drive">Disque dur externe :</label>
-            <input type="text" name="edit_external_hard_drive" id="edit_external_hard_drive">
-
-            <input type="submit" value="Modifier le film" class="edit-submit-btn">
-        </form>
-    </div>
-
-    <script>
-    // Code JavaScript pour gérer la modification des films
-    document.addEventListener('DOMContentLoaded', function() {
-        var editButtons = document.getElementsByClassName('edit-btn');
-        var editForm = document.getElementById('edit-form');
-
-        for (var i = 0; i < editButtons.length; i++) {
-            editButtons[i].addEventListener('click', function(event) {
-                event.preventDefault();
-                var movieContainer = this.parentNode.parentNode;
-                var movieDetails = movieContainer.getElementsByClassName('movie-details')[0];
-                var editId = movieContainer.querySelector('input[name="edit_id"]').value;
-                var editTitle = movieDetails.querySelector('.movie-title').textContent;
-                var editDirector = movieDetails.querySelector('.movie-director').textContent.replace('Réalisateur:', '').trim();
-                var editReleaseYear = movieDetails.querySelector('.movie-release-year').textContent.replace('Année de sortie:', '').trim();
-                var editExternalHardDrive = movieDetails.querySelector('.movie-external-hard-drive').textContent.replace('Disque dur externe:', '').trim();
-
-                // Préremplir le formulaire de modification avec les détails du film sélectionné
-                editForm.elements.edit_id.value = editId;
-                editForm.elements.edit_title.value = editTitle;
-                editForm.elements.edit_director.value = editDirector;
-                editForm.elements.edit_release_year.value = editReleaseYear;
-                editForm.elements.edit_external_hard_drive.value = editExternalHardDrive;
-
-                // Afficher l'ID du film sous le bouton "Modifier"
-                var editIdDisplay = document.createElement('p');
-                editIdDisplay.textContent = 'ID du film : ' + editId;
-                editIdDisplay.style.marginTop = '5px';
-                this.parentNode.appendChild(editIdDisplay);
-
-                // Faire défiler jusqu'au formulaire de modification
-                editForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
-            });
-        }
-    });
-</script>
 </body>
 </html>
