@@ -189,6 +189,7 @@ $connection->close();
                 }
                 ?>
                 <div class="movie-item">
+                    <h4>ID: <?php echo $id; ?></h4>
                     <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
                     <div class="movie-details">
                         <h3><?php echo $title; ?></h3>
