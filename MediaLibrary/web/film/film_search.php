@@ -27,6 +27,23 @@ if (isset($_POST['delete'])) {
     }
 }
 
+// Modification d'un film
+if (isset($_POST['update'])) {
+    $updateId = $connection->real_escape_string($_POST['update']);
+    $newTitle = $connection->real_escape_string($_POST['edit-title']);
+    $newDirector = $connection->real_escape_string($_POST['edit-director']);
+    $newReleaseYear = $connection->real_escape_string($_POST['edit-release-year']);
+    $newExternalHardDrive = $connection->real_escape_string($_POST['edit-external-hard-drive']);
+
+    $updateSql = "UPDATE films SET title = '$newTitle', director = '$newDirector', release_year = '$newReleaseYear', external_hard_drive = '$newExternalHardDrive' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($updateSql) === TRUE) {
+        $updateAlert = '<div class="alert alert-success">Film modifié avec succès !</div>';
+    } else {
+        $updateAlert = '<div class="alert alert-error">Erreur lors de la modification du film : ' . $connection->error . '</div>';
+    }
+}
+
 // Récupération des films correspondant à la recherche
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
@@ -66,6 +83,10 @@ $connection->close();
 
         <?php if (isset($deleteAlert)) {
             echo $deleteAlert;
+        } ?>
+
+        <?php if (isset($updateAlert)) {
+            echo $updateAlert;
         } ?>
     </div>
 
@@ -112,6 +133,8 @@ $connection->close();
                                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                                 <input type="submit" value="Supprimer" class="delete-btn">
                             </form>
+
+                            <button class="edit-btn" onclick="openEditForm(<?php echo $id; ?>)">Modifier</button>
                         </div>
                     </div>
                 <?php endwhile; ?>
@@ -153,6 +176,8 @@ $connection->close();
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
                         </form>
+
+                        <button class="edit-btn" onclick="openEditForm(<?php echo $id; ?>)">Modifier</button>
                     </div>
                 </div>
             <?php endwhile; ?>
@@ -160,3 +185,108 @@ $connection->close();
     </div>
 </body>
 </html>
+
+<script>
+    function openEditForm(id) {
+    // Créer une requête AJAX pour récupérer les informations du film à modifier
+    var xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            // Récupérer les données du film
+            var movieData = JSON.parse(xhr.responseText);
+
+            // Vérifier si les données ont été récupérées avec succès
+            if (movieData !== null) {
+                // Créer un formulaire de modification
+                var form = document.createElement('form');
+
+                // Ajouter un champ caché pour l'ID du film
+                var idInput = document.createElement('input');
+                idInput.setAttribute('type', 'hidden');
+                idInput.setAttribute('name', 'id');
+                idInput.setAttribute('value', movieData.id);
+                form.appendChild(idInput);
+
+                // Ajouter les champs de modification pour le titre, le réalisateur, l'année de sortie, et le disque dur externe
+                var titleLabel = document.createElement('label');
+                titleLabel.textContent = 'Titre:';
+                var titleInput = document.createElement('input');
+                titleInput.setAttribute('type', 'text');
+                titleInput.setAttribute('name', 'title');
+                titleInput.setAttribute('value', movieData.title);
+                form.appendChild(titleLabel);
+                form.appendChild(titleInput);
+
+                var directorLabel = document.createElement('label');
+                directorLabel.textContent = 'Réalisateur:';
+                var directorInput = document.createElement('input');
+                directorInput.setAttribute('type', 'text');
+                directorInput.setAttribute('name', 'director');
+                directorInput.setAttribute('value', movieData.director);
+                form.appendChild(directorLabel);
+                form.appendChild(directorInput);
+
+                var releaseYearLabel = document.createElement('label');
+                releaseYearLabel.textContent = 'Année de sortie:';
+                var releaseYearInput = document.createElement('input');
+                releaseYearInput.setAttribute('type', 'text');
+                releaseYearInput.setAttribute('name', 'release_year');
+                releaseYearInput.setAttribute('value', movieData.release_year);
+                form.appendChild(releaseYearLabel);
+                form.appendChild(releaseYearInput);
+
+                var externalHardDriveLabel = document.createElement('label');
+                externalHardDriveLabel.textContent = 'Disque dur externe:';
+                var externalHardDriveInput = document.createElement('input');
+                externalHardDriveInput.setAttribute('type', 'text');
+                externalHardDriveInput.setAttribute('name', 'external_hard_drive');
+                externalHardDriveInput.setAttribute('value', movieData.external_hard_drive);
+                form.appendChild(externalHardDriveLabel);
+                form.appendChild(externalHardDriveInput);
+
+                // Ajouter un bouton de soumission pour le formulaire de modification
+                var submitButton = document.createElement('input');
+                submitButton.setAttribute('type', 'submit');
+                submitButton.setAttribute('value', 'Enregistrer');
+                form.appendChild(submitButton);
+
+                // Ajouter l'événement de soumission du formulaire
+                form.addEventListener('submit', function(event) {
+                    event.preventDefault();
+
+                    // Récupérer les valeurs modifiées du formulaire
+                    var updatedTitle = titleInput.value;
+                    var updatedDirector = directorInput.value;
+                    var updatedReleaseYear = releaseYearInput.value;
+                    var updatedExternalHardDrive = externalHardDriveInput.value;
+
+                    // Créer une requête AJAX pour mettre à jour les informations du film
+                    var updateXhr = new XMLHttpRequest();
+                    updateXhr.onreadystatechange = function() {
+                        if (updateXhr.readyState === 4 && updateXhr.status === 200) {
+                            // Afficher un message de succès ou de traitement réussi
+                            console.log('Les informations du film ont été mises à jour avec succès.');
+                        }
+                    };
+
+                    // Envoyer la requête AJAX pour mettre à jour les informations du film
+                    updateXhr.open('POST', 'update_movie.php');
+                    updateXhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+                    updateXhr.send('id=' + id + '&title=' + encodeURIComponent(updatedTitle) +
+                        '&director=' + encodeURIComponent(updatedDirector) +
+                        '&release_year=' + encodeURIComponent(updatedReleaseYear) +
+                        '&external_hard_drive=' + encodeURIComponent(updatedExternalHardDrive));
+                });
+
+                // Afficher le formulaire de modification dans une nouvelle fenêtre ou un dialogue modal
+                // en remplaçant cette ligne par celle appropriée pour votre cas d'utilisation
+                document.body.appendChild(form);
+            }
+        }
+    };
+
+    // Envoyer la requête AJAX pour récupérer les informations du film à modifier
+    xhr.open('GET', 'get_movie.php?id=' + id);
+    xhr.send();
+}
+</script>
