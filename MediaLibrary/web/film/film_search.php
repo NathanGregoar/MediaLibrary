@@ -62,6 +62,27 @@ $connection->close();
 <head>
     <title>Rechercher des Films</title>
     <link rel="stylesheet" type="text/css" href="film.css">
+    <style>
+        #edit-form-overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 9999;
+        }
+
+        #edit-form {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: white;
+            padding: 20px;
+        }
+    </style>
 </head>
 <body>
     <div class="navbar">
@@ -183,20 +204,22 @@ $connection->close();
         </div>
     </div>
 
-    <div id="edit-form" style="display: none;">
-        <h2>Modifier le film</h2>
-        <form method="POST">
-            <input type="hidden" name="edit" id="edit-movie-id" value="">
-            <label for="edit-movie-title">Titre :</label>
-            <input type="text" name="edit-movie-title" id="edit-movie-title" required><br>
-            <label for="edit-movie-director">Réalisateur :</label>
-            <input type="text" name="edit-movie-director" id="edit-movie-director"><br>
-            <label for="edit-movie-release-year">Année de sortie :</label>
-            <input type="text" name="edit-movie-release-year" id="edit-movie-release-year"><br>
-            <label for="edit-movie-external-hard-drive">Disque dur externe :</label>
-            <input type="text" name="edit-movie-external-hard-drive" id="edit-movie-external-hard-drive"><br>
-            <input type="submit" value="Enregistrer les modifications">
-        </form>
+    <div id="edit-form-overlay">
+        <div id="edit-form">
+            <h2>Modifier le film</h2>
+            <form method="POST">
+                <input type="hidden" name="edit" id="edit-movie-id" value="">
+                <label for="edit-movie-title">Titre :</label>
+                <input type="text" name="edit-movie-title" id="edit-movie-title" required><br>
+                <label for="edit-movie-director">Réalisateur :</label>
+                <input type="text" name="edit-movie-director" id="edit-movie-director"><br>
+                <label for="edit-movie-release-year">Année de sortie :</label>
+                <input type="text" name="edit-movie-release-year" id="edit-movie-release-year"><br>
+                <label for="edit-movie-external-hard-drive">Disque dur externe :</label>
+                <input type="text" name="edit-movie-external-hard-drive" id="edit-movie-external-hard-drive"><br>
+                <input type="submit" value="Enregistrer les modifications">
+            </form>
+        </div>
     </div>
 
     <script>
@@ -207,7 +230,7 @@ $connection->close();
             document.getElementById('edit-movie-release-year').value = document.querySelector(`.movie-item[data-movie-id="${movieId}"] p:nth-child(3)`).innerText.replace('Année de sortie : ', '');
             document.getElementById('edit-movie-external-hard-drive').value = document.querySelector(`.movie-item[data-movie-id="${movieId}"] p:nth-child(4)`).innerText.replace('Disque dur externe : ', '');
 
-            document.getElementById('edit-form').style.display = 'block';
+            document.getElementById('edit-form-overlay').style.display = 'block';
         }
     </script>
 </body>
