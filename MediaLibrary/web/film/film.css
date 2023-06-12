@@ -228,6 +228,7 @@ h1 {
     border-radius: 4px;
     padding: 5px 10px;
     cursor: pointer;
+    width: 50%;
   }
   
   .delete-btn:hover {
