@@ -97,7 +97,7 @@ $connection->close();
                     if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
                         $poster = $data['Poster'];
                     } else {
-                        $poster = 'placeholder.png'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
+                        $poster = 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
                     }
                     ?>
                     <div class="movie-item">
@@ -141,7 +141,7 @@ $connection->close();
                 }
                 ?>
                 <div class="movie-item">
-                    <h4>ID: <?php echo $id; ?></h4>
+                    <!-- <h4>ID: <?php echo $id; ?></h4> -->
                     <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
                     <div class="movie-details">
                         <h3><?php echo $title; ?></h3>
