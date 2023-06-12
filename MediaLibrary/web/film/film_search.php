@@ -64,13 +64,13 @@ $connection->close();
             <?php endif; ?>
         <?php endif; ?>
 
-        <?php if (isset($deleteAlert)) : ?>
-            <?php echo $deleteAlert; ?>
-        <?php endif; ?>
+        <?php if (isset($deleteAlert)) {
+            echo $deleteAlert;
+        } ?>
 
-        <?php if (isset($updateAlert)) : ?>
-            <?php echo $updateAlert; ?>
-        <?php endif; ?>
+        <?php if (isset($updateAlert)) {
+            echo $updateAlert;
+        } ?>
     </div>
 
     <div class="container_search">
@@ -156,12 +156,10 @@ $connection->close();
                             <input type="hidden" name="delete" value="<?php echo $id; ?>">
                             <input type="submit" value="Supprimer" class="delete-btn">
                         </form>
-
                     </div>
                 </div>
             <?php endwhile; ?>
         </div>
     </div>
-    <?php endif; ?>
 </body>
 </html>
