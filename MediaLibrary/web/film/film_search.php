@@ -235,6 +235,7 @@ $connection->close();
 
     <script>
     // Code JavaScript pour gérer la modification des films
+    document.addEventListener('DOMContentLoaded', function() {
         var editButtons = document.getElementsByClassName('edit-btn');
         var editForm = document.getElementById('edit-form');
 
@@ -266,7 +267,7 @@ $connection->close();
                 editForm.scrollIntoView({ behavior: 'smooth', block: 'start' });
             });
         }
-
+    });
 </script>
 </body>
 </html>
