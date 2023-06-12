@@ -220,9 +220,22 @@ h1 {
     border-radius: 4px;
     cursor: pointer;
   }
+
+  .edit-btn {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 4px;
+    padding: 5px 10px;
+    cursor: pointer;
+  }
   
   .delete-btn:hover {
     background-color: #ff0000;
+  }
+
+  .edit-btn:hover {
+    background-color: #0062cb;
   }
 
   #edit-form-container {
