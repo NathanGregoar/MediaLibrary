@@ -23,6 +23,39 @@ if (isset($_POST['delete'])) {
     }
 }
 
+// Modification d'un film
+if (isset($_POST['edit'])) {
+    $editId = $connection->real_escape_string($_POST['edit']);
+    $editSql = "SELECT * FROM films WHERE id = $editId AND added_by = " . $loggedInUser['id'];
+    $editResult = $connection->query($editSql);
+
+    if ($editResult->num_rows > 0) {
+        $editData = $editResult->fetch_assoc();
+        $editTitle = $editData['title'];
+        $editDirector = $editData['director'];
+        $editReleaseYear = $editData['release_year'];
+        $editExternalHardDrive = $editData['external_hard_drive'];
+        $editFormVisible = true;
+    }
+}
+
+// Mise à jour d'un film
+if (isset($_POST['update'])) {
+    $updateId = $connection->real_escape_string($_POST['update']);
+    $updateTitle = $connection->real_escape_string($_POST['title']);
+    $updateDirector = $connection->real_escape_string($_POST['director']);
+    $updateReleaseYear = $connection->real_escape_string($_POST['release_year']);
+    $updateExternalHardDrive = $connection->real_escape_string($_POST['external_hard_drive']);
+
+    $updateSql = "UPDATE films SET title = '$updateTitle', director = '$updateDirector', release_year = '$updateReleaseYear', external_hard_drive = '$updateExternalHardDrive' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($updateSql) === TRUE) {
+        $updateAlert = '<div class="alert alert-success">Film mis à jour avec succès !</div>';
+    } else {
+        $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du film : ' . $connection->error . '</div>';
+    }
+}
+
 // Récupération des films correspondant à la recherche
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 $searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
@@ -66,6 +99,10 @@ $connection->close();
         if (isset($deleteAlert)) {
             echo $deleteAlert;
         }
+
+        if (isset($updateAlert)) {
+            echo $updateAlert;
+        }
         ?>
     </div>
 
@@ -107,6 +144,7 @@ $connection->close();
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
                 echo '</form>';
+                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ')">Modifier</button>';
                 echo '</div>';
                 echo '</div>';
             }
@@ -143,11 +181,49 @@ $connection->close();
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
                 echo '</form>';
+                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ')">Modifier</button>';
                 echo '</div>';
                 echo '</div>';
             }
             ?>
         </div>
     </div>
+
+    <div id="edit-form-container" style="display: none;">
+        <h2>Modifier un film</h2>
+        <form method="POST" action="update_movie.php">
+            <input type="hidden" name="movie_id" id="edit-movie-id">
+            <label for="edit-movie-title">Titre :</label>
+            <input type="text" name="title" id="edit-movie-title">
+            <label for="edit-movie-director">Réalisateur :</label>
+            <input type="text" name="director" id="edit-movie-director">
+            <label for="edit-movie-release-year">Année de sortie :</label>
+            <input type="text" name="release_year" id="edit-movie-release-year">
+            <label for="edit-movie-external-hard-drive">Disque dur externe :</label>
+            <input type="text" name="external_hard_drive" id="edit-movie-external-hard-drive">
+            <input type="submit" value="Enregistrer">
+        </form>
+    </div>
+
+    <script>
+        function showEditForm(movieId) {
+            var editFormContainer = document.getElementById('edit-form-container');
+            editFormContainer.style.display = 'block';
+
+            var movieIdInput = document.getElementById('edit-movie-id');
+            movieIdInput.value = movieId;
+
+            var movieTitleInput = document.getElementById('edit-movie-title');
+            var movieDirectorInput = document.getElementById('edit-movie-director');
+            var movieReleaseYearInput = document.getElementById('edit-movie-release-year');
+            var movieExternalHardDriveInput = document.getElementById('edit-movie-external-hard-drive');
+
+            // Remplir le formulaire avec les informations du film correspondant à l'ID
+            movieTitleInput.value = '<?php echo isset($editTitle) ? $editTitle : ''; ?>';
+            movieDirectorInput.value = '<?php echo isset($editDirector) ? $editDirector : ''; ?>';
+            movieReleaseYearInput.value = '<?php echo isset($editReleaseYear) ? $editReleaseYear : ''; ?>';
+            movieExternalHardDriveInput.value = '<?php echo isset($editExternalHardDrive) ? $editExternalHardDrive : ''; ?>';
+        }
+    </script>
 </body>
 </html>
