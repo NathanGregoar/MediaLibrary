@@ -5,10 +5,6 @@ require_once '../utils/config.php';
 // Récupérer l'utilisateur connecté
 $loggedInUser = getLoggedInUser();
 
-// Définition des variables de recherche
-$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
-$searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
-
 // Connexion à la base de données
 $connection = mysqli_connect($host, $username, $password, $dbName);
 if (!$connection) {
@@ -28,6 +24,8 @@ if (isset($_POST['delete'])) {
 }
 
 // Récupération des films correspondant à la recherche
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
 
@@ -56,17 +54,19 @@ $connection->close();
     <h1>Rechercher des Films</h1>
 
     <div class="alert-container">
-        <?php if ($searchTerm !== '') : ?>
-            <?php if ($numSearchResults > 0) : ?>
-                <div class="alert alert-success">Résultats de la recherche (<?php echo $numSearchResults; ?>) :</div>
-            <?php else : ?>
-                <div class="alert alert-info">Aucun résultat trouvé pour la recherche "<?php echo $searchTerm; ?>"</div>
-            <?php endif; ?>
-        <?php endif; ?>
+        <?php
+        if ($searchTerm !== '') {
+            if ($numSearchResults > 0) {
+                echo '<div class="alert alert-success">Résultats de la recherche (' . $numSearchResults . ') :</div>';
+            } else {
+                echo '<div class="alert alert-info">Aucun résultat trouvé pour la recherche "' . $searchTerm . '"</div>';
+            }
+        }
 
-        <?php if (isset($deleteAlert)) {
+        if (isset($deleteAlert)) {
             echo $deleteAlert;
-        } ?>
+        }
+        ?>
     </div>
 
     <div class="container_search">
@@ -77,51 +77,11 @@ $connection->close();
             </form>
         </div>
 
-        <?php if ($searchTerm !== '') : ?>
-            <h2>Résultats de la recherche (<?php echo $numSearchResults; ?>) :</h2>
-            <div class="movies-list">
-                <?php while ($row = $searchResult->fetch_assoc()) : ?>
-                    <?php
-                    $id = $row['id'];
-                    $title = $row['title'];
-                    $director = $row['director'];
-                    $releaseYear = $row['release_year'];
-                    $externalHardDrive = $row['external_hard_drive'];
-
-                    // Appel à l'API OMDB pour récupérer les informations du film
-                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-                    $response = file_get_contents($apiUrl);
-                    $data = json_decode($response, true);
-
-                    // Vérifier si la requête a réussi et si l'affiche est disponible
-                    if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                        $poster = $data['Poster'];
-                    } else {
-                        $poster = 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-                    }
-                    ?>
-                    <div class="movie-item">
-                        <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
-                        <div class="movie-details">
-                            <h3><?php echo $title; ?></h3>
-                            <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
-                            <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
-                            <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
-
-                            <form method="POST" style="display:inline">
-                                <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                                <input type="submit" value="Supprimer" class="delete-btn">
-                            </form>
-                        </div>
-                    </div>
-                <?php endwhile; ?>
-            </div>
-        <?php endif; ?>
-
-        <h2>Vos films (<?php echo $numUserMovies; ?>) :</h2>
-        <div class="movies-list">
-            <?php while ($row = $userMoviesResult->fetch_assoc()) : ?>
-                <?php
+        <?php
+        if ($searchTerm !== '') {
+            echo '<h2>Résultats de la recherche (' . $numSearchResults . ') :</h2>';
+            echo '<div class="movies-list">';
+            while ($row = $searchResult->fetch_assoc()) {
                 $id = $row['id'];
                 $title = $row['title'];
                 $director = $row['director'];
@@ -134,28 +94,59 @@ $connection->close();
                 $data = json_decode($response, true);
 
                 // Vérifier si la requête a réussi et si l'affiche est disponible
-                if ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') {
-                    $poster = $data['Poster'];
-                } else {
-                    $poster = 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; // Affiche par défaut en cas d'erreur ou d'affiche indisponible
-                }
-                ?>
-                <div class="movie-item">
-                    <!-- <h4>ID: <?php echo $id; ?></h4> -->
-                    <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>">
-                    <div class="movie-details">
-                        <h3><?php echo $title; ?></h3>
-                        <p><strong>Réalisateur :</strong> <?php echo ($director != 'NULL' ? $director : ''); ?></p>
-                        <p><strong>Année de sortie :</strong> <?php echo ($releaseYear != 'NULL' ? $releaseYear : ''); ?></p>
-                        <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL' ? $externalHardDrive : ''); ?></p>
+                $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
 
-                        <form method="POST" style="display:inline">
-                            <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                            <input type="submit" value="Supprimer" class="delete-btn">
-                        </form>
-                    </div>
-                </div>
-            <?php endwhile; ?>
+                echo '<div class="movie-item">';
+                echo '<img src="' . $poster . '" alt="' . $title . '">';
+                echo '<div class="movie-details">';
+                echo '<h3>' . $title . '</h3>';
+                echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
+                echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+                echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
+                echo '<form method="POST" style="display:inline">';
+                echo '<input type="hidden" name="delete" value="' . $id . '">';
+                echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                echo '</form>';
+                echo '</div>';
+                echo '</div>';
+            }
+            echo '</div>';
+        }
+        ?>
+
+        <h2>Vos films (<?php echo $numUserMovies; ?>) :</h2>
+        <div class="movies-list">
+            <?php
+            while ($row = $userMoviesResult->fetch_assoc()) {
+                $id = $row['id'];
+                $title = $row['title'];
+                $director = $row['director'];
+                $releaseYear = $row['release_year'];
+                $externalHardDrive = $row['external_hard_drive'];
+
+                // Appel à l'API OMDB pour récupérer les informations du film
+                $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+                $response = file_get_contents($apiUrl);
+                $data = json_decode($response, true);
+
+                // Vérifier si la requête a réussi et si l'affiche est disponible
+                $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
+
+                echo '<div class="movie-item">';
+                echo '<img src="' . $poster . '" alt="' . $title . '">';
+                echo '<div class="movie-details">';
+                echo '<h3>' . $title . '</h3>';
+                echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
+                echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+                echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
+                echo '<form method="POST" style="display:inline">';
+                echo '<input type="hidden" name="delete" value="' . $id . '">';
+                echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                echo '</form>';
+                echo '</div>';
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 </body>
