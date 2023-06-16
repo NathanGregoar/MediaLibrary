@@ -106,11 +106,12 @@ $connection->close();
     </div>
 
     <div class="container_search">
-        <form method="GET" action="series_search.php">
-            <input type="text" name="search" placeholder="Rechercher une série" value="<?php echo $searchTerm; ?>">
-            <input type="submit" value="Rechercher">
-        </form>
-
+        <div class="search-bar">
+            <form method="GET" action="series_search.php">
+                <input type="text" name="search" placeholder="Rechercher une série" value="<?php echo $searchTerm; ?>">
+                <input type="submit" value="Rechercher">
+            </form>
+        </div>
         <h2>Résultats de la recherche</h2>
         <table>
             <tr>
