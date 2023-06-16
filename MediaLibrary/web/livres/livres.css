@@ -224,7 +224,7 @@
       display: block;
     }
     
-    .edit-btn {
+    .btn-edit {
       background-color: #007bff;
       color: #fff;
       border: none;
@@ -240,7 +240,7 @@
       background-color: #ff0000;
     }
   
-    .edit-btn:hover {
+    .btn-edit:hover {
       background-color: #0062cb;
     }
   
