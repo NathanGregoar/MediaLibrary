@@ -289,22 +289,3 @@
       background-color: #45a049;
   }
   
-  .resume-livre {
-    max-height: 40px;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
-}
-
-.resume-livre.expanded {
-    max-height: none;
-}
-
-.toggle-resume {
-    cursor: pointer;
-    display: block;
-    margin-top: 5px;
-}
-
-.resume-livre.opened {
-    max-height: none;
-}

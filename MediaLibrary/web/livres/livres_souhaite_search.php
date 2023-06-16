@@ -94,12 +94,7 @@ $loggedInUser = getLoggedInUser();
                     echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
                     echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
                     echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-                    
-                    // Affichage du résumé avec option de pliage/dépliage
-                    echo '<div class="resume-livre">';
                     echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
-                    echo '</div>';
-                    echo '<button type="button" class="toggle-resume">Afficher plus</button>';
 
                     echo '<form method="POST" style="display:inline">';
                     echo '<input type="hidden" name="delete" value="' . $id . '">';
@@ -146,12 +141,7 @@ $loggedInUser = getLoggedInUser();
             echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
             echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
             echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-
-            // Affichage du résumé avec option de pliage/dépliage
-            echo '<div class="resume-livre">';
             echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
-            echo '</div>';
-            echo '<button type="button" class="toggle-resume">Afficher plus</button>';
 
             echo '<form method="POST" style="display:inline">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
