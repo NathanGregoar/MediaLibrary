@@ -61,9 +61,13 @@ if (isset($_POST['update'])) {
 }
 
 // Récupération des séries correspondant à la recherche
-$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$searchTerm = isset($_GET['search']) ? $connection->real_escape_string($_GET['search']) : '';
 $searchSql = "SELECT * FROM series WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
 $searchResult = $connection->query($searchSql);
+
+// Récupération de toutes les séries ajoutées par l'utilisateur connecté
+$allSeriesSql = "SELECT * FROM series WHERE added_by = " . $loggedInUser['id'];
+$allSeriesResult = $connection->query($allSeriesSql);
 
 // Fermeture de la connexion à la base de données
 $connection->close();
@@ -74,6 +78,18 @@ $connection->close();
 <head>
     <title>Recherche de séries</title>
     <link rel="stylesheet" type="text/css" href="./series.css">
+    <script>
+        function showEditForm(seriesId, title, langueSerie, completeSeason, episodeCount, seasonNumber, externalHardDrive) {
+            document.getElementById('series_id').value = seriesId;
+            document.getElementById('edit-title').value = title;
+            document.getElementById('edit-langue-serie').value = langueSerie;
+            document.getElementById('edit-complete-season').checked = completeSeason === '1';
+            document.getElementById('edit-episode-count').value = episodeCount;
+            document.getElementById('edit-season-number').value = seasonNumber;
+            document.getElementById('edit-external-hard-drive').value = externalHardDrive;
+            document.getElementById('edit-form-container').style.display = 'block';
+        }
+    </script>
 </head>
 <body>
     <div class="navbar">
@@ -81,34 +97,32 @@ $connection->close();
         <a href="./series.php">Ajouter une Série</a>
         <a href="./series_search.php">Consulter les Séries</a>
     </div>
-    <div class="container">
-        <h1>Recherche de séries</h1>
 
-        <div>
-            <?php echo $deleteAlert; ?>
-            <?php echo $updateAlert; ?>
-        </div>
+    <h1>Recherche de séries</h1>
 
-        <div>
-            <form action="series_search.php" method="GET">
-                <input type="text" name="search" placeholder="Rechercher une série" value="<?php echo $searchTerm; ?>">
-                <button type="submit" class="btn btn-primary">Rechercher</button>
-            </form>
-        </div>
+    <div class="alert-container">
+        <?php echo isset($deleteAlert) ? $deleteAlert : ''; ?>
+        <?php echo isset($updateAlert) ? $updateAlert : ''; ?>
+    </div>
 
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>Titre</th>
-                    <th>Langue de la série</th>
-                    <th>Saison complète</th>
-                    <th>Nombre d'épisodes</th>
-                    <th>Numéro de saison</th>
-                    <th>Disque dur externe</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
+    <div class="container_search">
+        <form method="GET" action="series_search.php">
+            <input type="text" name="search" placeholder="Rechercher une série" value="<?php echo $searchTerm; ?>">
+            <input type="submit" value="Rechercher">
+        </form>
+
+        <h2>Résultats de la recherche</h2>
+        <table>
+            <tr>
+                <th>Titre</th>
+                <th>Langue</th>
+                <th>Saison complète</th>
+                <th>Nombre d'épisodes</th>
+                <th>Numéro de saison</th>
+                <th>Disque dur externe</th>
+                <th>Actions</th>
+            </tr>
+            <?php if ($searchResult->num_rows > 0) : ?>
                 <?php while ($row = $searchResult->fetch_assoc()) : ?>
                     <tr>
                         <td><?php echo $row['title']; ?></td>
@@ -118,51 +132,40 @@ $connection->close();
                         <td><?php echo $row['season_number']; ?></td>
                         <td><?php echo $row['external_hard_drive']; ?></td>
                         <td>
-                            <form method="POST">
+                            <form method="POST" action="series_search.php" style="display: inline;">
                                 <input type="hidden" name="delete" value="<?php echo $row['id']; ?>">
-                                <button type="submit" class="btn btn-danger">Supprimer</button>
+                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer cette série ?')">Supprimer</button>
                             </form>
-                            <form method="POST">
-                                <input type="hidden" name="edit" value="<?php echo $row['id']; ?>">
-                                <button type="submit" class="btn btn-primary">Modifier</button>
-                            </form>
+                            <button onclick="showEditForm(<?php echo $row['id']; ?>, '<?php echo $row['title']; ?>', '<?php echo $row['langue_serie']; ?>', '<?php echo $row['complete_season']; ?>', <?php echo $row['episode_count']; ?>, <?php echo $row['season_number']; ?>, '<?php echo $row['external_hard_drive']; ?>')">Modifier</button>
                         </td>
                     </tr>
                 <?php endwhile; ?>
-            </tbody>
+            <?php else : ?>
+                <tr>
+                    <td colspan="7">Aucun résultat trouvé.</td>
+                </tr>
+            <?php endif; ?>
         </table>
+    </div>
 
-        <?php if ($editFormVisible) : ?>
-            <h2>Modifier la série</h2>
-            <form method="POST">
-                <input type="hidden" name="series_id" value="<?php echo $editId; ?>">
-                <div class="form-group">
-                    <label>Titre :</label>
-                    <input type="text" name="title" class="form-control" value="<?php echo $editTitle; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Langue de la série :</label>
-                    <input type="text" name="langue_serie" class="form-control" value="<?php echo $editLangueSerie; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Saison complète :</label>
-                    <input type="checkbox" name="complete_season" <?php echo $editCompleteSeason ? 'checked' : ''; ?>>
-                </div>
-                <div class="form-group">
-                    <label>Nombre d'épisodes :</label>
-                    <input type="number" name="episode_count" class="form-control" value="<?php echo $editEpisodeCount; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Numéro de saison :</label>
-                    <input type="number" name="season_number" class="form-control" value="<?php echo $editSeasonNumber; ?>" required>
-                </div>
-                <div class="form-group">
-                    <label>Disque dur externe :</label>
-                    <input type="text" name="external_hard_drive" class="form-control" value="<?php echo $editExternalHardDrive; ?>" required>
-                </div>
-                <button type="submit" name="update" class="btn btn-primary">Mettre à jour</button>
-            </form>
-        <?php endif; ?>
+    <div id="edit-form-container" style="display: none;">
+        <h2>Modifier la série</h2>
+        <form method="POST" action="series_search.php">
+            <input type="hidden" name="series_id" id="series_id">
+            <label for="edit-title">Titre :</label>
+            <input type="text" name="title" id="edit-title" required>
+            <label for="edit-langue-serie">Langue :</label>
+            <input type="text" name="langue_serie" id="edit-langue-serie">
+            <label for="edit-complete-season">Saison complète :</label>
+            <input type="checkbox" name="complete_season" id="edit-complete-season">
+            <label for="edit-episode-count">Nombre d'épisodes :</label>
+            <input type="number" name="episode_count" id="edit-episode-count" min="0">
+            <label for="edit-season-number">Numéro de saison :</label>
+            <input type="number" name="season_number" id="edit-season-number" min="0">
+            <label for="edit-external-hard-drive">Disque dur externe :</label>
+            <input type="text" name="external_hard_drive" id="edit-external-hard-drive">
+            <input type="submit" name="update" value="Enregistrer">
+        </form>
     </div>
 </body>
 </html>
