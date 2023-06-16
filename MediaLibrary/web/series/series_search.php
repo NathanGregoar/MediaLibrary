@@ -71,7 +71,7 @@ $searchResult = $connection->query($searchSql);
 
 <head>
     <title>Recherche de séries</title>
-    <link rel="stylesheet" type="text/css" href="../styles.css">
+    <link rel="stylesheet" type="text/css" href="./series.css">
 </head>
 
 <body>
