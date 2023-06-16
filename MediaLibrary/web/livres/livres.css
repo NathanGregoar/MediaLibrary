@@ -163,9 +163,8 @@
     }  
   
     .livre-item {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+      display: flex;
+      flex-direction: column;
       justify-content: space-between;
       background-color: #fff;
       border: 1px solid #ddd;
