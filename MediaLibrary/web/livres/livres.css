@@ -55,9 +55,9 @@
   }
   
   .container_search {
-    display: grid;
-    grid-template-columns: repeat(6, 1fr);
-    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
     width: 100%;
     margin: 20px auto;
   }
@@ -150,7 +150,9 @@
   }
   
   .livres-list {
-      display: flex;
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 20px;
       flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
       justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
       gap: 20px;
