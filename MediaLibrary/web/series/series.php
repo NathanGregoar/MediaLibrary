@@ -69,7 +69,7 @@ require_once '../utils/config.php';
             <input type="text" id="language" name="language">
 
             <label for="complete_season">Saison complète :</label>
-            <input type="checkbox" id="complete_season" name="complete_season"></br>
+            <input type="checkbox" id="complete_season" name="complete_season"></br></br>
 
             <label for="episode_count">Nombre d'épisodes :</label>
             <input type="number" id="episode_count" name="episode_count" min="0">
