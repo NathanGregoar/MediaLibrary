@@ -55,9 +55,9 @@
   }
   
   .container_search {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 20px;
     width: 100%;
     margin: 20px auto;
   }
