@@ -75,6 +75,11 @@ $searchResult = $connection->query($searchSql);
 </head>
 
 <body>
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+        <a href="./series.php">Ajouter une Série</a>
+        <a href="./series_search.php">Consulter les Séries</a>
+    </div>
     <div class="container">
         <h1>Recherche de séries</h1>
 
