@@ -94,25 +94,54 @@ $loggedInUser = getLoggedInUser();
                     echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
                     echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
                     echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-                    
-                    // Affichage du résumé avec option de pliage/dépliage
-                    echo '<div class="resume-livre">';
                     echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
-                    echo '</div>';
-                    echo '<button type="button" class="toggle-resume">Afficher plus</button>';
 
                     echo '<form method="POST" style="display:inline">';
                     echo '<input type="hidden" name="delete" value="' . $id . '">';
-@ -146,28 +141,23 @@
+                    echo '<input type="submit" value="Supprimer" class="delete-btn">';
+                    echo '</form>';
+
+                    // Ajout du bouton "Modifier"
+                    echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
+
+                    echo '</div>'; // .livre-item
+                }
+                echo '</div>'; // .livres-liste
+            } else {
+                echo '<div class="alert">Aucun résultat trouvé pour votre recherche.</div>';
+            }
+        }
+
+        // Affichage de tous les livres ajoutés par l'utilisateur connecté
+        $userLivresSql = "SELECT * FROM livres_souhaites WHERE added_by = " . $loggedInUser['id'];
+        $userLivresResult = $connection->query($userLivresSql);
+
+        echo '<h2>Vos livres :</h2>';
+        echo '<div class="livres-liste">';
+        while ($row = $userLivresResult->fetch_assoc()) {
+            $id = $row['id'];
+            $titre = stripslashes($row['titre']);
+            $auteur = stripslashes($row['auteur']);
+            $numero_tome = stripslashes($row['numero_tome']);
+            $nombre_total_tomes = stripslashes($row['nombre_total_tomes']);
+            $prix = stripslashes($row['prix']);
+            $format = stripslashes($row['format']);
+            $maison_edition = stripslashes($row['maison_edition']);
+            $resume = stripslashes($row['resume_livre']);
+
+            echo '<div class="livre-item">';
+            echo '<h3>' . $titre . '</h3>';
+            $bookCover = getBookCover($titre, $auteur);
+            if ($bookCover) {
+                echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
+            }
+            echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
+            echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
+            echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
             echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
             echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
             echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-
-            // Affichage du résumé avec option de pliage/dépliage
-            echo '<div class="resume-livre">';
             echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
-            echo '</div>';
-            echo '<button type="button" class="toggle-resume">Afficher plus</button>';
 
             echo '<form method="POST" style="display:inline">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
