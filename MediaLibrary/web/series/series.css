@@ -81,7 +81,9 @@
     margin-bottom: 5px;
   }
   
-  .container input[type="text"] {
+  .container input[type="text"],
+  .container input[type="number"],
+  .container textarea {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
@@ -143,13 +145,13 @@
     text-align: center;
   }
   
-  .series-list-wrapper {
+  .movies-list-wrapper {
     width: 100%;
     display: flex;
     justify-content: center;
   }
   
-  .series-list {
+  .movies-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
@@ -162,7 +164,7 @@
     border-radius: 5px;
   }
   
-  .series-item {
+  .movie-item {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
@@ -174,20 +176,20 @@
     overflow: hidden;
   }
   
-  .series-item img {
+  .movie-item img {
     width: 100%;
     height: 400px;
     object-fit: cover;
   }
   
-  .series-card {
+  .movie-card {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
   }
   
-  .series-details {
+  .movie-details {
     padding: 10px;
     display: flex;
     flex-direction: column;
@@ -195,19 +197,19 @@
     flex: 1;
   }
   
-  .series-details h3 {
+  .movie-details h3 {
     font-size: 18px;
     margin-top: 0;
     margin-bottom: 10px;
     text-align: center;
   }
   
-  .series-details p {
+  .movie-details p {
     margin-top: 0;
     margin-bottom: 5px;
   }
   
-  .series-details strong {
+  .movie-details strong {
     font-weight: bold;
   }
   
@@ -271,7 +273,14 @@
   
   #edit-form-container input[type="text"],
   #edit-form-container input[type="number"],
-  #edit-form-container input[type="checkbox"] {
+  #edit-form-container textarea {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+  }
+  
+  #edit-form-container select {
     padding: 5px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
@@ -280,7 +289,7 @@
   
   #edit-form-container input[type="submit"] {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #4CAF50;
     color: #fff;
     border: none;
     border-radius: 3px;
@@ -288,6 +297,54 @@
   }
   
   #edit-form-container input[type="submit"]:hover {
+    background-color: #45a049;
+  }
+  
+  /* Formulaire */
+  
+  .container form .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .container form .form-group:last-child {
+    margin-bottom: 0;
+  }
+  
+  .container form label {
+    font-weight: bold;
+    margin-bottom: 5px;
+  }
+  
+  .container form input[type="text"],
+  .container form input[type="number"],
+  .container form textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .container form select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+  }
+  
+  .container form input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  .container form input[type="submit"]:hover {
     background-color: #45a049;
   }
   
