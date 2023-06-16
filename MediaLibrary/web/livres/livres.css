@@ -1,23 +1,18 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
+body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
     background-color: #ecf2f9;
-  }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh;
+}
+
+.container {
+    max-width: 800px;
+    /* max-width: 800px; */
+    margin: 0 auto;
     padding: 20px;
-  }
-  
-  .navbar {
+}
+
+.navbar {
     display: flex;
     background-color: #333;
     color: #fff;
@@ -44,268 +39,128 @@
     margin-top: 20px;
     margin-bottom: 0;
   }
-  
-  .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 800px;
-    margin: 20px auto;
-  }
-  
-  .container_search {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    margin: 20px auto;
-  }
-  
-  .search-bar {
-    width: 100%;
-  }
-  
-  .container form {
-    width: 100%;
-  }
-  
-  .container_search form {
-    width: 100%;
-    margin: auto;
-    max-width: 800px;
-  }
-  
-  .container label {
+
+form {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 10px;
     font-weight: bold;
-    margin-bottom: 5px;
-  }
-  
-  .container input[type="text"] {
+    color: #333;
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+select {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     box-sizing: border-box;
-  }
-  
-  .container input[type="submit"] {
+}
+
+input[type="submit"] {
     padding: 10px 20px;
-    background-color: #4caf50;
+    background-color: #4CAF50;
     color: white;
     border: none;
-    border-radius: 4px;
     cursor: pointer;
-  }
-  
-  .container input[type="submit"]:hover {
-    background-color: #45a049;
-  }
-  
-  .alert {
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th,
+td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+    color: #333;
+}
+
+tr:hover {
+    background-color: #f5f5f5;
+}
+
+.alert {
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid transparent;
     border-radius: 4px;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .alert-container {
-    display: flex;
-    justify-content: center;
-    width: 800px;
-    margin: 0 auto;
-  }
-  
-  .alert-success {
+}
+
+.alert-success {
     background-color: #d4edda;
     color: #155724;
     border-color: #c3e6cb;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .alert-error {
+}
+
+.alert-error {
     background-color: #f8d7da;
     color: #721c24;
     border-color: #f5c6cb;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .alert-info {
+}
+
+.alert-info {
     background-color: #d1ecf1;
     color: #0c5460;
     border-color: #bee5eb;
-    width: 100%;
-    text-align: center;
-  }
-  
-  .livres-list-wrapper {
-    width: 100%;
+}
+
+.livres-liste {
+    margin-bottom: 20px;
+}
+
+.livre-item {
     display: flex;
-    justify-content: center;
-  }
-  
-  .livres-list {
-      display: flex;
-      flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
-      justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
-      gap: 20px;
-      width: 100%;
-      max-width: 90%;
-      align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
-      background-color: #DCE9F7;
-      padding: 10px;
-      border-radius: 5px;
-    }  
-  
-    .livre-item {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      background-color: #fff;
-      border: 1px solid #ddd;
-      border-radius: 4px;
-      max-width: 250px;
-      min-width: 250px;
-      overflow: hidden;
-    }
-    
-    .livre-item img {
-      width: 100%;
-      height: 400px; /* Ajuste la hauteur des affiches selon tes besoins */
-      object-fit: cover;
-    }
-    
-    .livre-card {
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      height: 100%;
-    }
-    
-    .livre-details {
-      padding: 10px;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
-      flex: 1;
-    }
-    
-    .livre-details h3 {
-      font-size: 18px;
-      margin-top: 0;
-      margin-bottom: 10px;
-      text-align: center;
-    }
-    
-    .livre-details p {
-      margin-top: 0;
-      margin-bottom: 5px;
-    }
-    
-    .livre-details strong {
-      font-weight: bold;
-    }
-    
-    .delete-btn {
-      align-self: center;
-      padding: 5px 10px;
-      background-color: #ff3333;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      width: 50%;
-      margin: 0 auto;
-      display: block;
-    }
-    
-    .btn-edit {
-      background-color: #007bff;
-      color: #fff;
-      border: none;
-      border-radius: 4px;
-      padding: 5px 10px;
-      cursor: pointer;
-      width: 50%;
-      margin: 0 auto;
-      display: block;
-    }
-    
-    .delete-btn:hover {
-      background-color: #ff0000;
-    }
-  
-    .btn-edit:hover {
-      background-color: #0062cb;
-    }
-  
-    #edit-form-container {
-      position: fixed;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      background-color: #f8f8f8;
-      padding: 20px;
-      border-radius: 5px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-      z-index: 9999; /* Assure que le formulaire s'affiche par-dessus le reste de la page */
-  }
-  
-  #edit-form-container h2 {
-      margin-top: 0;
-  }
-  
-  #edit-form-container form {
-      display: flex;
-      flex-direction: column;
-  }
-  
-  #edit-form-container label {
-      margin-bottom: 10px;
-  }
-  
-  #edit-form-container input[type="text"] {
-      padding: 5px;
-      margin-bottom: 10px;
-      border: 1px solid #ccc;
-      border-radius: 3px;
-  }
-  
-  #edit-form-container input[type="submit"] {
-      padding: 10px 20px;
-      background-color: #4CAF50;
-      color: #fff;
-      border: none;
-      border-radius: 3px;
-      cursor: pointer;
-  }
-  
-  #edit-form-container input[type="submit"]:hover {
-      background-color: #45a049;
-  }
-  
-  .resume-livre {
-    max-height: 40px;
-    overflow: hidden;
-    transition: max-height 0.5s ease;
+    align-items: center;
+    margin-bottom: 10px;
+    background: linear-gradient(#86c1ff, #1c79c0);
+    padding: 10px;
+    border-radius: 4px;
 }
 
-.resume-livre.expanded {
-    max-height: none;
+.livre-item img {
+    max-width: 100px;
+    margin-right: 10px;
 }
 
-.toggle-resume {
+.livre-details {
+    flex-grow: 1;
+}
+
+.livre-details h3 {
+    margin: 0;
+    margin-bottom: 5px;
+    color: white;
+}
+
+.livre-details p {
+    margin: 0;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.livre-item .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
     cursor: pointer;
-    display: block;
-    margin-top: 5px;
 }
 
-.resume-livre.opened {
-    max-height: none;
+.livre-item .btn-edit {
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
 }
-  
