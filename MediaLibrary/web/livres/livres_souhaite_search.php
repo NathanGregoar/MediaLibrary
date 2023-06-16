@@ -16,6 +16,67 @@ function getBookCover($title, $author) {
 
 // Récupérer l'utilisateur connecté
 $loggedInUser = getLoggedInUser();
+
+// Connexion à la base de données
+$connection = mysqli_connect($host, $username, $password, $dbName);
+if (!$connection) {
+    die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
+}
+
+// Suppression d'un livre
+if (isset($_POST['delete'])) {
+    $deleteId = $connection->real_escape_string($_POST['delete']);
+    $deleteSql = "DELETE FROM livres WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($deleteSql) === TRUE) {
+        $deleteAlert = '<div class="alert alert-success">Livre supprimé avec succès !</div>';
+    } else {
+        $deleteAlert = '<div class="alert alert-error">Erreur lors de la suppression du livre : ' . $connection->error . '</div>';
+    }
+}
+
+// Modification d'un livre
+if (isset($_POST['edit'])) {
+    $editId = $connection->real_escape_string($_POST['edit']);
+    $editSql = "SELECT * FROM livres WHERE id = $editId AND added_by = " . $loggedInUser['id'];
+    $editResult = $connection->query($editSql);
+
+    if ($editResult->num_rows > 0) {
+        $editData = $editResult->fetch_assoc();
+        $editTitle = $editData['title'];
+        $editAuthor = $editData['author'];
+        $editFormVisible = true;
+    }
+}
+
+// Mise à jour d'un livre
+if (isset($_POST['update'])) {
+    $updateId = $connection->real_escape_string($_POST['book_id']);
+    $updateTitle = $connection->real_escape_string($_POST['title']);
+    $updateAuthor = $connection->real_escape_string($_POST['author']);
+
+    $updateSql = "UPDATE livres SET title = '$updateTitle', author = '$updateAuthor' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
+
+    if ($connection->query($updateSql) === TRUE) {
+        $updateAlert = '<div class="alert alert-success">Livre mis à jour avec succès !</div>';
+    } else {
+        $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du livre : ' . $connection->error . '</div>';
+    }
+}
+
+// Récupération des livres correspondant à la recherche
+$searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
+$searchSql = "SELECT * FROM livres WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
+$searchResult = $connection->query($searchSql);
+$numSearchResults = $searchResult->num_rows;
+
+// Récupération de tous les livres de l'utilisateur connecté
+$booksSql = "SELECT * FROM livres WHERE added_by = " . $loggedInUser['id'];
+$booksResult = $connection->query($booksSql);
+$numBooks = $booksResult->num_rows;
+
+// Fermeture de la connexion à la base de données
+$connection->close();
 ?>
 
 <!DOCTYPE html>
@@ -27,12 +88,16 @@ $loggedInUser = getLoggedInUser();
 <body>
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
-        <a href="./livres_souhaite.php">Ajouter un Livre Souhaité</a>
-        <a href="./livres_souhaite_search.php">Consulter les Livres Souhaités</a>
-        <a href="./livres_possede.php">Consulter les Livres Possédés</a>
+        <a href="./livre.php">Ajouter un Livre</a>
+        <a href="./livre_search.php">Consulter les Livres</a>
     </div>
 
     <h1>Rechercher des Livres</h1>
+
+    <div class="alert-container">
+        <?php echo isset($deleteAlert) ? $deleteAlert : ''; ?>
+        <?php echo isset($updateAlert) ? $updateAlert : ''; ?>
+    </div>
 
     <div class="container_search">
         <div class="search-bar">
@@ -42,121 +107,77 @@ $loggedInUser = getLoggedInUser();
             </form>
         </div>
 
+        <?php if ($numSearchResults > 0) { ?>
+            <h2>Résultats de recherche (<?php echo $numSearchResults; ?>)</h2>
+            <ul class="book-list">
+                <?php while ($row = $searchResult->fetch_assoc()) { ?>
+                    <li class="book-item">
+                        <div class="book-info">
+                            <div class="book-cover">
+                                <?php
+                                $bookCover = getBookCover($row['title'], $row['author']);
+                                if ($bookCover) {
+                                    echo '<img src="' . $bookCover . '" alt="' . $row['title'] . '">';
+                                } else {
+                                    echo '<div class="no-cover">Pas de couverture disponible</div>';
+                                }
+                                ?>
+                            </div>
+                            <div class="book-details">
+                                <div class="book-title"><?php echo $row['title']; ?></div>
+                                <div class="book-author"><?php echo $row['author']; ?></div>
+                            </div>
+                        </div>
+                        <div class="book-actions">
+                            <form method="POST">
+                                <input type="hidden" name="delete" value="<?php echo $row['id']; ?>">
+                                <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')">Supprimer</button>
+                            </form>
+                            <form method="POST">
+                                <input type="hidden" name="edit" value="<?php echo $row['id']; ?>">
+                                <button type="submit">Modifier</button>
+                            </form>
+                        </div>
+                    </li>
+                <?php } ?>
+            </ul>
+        <?php } else if ($searchTerm !== '') { ?>
+            <div class="no-results">Aucun livre trouvé pour "<?php echo $searchTerm; ?>"</div>
+        <?php } ?>
 
-        <?php
-        $connection = mysqli_connect($host, $username, $password, $dbName);
-
-        if (!$connection) {
-            die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
-        }
-
-        // Suppression d'un livre
-        if (isset($_POST['delete'])) {
-            $deleteId = $connection->real_escape_string($_POST['delete']);
-            $deleteSql = "DELETE FROM livres_souhaites WHERE id = $deleteId AND added_by = " . $loggedInUser['id'];
-
-            if ($connection->query($deleteSql) === TRUE) {
-                echo '<div class="alert alert-success">Livre supprimé avec succès !</div>';
-            } else {
-                echo '<div class="alert alert-error">Erreur lors de la suppression du livre : ' . $connection->error . '</div>';
-            }
-        }
-
-        // Affichage des livres correspondant à la recherche
-        if (isset($_GET['search'])) {
-            $searchTerm = $connection->real_escape_string($_GET['search']);
-            $searchSql = "SELECT * FROM livres_souhaites WHERE titre LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'];
-            $searchResult = $connection->query($searchSql);
-
-            if ($searchResult->num_rows > 0) {
-                echo '<h2>Résultats de la recherche :</h2>';
-                echo '<div class="livres-liste">';
-                while ($row = $searchResult->fetch_assoc()) {
-                    $id = $row['id'];
-                    $titre = stripslashes($row['titre']);
-                    $auteur = stripslashes($row['auteur']);
-                    $numero_tome = stripslashes($row['numero_tome']);
-                    $nombre_total_tomes = stripslashes($row['nombre_total_tomes']);
-                    $prix = stripslashes($row['prix']);
-                    $format = stripslashes($row['format']);
-                    $maison_edition = stripslashes($row['maison_edition']);
-                    $resume = stripslashes($row['resume_livre']);
-
-                    echo '<div class="livre-item">';
-                    echo '<h3>' . $titre . '</h3>';
-                    $bookCover = getBookCover($titre, $auteur);
-                    if ($bookCover) {
-                        echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
-                    }
-                    echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
-                    echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
-                    echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
-                    echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
-                    echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
-                    echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-                    echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
-
-                    echo '<form method="POST" style="display:inline">';
-                    echo '<input type="hidden" name="delete" value="' . $id . '">';
-                    echo '<input type="submit" value="Supprimer" class="delete-btn">';
-                    echo '</form>';
-
-                    // Ajout du bouton "Modifier"
-                    echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
-
-                    echo '</div>'; // .livre-item
-                }
-                echo '</div>'; // .livres-liste
-            } else {
-                echo '<div class="alert">Aucun résultat trouvé pour votre recherche.</div>';
-            }
-        }
-
-        // Affichage de tous les livres ajoutés par l'utilisateur connecté
-        $userLivresSql = "SELECT * FROM livres_souhaites WHERE added_by = " . $loggedInUser['id'];
-        $userLivresResult = $connection->query($userLivresSql);
-
-        echo '<h2>Vos livres :</h2>';
-        echo '<div class="livres-liste">';
-        while ($row = $userLivresResult->fetch_assoc()) {
-            $id = $row['id'];
-            $titre = stripslashes($row['titre']);
-            $auteur = stripslashes($row['auteur']);
-            $numero_tome = stripslashes($row['numero_tome']);
-            $nombre_total_tomes = stripslashes($row['nombre_total_tomes']);
-            $prix = stripslashes($row['prix']);
-            $format = stripslashes($row['format']);
-            $maison_edition = stripslashes($row['maison_edition']);
-            $resume = stripslashes($row['resume_livre']);
-
-            echo '<div class="livre-item">';
-            echo '<h3>' . $titre . '</h3>';
-            $bookCover = getBookCover($titre, $auteur);
-            if ($bookCover) {
-                echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
-            }
-            echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
-            echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
-            echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
-            echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
-            echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
-            echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-            echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
-
-            echo '<form method="POST" style="display:inline">';
-            echo '<input type="hidden" name="delete" value="' . $id . '">';
-            echo '<input type="submit" value="Supprimer" class="delete-btn">';
-            echo '</form>';
-
-            // Ajout du bouton "Modifier"
-            echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
-
-            echo '</div>'; // .livre-item
-        }
-        echo '</div>'; // .livres-liste
-
-        mysqli_close($connection);
-        ?>
+        <h2>Tous les Livres (<?php echo $numBooks; ?>)</h2>
+        <ul class="book-list">
+            <?php while ($row = $booksResult->fetch_assoc()) { ?>
+                <li class="book-item">
+                    <div class="book-info">
+                        <div class="book-cover">
+                            <?php
+                            $bookCover = getBookCover($row['title'], $row['author']);
+                            if ($bookCover) {
+                                echo '<img src="' . $bookCover . '" alt="' . $row['title'] . '">';
+                            } else {
+                                echo '<div class="no-cover">Pas de couverture disponible</div>';
+                            }
+                            ?>
+                        </div>
+                        <div class="book-details">
+                            <div class="book-title"><?php echo $row['title']; ?></div>
+                            <div class="book-author"><?php echo $row['author']; ?></div>
+                        </div>
+                    </div>
+                    <div class="book-actions">
+                        <form method="POST">
+                            <input type="hidden" name="delete" value="<?php echo $row['id']; ?>">
+                            <button type="submit" onclick="return confirm('Êtes-vous sûr de vouloir supprimer ce livre ?')">Supprimer</button>
+                        </form>
+                        <form method="POST">
+                            <input type="hidden" name="edit" value="<?php echo $row['id']; ?>">
+                            <button type="submit">Modifier</button>
+                        </form>
+                    </div>
+                </li>
+            <?php } ?>
+        </ul>
     </div>
 </body>
 </html>
