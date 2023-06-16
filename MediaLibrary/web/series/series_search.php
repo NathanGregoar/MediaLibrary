@@ -73,7 +73,7 @@ $connection->close();
 <html>
 <head>
     <title>Recherche de séries</title>
-    <link rel="stylesheet" type="text/css" href="../css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./series.css">
 </head>
 <body>
     <div class="container">
