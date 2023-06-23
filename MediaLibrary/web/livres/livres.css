@@ -22,7 +22,8 @@ body {
 
 .container_search form {
     width: 100%;
-    margin: auto;
+    margin: 0px;
+    padding: 0px;
 }
 
 .navbar {
