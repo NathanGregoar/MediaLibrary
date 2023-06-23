@@ -115,6 +115,8 @@ tr:hover {
 
 .livres-liste {
     margin-bottom: 20px;
+    width: 100%;
+    max-width: 90%;
 }
 
 .livre-item {
