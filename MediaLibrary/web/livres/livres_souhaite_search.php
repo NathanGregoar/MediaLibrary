@@ -146,7 +146,7 @@ $loggedInUser = getLoggedInUser();
             echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
             echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
 
-            echo '<form method="POST" style="display:inline">';
+            echo '<form method="POST">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
             echo '<input type="submit" value="Supprimer" class="delete-btn">';
             echo '</form>';
