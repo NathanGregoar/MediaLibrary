@@ -53,6 +53,10 @@ if (isset($_POST['update'])) {
     } else {
         $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du livre souhaité : ' . $connection->error . '</div>';
     }
+
+    // Redirection vers la page appropriée après la mise à jour
+    header("Location: livre_search.php");
+    exit();
 }
 
 // Récupérer l'utilisateur connecté
@@ -144,7 +148,7 @@ $loggedInUser = getLoggedInUser();
                     echo '</form>';
 
                     // Ajout du bouton "Modifier"
-                    echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
+                    echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numeroTome . '\', \'' . $nombreTotalTomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maisonEdition . '\', \'' . $resumeLivre . '\')">Modifier</button>';
 
                     echo '</div>'; // .livre-item
                 }
