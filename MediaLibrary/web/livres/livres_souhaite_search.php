@@ -201,7 +201,14 @@ $connection->close();
                 echo '<p><strong>Prix :</strong> ' . ($prix != 0.00 ? $prix : '') . '</p>';
                 echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '') . '</p>';
                 echo '<p><strong>Maison d\'édition :</strong> ' . ($maisonEdition != null ? $maisonEdition : '') . '</p>';
-                echo '<p><strong>Résumé :</strong> ' . ($resumeLivre != null ? $resumeLivre : '') . '</p>';
+                
+                $resumeLivre = ($resumeLivre != null ? $resumeLivre : '');
+
+                $words = explode(' ', $resumeLivre); // Sépare la chaîne en mots
+                $limitedSummary = implode(' ', array_slice($words, 0, 20)); // Concatène les 20 premiers mots
+
+                echo '<p><strong>Résumé :</strong> ' . $limitedSummary . '</p>';
+
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
