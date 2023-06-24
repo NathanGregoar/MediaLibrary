@@ -139,7 +139,7 @@ tr:hover {
 .livre-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;;
+    /* margin-bottom: 10px; */
     max-width: 100%;
     background: linear-gradient(#86c1ff, #1c79c0);
     padding: 10px;
