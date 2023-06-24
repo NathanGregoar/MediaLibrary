@@ -178,7 +178,7 @@ $loggedInUser = getLoggedInUser();
             if ($bookCover) {
                 echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
             }
-            echo '<h3>' . $id . '</h3>';
+            echo '<h3>' . $id . '</h3>'; 
             echo '<h3>' . $titre . '</h3>';
             echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
             echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
