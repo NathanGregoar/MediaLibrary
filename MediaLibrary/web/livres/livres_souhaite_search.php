@@ -114,7 +114,7 @@ $loggedInUser = getLoggedInUser();
         }
 
         // Affichage de tous les livres ajoutés par l'utilisateur connecté
-        $userLivresSql = "SELECT * FROM livres_souhaites WHERE added_by = " . $loggedInUser['id'];
+        $userLivresSql = "SELECT * FROM livres_souhaites WHERE added_by = " . $loggedInUser['id'] . " ORDER BY titre ASC";
         $userLivresResult = $connection->query($userLivresSql);
 
         $numUserLivres = $userLivresResult->num_rows;
