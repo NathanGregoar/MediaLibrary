@@ -194,7 +194,7 @@ $loggedInUser = getLoggedInUser();
             echo '</form>';
 
             // Ajout du bouton "Modifier"
-            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numero_tome . '\', \'' . $nombre_total_tomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maison_edition . '\', \'' . $resume_livre . '\')">Modifier '<?php echo $id; ?>' </button>';
+            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numero_tome . '\', \'' . $nombre_total_tomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maison_edition . '\', \'' . $resume_livre . '\')">Modifier '. $id . ' </button>';
 
             echo '</div>'; // .livre-item
         }
