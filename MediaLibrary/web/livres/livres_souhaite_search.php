@@ -146,13 +146,13 @@ $loggedInUser = getLoggedInUser();
             echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
             echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
 
-            // echo '<form method="POST" style="display:inline">';
-            // echo '<input type="hidden" name="delete" value="' . $id . '">';
-            // echo '<input type="submit" value="Supprimer" class="delete-btn">';
-            // echo '</form>';
+            echo '<form method="POST" style="display:inline">';
+            echo '<input type="hidden" name="delete" value="' . $id . '">';
+            echo '<input type="submit" value="Supprimer" class="delete-btn">';
+            echo '</form>';
 
             // Ajout du bouton "Modifier"
-            echo '<button type="submit" name="delete" class="delete-btn">Supprimer</button>';
+            // echo '<button type="submit" name="delete" class="delete-btn">Supprimer</button>';
             echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
 
             echo '</div>'; // .livre-item
