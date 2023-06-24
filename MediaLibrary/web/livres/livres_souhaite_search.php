@@ -193,7 +193,7 @@ $loggedInUser = getLoggedInUser();
             echo '</form>';
 
             // Ajout du bouton "Modifier"
-            echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
+            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numeroTome . '\', \'' . $nombreTotalTomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maisonEdition . '\', \'' . $resumeLivre . '\')">Modifier</button>';
 
             echo '</div>'; // .livre-item
         }
