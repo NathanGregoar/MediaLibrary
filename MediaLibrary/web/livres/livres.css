@@ -125,7 +125,7 @@ tr:hover {
 .livres-liste {
     display: flex;
     flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
-    justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
+    /* justify-content: space-between; Répartit les éléments de manière égale sur la ligne */
     gap: 20px;
     width: 100%;
     max-width: 90%;
