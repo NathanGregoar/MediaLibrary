@@ -152,6 +152,10 @@ $connection->close();
                 $summary = $row['resume_livre'];
 
                 echo '<div class="book-item">';
+                $bookCover = getBookCover($titre, $auteur);
+                if ($bookCover) {
+                    echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
+                }
                 echo '<h3>' . $title . '</h3>';
                 echo '<p><strong>Auteur :</strong> ' . ($author != '/' ? $author : '') . '</p>';
                 echo '<p><strong>Numéro de tome :</strong> ' . ($volumeNumber != 1 ? $volumeNumber : '') . '</p>';
@@ -186,6 +190,10 @@ $connection->close();
                 $resumeLivre = $row['resume_livre'];
 
                 echo '<div class="book-item">';
+                $bookCover = getBookCover($titre, $auteur);
+                if ($bookCover) {
+                    echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
+                }
                 echo '<h3>' . $titre . '</h3>';
                 echo '<p><strong>Auteur :</strong> ' . ($auteur != '/' ? $auteur : '') . '</p>';
                 echo '<p><strong>Numéro de tome :</strong> ' . ($numeroTome != 1 ? $numeroTome : '') . '</p>';
