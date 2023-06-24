@@ -53,10 +53,6 @@ if (isset($_POST['update'])) {
     } else {
         $updateAlert = '<div class="alert alert-error">Erreur lors de la mise à jour du livre souhaité : ' . $connection->error . '</div>';
     }
-
-    // Redirection vers la page appropriée après la mise à jour
-    header("Location: livre_search.php");
-    exit();
 }
 
 // Récupérer l'utilisateur connecté
@@ -209,7 +205,7 @@ $loggedInUser = getLoggedInUser();
 
     <div id="edit-form-container" style="display: none;">
         <h2>Modifier un livre souhaité</h2>
-        <form method="POST" action="livre_search.php">
+        <form method="POST" action="livres_souhaite_search.php">
             <input type="hidden" name="livre_id" id="edit-livre-id">
             <label for="edit-livre-titre">Titre :</label>
             <input type="text" name="titre" id="edit-livre-titre">
