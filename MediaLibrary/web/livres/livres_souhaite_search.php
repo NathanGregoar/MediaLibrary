@@ -95,7 +95,7 @@ $loggedInUser = getLoggedInUser();
                     echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
                     echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
                     echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-                    echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
+                    echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? implode(' ', array_slice(explode(' ', $resume), 0, 20)) : '') . '</p>';
 
                     echo '<form method="POST" style="display:inline">';
                     echo '<input type="hidden" name="delete" value="' . $id . '">';
@@ -144,7 +144,7 @@ $loggedInUser = getLoggedInUser();
             echo '<p><strong>Prix :</strong> ' . ($prix != 'NULL' ? $prix : '') . '</p>';
             echo '<p><strong>Format :</strong> ' . ($format != 'NULL' ? $format : '') . '</p>';
             echo '<p><strong>Maison d\'édition :</strong> ' . ($maison_edition != 'NULL' ? $maison_edition : '') . '</p>';
-            echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? $resume : '') . '</p>';
+            echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? implode(' ', array_slice(explode(' ', $resume), 0, 20)) : '') . '</p>';
 
             echo '<form method="POST">';
             echo '<input type="hidden" name="delete" value="' . $id . '">';
@@ -152,7 +152,6 @@ $loggedInUser = getLoggedInUser();
             echo '</form>';
 
             // Ajout du bouton "Modifier"
-            // echo '<button type="submit" name="delete" class="delete-btn">Supprimer</button>';
             echo '<button type="submit" name="edit" class="btn-edit">Modifier</button>';
 
             echo '</div>'; // .livre-item
