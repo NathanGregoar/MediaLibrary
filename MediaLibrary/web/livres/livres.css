@@ -170,19 +170,34 @@ tr:hover {
 }
 
 .livre-item .delete-btn {
-    background-color: #dc3545;
+    align-self: center;
+    padding: 5px 10px;
+    background-color: #ff3333;
     color: #fff;
     border: none;
-    padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
 }
 
 .livre-item .btn-edit {
     background-color: #007bff;
     color: #fff;
     border: none;
-    padding: 5px 10px;
     border-radius: 4px;
+    padding: 5px 10px;
     cursor: pointer;
+    width: 50%;
+    margin: 0 auto;
+    display: block;
 }
+
+.delete-btn:hover {
+    background-color: #ff0000;
+  }
+
+  .btn-edit:hover {
+    background-color: #0062cb;
+  }
