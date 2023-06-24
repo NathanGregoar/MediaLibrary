@@ -144,7 +144,7 @@ $loggedInUser = getLoggedInUser();
                     echo '</form>';
 
                     // Ajout du bouton "Modifier"
-                    echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numeroTome . '\', \'' . $nombreTotalTomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maisonEdition . '\', \'' . $resumeLivre . '\')">Modifier</button>';
+                    echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numero_tome . '\', \'' . $nombre_total_tomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maison_edition . '\', \'' . $resume . '\')">Modifier</button>;
 
                     echo '</div>'; // .livre-item
                 }
@@ -194,7 +194,7 @@ $loggedInUser = getLoggedInUser();
             echo '</form>';
 
             // Ajout du bouton "Modifier"
-            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numeroTome . '\', \'' . $nombreTotalTomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maisonEdition . '\', \'' . $resumeLivre . '\')">Modifier</button>';
+            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numero_tome . '\', \'' . $nombre_total_tomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maison_edition . '\', \'' . $resume . '\')">Modifier</button>;
 
             echo '</div>'; // .livre-item
         }
