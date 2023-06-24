@@ -183,7 +183,7 @@ tr:hover {
     display: block;
 }
 
-.livre-item .btn-edit {
+.livre-item .edit-btn {
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -200,6 +200,51 @@ tr:hover {
     background-color: #ff0000;
   }
 
-  .btn-edit:hover {
+  .edit-btn:hover {
     background-color: #0062cb;
   }
+
+  #edit-form-container {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #f8f8f8;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: 9999; /* Assure que le formulaire s'affiche par-dessus le reste de la page */
+}
+
+#edit-form-container h2 {
+    margin-top: 0;
+}
+
+#edit-form-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+#edit-form-container label {
+    margin-bottom: 10px;
+}
+
+#edit-form-container input[type="text"] {
+    padding: 5px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+}
+
+#edit-form-container input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+#edit-form-container input[type="submit"]:hover {
+    background-color: #45a049;
+}
