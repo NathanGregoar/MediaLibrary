@@ -139,11 +139,21 @@ tr:hover {
 .livre-item {
     display: flex;
     align-items: center;
-    /* margin-bottom: 10px; */
+    margin-bottom: 10px;
     max-width: 100%;
     background: linear-gradient(#86c1ff, #1c79c0);
     padding: 10px;
     border-radius: 4px;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    max-width: 250px;
+    min-width: 250px;
+    overflow: hidden;
 }
 
 .livre-item img {
