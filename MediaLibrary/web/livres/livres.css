@@ -178,7 +178,8 @@ tr:hover {
     border-radius: 4px;
     cursor: pointer;
     width: 50%;
-    margin: 5px auto;
+    margin: 0 auto;
+    margin-bottom: 5px;
     display: block;
 }
 
@@ -190,7 +191,8 @@ tr:hover {
     padding: 5px 10px;
     cursor: pointer;
     width: 50%;
-    margin: 5px auto;
+    margin: 0 auto;
+    margin-bottom: 5px;
     display: block;
 }
 
