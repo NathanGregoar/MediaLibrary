@@ -127,7 +127,7 @@ tr:hover {
     flex-wrap: wrap; /* Permet le retour à la ligne des éléments */
     justify-content: space-between; /* Répartit les éléments de manière égale sur la ligne */
     gap: 20px;
-    width: 100%;
+    width: 90%;
     max-width: 90%;
     align-items: stretch; /* Étire les éléments pour avoir la même hauteur */
     background-color: #DCE9F7;
@@ -142,7 +142,7 @@ tr:hover {
     margin-bottom: 10px;
     max-width: 100%;
     background: linear-gradient(#86c1ff, #1c79c0);
-    padding: 100px;
+    padding: 10px;
     border-radius: 4px;
 }
 
