@@ -207,7 +207,7 @@ $connection->close();
 
     <div id="edit-form-container" style="display: none;">
         <h2>Modifier un livre souhaité</h2>
-        <form method="POST" action="livre_search.php">
+        <form method="POST" action="livres_souhaite_search.php">
             <input type="hidden" name="book_id" id="edit-book-id">
             <label for="edit-book-title">Titre :</label>
             <input type="text" name="titre" id="edit-book-title">
