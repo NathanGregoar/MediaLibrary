@@ -83,11 +83,11 @@ $loggedInUser = getLoggedInUser();
                     $resume = stripslashes($row['resume_livre']);
 
                     echo '<div class="livre-item">';
-                    echo '<h3>' . $titre . '</h3>';
                     $bookCover = getBookCover($titre, $auteur);
                     if ($bookCover) {
                         echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
                     }
+                    echo '<h3>' . $titre . '</h3>';
                     echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
                     echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
                     echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
@@ -130,11 +130,11 @@ $loggedInUser = getLoggedInUser();
             $resume = stripslashes($row['resume_livre']);
 
             echo '<div class="livre-item">';
-            echo '<h3>' . $titre . '</h3>';
             $bookCover = getBookCover($titre, $auteur);
             if ($bookCover) {
                 echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
             }
+            echo '<h3>' . $titre . '</h3>';
             echo '<p><strong>Auteur :</strong> ' . ($auteur != 'NULL' ? $auteur : '') . '</p>';
             echo '<p><strong>Numéro de tome :</strong> ' . ($numero_tome != 'NULL' ? $numero_tome : '') . '</p>';
             echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombre_total_tomes != 'NULL' ? $nombre_total_tomes : '') . '</p>';
