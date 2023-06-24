@@ -194,7 +194,7 @@ $loggedInUser = getLoggedInUser();
             echo '</form>';
 
             // Ajout du bouton "Modifier"
-            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numero_tome . '\', \'' . $nombre_total_tomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maison_edition . '\', \'' . $resume_livre . '\')">Modifier '. $id . ' </button>';
+            echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', \'' . $numero_tome . '\', \'' . $nombre_total_tomes . '\', \'' . $prix . '\', \'' . $format . '\', \'' . $maison_edition . '\', \'' . $resume_livre . '\')">Modifier</button>';
 
             echo '</div>'; // .livre-item
         }
@@ -207,7 +207,7 @@ $loggedInUser = getLoggedInUser();
     <div id="edit-form-container" style="display: none;">
         <h2>Modifier un livre souhaité <?php echo $id; ?></h2>
         <form method="POST" action="livres_souhaite_search.php">
-            <input type="hidden" name="livre_id" id="edit-livre-id">
+            <input type="hidden" name="<?php echo $id; ?>" id="edit-livre-id">
             <label for="edit-livre-titre">Titre :</label>
             <input type="text" name="titre" id="edit-livre-titre">
             <label for="edit-livre-auteur">Auteur :</label>
