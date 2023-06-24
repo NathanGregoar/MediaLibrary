@@ -14,10 +14,6 @@ function getBookCover($title, $author) {
     return null;
 }
 
-if (!$connection) {
-    die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
-}
-
 // Modification d'un livre souhaité
 if (isset($_POST['edit'])) {
     $editId = $connection->real_escape_string($_POST['edit']);
