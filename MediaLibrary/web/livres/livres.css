@@ -162,16 +162,20 @@ tr:hover {
 }
 
 .livre-details h3 {
-    margin: 0;
-    margin-bottom: 5px;
-    color: white;
+    font-size: 18px;
+    margin-top: 0;
+    margin-bottom: 10px;
+    text-align: center;
 }
 
 .livre-details p {
-    margin: 0;
-    margin-bottom: 10px;
-    color: white;
+    margin-top: 0;
+    margin-bottom: 5px;
 }
+
+.livre-details strong {
+    font-weight: bold;
+  }
 
 .livre-item .delete-btn {
     /* align-self: center; */
