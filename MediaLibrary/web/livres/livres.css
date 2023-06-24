@@ -20,10 +20,10 @@ body {
   margin: 20px auto;
 }
 
-/* .container_search form {
+.search_book {
     width: 800px;
     margin: auto;
-} */
+}
 
 .navbar {
     display: flex;
