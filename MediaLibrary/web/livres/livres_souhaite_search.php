@@ -163,7 +163,7 @@ $connection->close();
                 echo '<p><strong>Prix :</strong> ' . number_format($price, 2) . ' €</p>';
                 echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '') . '</p>';
                 echo '<p><strong>Maison d\'édition :</strong> ' . ($publisher != null ? $publisher : '') . '</p>';
-                echo '<p><strong>Résumé :</strong> ' . ($summary != null ? $summary : '') . '</p>';
+                echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? implode(' ', array_slice(explode(' ', $resume), 0, 20)) : '') . '</p>';
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
@@ -175,7 +175,7 @@ $connection->close();
         }
         ?>
 
-        <h2>Vos livres souhaités (<?php echo $numUserBooks; ?>) :</h2>
+        <h2>Vos livres (<?php echo $numUserBooks; ?>) :</h2>
         <div class="books-list">
             <?php
             while ($row = $userBooksResult->fetch_assoc()) {
@@ -201,7 +201,7 @@ $connection->close();
                 echo '<p><strong>Prix :</strong> ' . ($prix != 0.00 ? $prix : '') . '</p>';
                 echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '') . '</p>';
                 echo '<p><strong>Maison d\'édition :</strong> ' . ($maisonEdition != null ? $maisonEdition : '') . '</p>';
-                echo '<p><strong>Résumé :</strong> ' . ($resumeLivre != null ? $resumeLivre : '') . '</p>';
+                echo '<p><strong>Résumé :</strong> ' . ($resume != 'NULL' ? implode(' ', array_slice(explode(' ', $resume), 0, 20)) : '') . '</p>';
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
