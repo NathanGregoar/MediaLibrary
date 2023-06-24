@@ -138,8 +138,7 @@ tr:hover {
 
 .livre-item {
     display: flex;
-    align-items: flex-start; /* Aligner les éléments en haut */
-    justify-content: space-between; /* Répartir les éléments horizontalement */
+    align-items: center;
     margin-bottom: 10px;
     background: linear-gradient(#86c1ff, #1c79c0);
     padding: 10px;
@@ -147,9 +146,7 @@ tr:hover {
 }
 
 .livre-item img {
-    flex-shrink: 0; /* Empêcher le rétrécissement de l'image */
-    width: 100px; /* Définir une largeur fixe pour l'image */
-    height: auto; /* Ajuster la hauteur proportionnellement */
+    max-width: 100px;
     margin-right: 10px;
 }
 
@@ -157,14 +154,27 @@ tr:hover {
     flex-grow: 1;
 }
 
-.livre-details h3,
-.livre-details p {
+.livre-details h3 {
     margin: 0;
     margin-bottom: 5px;
     color: white;
 }
 
-.livre-item .delete-btn,
+.livre-details p {
+    margin: 0;
+    margin-bottom: 10px;
+    color: white;
+}
+
+.livre-item .delete-btn {
+    background-color: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
 .livre-item .btn-edit {
     background-color: #007bff;
     color: #fff;
@@ -172,5 +182,4 @@ tr:hover {
     padding: 5px 10px;
     border-radius: 4px;
     cursor: pointer;
-    margin-left: 10px; /* Ajouter une marge à gauche pour séparer les boutons */
 }
