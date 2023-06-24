@@ -174,7 +174,7 @@ tr:hover {
 }
 
 .livre-item .delete-btn {
-    align-self: center;
+    /* align-self: center; */
     padding: 5px 10px;
     background-color: #ff3333;
     color: #fff;
