@@ -69,7 +69,8 @@ $loggedInUser = getLoggedInUser();
             $searchResult = $connection->query($searchSql);
 
             if ($searchResult->num_rows > 0) {
-                echo '<h2>Résultats de la recherche :</h2>';
+                $numSearchResults = $searchResult->num_rows;
+                echo '<h2>Résultats de la recherche (' . $numSearchResults . ') :</h2>';
                 echo '<div class="livres-liste">';
                 while ($row = $searchResult->fetch_assoc()) {
                     $id = $row['id'];
@@ -116,7 +117,9 @@ $loggedInUser = getLoggedInUser();
         $userLivresSql = "SELECT * FROM livres_souhaites WHERE added_by = " . $loggedInUser['id'];
         $userLivresResult = $connection->query($userLivresSql);
 
-        echo '<h2>Vos livres :</h2>';
+        $numUserLivres = $userLivresResult->num_rows;
+        
+        echo '<h2>Vos livres (' . $numUserLivres . ') :</h2>';
         echo '<div class="livres-liste">';
         while ($row = $userLivresResult->fetch_assoc()) {
             $id = $row['id'];

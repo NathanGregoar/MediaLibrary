@@ -153,14 +153,6 @@ tr:hover {
     object-fit: cover;
 }
 
-/* .livre-item {
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    flex: 1;
-} */
-
 .livre-item h3 {
     font-size: 18px;
     margin-top: 5px;
