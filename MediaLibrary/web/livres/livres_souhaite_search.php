@@ -205,7 +205,7 @@ $loggedInUser = getLoggedInUser();
     </div>
 
     <div id="edit-form-container" style="display: none;">
-        <h2>Modifier un livre souhaité</h2>
+        <h2>Modifier un livre souhaité <?php echo $titre; ?></h2>
         <form method="POST" action="livres_souhaite_search.php">
             <input type="hidden" name="livre_id" id="edit-livre-id">
             <label for="edit-livre-titre">Titre :</label>
