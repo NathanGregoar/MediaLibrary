@@ -155,15 +155,17 @@ $connection->close();
                 $bookCover = getBookCover($titre, $auteur);
                 if ($bookCover) {
                     echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
+                } else {
+                    echo '<img src="https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg" alt="Image par défaut">';
                 }
-                echo '<h3>' . $title . '</h3>';
-                echo '<p><strong>Auteur :</strong> ' . ($author != '/' ? $author : '') . '</p>';
-                echo '<p><strong>Numéro de tome :</strong> ' . ($volumeNumber != 1 ? $volumeNumber : '') . '</p>';
-                echo '<p><strong>Nombre total de tomes :</strong> ' . ($totalVolumes != 1 ? $totalVolumes : '') . '</p>';
-                echo '<p><strong>Prix :</strong> ' . number_format($price, 2) . ' €</p>';
+                echo '<h3>' . $titre . '</h3>';
+                echo '<p><strong>Auteur :</strong> ' . ($auteur != '/' ? $auteur : '') . '</p>';
+                echo '<p><strong>Numéro de tome :</strong> ' . ($numeroTome != 1 ? $numeroTome : '') . '</p>';
+                echo '<p><strong>Nombre total de tomes :</strong> ' . ($nombreTotalTomes != 1 ? $nombreTotalTomes : '') . '</p>';
+                echo '<p><strong>Prix :</strong> ' . ($prix != 0.00 ? $prix : '') . '</p>';
                 echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '') . '</p>';
-                echo '<p><strong>Maison d\'édition :</strong> ' . ($publisher != null ? $publisher : '') . '</p>';
-                
+                echo '<p><strong>Maison d\'édition :</strong> ' . ($maisonEdition != null ? $maisonEdition : '') . '</p>';
+
                 $resumeLivre = ($resumeLivre != null ? $resumeLivre : '');
 
                 $words = explode(' ', $resumeLivre); // Sépare la chaîne en mots
@@ -175,7 +177,7 @@ $connection->close();
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
                 echo '</form>';
-                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $title . '\', \'' . $author . '\', ' . $volumeNumber . ', ' . $totalVolumes . ', ' . $price . ', \'' . $format . '\', \'' . $publisher . '\', \'' . $summary . '\')">Modifier</button>';
+                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $titre . '\', \'' . $auteur . '\', ' . $numeroTome . ', ' . $nombreTotalTomes . ', ' . $prix . ', \'' . $format . '\', \'' . $maisonEdition . '\', \'' . $resumeLivre . '\')">Modifier</button>';
                 echo '</div>';
             }
             echo '</div>';
@@ -200,6 +202,8 @@ $connection->close();
                 $bookCover = getBookCover($titre, $auteur);
                 if ($bookCover) {
                     echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
+                } else {
+                    echo '<img src="https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg" alt="Image par défaut">';
                 }
                 echo '<h3>' . $titre . '</h3>';
                 echo '<p><strong>Auteur :</strong> ' . ($auteur != '/' ? $auteur : '') . '</p>';
@@ -208,7 +212,7 @@ $connection->close();
                 echo '<p><strong>Prix :</strong> ' . ($prix != 0.00 ? $prix : '') . '</p>';
                 echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '') . '</p>';
                 echo '<p><strong>Maison d\'édition :</strong> ' . ($maisonEdition != null ? $maisonEdition : '') . '</p>';
-                
+
                 $resumeLivre = ($resumeLivre != null ? $resumeLivre : '');
 
                 $words = explode(' ', $resumeLivre); // Sépare la chaîne en mots
