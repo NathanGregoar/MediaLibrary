@@ -1,58 +1,94 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-    <meta charset="UTF-8">
-    <title>Erreur 404 - Page non trouvée</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f7f7f7;
-            color: #444;
-            margin: 0;
-            padding: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-        }
-        
-        .container {
-            text-align: center;
-        }
-        
-        h1 {
-            font-size: 48px;
-            margin-bottom: 20px;
-            color: #333;
-        }
-        
-        p {
-            font-size: 18px;
-            margin-bottom: 40px;
-        }
-        
-        a {
-            color: #007bff;
-            text-decoration: none;
-        }
-        
-        a:hover {
-            text-decoration: underline;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>Erreur Cat sans Cat - 404</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      color: #444;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+    }
 
-    <script>
-        function goBack() {
-            window.history.back();
-        }
-    </script>
+    .container {
+      text-align: center;
+    }
 
+    h1 {
+      font-size: 48px;
+      margin-bottom: 20px;
+      color: #333;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 40px;
+    }
+
+    a {
+      color: #007bff;
+      text-decoration: none;
+    }
+
+    a:hover {
+      text-decoration: underline;
+    }
+
+    /* Custom styles for "Erreur Cat sans Cat" */
+    .cat-image {
+      max-width: 200px;
+      margin-bottom: 20px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%,
+      100% {
+        transform: translateY(0);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+    }
+
+    .text-fade-in {
+      opacity: 0;
+      animation: fade-in 2s forwards;
+    }
+
+    @keyframes fade-in {
+      0% {
+        opacity: 0;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+  </style>
+
+  <script>
+    function goBack() {
+      window.history.back();
+    }
+  </script>
 </head>
+
 <body>
-    <div class="container">
-        <h1>Erreur 404</h1>
-        <p>Désolé, la page que vous recherchez est introuvable.</p>
-        <p>Retournez à <a href="javascript:history.back()">la page d'accueil</a> ou essayez une recherche :</p>
-    </div>
+  <div class="container">
+    <img class="cat-image" src="https://w7.pngwing.com/pngs/13/441/png-transparent-cat-kitten-cat-image-file-formats-animals-cat-like-mammal-thumbnail.png" alt="Cat">
+    <h1 class="text-fade-in">Erreur Cat sans Cat</h1>
+    <p class="text-fade-in">Désolé, la page que vous recherchez est introuvable.</p>
+    <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a> ou essayez une recherche :</p>
+  </div>
 </body>
+
 </html>
