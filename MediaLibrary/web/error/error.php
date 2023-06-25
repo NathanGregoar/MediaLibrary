@@ -84,10 +84,10 @@
 
 <body>
   <div class="container">
-    <img class="cat-image" src="https://w7.pngwing.com/pngs/13/441/png-transparent-cat-kitten-cat-image-file-formats-animals-cat-like-mammal-thumbnail.png" alt="Cat">
-    <h1 class="text-fade-in">Erreur Cat sans Cat</h1>
+    <img class="cat-image" src="https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png" alt="Cat">
+    <h1 class="text-fade-in">Erreur Cat sans Cat - 404</h1>
     <p class="text-fade-in">Désolé, la page que vous recherchez est introuvable.</p>
-    <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a> ou essayez une recherche :</p>
+    <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a></p>
   </div>
 </body>
 
