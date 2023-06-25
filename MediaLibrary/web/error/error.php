@@ -43,7 +43,7 @@
 
     /* Custom styles for "Erreur Cat sans Cat" */
     .cat-image {
-      max-width: 400px;
+      max-width: 250px;
       margin-bottom: 20px;
       animation: bounce 2s infinite;
     }
