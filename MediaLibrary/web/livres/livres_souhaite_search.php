@@ -157,13 +157,20 @@ $connection->close();
                     echo '<img src="' . $bookCover . '" alt="Couverture du livre">';
                 }
                 echo '<h3>' . $title . '</h3>';
-                echo '<p><strong>Auteur :</strong> ' . ($author != null && $author !== '' ? $author : '/') . '</p>';
-                echo '<p><strong>Numéro de tome :</strong> ' . ($volumeNumber != null && $volumeNumber !== 1 ? $volumeNumber : '/') . '</p>';
-                echo '<p><strong>Nombre total de tomes :</strong> ' . ($totalVolumes != null && $totalVolumes !== 1 ? $totalVolumes : '/') . '</p>';
+                echo '<p><strong>Auteur :</strong> ' . ($author != '/' ? $author : '') . '</p>';
+                echo '<p><strong>Numéro de tome :</strong> ' . ($volumeNumber != 1 ? $volumeNumber : '') . '</p>';
+                echo '<p><strong>Nombre total de tomes :</strong> ' . ($totalVolumes != 1 ? $totalVolumes : '') . '</p>';
                 echo '<p><strong>Prix :</strong> ' . number_format($price, 2) . ' €</p>';
-                echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '/') . '</p>';
-                echo '<p><strong>Maison d\'édition :</strong> ' . ($publisher != null ? $publisher : '/') . '</p>';
-                echo '<p><strong>Résumé :</strong> ' . ($summary != null ? $summary : '/') . '</p>';
+                echo '<p><strong>Format :</strong> ' . ($format != null ? $format : '') . '</p>';
+                echo '<p><strong>Maison d\'édition :</strong> ' . ($publisher != null ? $publisher : '') . '</p>';
+                
+                $resumeLivre = ($resumeLivre != null ? $resumeLivre : '');
+
+                $words = explode(' ', $resumeLivre); // Sépare la chaîne en mots
+                $limitedSummary = implode(' ', array_slice($words, 0, 20)); // Concatène les 20 premiers mots
+
+                echo '<p><strong>Résumé :</strong> ' . $limitedSummary . '</p>';
+
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
                 echo '<input type="submit" value="Supprimer" class="delete-btn">';
