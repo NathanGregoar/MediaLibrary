@@ -58,12 +58,12 @@ if (isset($_POST['update'])) {
 
 // Récupération des films correspondant à la recherche
 $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
-$searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'] . " ORDER BY titre ASC";
+$searchSql = "SELECT * FROM films WHERE title LIKE '%$searchTerm%' AND added_by = " . $loggedInUser['id'] . " ORDER BY title ASC";
 $searchResult = $connection->query($searchSql);
 $numSearchResults = $searchResult->num_rows;
 
 // Récupération de tous les films ajoutés par l'utilisateur connecté
-$userMoviesSql = "SELECT * FROM films WHERE added_by = " . $loggedInUser['id'] . " ORDER BY titre ASC";
+$userMoviesSql = "SELECT * FROM films WHERE added_by = " . $loggedInUser['id'] . " ORDER BY title ASC";
 $userMoviesResult = $connection->query($userMoviesSql);
 $numUserMovies = $userMoviesResult->num_rows;
 
