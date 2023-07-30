@@ -88,6 +88,12 @@ if (isset($_POST['selected_cell'])) {
     <script>
         // Lorsque le document est prêt
         $(document).ready(function() {
+            // Restaurer les cellules sélectionnées à partir du stockage local
+            const selectedCells = JSON.parse(localStorage.getItem('selectedCells')) || [];
+            selectedCells.forEach(cellNumber => {
+                $(`td[data-cell='${cellNumber}']`).addClass('selected');
+            });
+
             // Ajouter un gestionnaire d'événement click sur les cellules
             $('#table td').on('click', function() {
                 const cellNumber = $(this).data('cell');
@@ -95,6 +101,13 @@ if (isset($_POST['selected_cell'])) {
 
                 // Inverser l'état de sélection de la cellule
                 $(this).toggleClass('selected');
+
+                // Enregistrer les cellules sélectionnées dans le stockage local
+                const selectedCells = [];
+                $('.selected').each(function() {
+                    selectedCells.push($(this).data('cell'));
+                });
+                localStorage.setItem('selectedCells', JSON.stringify(selectedCells));
 
                 // Calculer la somme des nombres sélectionnés
                 let sum = 0;
