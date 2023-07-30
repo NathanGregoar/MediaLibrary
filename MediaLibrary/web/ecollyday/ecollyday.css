@@ -70,8 +70,8 @@ td.hoverable:hover {
         font-size: 18px;
     }
     td {
-        width: 60px;
-        height: 100px; /* Hauteur de l'espace disponible sur l'écran des appareils mobiles */
+        width: 100px;
+        height: 100%; /* Hauteur de l'espace disponible sur l'écran des appareils mobiles */
         font-size: 10px; /* Réduire la taille de la police pour les cellules sur mobile */
     }
     table {
