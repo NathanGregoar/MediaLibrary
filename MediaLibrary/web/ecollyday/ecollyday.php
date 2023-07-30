@@ -141,7 +141,7 @@ $connection->close();
                 });
 
                 // Mise à jour du titre h1 avec la somme
-                $('h1').text(`Tableau de 100 cases numérotées de 1 à 100 - Somme : ${sum}`);
+                $('h1').text(`<?php echo $username; ?>, tu as économisé : <?php echo $sum; ?>`);
 
                 // Envoyer une requête AJAX pour mettre à jour la base de données
                 $.ajax({
