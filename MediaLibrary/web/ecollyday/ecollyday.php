@@ -10,6 +10,18 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
     header("Location: ../accueil/index.php");
     exit();
 }
+
+// Vérification si une cellule a été sélectionnée
+if (isset($_POST['selected_cell'])) {
+    $cell_number = $_POST['selected_cell'];
+
+    // Récupération de l'ID de l'utilisateur (à adapter selon comment vous stockez l'ID de l'utilisateur dans la session)
+    $user_id = $_SESSION['user_id'];
+
+    // Requête d'insertion de la case sélectionnée dans la table ecollyday
+    $stmt = $pdo->prepare("INSERT INTO ecollyday (cell_number, user_id) VALUES (?, ?)");
+    $stmt->execute([$cell_number, $user_id]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -28,7 +40,7 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
         <tr>
             <?php
             for ($i = 1; $i <= 100; $i++) {
-                echo "<td onclick='toggleSelection(this)'>$i</td>";
+                echo "<td onclick='toggleSelection($i)'>$i</td>";
                 if ($i % 10 === 0) {
                     echo "</tr><tr>";
                 }
@@ -38,7 +50,8 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
     </table>
 
     <script>
-        function toggleSelection(cell) {
+        function toggleSelection(cellNumber) {
+            const cell = document.querySelector(`td:nth-child(${cellNumber})`);
             cell.classList.toggle("selected");
 
             // Calcul de la somme des nombres sélectionnés
@@ -51,6 +64,18 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
             // Mise à jour du titre h1 avec la somme
             const h1 = document.querySelector("h1");
             h1.textContent = `Tableau de 100 cases numérotées de 1 à 100 - Somme : ${sum}`;
+
+            // Envoi de la case sélectionnée en tant que formulaire pour enregistrement en base de données
+            const form = document.createElement("form");
+            form.method = "post";
+            form.action = "ecollyday.php";
+            const hiddenInput = document.createElement("input");
+            hiddenInput.type = "hidden";
+            hiddenInput.name = "selected_cell";
+            hiddenInput.value = cellNumber;
+            form.appendChild(hiddenInput);
+            document.body.appendChild(form);
+            form.submit();
         }
     </script>
 </body>

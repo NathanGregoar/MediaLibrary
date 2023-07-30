@@ -82,5 +82,12 @@ CREATE TABLE IF NOT EXISTS documentaires (
   FOREIGN KEY (added_by) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS ecollyday (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  cell_number INT NOT NULL,
+  user_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id)
+);
+
 GRANT ALL PRIVILEGES ON media_library.* TO 'nathan'@'%' IDENTIFIED BY '444719';
 FLUSH PRIVILEGES;
