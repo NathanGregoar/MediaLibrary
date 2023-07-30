@@ -33,10 +33,11 @@ body {
 h1 {
     font-size: 24px; /* Réduire la taille de la police pour les écrans plus petits */
     position: fixed;
-    top: 5px;
-    right: 5px;
+    top: 15px;
+    right: 20px;
     text-align: right;
     margin: 0;
+    color: white;
 }
 
 table {
