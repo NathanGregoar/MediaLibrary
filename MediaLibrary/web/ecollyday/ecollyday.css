@@ -7,10 +7,6 @@
     margin: 0;
     padding: 0;
     background-color: #ecf2f9;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
   }
   
   .navbar {
