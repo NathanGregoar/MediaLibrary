@@ -19,6 +19,23 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
     <link rel="stylesheet" type="text/css" href="./admin.css">
 </head>
 <body>
-    <p>Ecollyday</p>
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+    </div>
+
+    <h1>Tableau de 100 cases numérotées de 1 à 100:</h1>
+    <table>
+        <tr>
+            <?php
+            for ($i = 1; $i <= 100; $i++) {
+                echo "<td>$i</td>";
+                if ($i % 10 === 0) {
+                    echo "</tr><tr>";
+                }
+            }
+            ?>
+        </tr>
+    </table>
+    
 </body>
 </html>
