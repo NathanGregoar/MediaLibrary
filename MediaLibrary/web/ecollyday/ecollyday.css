@@ -79,7 +79,7 @@ td.hoverable:hover {
 /* Rendre la table responsive pour les appareils mobiles en mode portrait */
 @media only screen and (max-width: 767px) {
     body {
-        overflow-y: visible;
+        overflow: hidden; /* Empêche le défilement de la page */
     }
     h1 {
         font-size: 18px;
@@ -95,5 +95,7 @@ td.hoverable:hover {
         background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
         background-size: cover;
         background-position: center center;
+        overflow-y: scroll; /* Autorise le défilement vertical du contenu du tableau uniquement */
     }
 }
+
