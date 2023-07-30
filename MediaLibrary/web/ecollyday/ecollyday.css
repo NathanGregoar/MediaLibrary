@@ -60,7 +60,7 @@ table {
 
 td {
     width: 75px; /* Ajuster la taille des cases selon vos préférences pour les PC */
-    height: calc((100vh - 60px) / 10); /* Divise la hauteur restante par le nombre de lignes du tableau */
+    height: calc((97vh - 60px) / 10); /* Divise la hauteur restante par le nombre de lignes du tableau */
     text-align: center;
     border: 1px solid black;
     background-color: #86c1ff;
