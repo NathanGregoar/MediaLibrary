@@ -117,12 +117,15 @@ header {
   /* border-radius: 4px; */
   padding: 10px 20px;
   /* transition: background-color 0.3s ease; */
-  max-width: 20px;
 }
 
-.ecollyday:hover {
-  background: linear-gradient(#63a8ff, #1c79c0);
+.ecollyday img {
+  width: 20px;
 }
+
+/* .ecollyday:hover {
+  background: linear-gradient(#63a8ff, #1c79c0);
+} */
 
 @media screen and (max-width: 600px) {
   .welcome-message {
