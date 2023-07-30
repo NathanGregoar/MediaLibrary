@@ -15,67 +15,46 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
 $loggedInUser = getLoggedInUser();
 $user_id = $loggedInUser['id'];
 
-// Fonction pour insérer une cellule sélectionnée en DB
-function insertSelectedCell($cell_number, $user_id) {
-    // Connexion à la base de données (à adapter avec vos informations d'accès)
-    $host = 'db';
-    $dbuser = 'nathan';
-    $dbpassword = '444719';
-    $dbname = 'media_library';
-
-    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
-    if ($connection->connect_error) {
-        die('Erreur de connexion : ' . $connection->connect_error);
-    }
-
-    // Requête d'insertion de la case sélectionnée dans la table ecollyday
-    $query = "INSERT INTO ecollyday (cell_number, user_id) VALUES (?, ?)";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("ii", $cell_number, $user_id);
-    $stmt->execute();
-    $stmt->close();
-
-    // Fermer la connexion à la base de données
-    $connection->close();
-}
-
-// Fonction pour supprimer une cellule dé-sélectionnée de la DB
-function deleteSelectedCell($cell_number, $user_id) {
-    // Connexion à la base de données (à adapter avec vos informations d'accès)
-    $host = 'db';
-    $dbuser = 'nathan';
-    $dbpassword = '444719';
-    $dbname = 'media_library';
-
-    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
-    if ($connection->connect_error) {
-        die('Erreur de connexion : ' . $connection->connect_error);
-    }
-
-    // Requête de suppression de la case dé-sélectionnée de la table ecollyday
-    $query = "DELETE FROM ecollyday WHERE cell_number = ? AND user_id = ?";
-    $stmt = $connection->prepare($query);
-    $stmt->bind_param("ii", $cell_number, $user_id);
-    $stmt->execute();
-    $stmt->close();
-
-    // Fermer la connexion à la base de données
-    $connection->close();
-}
-
 // Vérification si une cellule a été sélectionnée ou dé-sélectionnée
 if (isset($_POST['selected_cell'])) {
     $cell_number = $_POST['selected_cell'];
     $action = $_POST['action']; // Action = "select" si la cellule est sélectionnée, "deselect" si elle est dé-sélectionnée
 
-    // Mettre à jour l'état de la cellule en base de données en fonction de l'action
-    if ($action === "select") {
-        insertSelectedCell($cell_number, $user_id);
-    } else if ($action === "deselect") {
-        deleteSelectedCell($cell_number, $user_id);
+    // Connexion à la base de données (à adapter avec vos informations d'accès)
+    $host = 'db';
+    $dbuser = 'nathan';
+    $dbpassword = '444719';
+    $dbname = 'media_library';
+
+    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+    if ($connection->connect_error) {
+        die('Erreur de connexion : ' . $connection->connect_error);
     }
+
+    if ($action === "select") {
+        // Requête d'insertion de la case sélectionnée dans la table ecollyday
+        $query = "INSERT INTO ecollyday (cell_number, user_id) VALUES (?, ?)";
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("ii", $cell_number, $user_id);
+        $stmt->execute();
+        $stmt->close();
+    } else if ($action === "deselect") {
+        // Requête de suppression de la case dé-sélectionnée de la table ecollyday
+        $query = "DELETE FROM ecollyday WHERE cell_number = ? AND user_id = ?";
+        $stmt = $connection->prepare($query);
+        $stmt->bind_param("ii", $cell_number, $user_id);
+        $stmt->execute();
+        $stmt->close();
+    }
+
+    // Fermer la connexion à la base de données
+    $connection->close();
+
+    // Envoi d'une réponse JSON indiquant le succès de l'opération
+    header('Content-Type: application/json');
+    echo json_encode(array('success' => true));
+    exit();
 }
 ?>
 
@@ -84,6 +63,8 @@ if (isset($_POST['selected_cell'])) {
 <head>
     <title>Ecollyday</title>
     <link rel="stylesheet" type="text/css" href="./ecollyday.css">
+    <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -95,7 +76,7 @@ if (isset($_POST['selected_cell'])) {
         <tr>
             <?php
             for ($i = 1; $i <= 100; $i++) {
-                echo "<td onclick='toggleSelection(this, $i)'>$i</td>";
+                echo "<td data-cell='$i'>$i</td>";
                 if ($i % 10 === 0) {
                     echo "</tr><tr>";
                 }
@@ -105,37 +86,43 @@ if (isset($_POST['selected_cell'])) {
     </table>
 
     <script>
-        function toggleSelection(cell, cellNumber) {
-            cell.classList.toggle("selected");
+        // Lorsque le document est prêt
+        $(document).ready(function() {
+            // Ajouter un gestionnaire d'événement click sur les cellules
+            $('#table td').on('click', function() {
+                const cellNumber = $(this).data('cell');
+                const isSelected = $(this).hasClass('selected');
 
-            // Calcul de la somme des nombres sélectionnés
-            const selectedCells = document.querySelectorAll(".selected");
-            let sum = 0;
-            selectedCells.forEach(selectedCell => {
-                sum += parseInt(selectedCell.textContent);
+                // Inverser l'état de sélection de la cellule
+                $(this).toggleClass('selected');
+
+                // Calculer la somme des nombres sélectionnés
+                let sum = 0;
+                $('.selected').each(function() {
+                    sum += parseInt($(this).text());
+                });
+
+                // Mise à jour du titre h1 avec la somme
+                $('h1').text(`Tableau de 100 cases numérotées de 1 à 100 - Somme : ${sum}`);
+
+                // Envoyer une requête AJAX pour mettre à jour la base de données
+                $.ajax({
+                    method: 'POST',
+                    url: 'ecollyday.php',
+                    data: {
+                        selected_cell: cellNumber,
+                        action: isSelected ? 'deselect' : 'select'
+                    },
+                    dataType: 'json',
+                    success: function(data) {
+                        console.log('Données enregistrées en DB avec succès.');
+                    },
+                    error: function(error) {
+                        console.error('Erreur lors de l\'enregistrement des données en DB : ', error);
+                    }
+                });
             });
-
-            // Mise à jour du titre h1 avec la somme
-            const h1 = document.querySelector("h1");
-            h1.textContent = `Tableau de 100 cases numérotées de 1 à 100 - Somme : ${sum}`;
-
-            // Envoi de la cellule sélectionnée ou dé-sélectionnée en tant que formulaire pour mise à jour en base de données
-            const form = document.createElement("form");
-            form.method = "post";
-            form.action = "ecollyday.php";
-            const hiddenInputCell = document.createElement("input");
-            hiddenInputCell.type = "hidden";
-            hiddenInputCell.name = "selected_cell";
-            hiddenInputCell.value = cellNumber;
-            const hiddenInputAction = document.createElement("input");
-            hiddenInputAction.type = "hidden";
-            hiddenInputAction.name = "action";
-            hiddenInputAction.value = cell.classList.contains("selected") ? "select" : "deselect";
-            form.appendChild(hiddenInputCell);
-            form.appendChild(hiddenInputAction);
-            document.body.appendChild(form);
-            form.submit();
-        }
+        });
     </script>
 </body>
 </html>
