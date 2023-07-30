@@ -88,7 +88,6 @@ while ($row = $result->fetch_assoc()) {
 $stmt->close();
 $connection->close();
 ?>
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -108,7 +107,7 @@ $connection->close();
             <?php
             for ($i = 1; $i <= 100; $i++) {
                 $selected = in_array($i, $selected_cells) ? 'selected' : '';
-                echo "<td data-cell='$i' class='$selected'>$i</td>";
+                echo "<td data-cell='$i' class='$selected hoverable'>$i</td>";
                 if ($i % 10 === 0) {
                     echo "</tr><tr>";
                 }

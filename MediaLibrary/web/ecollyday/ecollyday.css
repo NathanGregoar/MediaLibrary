@@ -43,7 +43,8 @@ table {
     margin: auto;
     margin-top: 10px;
     background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
-    background-size: 100% 100%;
+    background-size: cover;
+    background-position: center center;
 }
 
 td {
@@ -63,7 +64,7 @@ td.hoverable:hover {
     background-color: #86c0ff00;
 }
 
-/* Rendre la table responsive pour les écrans de petite taille */
+/* Rendre la table responsive pour les écrans de petite taille en portrait */
 @media only screen and (max-width: 600px) {
     h1 {
         font-size: 18px;
