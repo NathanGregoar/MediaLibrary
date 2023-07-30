@@ -99,9 +99,20 @@ $connection->close();
     <style>
         /* Ajouter une classe CSS pour les cellules sélectionnées avec une image de fond */
         .selected {
+            position: relative;
+        }
+        .selected:before {
+            content: "";
             background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
-            background-size: cover;
+            background-size: 1000% 1000%;
             background-repeat: no-repeat;
+            display: block;
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            opacity: 0.5;
         }
     </style>
 </head>
