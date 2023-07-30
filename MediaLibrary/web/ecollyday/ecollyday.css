@@ -32,7 +32,7 @@ body {
 
 h1 {
     font-size: 24px; /* Réduire la taille de la police pour les écrans plus petits */
-    text-align: center;
+    text-align: right;
     margin-top: 20px;
     margin-bottom: 0;
 }
@@ -66,9 +66,6 @@ td.hoverable:hover {
 
 /* Rendre la table responsive pour les appareils mobiles en mode portrait */
 @media only screen and (max-width: 767px) {
-    body {
-        overflow-y: hidden;
-    }
     h1 {
         font-size: 18px;
     }

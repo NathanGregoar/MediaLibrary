@@ -99,9 +99,8 @@ $connection->close();
 <body>
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
+        <h1><?php echo $username; ?>, tu as économisé : <?php echo $sum; ?></h1>
     </div>
-
-    <h1>Tableau de 100 cases numérotées de 1 à 100 - Somme : <?php echo $sum; ?></h1>
     <table id="table">
         <tr>
             <?php
