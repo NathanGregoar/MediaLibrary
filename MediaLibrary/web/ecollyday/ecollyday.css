@@ -71,10 +71,12 @@ td.hoverable:hover {
     }
     td {
         width: 50px;
-        height: 75px;
+        height: 75px; /* Hauteur de l'espace disponible sur l'écran des appareils mobiles */
         font-size: 10px; /* Réduire la taille de la police pour les cellules sur mobile */
     }
     table {
+        width: 100%; /* Largeur du tableau égale à la largeur de l'écran des appareils mobiles */
+        height: calc(100vh - 170px); /* Hauteur du tableau égale à l'espace disponible sur l'écran des appareils mobiles (100vh - hauteur de la navbar) */
         background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
         background-size: cover;
         background-position: center center;
