@@ -105,6 +105,24 @@ header {
   background: linear-gradient(#63a8ff, #1c79c0);
 }
 
+.ecollyday {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  background: linear-gradient(#86c1ff, #1c79c0);
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  font-size: 18px;
+  border-radius: 4px;
+  padding: 10px 20px;
+  transition: background-color 0.3s ease;
+}
+
+.ecollyday:hover {
+  background: linear-gradient(#63a8ff, #1c79c0);
+}
+
 @media screen and (max-width: 600px) {
   .welcome-message {
       font-size: 24px;

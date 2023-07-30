@@ -60,6 +60,15 @@ $email = $_SESSION['email'];
                 echo '</a>';
             }
             ?>
+
+            <?php
+            // Vérification si l'utilisateur est "Nathan" et son adresse e-mail est "nathan.gregoar@yahoo.fr"
+            if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
+                echo '<a href="../ecollyday/ecollyday.php" class="ecollyday">';
+                echo '<span class="section-link-text">Ecollyday</span>';
+                echo '</a>';
+            }
+            ?>
         </div>
     </div>
 </body>
