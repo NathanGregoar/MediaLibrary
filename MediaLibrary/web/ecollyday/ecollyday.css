@@ -50,3 +50,7 @@ td {
     text-align: center;
     border: 1px solid black;
 }
+
+.selected {
+    background-color: #86c1ff; /* Couleur de fond pour les cases sélectionnées */
+}
