@@ -52,7 +52,7 @@ table {
     background-size: contain; /* Ajuste l'image pour qu'elle s'adapte sans être coupée */
     background-position: top center; /* L'image est centrée horizontalement */
     position: absolute; /* Position absolue pour empêcher le débordement */
-    top: 60px; /* Position juste en dessous du bas de la navbar */
+    top: 0px; /* Position juste en dessous du bas de la navbar */
     left: 0;
     bottom: 0;
     right: 0;
