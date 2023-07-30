@@ -47,7 +47,7 @@ table {
 }
 
 td {
-    width: 50px; /* Ajuster la taille des cases selon vos préférences */
+    width: 75px; /* Ajuster la taille des cases selon vos préférences */
     height: 50px; /* Assurez-vous que la largeur et la hauteur sont égales pour avoir des cases carrées */
     text-align: center;
     border: 1px solid black;
@@ -70,7 +70,7 @@ td.hoverable:hover {
     }
     td {
         width: 30px;
-        height: 30px;
+        height: 50px;
         font-size: 10px; /* Réduire la taille de la police pour les cellules */
     }
 }
