@@ -7,6 +7,10 @@
     margin: 0;
     padding: 0;
     background-color: #ecf2f9;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
   }
   
   .navbar {
@@ -36,3 +40,14 @@
     margin-top: 20px;
     margin-bottom: 0;
   }
+
+table {
+    border-collapse: collapse;
+}
+
+td {
+    width: 50px; /* Ajuster la taille des cases selon vos préférences */
+    height: 50px; /* Assurez-vous que la largeur et la hauteur sont égales pour avoir des cases carrées */
+    text-align: center;
+    border: 1px solid black;
+}
