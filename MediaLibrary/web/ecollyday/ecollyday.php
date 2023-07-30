@@ -24,11 +24,11 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
     </div>
 
     <h1>Tableau de 100 cases numérotées de 1 à 100:</h1>
-    <table>
+    <table id="table">
         <tr>
             <?php
             for ($i = 1; $i <= 100; $i++) {
-                echo "<td>$i</td>";
+                echo "<td onclick='toggleSelection(this)'>$i</td>";
                 if ($i % 10 === 0) {
                     echo "</tr><tr>";
                 }
@@ -36,6 +36,22 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
             ?>
         </tr>
     </table>
-    
+
+    <script>
+        function toggleSelection(cell) {
+            cell.classList.toggle("selected");
+
+            // Calcul de la somme des nombres sélectionnés
+            const selectedCells = document.querySelectorAll(".selected");
+            let sum = 0;
+            selectedCells.forEach(selectedCell => {
+                sum += parseInt(selectedCell.textContent);
+            });
+
+            // Mise à jour du titre h1 avec la somme
+            const h1 = document.querySelector("h1");
+            h1.textContent = `Tableau de 100 cases numérotées de 1 à 100 - Somme : ${sum}`;
+        }
+    </script>
 </body>
 </html>
