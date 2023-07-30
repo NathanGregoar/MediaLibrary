@@ -47,7 +47,7 @@ table {
 }
 
 td {
-    width: 50px; /* Ajuster la taille des cases selon vos préférences */
+    width: 60px; /* Ajuster la taille des cases selon vos préférences */
     height: 50px; /* Assurez-vous que la largeur et la hauteur sont égales pour avoir des cases carrées */
     text-align: center;
     border: 1px solid black;
