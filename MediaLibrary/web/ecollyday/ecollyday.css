@@ -77,6 +77,7 @@ td.hoverable:hover {
 
 
 /* Rendre la table responsive pour les appareils mobiles en mode portrait */
+/* Pour les appareils mobiles en mode portrait */
 @media only screen and (max-width: 767px) {
     h1 {
         font-size: 18px;
@@ -92,5 +93,7 @@ td.hoverable:hover {
         background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
         background-size: cover;
         background-position: center center;
+        overflow: auto; /* Ajouter une barre de défilement si le contenu dépasse la hauteur de la table */
     }
 }
+
