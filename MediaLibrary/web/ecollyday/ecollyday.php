@@ -141,7 +141,7 @@ $connection->close();
                 });
 
                 // Mise à jour du titre h1 avec la somme
-                $('h1').text(`<?php echo $username; ?>, tu as économisé : <?php echo $sum; ?>`);
+                $('h1').text(`<?php echo $username; ?>, tu as économisé : ${sum}`);
 
                 // Envoyer une requête AJAX pour mettre à jour la base de données
                 $.ajax({
