@@ -32,8 +32,9 @@ body {
 
 h1 {
     font-size: 24px; /* Réduire la taille de la police pour les écrans plus petits */
+    position: fixed;
     text-align: right;
-    margin-top: 20px;
+    margin-top: 5px;
     margin-bottom: 0;
 }
 
