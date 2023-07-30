@@ -92,7 +92,7 @@ td.hoverable:hover {
     table {
         width: 100%; /* Largeur du tableau égale à la largeur de l'écran des appareils mobiles */
         height: calc(101vh - 170px); /* Hauteur du tableau égale à l'espace disponible sur l'écran des appareils mobiles (100vh - hauteur de la navbar) */
-        background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
+        background-image: url('https://static.actu.fr/uploads/2022/08/adobestock-296357187-editorial-use-only-960x640.jpeg');
         background-size: cover;
         background-position: center center;
     }
