@@ -101,22 +101,11 @@ $connection->close();
         #table {
             background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
             background-size: 100% 100%;
-            border-collapse: collapse; /* Pour supprimer les espaces entre les cellules du tableau */
         }
 
-        /* Ajouter une classe CSS pour les cellules du tableau */
-        #table td {
-            border: 1px solid #000; /* Ajouter une bordure aux cellules */
-            width: 30px; /* Ajuster la largeur des cellules */
-            height: 30px; /* Ajuster la hauteur des cellules */
-            text-align: center;
-            font-size: 16px;
-            cursor: pointer; /* Pour montrer que les cellules sont cliquables */
-        }
-
-        /* Ajouter une classe CSS pour les cellules sélectionnées */
-        #table td.selected {
-            background-color: rgba(255, 255, 255, 0.8); /* Opacité réduite pour voir l'image à travers */
+        /* Ajouter une classe CSS pour les cellules sélectionnées avec une image de fond */
+        .selected {
+            opacity: 0.5;
         }
     </style>
 </head>
