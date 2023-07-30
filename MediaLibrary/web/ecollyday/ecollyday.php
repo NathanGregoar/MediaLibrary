@@ -56,6 +56,37 @@ if (isset($_POST['selected_cell'])) {
     echo json_encode(array('success' => true));
     exit();
 }
+
+// Si aucune cellule n'a été sélectionnée ou dé-sélectionnée, calculer la somme des cellules sélectionnées
+// à partir de la base de données lors du chargement initial de la page
+$sum = 0;
+$selected_cells = array();
+
+// Connexion à la base de données (à adapter avec vos informations d'accès)
+$host = 'db';
+$dbuser = 'nathan';
+$dbpassword = '444719';
+$dbname = 'media_library';
+
+$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+if ($connection->connect_error) {
+    die('Erreur de connexion : ' . $connection->connect_error);
+}
+
+$query = "SELECT cell_number FROM ecollyday WHERE user_id = ?";
+$stmt = $connection->prepare($query);
+$stmt->bind_param("i", $user_id);
+$stmt->execute();
+$result = $stmt->get_result();
+
+while ($row = $result->fetch_assoc()) {
+    $sum += intval($row['cell_number']);
+    $selected_cells[] = intval($row['cell_number']);
+}
+
+$stmt->close();
+$connection->close();
 ?>
 
 <!DOCTYPE html>
@@ -71,12 +102,13 @@ if (isset($_POST['selected_cell'])) {
         <a href="../accueil/index.php">Accueil</a>
     </div>
 
-    <h1>Tableau de 100 cases numérotées de 1 à 100:</h1>
+    <h1>Tableau de 100 cases numérotées de 1 à 100 - Somme : <?php echo $sum; ?></h1>
     <table id="table">
         <tr>
             <?php
             for ($i = 1; $i <= 100; $i++) {
-                echo "<td data-cell='$i'>$i</td>";
+                $selected = in_array($i, $selected_cells) ? 'selected' : '';
+                echo "<td data-cell='$i' class='$selected'>$i</td>";
                 if ($i % 10 === 0) {
                     echo "</tr><tr>";
                 }
@@ -88,12 +120,6 @@ if (isset($_POST['selected_cell'])) {
     <script>
         // Lorsque le document est prêt
         $(document).ready(function() {
-            // Restaurer les cellules sélectionnées à partir du stockage local
-            const selectedCells = JSON.parse(localStorage.getItem('selectedCells')) || [];
-            selectedCells.forEach(cellNumber => {
-                $(`td[data-cell='${cellNumber}']`).addClass('selected');
-            });
-
             // Ajouter un gestionnaire d'événement click sur les cellules
             $('#table td').on('click', function() {
                 const cellNumber = $(this).data('cell');
@@ -107,7 +133,6 @@ if (isset($_POST['selected_cell'])) {
                 $('.selected').each(function() {
                     selectedCells.push($(this).data('cell'));
                 });
-                localStorage.setItem('selectedCells', JSON.stringify(selectedCells));
 
                 // Calculer la somme des nombres sélectionnés
                 let sum = 0;
