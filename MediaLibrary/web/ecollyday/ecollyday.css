@@ -78,9 +78,6 @@ td.hoverable:hover {
 
 /* Rendre la table responsive pour les appareils mobiles en mode portrait */
 @media only screen and (max-width: 767px) {
-    body {
-        overflow-y: visible;
-    }
     h1 {
         font-size: 18px;
     }
@@ -93,7 +90,9 @@ td.hoverable:hover {
         width: 100%; /* Largeur du tableau égale à la largeur de l'écran des appareils mobiles */
         height: calc(100vh - 170px); /* Hauteur du tableau égale à l'espace disponible sur l'écran des appareils mobiles (100vh - hauteur de la navbar) */
         background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
-        background-size: cover;
+        background-size: 100% auto; /* Redimensionne l'image pour qu'elle occupe toute la hauteur restante et s'adapte automatiquement en largeur */
         background-position: center center;
+        overflow: auto; /* Ajouter une barre de défilement si le contenu dépasse la hauteur de la table */
     }
 }
+
