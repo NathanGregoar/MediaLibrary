@@ -88,11 +88,20 @@ while ($row = $result->fetch_assoc()) {
 $stmt->close();
 $connection->close();
 ?>
-<!DOCTYPE html>
+<!DOCTYPE html><head>
+    <title>Ecollyday</title>
+    <link rel="stylesheet" type="text/css" href="./ecollyday.css">
+    <!-- Inclure l'icône de page -->
+    <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
+    <!-- Inclure jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
 <html>
 <head>
     <title>Ecollyday</title>
     <link rel="stylesheet" type="text/css" href="./ecollyday.css">
+    <!-- Inclure l'icône de page -->
+    <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
     <!-- Inclure jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
