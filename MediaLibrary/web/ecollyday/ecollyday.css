@@ -45,17 +45,17 @@ table {
     border-collapse: separate;
     border-spacing: 2px;
     margin: auto;
-    margin-top: 0; /* Plus besoin de la marge */
+    margin-top: 60px; /* Ajuster la hauteur en fonction de la hauteur de la navbar */
     width: 100%; /* Prend toute la largeur de l'écran */
-    height: 100%; /* Prend toute la hauteur de l'écran */
+    height: calc(100% - 60px); /* Prend toute la hauteur restante de l'écran après la navbar */
     background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
-    background-size: cover;
-    background-position: top center; /* L'image est collée tout en haut au centre */
+    background-size: contain; /* Ajuste l'image pour qu'elle s'adapte sans être coupée */
+    background-position: top center; /* L'image est centrée horizontalement */
     position: absolute; /* Position absolue pour empêcher le débordement */
-    top: 0; /* Position tout en haut */
-    left: 0; /* Position tout à gauche */
-    bottom: 0; /* Position tout en bas */
-    right: 0; /* Position tout à droite */
+    top: 60px; /* Position juste en dessous du bas de la navbar */
+    left: 0;
+    bottom: 0;
+    right: 0;
 }
 
 td {
@@ -74,6 +74,7 @@ td.hoverable:hover {
 .selected {
     background-color: #86c0ff00;
 }
+
 
 /* Rendre la table responsive pour les appareils mobiles en mode portrait */
 @media only screen and (max-width: 767px) {
