@@ -42,6 +42,8 @@ table {
     border-spacing: 2px;
     margin: auto;
     margin-top: 10px;
+    background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
+    background-size: 100% 100%;
 }
 
 td {

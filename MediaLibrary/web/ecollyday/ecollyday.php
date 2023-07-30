@@ -96,18 +96,6 @@ $connection->close();
     <link rel="stylesheet" type="text/css" href="./ecollyday.css">
     <!-- Inclure jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <style>
-        /* Ajouter une classe CSS pour le fond du tableau */
-        #table {
-            background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
-            background-size: 100% 100%;
-        }
-
-        /* Ajouter une classe CSS pour les cellules sélectionnées avec une image de fond */
-        .selected {
-            opacity: 0.5;
-        }
-    </style>
 </head>
 <body>
     <div class="navbar">
