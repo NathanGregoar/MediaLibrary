@@ -69,8 +69,11 @@ td.hoverable:hover {
         font-size: 18px;
     }
     td {
-        width: 30px;
-        height: 50px;
+        width: 50px;
+        height: 75px;
         font-size: 10px; /* Réduire la taille de la police pour les cellules */
+    }
+    table {
+        background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
     }
 }
