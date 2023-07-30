@@ -48,7 +48,7 @@ table {
 }
 
 td {
-    width: 75px; /* Ajuster la taille des cases selon vos préférences */
+    width: 75px; /* Ajuster la taille des cases selon vos préférences pour les PC */
     height: 50px; /* Assurez-vous que la largeur et la hauteur sont égales pour avoir des cases carrées */
     text-align: center;
     border: 1px solid black;
@@ -64,15 +64,15 @@ td.hoverable:hover {
     background-color: #86c0ff00;
 }
 
-/* Rendre la table responsive pour les écrans de petite taille en portrait */
-@media only screen and (max-width: 600px) {
+/* Rendre la table responsive pour les appareils mobiles en mode portrait */
+@media only screen and (max-width: 767px) {
     h1 {
         font-size: 18px;
     }
     td {
-        width: 30px;
+        width: 50px;
         height: 50px;
-        font-size: 10px; /* Réduire la taille de la police pour les cellules */
+        font-size: 10px; /* Réduire la taille de la police pour les cellules sur mobile */
     }
     table {
         background-image: url('https://i.pinimg.com/236x/21/ae/dc/21aedc316527618a9fde9da54386b03b.jpg');
