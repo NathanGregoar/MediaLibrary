@@ -49,6 +49,7 @@ td {
     height: 50px; /* Assurez-vous que la largeur et la hauteur sont égales pour avoir des cases carrées */
     text-align: center;
     border: 1px solid black;
+    background-color: #86c1ff;
 }
 
 .selected {
