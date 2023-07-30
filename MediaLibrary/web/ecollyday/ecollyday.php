@@ -103,9 +103,20 @@ $connection->close();
             background-size: 100% 100%;
         }
 
-        /* Ajouter une classe CSS pour les cellules sélectionnées avec une image de fond */
-        .selected {
-            opacity: 0.5;
+        /* Ajouter une classe CSS pour les cellules du tableau */
+        #table td {
+            border: 1px solid #000; /* Ajouter une bordure aux cellules */
+            width: 30px; /* Ajuster la largeur des cellules */
+            height: 30px; /* Ajuster la hauteur des cellules */
+            text-align: center;
+            font-size: 16px;
+            cursor: pointer; /* Pour montrer que les cellules sont cliquables */
+        }
+
+        /* Ajouter une classe CSS pour les cellules sélectionnées */
+        #table td.selected {
+            opacity: 0.5; /* Opacité réduite pour voir l'image à travers */
+            border: none; /* Supprimer la bordure des cellules sélectionnées */
         }
     </style>
 </head>
@@ -120,7 +131,7 @@ $connection->close();
             <?php
             for ($i = 1; $i <= 100; $i++) {
                 $selected = in_array($i, $selected_cells) ? 'selected' : '';
-                echo "<td data-cell='$i' class='$selected'>$i</td>";
+                echo "<td data-cell='$i' class='$selected'></td>";
                 if ($i % 10 === 0) {
                     echo "</tr><tr>";
                 }
