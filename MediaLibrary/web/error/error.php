@@ -3,7 +3,7 @@
 
 <head>
   <meta charset="UTF-8">
-  <title>Erreur Cat sans Cat - 404</title>
+  <title>Erreur Cat 100 Cat - 404</title>
   <style>
     body {
       font-family: Arial, sans-serif;
@@ -79,13 +79,38 @@
     function goBack() {
       window.history.back();
     }
+
+    // Function to add 99 more cat images
+    function addCatImages() {
+      const container = document.querySelector('.container');
+
+      // Create and add 99 cat images
+      for (let i = 0; i < 99; i++) {
+        const img = document.createElement('img');
+        img.className = 'cat-image';
+        img.src = 'https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png';
+        img.style.position = 'absolute';
+        img.style.left = `${Math.random() * 90 + 5}vw`; // Random horizontal position (5% to 95% of viewport width)
+        img.style.top = `${Math.random() * 90 + 5}vh`; // Random vertical position (5% to 95% of viewport height)
+        container.appendChild(img);
+
+        // Apply fade-in animation to each image with a delay of 1 second
+        img.style.opacity = 0;
+        img.style.animation = `fade-in 2s forwards ${i + 1}s`;
+      }
+    }
+
+    // Wait for the page to load and then add the cat images
+    window.onload = function() {
+      addCatImages();
+    };
   </script>
 </head>
 
 <body>
   <div class="container">
     <img class="cat-image" src="https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png" alt="Cat">
-    <h1 class="text-fade-in">Erreur Cat sans Cat - 404</h1>
+    <h1 class="text-fade-in">Erreur Cat 100 Cat - 404</h1>
     <p class="text-fade-in">Désolé, la page que vous recherchez est introuvable.</p>
     <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a></p>
   </div>
