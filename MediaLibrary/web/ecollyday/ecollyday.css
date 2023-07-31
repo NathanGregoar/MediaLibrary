@@ -76,17 +76,16 @@ td.hoverable:hover {
 }
 
 
-/* Rendre la table responsive pour les appareils mobiles en mode portrait */
 @media only screen and (max-width: 767px) {
     body {
         overflow-y: visible;
-    } 
+    }
     h1 {
         font-size: 18px;
     }
     td {
         width: 50px;
-        height: calc(18vh - 140px); /* Hauteur de l'espace disponible sur l'écran des appareils mobiles */
+        height: auto; /* Hauteur automatique pour s'adapter au contenu */
         font-size: 30px;
     }
     table {
