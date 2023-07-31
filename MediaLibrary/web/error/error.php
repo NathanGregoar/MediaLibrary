@@ -11,36 +11,9 @@
       color: #444;
       margin: 0;
       padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       min-height: 100vh;
       overflow: hidden; /* Empêcher le défilement vertical et horizontal */
-    }
-
-    .container {
-      text-align: center;
-      position: relative; /* Permet de positionner les images absolument à l'intérieur de .container */
-    }
-
-    h1 {
-      font-size: 48px;
-      margin-bottom: 20px;
-      color: #333;
-    }
-
-    p {
-      font-size: 18px;
-      margin-bottom: 40px;
-    }
-
-    a {
-      color: #007bff;
-      text-decoration: none;
-    }
-
-    a:hover {
-      text-decoration: underline;
+      position: relative; /* Permet de positionner les images absolument à l'intérieur de body */
     }
 
     /* Custom styles for "Erreur Cat sans Cat" */
@@ -48,6 +21,7 @@
       max-width: 250px;
       margin-bottom: 20px;
       animation: bounce 2s infinite;
+      position: absolute;
     }
 
     @keyframes bounce {
@@ -61,44 +35,28 @@
       }
     }
 
-    .text-fade-in {
-      opacity: 0;
-      animation: fade-in 2s forwards;
-    }
-
-    @keyframes fade-in {
-      0% {
-        opacity: 0;
-      }
-
-      100% {
-        opacity: 1;
-      }
+    /* Adjust z-index to avoid image overlap */
+    .cat-image {
+      z-index: -1;
     }
   </style>
 
   <script>
-    function goBack() {
-      window.history.back();
-    }
-
     // Function to add 99 more cat images
     function addCatImages() {
-      const container = document.querySelector('.container');
+      const body = document.body;
 
       // Create and add 99 cat images
       for (let i = 0; i < 99; i++) {
         const img = document.createElement('img');
         img.className = 'cat-image';
-        img.src = 'https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png';
-        img.style.position = 'absolute';
-        img.style.left = `${Math.random() * (container.clientWidth - 250)}px`; // Random horizontal position within container
-        img.style.top = `${Math.random() * (container.clientHeight - 250)}px`; // Random vertical position within container
-        container.appendChild(img);
+        img.src = 'https://cdn-icons-png.flaticon.com/512/616/616430.png';
+        img.style.left = `${Math.random() * (window.innerWidth - 250)}px`; // Random horizontal position within window
+        img.style.top = `${Math.random() * (window.innerHeight - 250)}px`; // Random vertical position within window
+        body.appendChild(img);
 
-        // Apply fade-in animation to each image with a delay of 1 second
-        img.style.opacity = 0;
-        img.style.animation = `fade-in 2s forwards ${i + 1}s`;
+        // Apply bounce animation to each image with a delay of 1 second
+        img.style.animation = `bounce 2s infinite ${i + 1}s`;
       }
     }
 
@@ -110,12 +68,9 @@
 </head>
 
 <body>
-  <div class="container">
-    <img class="cat-image" src="https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png" alt="Cat">
-    <h1 class="text-fade-in">Erreur Cat 100 Cat - 404</h1>
-    <p class="text-fade-in">Désolé, la page que vous recherchez est introuvable.</p>
-    <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a></p>
-  </div>
+  <h1>Erreur Cat 100 Cat - 404</h1>
+  <p>Désolé, la page que vous recherchez est introuvable.</p>
+  <p>Retournez à <a href="javascript:history.back()">la page précédente</a></p>
 </body>
 
 </html>
