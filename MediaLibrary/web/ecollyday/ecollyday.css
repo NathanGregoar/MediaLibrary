@@ -90,7 +90,7 @@ td.hoverable:hover {
     }
     table {
         width: 100%; /* Largeur du tableau égale à la largeur de l'écran des appareils mobiles */
-        height: auto; /* Hauteur automatique pour s'adapter au contenu */
+        height: calc(100vh - 170px); /* Hauteur du tableau pour prendre tout l'espace disponible restant sur l'écran */
         background-image: url('https://static.actu.fr/uploads/2022/08/adobestock-296357187-editorial-use-only-960x640.jpeg');
         background-size: cover;
         background-position: center center;
