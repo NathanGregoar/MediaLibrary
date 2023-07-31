@@ -104,6 +104,7 @@ $connection->close();
     <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
     <!-- Inclure jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.2.0/socket.io.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -129,6 +130,9 @@ $connection->close();
     <script>
         // Lorsque le document est prêt
         $(document).ready(function() {
+            // Créer une connexion WebSocket vers le serveur
+            const socket = io('ws://localhost:8080/ecollyday');
+
             // Ajouter un gestionnaire d'événement click sur les cellules
             $('#table td').on('click', function() {
                 const cellNumber = $(this).data('cell');
@@ -150,24 +154,40 @@ $connection->close();
                 });
 
                 // Mise à jour du titre h1 avec la somme
-                $('h1').text(`Plus que ${5050-sum} ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
+                $('h1').text(`<?php echo $username; ?>, tu as économisé : ${sum}`);
 
-                // Envoyer une requête AJAX pour mettre à jour la base de données
-                $.ajax({
-                    method: 'POST',
-                    url: 'ecollyday.php',
-                    data: {
-                        selected_cell: cellNumber,
-                        action: isSelected ? 'deselect' : 'select'
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log('Données enregistrées en DB avec succès.');
-                    },
-                    error: function(error) {
-                        console.error('Erreur lors de l\'enregistrement des données en DB : ', error);
-                    }
+                // Envoyer un message WebSocket pour indiquer que la cellule a été sélectionnée ou dé-sélectionnée
+                const message = JSON.stringify({
+                    cellNumber: cellNumber,
+                    action: isSelected ? 'deselect' : 'select'
                 });
+                socket.send(message);
+            });
+
+            // Écouter les messages WebSocket reçus du serveur
+            socket.on('message', function(message) {
+                const data = JSON.parse(message);
+                const cellNumber = data.cellNumber;
+                const action = data.action;
+
+                // Trouver la cellule correspondante dans le tableau
+                const cell = $(`#table td[data-cell="${cellNumber}"]`);
+
+                // Mettre à jour l'état de la cellule en fonction de l'action
+                if (action === 'select') {
+                    cell.addClass('selected');
+                } else if (action === 'deselect') {
+                    cell.removeClass('selected');
+                }
+
+                // Recalculer la somme des nombres sélectionnés
+                let sum = 0;
+                $('.selected').each(function() {
+                    sum += parseInt($(this).text());
+                });
+
+                // Mise à jour du titre h1 avec la somme
+                $('h1').text(`<?php echo $username; ?>, tu as économisé : ${sum}`);
             });
         });
     </script>
