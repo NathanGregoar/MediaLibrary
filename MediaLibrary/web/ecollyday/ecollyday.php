@@ -169,6 +169,47 @@ $connection->close();
                     }
                 });
             });
+
+            <script>
+            // Fonction pour effectuer le long-polling
+            function doLongPolling() {
+                $.ajax({
+                    method: 'GET',
+                    url: 'check_updates.php',
+                    dataType: 'json',
+                    success: function(data) {
+                        // Mettre à jour l'affichage avec les nouvelles données reçues
+                        const sum = data.sum;
+                        const selectedCells = data.selectedCells;
+                        $('h1').text(`Plus que ${5050 - sum} ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
+
+                        // Mettre à jour les cellules sélectionnées sur le tableau
+                        $('#table td').each(function() {
+                            const cellNumber = $(this).data('cell');
+                            if (selectedCells.includes(cellNumber)) {
+                                $(this).addClass('selected');
+                            } else {
+                                $(this).removeClass('selected');
+                            }
+                        });
+
+                        // Lancer un nouveau long-polling
+                        doLongPolling();
+                    },
+                    error: function(error) {
+                        console.error('Erreur lors du long-polling : ', error);
+                        // Lancer un nouveau long-polling en cas d'erreur
+                        doLongPolling();
+                    }
+                });
+            }
+
+            // Lancer le long-polling lors du chargement de la page
+            $(document).ready(function() {
+                doLongPolling();
+            });
+        </script>
+
         });
     </script>
 </body>
