@@ -50,6 +50,10 @@
       animation: bounce 2s infinite;
     }
 
+    .cat-image2 {
+      max-width: 20px;
+    }
+
     @keyframes bounce {
       0%,
       100% {
@@ -89,7 +93,7 @@
       // Create and add 99 cat images
       for (let i = 0; i < 99; i++) {
         const img = document.createElement('img');
-        img.className = 'cat-image';
+        img.className = 'cat-image2';
         img.src = 'https://cdn-icons-png.flaticon.com/512/616/616430.png';
         img.style.position = 'absolute';
         img.style.left = `${Math.random() * (container.clientWidth - 250)}px`; // Random horizontal position within container
