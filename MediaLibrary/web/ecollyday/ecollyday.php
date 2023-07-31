@@ -150,7 +150,7 @@ $connection->close();
                 });
 
                 // Mise à jour du titre h1 avec la somme
-                $('h1').text(`Plus que <?php echo 5050-$sum ?> ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
+                $('h1').text(`Plus que ${5050-sum} ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
 
                 // Envoyer une requête AJAX pour mettre à jour la base de données
                 $.ajax({
