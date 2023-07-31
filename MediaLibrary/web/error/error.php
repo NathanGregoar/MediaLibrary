@@ -101,8 +101,8 @@
         container.appendChild(img);
 
         // Apply fade-in animation to each image with a delay of 1 second
-        img.style.opacity = 0;
-        img.style.animation = `fade-in 2s forwards ${i + 1}s`;
+        // img.style.opacity = 0;
+        // img.style.animation = `fade-in 2s forwards ${i + 1}s`;
       }
     }
 
