@@ -11,9 +11,6 @@
       color: #444;
       margin: 0;
       padding: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
       min-height: 100vh;
       position: relative; /* Ajouter une position relative pour positionner les nouvelles images */
       overflow: hidden; /* Empêcher le défilement vertical et horizontal */
@@ -21,6 +18,8 @@
 
     .container {
       text-align: center;
+      position: relative; /* Permet de positionner le contenu du container */
+      z-index: 1; /* Mettre le container au-dessus des images */
     }
 
     h1 {
@@ -55,6 +54,7 @@
       max-width: 20px;
       position: absolute;
       opacity: 0; /* Start with 0 opacity */
+      z-index: 0; /* Mettre les images au-dessous du contenu */
     }
 
     @keyframes bounce {
@@ -89,6 +89,7 @@
       left: 0;
       width: 100%;
       height: 100%;
+      z-index: 0; /* Mettre le conteneur d'images au-dessous du contenu */
     }
   </style>
 
