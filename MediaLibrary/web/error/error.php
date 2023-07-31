@@ -21,7 +21,6 @@
 
     .container {
       text-align: center;
-      position: relative; /* Permet de positionner les images absolument à l'intérieur de .container */
     }
 
     h1 {
@@ -82,6 +81,15 @@
         opacity: 1;
       }
     }
+
+    /* Add a new element to contain the cat images outside of the container */
+    .cat-images-container {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
   </style>
 
   <script>
@@ -91,17 +99,17 @@
 
     // Function to add 99 more cat images
     function addCatImages() {
-      const container = document.querySelector('.container');
+      const catImagesContainer = document.querySelector('.cat-images-container');
 
       // Create and add 99 cat images
       for (let i = 0; i < 99; i++) {
         const img = document.createElement('img');
         img.className = 'cat-image-small'; // Use the new class for styling
         img.src = 'https://cdn-icons-png.flaticon.com/512/616/616430.png';
-        img.style.left = `${Math.random() * (container.clientWidth - 20)}px`; // Random horizontal position within container
-        img.style.top = `${Math.random() * (container.clientHeight - 20)}px`; // Random vertical position within container
+        img.style.left = `${Math.random() * (window.innerWidth - 20)}px`; // Random horizontal position within window
+        img.style.top = `${Math.random() * (window.innerHeight - 20)}px`; // Random vertical position within window
         img.style.animation = `fade-in 1s forwards ${0.5 * i}s`; // Apply fade-in animation with a delay of 0.5 seconds * i
-        container.appendChild(img);
+        catImagesContainer.appendChild(img);
       }
     }
 
@@ -119,6 +127,8 @@
     <p class="text-fade-in">Désolé, la page que vous recherchez est introuvable.</p>
     <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a></p>
   </div>
+  <!-- New element to contain the cat images -->
+  <div class="cat-images-container"></div>
 </body>
 
 </html>
