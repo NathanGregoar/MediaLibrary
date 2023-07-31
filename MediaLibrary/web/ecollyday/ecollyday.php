@@ -110,7 +110,7 @@ $connection->close();
         <a href="../accueil/index.php">Accueil</a>
     </div>
 
-    <h1><?php echo $username; ?>, tu as économisé : <?php echo $sum; ?></h1>
+    <h1>Plus que <?php echo 5050-$sum ?> ! - <?php echo $username; ?>, tu as économisé : <?php echo $sum; ?></h1>
 
     <table id="table">
         <tr>
@@ -150,7 +150,7 @@ $connection->close();
                 });
 
                 // Mise à jour du titre h1 avec la somme
-                $('h1').text(`<?php echo $username; ?>, tu as économisé : ${sum}`);
+                $('h1').text(`Plus que <?php echo 5050-$sum ?> ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
 
                 // Envoyer une requête AJAX pour mettre à jour la base de données
                 $.ajax({
