@@ -15,10 +15,12 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
+      overflow: hidden; /* Empêcher le défilement vertical et horizontal */
     }
 
     .container {
       text-align: center;
+      position: relative; /* Permet de positionner les images absolument à l'intérieur de .container */
     }
 
     h1 {
@@ -90,8 +92,8 @@
         img.className = 'cat-image';
         img.src = 'https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png';
         img.style.position = 'absolute';
-        img.style.left = `${Math.random() * 90 + 5}vw`; // Random horizontal position (5% to 95% of viewport width)
-        img.style.top = `${Math.random() * 90 + 5}vh`; // Random vertical position (5% to 95% of viewport height)
+        img.style.left = `${Math.random() * (container.clientWidth - 250)}px`; // Random horizontal position within container
+        img.style.top = `${Math.random() * (container.clientHeight - 250)}px`; // Random vertical position within container
         container.appendChild(img);
 
         // Apply fade-in animation to each image with a delay of 1 second
