@@ -109,7 +109,7 @@
         img.src = 'https://cdn-icons-png.flaticon.com/512/616/616430.png';
         img.style.left = `${Math.random() * (window.innerWidth - 20)}px`; // Random horizontal position within window
         img.style.top = `${Math.random() * (window.innerHeight - 20)}px`; // Random vertical position within window
-        img.style.animation = `fade-in 1s forwards ${0.5 * i}s`; // Apply fade-in animation with a delay of 0.5 seconds * i
+        img.style.animation = `fade-in 1s forwards ${0.2 * i}s`; // Apply fade-in animation with a delay of 0.5 seconds * i
         catImagesContainer.appendChild(img);
       }
     }
