@@ -118,7 +118,16 @@ $connection->close();
         if ($searchTerm !== '') {
             echo '<h2>Résultats de la recherche (' . $numSearchResults . ') :</h2>';
             echo '<div class="movies-list">';
+            $maxMoviesPerPage = 10; // Nombre maximum de films affichés par page
+            $moviesCount = 0;
+
             while ($row = $searchResult->fetch_assoc()) {
+                if ($moviesCount >= $maxMoviesPerPage) {
+                    // Limite atteinte, afficher un lien de pagination
+                    echo '<a href="?search=' . urlencode($searchTerm) . '&page=2">Page suivante</a>';
+                    break;
+                }
+
                 $id = $row['id'];
                 $title = $row['title'];
                 $director = $row['director'];
@@ -134,23 +143,15 @@ $connection->close();
                 $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
 
                 echo '<div class="movie-item">';
-                echo '<img src="' . $poster . '" alt="' . $title . '">';
+                echo '<img src="' . $poster . '" alt="' . $title . '" loading="lazy">';
                 echo '<div class="movie-details">';
                 echo '<h3>' . $title . '</h3>';
 
                 // Affichage du réalisateur avec la gestion du cas où il n'est pas spécifié
-                if (!empty($director) && $director != 'NULL') {
-                    echo '<p><strong>Réalisateur :</strong> ' . $director . '</p>';
-                } else {
-                    echo '<p><strong>Réalisateur :</strong> /</p>';
-                }
+                echo '<p><strong>Réalisateur :</strong> ' . (!empty($director) && $director != 'NULL' ? $director : '/') . '</p>';
 
                 // Affichage de la date de sortie avec la gestion du cas où elle n'est pas spécifiée
-                if (!empty($releaseYear) && $releaseYear != 'NULL') {
-                    echo '<p><strong>Année de sortie :</strong> ' . $releaseYear . '</p>';
-                } else {
-                    echo '<p><strong>Année de sortie :</strong> /</p>';
-                }
+                echo '<p><strong>Année de sortie :</strong> ' . (!empty($releaseYear) && $releaseYear != 'NULL' ? $releaseYear : '/') . '</p>';
 
                 echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
                 echo '<form method="POST" style="display:inline">';
@@ -160,7 +161,15 @@ $connection->close();
                 echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $title . '\', \'' . $director . '\', \'' . $releaseYear . '\', \'' . $externalHardDrive . '\')">Modifier</button>';
                 echo '</div>';
                 echo '</div>';
+
+                $moviesCount++;
             }
+
+            if ($numSearchResults > $maxMoviesPerPage) {
+                // Il y a plus de films que le nombre maximum par page, afficher un lien de pagination
+                echo '<a href="?search=' . urlencode($searchTerm) . '&page=2">Page suivante</a>';
+            }
+
             echo '</div>';
         }
         ?>
@@ -184,23 +193,15 @@ $connection->close();
                 $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
 
                 echo '<div class="movie-item">';
-                echo '<img src="' . $poster . '" alt="' . $title . '">';
+                echo '<img src="' . $poster . '" alt="' . $title . '" loading="lazy">';
                 echo '<div class="movie-details">';
                 echo '<h3>' . $title . '</h3>';
 
                 // Affichage du réalisateur avec la gestion du cas où il n'est pas spécifié
-                if (!empty($director) && $director != 'NULL') {
-                    echo '<p><strong>Réalisateur :</strong> ' . $director . '</p>';
-                } else {
-                    echo '<p><strong>Réalisateur :</strong> /</p>';
-                }
+                echo '<p><strong>Réalisateur :</strong> ' . (!empty($director) && $director != 'NULL' ? $director : '/') . '</p>';
 
                 // Affichage de la date de sortie avec la gestion du cas où elle n'est pas spécifiée
-                if (!empty($releaseYear) && $releaseYear != 'NULL') {
-                    echo '<p><strong>Année de sortie :</strong> ' . $releaseYear . '</p>';
-                } else {
-                    echo '<p><strong>Année de sortie :</strong> /</p>';
-                }
+                echo '<p><strong>Année de sortie :</strong> ' . (!empty($releaseYear) && $releaseYear != 'NULL' ? $releaseYear : '/') . '</p>';
 
                 echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
                 echo '<form method="POST" style="display:inline">';
