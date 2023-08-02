@@ -31,10 +31,6 @@ if (isset($_POST['edit'])) {
 
     if ($editResult->num_rows > 0) {
         $editData = $editResult->fetch_assoc();
-        $editTitle = $editData['title'];
-        $editDirector = $editData['director'];
-        $editReleaseYear = $editData['release_year'];
-        $editExternalHardDrive = $editData['external_hard_drive'];
         $editFormVisible = true;
     }
 }
@@ -42,12 +38,14 @@ if (isset($_POST['edit'])) {
 // Mise à jour d'un film
 if (isset($_POST['update'])) {
     $updateId = $connection->real_escape_string($_POST['movie_id']);
-    $updateTitle = $connection->real_escape_string($_POST['title']);
-    $updateDirector = $connection->real_escape_string($_POST['director']);
-    $updateReleaseYear = $connection->real_escape_string($_POST['release_year']);
-    $updateExternalHardDrive = $connection->real_escape_string($_POST['external_hard_drive']);
+    $updateFields = ['title', 'director', 'release_year', 'external_hard_drive'];
+    $updateValues = [];
 
-    $updateSql = "UPDATE films SET title = '$updateTitle', director = '$updateDirector', release_year = '$updateReleaseYear', external_hard_drive = '$updateExternalHardDrive' WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
+    foreach ($updateFields as $field) {
+        $updateValues[] = "$field = '" . $connection->real_escape_string($_POST[$field]) . "'";
+    }
+
+    $updateSql = "UPDATE films SET " . implode(', ', $updateValues) . " WHERE id = $updateId AND added_by = " . $loggedInUser['id'];
 
     if ($connection->query($updateSql) === TRUE) {
         $updateAlert = '<div class="alert alert-success">Film mis à jour avec succès !</div>';
@@ -89,11 +87,7 @@ $connection->close();
     <div class="alert-container">
         <?php
         if ($searchTerm !== '') {
-            if ($numSearchResults > 0) {
-                echo '<div class="alert alert-success">Résultats de la recherche (' . $numSearchResults . ') :</div>';
-            } else {
-                echo '<div class="alert alert-info">Aucun résultat trouvé pour la recherche "' . $searchTerm . '"</div>';
-            }
+            echo ($numSearchResults > 0) ? '<div class="alert alert-success">Résultats de la recherche (' . $numSearchResults . ') :</div>' : '<div class="alert alert-info">Aucun résultat trouvé pour la recherche "' . $searchTerm . '"</div>';
         }
 
         if (isset($deleteAlert)) {
@@ -114,70 +108,62 @@ $connection->close();
             </form>
         </div>
 
-        <?php
-        if ($searchTerm !== '') {
-            echo '<h2>Résultats de la recherche (' . $numSearchResults . ') :</h2>';
-            echo '<div class="movies-list">';
-            $maxMoviesPerPage = 10; // Nombre maximum de films affichés par page
-            $moviesCount = 0;
+        <?php if ($searchTerm !== '') : ?>
+            <h2>Résultats de la recherche (<?php echo $numSearchResults; ?>) :</h2>
+            <div class="movies-list">
+                <?php
+                $maxMoviesPerPage = 10; // Nombre maximum de films affichés par page
+                $moviesCount = 0;
 
-            while ($row = $searchResult->fetch_assoc()) {
-                if ($moviesCount >= $maxMoviesPerPage) {
-                    // Limite atteinte, afficher un lien de pagination
-                    echo '<a href="?search=' . urlencode($searchTerm) . '&page=2">Page suivante</a>';
-                    break;
+                while ($row = $searchResult->fetch_assoc()) {
+                    if ($moviesCount >= $maxMoviesPerPage) {
+                        echo '<a href="?search=' . urlencode($searchTerm) . '&page=2">Page suivante</a>';
+                        break;
+                    }
+
+                    $id = $row['id'];
+                    $title = $row['title'];
+                    $director = $row['director'];
+                    $releaseYear = $row['release_year'];
+                    $externalHardDrive = $row['external_hard_drive'];
+
+                    // Appel à l'API OMDB pour récupérer les informations du film
+                    $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
+                    $response = file_get_contents($apiUrl);
+                    $data = json_decode($response, true);
+
+                    // Vérifier si la requête a réussi et si l'affiche est disponible
+                    $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
+                ?>
+                    <div class="movie-item">
+                        <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>" loading="lazy">
+                        <div class="movie-details">
+                            <h3><?php echo $title; ?></h3>
+                            <p><strong>Réalisateur :</strong> <?php echo (!empty($director) && $director != 'NULL') ? $director : '/'; ?></p>
+                            <p><strong>Année de sortie :</strong> <?php echo (!empty($releaseYear) && $releaseYear != 'NULL') ? $releaseYear : '/'; ?></p>
+                            <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL') ? $externalHardDrive : ''; ?></p>
+                            <form method="POST" style="display:inline">
+                                <input type="hidden" name="delete" value="<?php echo $id; ?>">
+                                <input type="submit" value="Supprimer" class="delete-btn">
+                            </form>
+                            <button class="edit-btn" onclick="showEditForm(<?php echo $id; ?>, '<?php echo $title; ?>', '<?php echo $director; ?>', '<?php echo $releaseYear; ?>', '<?php echo $externalHardDrive; ?>')">Modifier</button>
+                        </div>
+                    </div>
+                <?php
+                    $moviesCount++;
                 }
 
-                $id = $row['id'];
-                $title = $row['title'];
-                $director = $row['director'];
-                $releaseYear = $row['release_year'];
-                $externalHardDrive = $row['external_hard_drive'];
-
-                // Appel à l'API OMDB pour récupérer les informations du film
-                $apiUrl = "http://www.omdbapi.com/?apikey=f1e681ff&t=" . urlencode($title);
-                $response = file_get_contents($apiUrl);
-                $data = json_decode($response, true);
-
-                // Vérifier si la requête a réussi et si l'affiche est disponible
-                $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
-
-                echo '<div class="movie-item">';
-                echo '<img src="' . $poster . '" alt="' . $title . '" loading="lazy">';
-                echo '<div class="movie-details">';
-                echo '<h3>' . $title . '</h3>';
-
-                // Affichage du réalisateur avec la gestion du cas où il n'est pas spécifié
-                echo '<p><strong>Réalisateur :</strong> ' . (!empty($director) && $director != 'NULL' ? $director : '/') . '</p>';
-
-                // Affichage de la date de sortie avec la gestion du cas où elle n'est pas spécifiée
-                echo '<p><strong>Année de sortie :</strong> ' . (!empty($releaseYear) && $releaseYear != 'NULL' ? $releaseYear : '/') . '</p>';
-
-                echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
-                echo '<form method="POST" style="display:inline">';
-                echo '<input type="hidden" name="delete" value="' . $id . '">';
-                echo '<input type="submit" value="Supprimer" class="delete-btn">';
-                echo '</form>';
-                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $title . '\', \'' . $director . '\', \'' . $releaseYear . '\', \'' . $externalHardDrive . '\')">Modifier</button>';
-                echo '</div>';
-                echo '</div>';
-
-                $moviesCount++;
-            }
-
-            if ($numSearchResults > $maxMoviesPerPage) {
-                // Il y a plus de films que le nombre maximum par page, afficher un lien de pagination
-                echo '<a href="?search=' . urlencode($searchTerm) . '&page=2">Page suivante</a>';
-            }
-
-            echo '</div>';
-        }
-        ?>
+                if ($numSearchResults > $maxMoviesPerPage) {
+                    echo '<a href="?search=' . urlencode($searchTerm) . '&page=2">Page suivante</a>';
+                }
+                ?>
+            </div>
+        <?php endif; ?>
 
         <h2>Vos films (<?php echo $numUserMovies; ?>) :</h2>
         <div class="movies-list">
-            <?php
-            while ($row = $userMoviesResult->fetch_assoc()) {
+            <?php while ($row = $userMoviesResult->fetch_assoc()) : ?>
+                <?php
                 $id = $row['id'];
                 $title = $row['title'];
                 $director = $row['director'];
@@ -191,28 +177,22 @@ $connection->close();
 
                 // Vérifier si la requête a réussi et si l'affiche est disponible
                 $poster = ($data['Response'] === 'True' && $data['Poster'] !== 'N/A') ? $data['Poster'] : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg';
-
-                echo '<div class="movie-item">';
-                echo '<img src="' . $poster . '" alt="' . $title . '" loading="lazy">';
-                echo '<div class="movie-details">';
-                echo '<h3>' . $title . '</h3>';
-
-                // Affichage du réalisateur avec la gestion du cas où il n'est pas spécifié
-                echo '<p><strong>Réalisateur :</strong> ' . (!empty($director) && $director != 'NULL' ? $director : '/') . '</p>';
-
-                // Affichage de la date de sortie avec la gestion du cas où elle n'est pas spécifiée
-                echo '<p><strong>Année de sortie :</strong> ' . (!empty($releaseYear) && $releaseYear != 'NULL' ? $releaseYear : '/') . '</p>';
-
-                echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
-                echo '<form method="POST" style="display:inline">';
-                echo '<input type="hidden" name="delete" value="' . $id . '">';
-                echo '<input type="submit" value="Supprimer" class="delete-btn">';
-                echo '</form>';
-                echo '<button class="edit-btn" onclick="showEditForm(' . $id . ', \'' . $title . '\', \'' . $director . '\', \'' . $releaseYear . '\', \'' . $externalHardDrive . '\')">Modifier</button>';
-                echo '</div>';
-                echo '</div>';
-            }
-            ?>
+                ?>
+                <div class="movie-item">
+                    <img src="<?php echo $poster; ?>" alt="<?php echo $title; ?>" loading="lazy">
+                    <div class="movie-details">
+                        <h3><?php echo $title; ?></h3>
+                        <p><strong>Réalisateur :</strong> <?php echo (!empty($director) && $director != 'NULL') ? $director : '/'; ?></p>
+                        <p><strong>Année de sortie :</strong> <?php echo (!empty($releaseYear) && $releaseYear != 'NULL') ? $releaseYear : '/'; ?></p>
+                        <p><strong>Disque dur externe :</strong> <?php echo ($externalHardDrive != 'NULL') ? $externalHardDrive : ''; ?></p>
+                        <form method="POST" style="display:inline">
+                            <input type="hidden" name="delete" value="<?php echo $id; ?>">
+                            <input type="submit" value="Supprimer" class="delete-btn">
+                        </form>
+                        <button class="edit-btn" onclick="showEditForm(<?php echo $id; ?>, '<?php echo $title; ?>', '<?php echo $director; ?>', '<?php echo $releaseYear; ?>', '<?php echo $externalHardDrive; ?>')">Modifier</button>
+                    </div>
+                </div>
+            <?php endwhile; ?>
         </div>
     </div>
 
@@ -250,9 +230,6 @@ $connection->close();
             movieDirectorInput.value = movieDirector;
             movieReleaseYearInput.value = movieReleaseYear;
             movieExternalHardDriveInput.value = movieExternalHardDrive;
-
-            var movieIdDisplay = document.getElementById('edit-movie-id-display');
-            movieIdDisplay.textContent = movieId;
         }
     </script>
 </body>
