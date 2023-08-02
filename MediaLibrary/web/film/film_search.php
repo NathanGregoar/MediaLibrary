@@ -137,8 +137,21 @@ $connection->close();
                 echo '<img src="' . $poster . '" alt="' . $title . '">';
                 echo '<div class="movie-details">';
                 echo '<h3>' . $title . '</h3>';
-                echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
-                echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+
+                // Affichage du réalisateur avec la gestion du cas où il n'est pas spécifié
+                if (!empty($director) && $director != 'NULL') {
+                    echo '<p><strong>Réalisateur :</strong> ' . $director . '</p>';
+                } else {
+                    echo '<p><strong>Réalisateur :</strong> /</p>';
+                }
+
+                // Affichage de la date de sortie avec la gestion du cas où elle n'est pas spécifiée
+                if (!empty($releaseYear) && $releaseYear != 'NULL') {
+                    echo '<p><strong>Année de sortie :</strong> ' . $releaseYear . '</p>';
+                } else {
+                    echo '<p><strong>Année de sortie :</strong> /</p>';
+                }
+
                 echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
@@ -174,8 +187,21 @@ $connection->close();
                 echo '<img src="' . $poster . '" alt="' . $title . '">';
                 echo '<div class="movie-details">';
                 echo '<h3>' . $title . '</h3>';
-                echo '<p><strong>Réalisateur :</strong> ' . ($director != 'NULL' ? $director : '') . '</p>';
-                echo '<p><strong>Année de sortie :</strong> ' . ($releaseYear != 'NULL' ? $releaseYear : '') . '</p>';
+
+                // Affichage du réalisateur avec la gestion du cas où il n'est pas spécifié
+                if (!empty($director) && $director != 'NULL') {
+                    echo '<p><strong>Réalisateur :</strong> ' . $director . '</p>';
+                } else {
+                    echo '<p><strong>Réalisateur :</strong> /</p>';
+                }
+
+                // Affichage de la date de sortie avec la gestion du cas où elle n'est pas spécifiée
+                if (!empty($releaseYear) && $releaseYear != 'NULL') {
+                    echo '<p><strong>Année de sortie :</strong> ' . $releaseYear . '</p>';
+                } else {
+                    echo '<p><strong>Année de sortie :</strong> /</p>';
+                }
+
                 echo '<p><strong>Disque dur externe :</strong> ' . ($externalHardDrive != 'NULL' ? $externalHardDrive : '') . '</p>';
                 echo '<form method="POST" style="display:inline">';
                 echo '<input type="hidden" name="delete" value="' . $id . '">';
