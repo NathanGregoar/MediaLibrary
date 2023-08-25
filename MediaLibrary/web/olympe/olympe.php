@@ -41,10 +41,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="number" id="budget_min" name="budget_min" min="1" required>
             </div>
             <div class="input-group">
-                <label for="dispo_date">Disponibilité :</label>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
-            </div>
-            <div class="input-group">
                 <label for="pays_pref">Pays préférés :</label>
                 <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
                     <!-- Ajouter ici les pays européens -->
@@ -66,10 +62,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="number" id="budget_max" name="budget_max" min="1" required>
             </div>
             <div class="input-group">
-                <label for="not_dispo_date">Pas de disponibilité :</label>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr" required>
-            </div>
-            <div class="input-group">
                 <label for="pays_non_pref">Pays non préférés :</label>
                 <select id="pays_non_pref" name="pays_non_pref[]" multiple size="3" class="country-select">
                     <!-- Ajouter ici les pays européens -->
@@ -83,30 +75,11 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         </div>
     </form>
 
-    <!-- Inclure le script pour la vérification en temps réel -->
-    <script>
-        const budgetMinInput = document.getElementById('budget_min');
-        const budgetMaxInput = document.getElementById('budget_max');
-
-        budgetMinInput.addEventListener('input', function() {
-            checkBudgetValidity(this);
-        });
-
-        budgetMaxInput.addEventListener('input', function() {
-            checkBudgetValidity(this);
-        });
-
-        function checkBudgetValidity(input) {
-            const value = parseFloat(input.value);
-            if (isNaN(value) || value <= 0) {
-                input.classList.remove('valid');
-                input.classList.add('invalid');
-            } else {
-                input.classList.remove('invalid');
-                input.classList.add('valid');
-            }
-        }
-    </script>
+    <!-- Afficher le calendrier en permanence -->
+    <div class="calendar-container">
+        <input type="text" id="dispo_date" class="flatpickr" readonly>
+        <input type="text" id="not_dispo_date" class="flatpickr" readonly>
+    </div>
 
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
@@ -114,26 +87,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         flatpickr(".flatpickr", {
             mode: "multiple",
             dateFormat: "Y-m-d",
-            onChange: function(selectedDates, dateStr, instance) {
-                const calendarContainer = instance._container;
-                if (calendarContainer.classList.contains("flatpickr-calendar")) {
-                    const dispoDates = document.querySelectorAll(".green-date");
-                    const notDispoDates = document.querySelectorAll(".red-date");
-                    dispoDates.forEach(date => {
-                        date.classList.remove("green-date");
-                    });
-                    notDispoDates.forEach(date => {
-                        date.classList.remove("red-date");
-                    });
-                    selectedDates.forEach(date => {
-                        if (instance._input.id === "dispo_date") {
-                            date.classList.add("green-date");
-                        } else if (instance._input.id === "not_dispo_date") {
-                            date.classList.add("red-date");
-                        }
-                    });
-                }
-            }
+            static: true // Affiche le calendrier en permanence
         });
     </script>
 </body>
