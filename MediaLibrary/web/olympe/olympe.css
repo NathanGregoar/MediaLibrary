@@ -56,7 +56,9 @@ h2 {
 }
 
 /* Formulaire */
-form {
+.form-container {
+    display: flex;
+    justify-content: space-between;
     width: 90%;
     margin: 0 auto;
     padding: 20px;
@@ -65,42 +67,29 @@ form {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-label {
-    display: block;
-    margin-top: 10px;
-    color: #555;
+.form-column {
+    flex: 1;
+    padding: 0 10px;
 }
 
-input[type="number"],
-input[type="text"],
-select,
-button {
-    display: block;
-    width: 100%;
-    padding: 10px;
-    margin-top: 5px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    font-size: 16px;
+.input-group {
+    margin-bottom: 15px;
 }
 
-.select-group {
-    display: flex;
-    justify-content: space-between;
-}
-
-select {
+select.country-select {
     height: 150px;
-    width: 48%; /* Largeur réduite pour s'adapter côte à côte */
+    width: 48%;
 }
 
-.button-group {
-    display: flex;
-    justify-content: flex-end; /* Aligner à droite */
+.transport-group {
     margin-top: 15px;
 }
 
-button {
+.transport-checkbox {
+    margin-right: 5px;
+}
+
+.submit-button {
     background-color: #333;
     color: white;
     cursor: pointer;
@@ -111,7 +100,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.submit-button:hover {
     background-color: #555;
 }
 

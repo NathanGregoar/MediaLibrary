@@ -33,46 +33,56 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <h1>Bienvenue dans l'Olympe <?php echo $username; ?></h1>
     <h2>Choix de destination 2024</h2>
 
-<!-- Formulaire -->
-<form action="traitement_formulaire.php" method="post" class="form-container">
-    <div class="input-group">
-        <label for="budget_min">Budget min :</label>
-        <input type="number" id="budget_min" name="budget_min" min="1" required>
-        <label for="budget_max">Budget max :</label>
-        <input type="number" id="budget_max" name="budget_max" min="1" required>
-    </div>
-    <div class="input-group">
-        <label>Disponibilité :</label>
-        <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
-        <label>Pas de disponibilité :</label>
-        <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr" required>
-    </div>
-    <div class="input-group">
-        <label for="pays_pref">Pays préférés :</label>
-        <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
-            <!-- Ajouter ici les pays européens -->
-        </select>
-        <div class="ranking-label">Classement pays préférés :</div>
-        <input type="number" name="classement_pref[]" min="1" max="5" class="ranking-input">
-    </div>
-    <div class="input-group">
-        <label for="pays_non_pref">Pays non préférés :</label>
-        <select id="pays_non_pref" name="pays_non_pref[]" multiple size="3" class="country-select">
-            <!-- Ajouter ici les pays européens -->
-        </select>
-        <div class="ranking-label">Top 3 pays non préférés :</div>
-        <input type="text" name="top_non_pref[]" class="ranking-input">
-    </div>
-    <div class="transport-group">
-        <label>Transport :</label>
-        <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
-        <label for="train" class="transport-label">Train</label>
-        <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-        <label for="avion" class="transport-label">Avion</label>
-        <!-- Ajouter d'autres options de transport -->
-    </div>
-    <button type="submit" class="submit-button">Enregistrer</button>
-</form>
+    <!-- Formulaire -->
+    <form action="traitement_formulaire.php" method="post" class="form-container">
+        <div class="form-column">
+            <div class="input-group">
+                <label for="budget_min">Budget min :</label>
+                <input type="number" id="budget_min" name="budget_min" min="1" required>
+            </div>
+            <div class="input-group">
+                <label for="dispo_date">Disponibilité :</label>
+                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
+            </div>
+            <div class="input-group">
+                <label for="pays_pref">Pays préférés :</label>
+                <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
+                    <!-- Ajouter ici les pays européens -->
+                </select>
+                <div class="ranking-label">Classement pays préférés :</div>
+                <input type="number" name="classement_pref[]" min="1" max="5" class="ranking-input">
+            </div>
+            <div class="transport-group">
+                <label>Transport :</label>
+                <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
+                <label for="train" class="transport-label">Train</label>
+                <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
+                <label for="avion" class="transport-label">Avion</label>
+                <!-- Ajouter d'autres options de transport -->
+            </div>
+        </div>
+        <div class="form-column">
+            <div class="input-group">
+                <label for="budget_max">Budget max :</label>
+                <input type="number" id="budget_max" name="budget_max" min="1" required>
+            </div>
+            <div class="input-group">
+                <label for="not_dispo_date">Pas de disponibilité :</label>
+                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr" required>
+            </div>
+            <div class="input-group">
+                <label for="pays_non_pref">Pays non préférés :</label>
+                <select id="pays_non_pref" name="pays_non_pref[]" multiple size="3" class="country-select">
+                    <!-- Ajouter ici les pays européens -->
+                </select>
+                <div class="ranking-label">Top 3 pays non préférés :</div>
+                <input type="text" name="top_non_pref[]" class="ranking-input">
+            </div>
+            <div class="button-group">
+                <button type="submit" class="submit-button">Enregistrer</button>
+            </div>
+        </div>
+    </form>
 
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
