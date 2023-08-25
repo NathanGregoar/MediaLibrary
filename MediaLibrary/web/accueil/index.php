@@ -65,7 +65,7 @@ $email = $_SESSION['email'];
             // Vérification si l'utilisateur est "Nathan" et son adresse e-mail est "nathan.gregoar@yahoo.fr"
             if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
                 echo '<a href="../olympe/olympe.php" class="olympe">';
-                echo '<img src="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png" alt="Ecollyday">';
+                echo '<img src="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png" alt="olympe">';
                 echo '</a>';
             }
             ?>
