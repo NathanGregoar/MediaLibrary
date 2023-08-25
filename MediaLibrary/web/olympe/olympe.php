@@ -37,12 +37,11 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         <div class="form-column">
             <div class="input-group">
                 <label for="budget_min">Budget min :</label>
-                <small class="sub-label">(Transport & Location comprise, en euros)</small>
+                <small class="sub-label">(Transport & Location compris)</small>
                 <input type="number" id="budget_min" name="budget_min" min="1" required>
             </div>
             <div class="input-group">
                 <label for="dispo_date">Mes disponibilitées :</label>
-                <small class="sub-label">(dates disponibles)</small>
                 <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
@@ -52,7 +51,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
             <div class="transport-group">
                 <label>Transport allé-retour :</label>
-                <small class="sub-label">(Cocher ceux pour lesquels vous êtes d'accord / Ne cochez pas ceux que vous ne voulez pas prendre)</small>
+                <small class="sub-label">(Coché : Accepté / Pas coché : Refusé)</small>
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
@@ -66,12 +65,11 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         <div class="form-column">
             <div class="input-group">
                 <label for="budget_max">Budget max :</label>
-                <small class="sub-label">(Transport & Location comprise, en euros)</small>
+                <small class="sub-label">(Transport & Location compris)</small>
                 <input type="number" id="budget_max" name="budget_max" min="1" required>
             </div>
             <div class="input-group">
                 <label for="not_dispo_date">Mes non-disponibilitées :</label>
-                <small class="sub-label">(dates non disponibles)</small>
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
