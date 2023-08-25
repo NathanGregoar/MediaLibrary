@@ -22,9 +22,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <title>L'Olympe - Choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./olympe.css">
     <!-- Inclure le CSS pour le calendrier -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">4
-    <!-- Inclure le script pour le calendrier -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <div class="navbar">
@@ -110,6 +108,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         }
     </script>
 
+    <!-- Inclure le script pour le calendrier -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr(".flatpickr", {
             mode: "multiple",
@@ -118,8 +118,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             onChange: function(selectedDates, dateStr, instance) {
                 const calendarContainer = instance._container;
                 if (calendarContainer.classList.contains("flatpickr-calendar")) {
-                    const dispoDates = calendarContainer.querySelectorAll(".green-date");
-                    const notDispoDates = calendarContainer.querySelectorAll(".red-date");
+                    const dispoDates = document.querySelectorAll(".green-date");
+                    const notDispoDates = document.querySelectorAll(".red-date");
                     dispoDates.forEach(date => {
                         date.classList.remove("green-date");
                     });
