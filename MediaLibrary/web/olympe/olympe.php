@@ -48,6 +48,10 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <label for="pays_pref">Pays préférés :</label>
                 <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
                     <!-- Ajouter ici les pays européens -->
+                    <option value="france">France</option>
+                    <option value="italie">Italie</option>
+                    <option value="espagne">Espagne</option>
+                    <!-- ... autres pays européens ... -->
                 </select>
                 <div class="ranking-label">Classement pays préférés :</div>
                 <input type="number" name="classement_pref[]" min="1" max="5" class="ranking-input">
