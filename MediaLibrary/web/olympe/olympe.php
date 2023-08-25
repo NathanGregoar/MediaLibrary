@@ -217,5 +217,27 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             prefCountriesModal.style.display = 'none';
         });
     </script>
+
+    <script>
+        // Modal handling for non preferred countries
+        const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
+        const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
+        const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
+
+        chooseNonPrefCountriesBtn.addEventListener('click', () => {
+            nonPrefCountriesModal.style.display = 'flex';
+        });
+
+        closeNonPrefCountriesModal.addEventListener('click', () => {
+            nonPrefCountriesModal.style.display = 'none';
+        });
+
+        // Close the modal if user clicks outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === nonPrefCountriesModal) {
+                nonPrefCountriesModal.style.display = 'none';
+            }
+        });
+    </script>
 </body>
 </html>
