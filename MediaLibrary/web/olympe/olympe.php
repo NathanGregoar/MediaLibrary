@@ -23,6 +23,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <link rel="stylesheet" type="text/css" href="./olympe.css">
 </head>
 <body>
-
+    <div class="navbar">
+        <a href="../accueil/index.php">Accueil</a>
+        <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
+    </div>
 </body>
 </html>
