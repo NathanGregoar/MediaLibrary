@@ -16,23 +16,20 @@ if ($username !== "Nathan" && $email !== "nathan.gregoar@yahoo.fr") {
 $loggedInUser = getLoggedInUser();
 $user_id = $loggedInUser['id'];
 
-    // Fermer la connexion à la base de données
-    $connection->close();
-
-    // Envoi d'une réponse JSON indiquant le succès de l'opération
-    header('Content-Type: application/json');
-    echo json_encode(array('success' => true));
-    exit();
-
 $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-$stmt->close();
-$connection->close();
+// Envoi d'une réponse JSON indiquant le succès de l'opération
+header('Content-Type: application/json');
+echo json_encode(array('success' => true));
+exit();
+
+$connection->close(); // Fermer la connexion à la base de données
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
