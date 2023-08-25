@@ -42,7 +42,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
             <div class="input-group">
                 <label for="dispo_date">Disponibilité :</label>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
+                <div id="dispo_date" class="flatpickr"></div>
             </div>
             <div class="input-group">
                 <label for="pays_pref">Pays préférés :</label>
@@ -67,7 +67,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
             <div class="input-group">
                 <label for="not_dispo_date">Pas de disponibilité :</label>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr" required>
+                <div id="not_dispo_date" class="flatpickr"></div>
             </div>
             <div class="input-group">
                 <label for="pays_non_pref">Pays non préférés :</label>
@@ -111,29 +111,14 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr(".flatpickr", {
+        flatpickr("#dispo_date", {
             mode: "multiple",
-            dateFormat: "Y-m-d",
-            onChange: function(selectedDates, dateStr, instance) {
-                const calendarContainer = instance._container;
-                if (calendarContainer.classList.contains("flatpickr-calendar")) {
-                    const dispoDates = document.querySelectorAll(".green-date");
-                    const notDispoDates = document.querySelectorAll(".red-date");
-                    dispoDates.forEach(date => {
-                        date.classList.remove("green-date");
-                    });
-                    notDispoDates.forEach(date => {
-                        date.classList.remove("red-date");
-                    });
-                    selectedDates.forEach(date => {
-                        if (instance._input.id === "dispo_date") {
-                            date.classList.add("green-date");
-                        } else if (instance._input.id === "not_dispo_date") {
-                            date.classList.add("red-date");
-                        }
-                    });
-                }
-            }
+            dateFormat: "Y-m-d"
+        });
+
+        flatpickr("#not_dispo_date", {
+            mode: "multiple",
+            dateFormat: "Y-m-d"
         });
     </script>
 </body>
