@@ -53,6 +53,10 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
                 <label for="avion" class="transport-label">Avion</label>
+                <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
+                <label for="bus" class="transport-label">Bus</label>
+                <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
+                <label for="bateau" class="transport-label">Bateau</label>
             </div>
         </div>
         <div class="form-column">
