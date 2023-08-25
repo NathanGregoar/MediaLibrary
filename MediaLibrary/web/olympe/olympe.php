@@ -45,38 +45,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <label for="pays_pref">Pays préférés :</label>
-                <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
-                    <option value="allemagne">Allemagne</option>
-                    <option value="autriche">Autriche</option>
-                    <option value="belgique">Belgique</option>
-                    <option value="bulgarie">Bulgarie</option>
-                    <option value="chypre">Chypre</option>
-                    <option value="croatie">Croatie</option>
-                    <option value="danemark">Danemark</option>
-                    <option value="espagne">Espagne</option>
-                    <option value="estonie">Estonie</option>
-                    <option value="finlande">Finlande</option>
-                    <option value="france">France</option>
-                    <option value="grece">Grèce</option>
-                    <option value="hongrie">Hongrie</option>
-                    <option value="irlande">Irlande</option>
-                    <option value="italie">Italie</option>
-                    <option value="lettonie">Lettonie</option>
-                    <option value="lituanie">Lituanie</option>
-                    <option value="luxembourg">Luxembourg</option>
-                    <option value="malte">Malte</option>
-                    <option value="pays-bas">Pays-Bas</option>
-                    <option value="pologne">Pologne</option>
-                    <option value="portugal">Portugal</option>
-                    <option value="republique-tcheque">République tchèque</option>
-                    <option value="roumanie">Roumanie</option>
-                    <option value="slovaquie">Slovaquie</option>
-                    <option value="slovenie">Slovénie</option>
-                    <option value="suede">Suède</option>
-                </select>
-                <div class="ranking-label">Classement pays préférés :</div>
-                <input type="number" name="classement_pref[]" min="1" max="5" class="ranking-input">
+                <button type="button" id="choosePrefCountriesBtn">Choix du pays préféré</button>
+                <div id="prefCountries"></div>
             </div>
             <div class="transport-group">
                 <label>Transport :</label>
@@ -96,38 +66,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <label for="pays_non_pref">Pays non préférés :</label>
-                <select id="pays_non_pref" name="pays_non_pref[]" multiple size="3" class="country-select">
-                    <option value="allemagne">Allemagne</option>
-                    <option value="autriche">Autriche</option>
-                    <option value="belgique">Belgique</option>
-                    <option value="bulgarie">Bulgarie</option>
-                    <option value="chypre">Chypre</option>
-                    <option value="croatie">Croatie</option>
-                    <option value="danemark">Danemark</option>
-                    <option value="espagne">Espagne</option>
-                    <option value="estonie">Estonie</option>
-                    <option value="finlande">Finlande</option>
-                    <option value="france">France</option>
-                    <option value="grece">Grèce</option>
-                    <option value="hongrie">Hongrie</option>
-                    <option value="irlande">Irlande</option>
-                    <option value="italie">Italie</option>
-                    <option value="lettonie">Lettonie</option>
-                    <option value="lituanie">Lituanie</option>
-                    <option value="luxembourg">Luxembourg</option>
-                    <option value="malte">Malte</option>
-                    <option value="pays-bas">Pays-Bas</option>
-                    <option value="pologne">Pologne</option>
-                    <option value="portugal">Portugal</option>
-                    <option value="republique-tcheque">République tchèque</option>
-                    <option value="roumanie">Roumanie</option>
-                    <option value="slovaquie">Slovaquie</option>
-                    <option value="slovenie">Slovénie</option>
-                    <option value="suede">Suède</option>
-                </select>
-                <div class="ranking-label">Top 3 pays non préférés :</div>
-                <input type="text" name="top_non_pref[]" class="ranking-input">
+                <button type="button" id="chooseNonPrefCountriesBtn">Choix du pays non préféré</button>
+                <div id="nonPrefCountries"></div>
             </div>
             <div class="button-group">
                 <button type="submit" class="submit-button">Enregistrer</button>
@@ -157,43 +97,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 input.classList.remove('invalid');
                 input.classList.add('valid');
             }
-        }
-    </script>
-
-    <script>
-        // Activer la sélection multiple des options dans les listes déroulantes
-        const selectElements = document.querySelectorAll('select[multiple]');
-        selectElements.forEach(select => {
-            let isMouseDown = false;
-
-            select.addEventListener('mousedown', function(event) {
-                isMouseDown = true;
-                event.preventDefault();
-
-                const option = event.target;
-                option.selected = !option.selected;
-                updateSelectedOptions(select);
-            });
-
-            select.addEventListener('mouseup', function() {
-                isMouseDown = false;
-            });
-
-            select.addEventListener('mousemove', function(event) {
-                if (isMouseDown) {
-                    const option = event.target;
-                    option.selected = !option.selected;
-                    updateSelectedOptions(select);
-                }
-            });
-        });
-
-        function updateSelectedOptions(select) {
-            const selectedOptions = Array.from(select.options)
-                .filter(option => option.selected)
-                .map(option => option.value);
-
-            select.value = selectedOptions;
         }
     </script>
 
