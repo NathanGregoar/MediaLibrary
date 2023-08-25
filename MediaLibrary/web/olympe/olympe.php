@@ -42,11 +42,15 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
             <div class="input-group">
                 <label for="dispo_date">Disponibilité :</label>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
+                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <label for="dispo_date">Disponibilité :</label>
-                <input type="date" id="dispo_date" name="dispo_date" required>
+                <label for="pays_pref">Pays préférés :</label>
+                <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
+                    <!-- Ajouter ici les pays européens -->
+                </select>
+                <div class="ranking-label">Classement pays préférés :</div>
+                <input type="number" name="classement_pref[]" min="1" max="5" class="ranking-input">
             </div>
             <div class="transport-group">
                 <label>Transport :</label>
@@ -63,7 +67,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
             <div class="input-group">
                 <label for="not_dispo_date">Pas de disponibilité :</label>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr" required>
+                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
                 <label for="pays_non_pref">Pays non préférés :</label>
@@ -110,6 +114,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         flatpickr(".flatpickr", {
             mode: "multiple",
             dateFormat: "Y-m-d",
+            inline: true,
             onChange: function(selectedDates, dateStr, instance) {
                 const calendarContainer = instance._container;
                 if (calendarContainer.classList.contains("flatpickr-calendar")) {
