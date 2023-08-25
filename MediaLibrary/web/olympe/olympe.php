@@ -25,6 +25,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
 <body>
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
+        <a href="../olympe/olympe.php">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
 </body>
