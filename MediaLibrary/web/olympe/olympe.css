@@ -188,3 +188,14 @@ select.country-select:focus {
 .country-list label {
     display: block;
 }
+
+/* Styles for the close button */
+#closeNonPrefCountriesModal {
+    margin-top: 10px;
+    padding: 5px 10px;
+    background-color: #333;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
