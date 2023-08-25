@@ -45,12 +45,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
             </div>
             <div class="input-group">
-                <label for="pays_pref">Pays préférés :</label>
-                <select id="pays_pref" name="pays_pref[]" multiple size="5" class="country-select">
-                    <!-- Ajouter ici les pays européens -->
-                </select>
-                <div class="ranking-label">Classement pays préférés :</div>
-                <input type="number" name="classement_pref[]" min="1" max="5" class="ranking-input">
+                <label for="dispo_date">Disponibilité :</label>
+                <input type="date" id="dispo_date" name="dispo_date" required>
             </div>
             <div class="transport-group">
                 <label>Transport :</label>
