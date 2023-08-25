@@ -7,7 +7,7 @@ body {
     margin: 0;
     padding: 0;
     background-color: #ecf2f9;
-    overflow: hidden;
+    /* overflow: hidden; */
 }
 
 .navbar {
@@ -127,6 +127,14 @@ select.country-select:focus {
 
 .submit-button:hover {
     background-color: #555;
+}
+
+.input-group input[type="number"].valid {
+    border-color: #82cc82;
+}
+
+.input-group input[type="number"].invalid {
+    border-color: #ff6b6b;
 }
 
 /* Calendrier */

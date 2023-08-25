@@ -57,7 +57,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                <label for="avion" class="transport-label">Avion</label>
                 <!-- Ajouter d'autres options de transport -->
             </div>
         </div>
@@ -83,6 +82,31 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
     </form>
+
+    <!-- Inclure le script pour la vérification en temps réel -->
+    <script>
+        const budgetMinInput = document.getElementById('budget_min');
+        const budgetMaxInput = document.getElementById('budget_max');
+
+        budgetMinInput.addEventListener('input', function() {
+            checkBudgetValidity(this);
+        });
+
+        budgetMaxInput.addEventListener('input', function() {
+            checkBudgetValidity(this);
+        });
+
+        function checkBudgetValidity(input) {
+            const value = parseFloat(input.value);
+            if (isNaN(value) || value <= 0) {
+                input.classList.remove('valid');
+                input.classList.add('invalid');
+            } else {
+                input.classList.remove('invalid');
+                input.classList.add('valid');
+            }
+        }
+    </script>
 
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
