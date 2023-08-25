@@ -23,7 +23,6 @@ $user_id = $loggedInUser['id'];
     header('Content-Type: application/json');
     echo json_encode(array('success' => true));
     exit();
-}
 
 $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
