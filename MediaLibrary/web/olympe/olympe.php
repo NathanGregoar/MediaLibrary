@@ -36,34 +36,35 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <!-- Formulaire -->
     <form action="traitement_formulaire.php" method="post">
         <label for="budget_min">Budget min :</label>
-        <input type="number" id="budget_min" name="budget_min" required>
+        <input type="number" id="budget_min" name="budget_min" min="1" required>
         <label for="budget_max">Budget max :</label>
-        <input type="number" id="budget_max" name="budget_max" required>
+        <input type="number" id="budget_max" name="budget_max" min="1" required>
         <br>
-        <label for="dispo_date">Disponibilité :</label>
+        <label>Disponibilité :</label>
         <input type="text" id="dispo_date" name="dispo_date" class="flatpickr" required>
-        <label for="not_dispo_date">Pas de disponibilité :</label>
+        <label>Pas de disponibilité :</label>
         <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr" required>
         <br>
         <label for="pays_pref">Pays préférés :</label>
-        <select id="pays_pref" name="pays_pref[]" multiple>
-            <option value="pays1">Pays 1</option>
-            <option value="pays2">Pays 2</option>
-            <!-- Ajoutez d'autres options -->
+        <select id="pays_pref" name="pays_pref[]" multiple size="5">
+            <!-- Ajouter ici les pays européens -->
         </select>
+        <div>Classement pays préférés :</div>
+        <input type="number" name="classement_pref[]" min="1" max="5">
+        <br>
         <label for="pays_non_pref">Pays non préférés :</label>
-        <select id="pays_non_pref" name="pays_non_pref[]" multiple>
-            <option value="pays3">Pays 3</option>
-            <option value="pays4">Pays 4</option>
-            <!-- Ajoutez d'autres options -->
+        <select id="pays_non_pref" name="pays_non_pref[]" multiple size="3">
+            <!-- Ajouter ici les pays européens -->
         </select>
+        <div>Top 3 pays non préférés :</div>
+        <input type="text" name="top_non_pref[]">
         <br>
         <label>Transport :</label>
         <input type="checkbox" id="train" name="transport[]" value="train">
         <label for="train">Train</label>
         <input type="checkbox" id="avion" name="transport[]" value="avion">
         <label for="avion">Avion</label>
-        <!-- Ajoutez d'autres options de transport -->
+        <!-- Ajouter d'autres options de transport -->
         <br>
         <button type="submit">Enregistrer</button>
     </form>
@@ -72,7 +73,28 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr(".flatpickr", {
+            mode: "multiple",
             dateFormat: "Y-m-d",
+            onChange: function(selectedDates, dateStr, instance) {
+                const calendarContainer = instance._container;
+                if (calendarContainer.classList.contains("flatpickr-calendar")) {
+                    const dispoDates = document.querySelectorAll(".green-date");
+                    const notDispoDates = document.querySelectorAll(".red-date");
+                    dispoDates.forEach(date => {
+                        date.classList.remove("green-date");
+                    });
+                    notDispoDates.forEach(date => {
+                        date.classList.remove("red-date");
+                    });
+                    selectedDates.forEach(date => {
+                        if (instance._input.id === "dispo_date") {
+                            date.classList.add("green-date");
+                        } else if (instance._input.id === "not_dispo_date") {
+                            date.classList.add("red-date");
+                        }
+                    });
+                }
+            }
         });
     </script>
 </body>

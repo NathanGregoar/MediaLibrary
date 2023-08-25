@@ -44,3 +44,13 @@ h1 {
 h2{
     text-align: center;
 }
+
+.green-date {
+    background-color: green !important;
+    color: white;
+}
+
+.red-date {
+    background-color: red !important;
+    color: white;
+}
