@@ -54,3 +54,57 @@ h2{
     background-color: red !important;
     color: white;
 }
+
+/* Formulaire */
+form {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+label {
+    display: block;
+    margin-top: 10px;
+    color: #555;
+}
+
+input[type="number"],
+input[type="text"],
+select,
+button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+}
+
+select {
+    height: 150px;
+}
+
+button {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #555;
+}
+
+/* Calendrier */
+.flatpickr-calendar .green-date {
+    background-color: #82cc82 !important;
+    color: white;
+}
+
+.flatpickr-calendar .red-date {
+    background-color: #ff6b6b !important;
+    color: white;
+}
