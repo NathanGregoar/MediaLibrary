@@ -42,7 +42,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <input type="number" id="budget_min" name="budget_min" min="1" required>
                 </div>
                 <div class="input-group">
-                    <button type="button" id="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</button>
+                    <label for="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</label><br>
+                    <small class="sub-label">(5 Pays Max)</small><br>
+                    <button type="button" id="choosePrefCountriesBtn">Choisir</button>
                     <div id="prefCountries"></div>
                 </div>
             </div>
@@ -53,7 +55,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <input type="number" id="budget_max" name="budget_max" min="1" required>
                 </div>
                 <div class="input-group">
-                    <button type="button" id="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</button>
+                    <label for="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</label><br>
+                    <small class="sub-label">(3 Pays Max)</small><br>
+                    <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
                     <div id="nonPrefCountries"></div>
                 </div>
             </div>
@@ -71,7 +75,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
         <div class="form-row">
-            <div class="form-column centered">
+            <div class="form-column">
                 <div class="transport-group">
                     <label>Transport allé-retour :</label><br>
                     <small class="sub-label">(Coché : Accepté / Pas coché : Refusé)</small><br>
@@ -81,7 +85,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <label for="avion" class="transport-label">Avion</label>
                 </div>
             </div>
-            <div class="form-column centered">
+            <div class="form-column">
                 <div class="transport-group">
                     <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
                     <label for="bus" class="transport-label">Bus</label>
@@ -89,8 +93,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <label for="bateau" class="transport-label">Bateau</label>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="button-group centered">
+            <div class="form-column centered">
+                <div class="button-group">
                     <button type="submit" class="submit-button">Enregistrer</button>
                 </div>
             </div>
