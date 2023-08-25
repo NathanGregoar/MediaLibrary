@@ -83,7 +83,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                <!-- Ajouter d'autres options de transport -->
+                <label for="avion" class="transport-label">Avion</label>
             </div>
         </div>
         <div class="form-column">
@@ -157,6 +157,30 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 input.classList.remove('invalid');
                 input.classList.add('valid');
             }
+        }
+    </script>
+
+    <script>
+        // Activer la sélection multiple des options dans les listes déroulantes
+        const selectElements = document.querySelectorAll('select[multiple]');
+        selectElements.forEach(select => {
+            select.addEventListener('mousedown', function(event) {
+                event.preventDefault();
+
+                const option = event.target;
+                option.selected = !option.selected;
+
+                // Mettre à jour la liste des options sélectionnées
+                updateSelectedOptions(select);
+            });
+        });
+
+        function updateSelectedOptions(select) {
+            const selectedOptions = Array.from(select.options)
+                .filter(option => option.selected)
+                .map(option => option.value);
+
+            select.value = selectedOptions;
         }
     </script>
 
