@@ -109,7 +109,7 @@ $connection->close();
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
         <a href="../olympe/olympe.php">L'Olympe</a>
-        <a href="../ecollyday/ecollyday.php">Ecollyday</a>
+        <a href="../ecollyday/ecollyday.php" style="color: #D7EBF3;">Ecollyday</a>
     </div>
 
     <h1>Plus que <?php echo 5050-$sum ?> ! - <?php echo $username; ?>, tu as économisé : <?php echo $sum; ?></h1>
