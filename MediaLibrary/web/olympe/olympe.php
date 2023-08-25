@@ -22,7 +22,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <title>L'Olympe - Choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./olympe.css">
     <!-- Inclure le CSS pour le calendrier -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">4
+    <!-- Inclure le script pour le calendrier -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <div class="navbar">
