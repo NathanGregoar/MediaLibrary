@@ -164,14 +164,27 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         // Activer la sélection multiple des options dans les listes déroulantes
         const selectElements = document.querySelectorAll('select[multiple]');
         selectElements.forEach(select => {
+            let isMouseDown = false;
+
             select.addEventListener('mousedown', function(event) {
+                isMouseDown = true;
                 event.preventDefault();
 
                 const option = event.target;
                 option.selected = !option.selected;
-
-                // Mettre à jour la liste des options sélectionnées
                 updateSelectedOptions(select);
+            });
+
+            select.addEventListener('mouseup', function() {
+                isMouseDown = false;
+            });
+
+            select.addEventListener('mousemove', function(event) {
+                if (isMouseDown) {
+                    const option = event.target;
+                    option.selected = !option.selected;
+                    updateSelectedOptions(select);
+                }
             });
         });
 
