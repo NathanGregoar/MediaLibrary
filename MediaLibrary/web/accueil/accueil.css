@@ -105,18 +105,18 @@ header {
   background: linear-gradient(#63a8ff, #1c79c0);
 }
 
-.ecollyday {
+.olympe {
   position: fixed;
   bottom: 20px;
   left: 20px;
   padding: 10px 20px;
 }
 
-.ecollyday img {
+.olympe img {
   width: 50%;
 }
 
-.ecollyday img:hover {
+.olympe img:hover {
   width: 52%;
 }
 
