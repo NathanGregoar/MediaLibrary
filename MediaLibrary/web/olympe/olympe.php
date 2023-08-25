@@ -108,8 +108,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         }
     </script>
 
-    <!-- Inclure le script pour le calendrier -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         flatpickr(".flatpickr", {
             mode: "multiple",
@@ -118,8 +116,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             onChange: function(selectedDates, dateStr, instance) {
                 const calendarContainer = instance._container;
                 if (calendarContainer.classList.contains("flatpickr-calendar")) {
-                    const dispoDates = document.querySelectorAll(".green-date");
-                    const notDispoDates = document.querySelectorAll(".red-date");
+                    const dispoDates = calendarContainer.querySelectorAll(".green-date");
+                    const notDispoDates = calendarContainer.querySelectorAll(".red-date");
                     dispoDates.forEach(date => {
                         date.classList.remove("green-date");
                     });
