@@ -36,19 +36,23 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <form action="traitement_formulaire.php" method="post" class="form-container">
         <div class="form-column">
             <div class="input-group">
-                <label for="budget_min">Budget min (Transport & Location comprise) :</label>
+                <label for="budget_min">Budget min :</label>
+                <small class="sub-label">(Transport & Location comprise, en euros)</small>
                 <input type="number" id="budget_min" name="budget_min" min="1" required>
             </div>
             <div class="input-group">
                 <label for="dispo_date">Mes disponibilitées :</label>
+                <small class="sub-label">(dates disponibles)</small>
                 <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <button type="button" id="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</button>
+                <label for="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</label>
+                <button type="button" id="choosePrefCountriesBtn">Choisir</button>
                 <div id="prefCountries"></div>
             </div>
             <div class="transport-group">
-                <label>Transport allé-retour (Cocher ceux pour lesquels vous êtes d'accord / Ne cochez pas ceux que vous ne voulez pas prendre :) :</label>
+                <label>Transport allé-retour :</label>
+                <small class="sub-label">(Cocher ceux pour lesquels vous êtes d'accord / Ne cochez pas ceux que vous ne voulez pas prendre)</small>
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
@@ -61,15 +65,18 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         </div>
         <div class="form-column">
             <div class="input-group">
-                <label for="budget_max">Budget max (Transport & Location comprise) :</label>
+                <label for="budget_max">Budget max :</label>
+                <small class="sub-label">(Transport & Location comprise, en euros)</small>
                 <input type="number" id="budget_max" name="budget_max" min="1" required>
             </div>
             <div class="input-group">
                 <label for="not_dispo_date">Mes non-disponibilitées :</label>
+                <small class="sub-label">(dates non disponibles)</small>
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <button type="button" id="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</button>
+                <label for="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</label>
+                <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
                 <div id="nonPrefCountries"></div>
             </div>
             <div class="button-group">
