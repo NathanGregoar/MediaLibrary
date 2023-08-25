@@ -2,8 +2,18 @@
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
 
-$username = $_SESSION['username'];
-$email = $_SESSION['email'];
+// Démarrage de la session
+session_start();
+
+$username = $_SESSION['username'] ?? ''; // Utilisation de l'opérateur de fusion null
+$email = $_SESSION['email'] ?? '';
+
+// Vérification si l'utilisateur est autorisé à accéder à la page
+if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
+    // Redirection vers la page d'accueil
+    header("Location: ../accueil/index.php");
+    exit();
+}
 ?>
 
 <!DOCTYPE html>
