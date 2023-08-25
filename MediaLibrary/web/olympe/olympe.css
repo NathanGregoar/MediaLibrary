@@ -55,45 +55,70 @@ h2 {
     color: white;
 }
 
-/* Formulaire */
+/* Styles améliorés pour le formulaire */
 .form-container {
     display: flex;
     justify-content: space-between;
     width: 90%;
-    margin: 0 auto;
-    padding: 20px;
-    background-color: #f9f9f9;
+    margin: 50px auto;
+    padding: 30px;
+    background-color: #ffffff;
     border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-column {
     flex: 1;
-    padding: 0 10px;
+    padding: 0 15px;
 }
 
 .input-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
+.input-group label {
+    font-size: 16px;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+input[type="number"],
+input[type="text"],
 select.country-select {
-    height: 150px;
-    width: 48%;
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: border-color 0.3s ease;
+}
+
+input[type="number"]:focus,
+input[type="text"]:focus,
+select.country-select:focus {
+    border-color: #86c1ff;
+    outline: none;
 }
 
 .transport-group {
-    margin-top: 15px;
+    margin-top: 20px;
 }
 
 .transport-checkbox {
-    margin-right: 5px;
+    margin-right: 8px;
+}
+
+.transport-label {
+    font-size: 16px;
+    margin-right: 15px;
+    color: #333;
 }
 
 .submit-button {
     background-color: #333;
     color: white;
     cursor: pointer;
-    padding: 8px 20px;
+    padding: 12px 20px;
     border: none;
     border-radius: 4px;
     font-size: 16px;
@@ -105,6 +130,12 @@ select.country-select {
 }
 
 /* Calendrier */
+.flatpickr-calendar {
+    background-color: #ffffff;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
 .flatpickr-calendar .green-date {
     background-color: #82cc82 !important;
     color: white;
