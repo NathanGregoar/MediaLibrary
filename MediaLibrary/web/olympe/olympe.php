@@ -110,6 +110,42 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         </div>
     </div>
 
+    <div id="nonPrefCountriesModal" class="modal">
+        <div class="modal-content">
+            <h2>Choix du pays non préféré</h2>
+            <div class="country-list">
+                <label><input type="checkbox" name="non_pref_countries[]" value="allemagne">Allemagne</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="autriche">Autriche</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="belgique">Belgique</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="bulgarie">Bulgarie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="chypre">Chypre</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="croatie">Croatie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="danemark">Danemark</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="espagne">Espagne</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="estonie">Estonie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="finlande">Finlande</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="france">France</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="grece">Grèce</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="hongrie">Hongrie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="irlande">Irlande</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="italie">Italie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="lettonie">Lettonie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="lituanie">Lituanie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="luxembourg">Luxembourg</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="malte">Malte</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="pays-bas">Pays-Bas</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="pologne">Pologne</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="portugal">Portugal</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="republique-tcheque">République tchèque</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="roumanie">Roumanie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="slovaquie">Slovaquie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="slovenie">Slovénie</label>
+                <label><input type="checkbox" name="non_pref_countries[]" value="suede">Suède</label>
+            </div>
+            <button id="closeNonPrefCountriesModal">Fermer</button>
+        </div>
+    </div>
+
     <!-- Inclure le script pour la vérification en temps réel -->
     <script>
         const budgetMinInput = document.getElementById('budget_min');
