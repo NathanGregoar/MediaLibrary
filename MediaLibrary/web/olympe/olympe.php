@@ -36,19 +36,19 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     <form action="traitement_formulaire.php" method="post" class="form-container">
         <div class="form-column">
             <div class="input-group">
-                <label for="budget_min">Budget min :</label>
+                <label for="budget_min">Budget min (Transport & Location comprise) :</label>
                 <input type="number" id="budget_min" name="budget_min" min="1" required>
             </div>
             <div class="input-group">
-                <label for="dispo_date">Disponibilité :</label>
+                <label for="dispo_date">Mes disponibilitées :</label>
                 <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <button type="button" id="choosePrefCountriesBtn">Choix du pays préféré</button>
+                <button type="button" id="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</button>
                 <div id="prefCountries"></div>
             </div>
             <div class="transport-group">
-                <label>Transport :</label>
+                <label>Transport allé-retour (Cocher ceux pour lesquels vous êtes d'accord / Ne cochez pas ceux que vous ne voulez pas prendre :) :</label>
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
@@ -61,15 +61,15 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         </div>
         <div class="form-column">
             <div class="input-group">
-                <label for="budget_max">Budget max :</label>
+                <label for="budget_max">Budget max (Transport & Location comprise) :</label>
                 <input type="number" id="budget_max" name="budget_max" min="1" required>
             </div>
             <div class="input-group">
-                <label for="not_dispo_date">Pas de disponibilité :</label>
+                <label for="not_dispo_date">Mes non-disponibilitées :</label>
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
             <div class="input-group">
-                <button type="button" id="chooseNonPrefCountriesBtn">Choix du pays non préféré</button>
+                <button type="button" id="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</button>
                 <div id="nonPrefCountries"></div>
             </div>
             <div class="button-group">
