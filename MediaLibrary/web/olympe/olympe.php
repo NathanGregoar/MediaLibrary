@@ -283,7 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const selectedNonPreferredCountries = Array.from(nonPreferredCountriesCheckboxes)
                 .filter(checkbox => checkbox.checked)
                 .map(checkbox => checkbox.value);
-            
+
             if (selectedPreferredCountries.length > MAX_PREFERRED_COUNTRIES) {
                 const lastPreferredCountry = preferredCountriesCheckboxes.find(checkbox => checkbox.value === selectedPreferredCountries[selectedPreferredCountries.length - 1]);
                 lastPreferredCountry.checked = false;
@@ -293,14 +293,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 const lastNonPreferredCountry = nonPreferredCountriesCheckboxes.find(checkbox => checkbox.value === selectedNonPreferredCountries[selectedNonPreferredCountries.length - 1]);
                 lastNonPreferredCountry.checked = false;
             }
-            
+
+            updateTopCountriesLists();
+        };
+
+        const updateTopCountriesLists = () => {
+            const selectedPreferredCountries = Array.from(preferredCountriesCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
+            const selectedNonPreferredCountries = Array.from(nonPreferredCountriesCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+
             topPreferredCountries.innerHTML = selectedPreferredCountries
-                .slice(0, 5)
+                .slice(0, MAX_PREFERRED_COUNTRIES)
                 .map(country => `<li>${country}</li>`)
                 .join('');
 
             topNonPreferredCountries.innerHTML = selectedNonPreferredCountries
-                .slice(0, 3)
+                .slice(0, MAX_NON_PREFERRED_COUNTRIES)
                 .map(country => `<li>${country}</li>`)
                 .join('');
         };
