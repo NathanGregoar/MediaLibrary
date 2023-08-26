@@ -29,12 +29,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pref_countries = isset($_POST['pref_countries']) ? implode(', ', $_POST['pref_countries']) : '';
     $non_pref_countries = isset($_POST['non_pref_countries']) ? implode(', ', $_POST['non_pref_countries']) : '';
 
-    // Connexion à la base de données
     $connection = mysqli_connect($host, $username, $password, $dbName);
-    
-    // Vérification de la connexion
-    if ($conn->connect_error) {
-        die("Échec de la connexion à la base de données: " . $conn->connect_error);
+
+    if (!$connection) {
+        die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
     }
     
     // Préparation de la requête d'insertion
