@@ -46,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                     VALUES ($userId, $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
+                     VALUES ($loggedInUser['id'], $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
     
     if ($conn->query($insert_query) === TRUE) {
         $successMessage = "Enregistrement réussi !";
