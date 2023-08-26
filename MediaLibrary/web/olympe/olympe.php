@@ -30,7 +30,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $non_pref_countries = isset($_POST['non_pref_countries']) ? implode(', ', $_POST['non_pref_countries']) : '';
 
     // Connexion à la base de données
-    $conn = new mysqli(DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME);
+    $connection = mysqli_connect($host, $username, $password, $dbName);
     
     // Vérification de la connexion
     if ($conn->connect_error) {
