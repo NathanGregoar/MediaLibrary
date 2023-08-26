@@ -232,6 +232,6 @@ select.country-select:focus {
 }
 
 .form-subcolumn {
-    width: 48%; /* Each subcolumn takes half the width of the form column */
+    width: 48%; /* Chaque sous-colonne prend la moitié de la largeur de la colonne de droite */
     margin-bottom: 15px;
 }
