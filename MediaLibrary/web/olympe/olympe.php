@@ -42,15 +42,17 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <input type="number" id="budget_min" name="budget_min" min="1" required>
             </div>
             <div class="input-group">
-                <label for="budget_max">Budget max :</label><br>
-                <small>(Transport & Location compris)</small><br>
-                <input type="number" id="budget_max" name="budget_max" min="1" required>
-            </div>
-            <div class="input-group">
                 <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
                 <small>(5 Pays Max)</small><br>
                 <button type="button" id="choosePrefCountriesBtn">Choisir</button>
                 <div id="prefCountries"></div>
+            </div>
+        </div>
+        <div class="form-column">
+            <div class="input-group">
+                <label for="budget_max">Budget max :</label><br>
+                <small>(Transport & Location compris)</small><br>
+                <input type="number" id="budget_max" name="budget_max" min="1" required>
             </div>
             <div class="input-group">
                 <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
@@ -58,6 +60,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
                 <div id="nonPrefCountries"></div>
             </div>
+        </div>
+        <div class="form-column">
             <div class="transport-group">
                 <label>Transport allé-retour :</label><br>
                 <small>(Coché : Accepté / Pas coché : Refusé)</small><br>
@@ -71,17 +75,22 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <label for="bateau" class="transport-label">Bateau</label>
             </div>
         </div>
+    </div>
+    <div class="form-row">
         <div class="form-column">
             <div class="input-group">
                 <label for="dispo_date">Mes disponibilités :</label><br>
                 <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
             </div>
+        </div>
+        <div class="form-column">
             <div class="input-group">
                 <label for="not_dispo_date">Mes non-disponibilités :</label><br>
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
         </div>
     </div>
+    <hr>
     <div class="centered">
         <div class="button-group">
             <button type="submit" class="submit-button">Enregistrer</button>
