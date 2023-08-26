@@ -186,6 +186,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label><input type="checkbox" name="pref_countries[]" value="suede">Suède</label>
             </div>
             <button id="closePrefCountriesModal">Fermer</button>
+
+            <div class="top-countries">
+                <div class="top-countries-list">
+                    <h3>Top 5 Preferred Countries:</h3>
+                    <ul id="topPreferredCountries"></ul>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -222,6 +230,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label><input type="checkbox" name="non_pref_countries[]" value="suede">Suède</label>
             </div>
             <button id="closeNonPrefCountriesModal">Fermer</button>
+
+            <div class="top-countries">
+                <div class="top-countries-list">
+                    <h3>Top 3 Non-Preferred Countries:</h3>
+                    <ul id="topNonPreferredCountries"></ul>
+                </div>
+            </div>
+
         </div>
     </div>
 
@@ -248,6 +264,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 input.classList.add('valid');
             }
         }
+    </script>
+
+    <script>
+        const preferredCountriesCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
+        const nonPreferredCountriesCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
+        const topPreferredCountries = document.getElementById('topPreferredCountries');
+        const topNonPreferredCountries = document.getElementById('topNonPreferredCountries');
+
+        const updateTopCountries = () => {
+            const selectedPreferredCountries = Array.from(preferredCountriesCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+            
+            const selectedNonPreferredCountries = Array.from(nonPreferredCountriesCheckboxes)
+                .filter(checkbox => checkbox.checked)
+                .map(checkbox => checkbox.value);
+            
+            topPreferredCountries.innerHTML = selectedPreferredCountries
+                .slice(0, 5)
+                .map(country => `<li>${country}</li>`)
+                .join('');
+
+            topNonPreferredCountries.innerHTML = selectedNonPreferredCountries
+                .slice(0, 3)
+                .map(country => `<li>${country}</li>`)
+                .join('');
+        };
+
+        preferredCountriesCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateTopCountries);
+        });
+
+        nonPreferredCountriesCheckboxes.forEach(checkbox => {
+            checkbox.addEventListener('change', updateTopCountries);
+        });
     </script>
 
     <!-- Inclure le script pour le calendrier -->
