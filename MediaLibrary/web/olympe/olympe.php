@@ -7,6 +7,7 @@ session_start();
 
 $username = $_SESSION['username'] ?? '';
 $email = $_SESSION['email'] ?? '';
+$_SESSION['user_id'] = $user_id;
 $userId = $_SESSION['user_id'] ?? 0; // Assurez-vous de fournir une valeur par défaut appropriée.
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
