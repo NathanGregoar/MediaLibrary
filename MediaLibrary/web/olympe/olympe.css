@@ -198,4 +198,5 @@ select.country-select:focus {
     display: flex;
     justify-content: center;
     margin-top: 20px;
+    width: 90%;
 }
