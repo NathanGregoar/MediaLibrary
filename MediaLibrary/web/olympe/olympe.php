@@ -7,7 +7,6 @@ session_start();
 
 $username = $_SESSION['username'] ?? '';
 $email = $_SESSION['email'] ?? '';
-$_SESSION['user_id'] = $user_id;
 $userId = $_SESSION['user_id'] ?? 0; // Assurez-vous de fournir une valeur par défaut appropriée.
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
@@ -23,7 +22,6 @@ $errorMessage = '';
 
 // Vérification si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    // Récupération des valeurs du formulaire
     $budget_min = $_POST['budget_min'];
     $budget_max = $_POST['budget_max'];
     $dispo_dates = $_POST['dispo_date'];
@@ -77,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?php echo $username; ?> - Choix de la destination Summer 2024</h1>
+    <h1>Bienvenue dans l'Olympe <?php echo $username; echo $userId?> - Choix de la destination Summer 2024</h1>
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
