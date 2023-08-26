@@ -7,6 +7,7 @@ session_start();
 
 $username = $_SESSION['username'] ?? '';
 $email = $_SESSION['email'] ?? '';
+$userId = $_SESSION['user_id'] ?? 0; // Assurez-vous de fournir une valeur par défaut appropriée.
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
 if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
@@ -21,6 +22,7 @@ $errorMessage = '';
 
 // Vérification si le formulaire a été soumis
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    // Récupération des valeurs du formulaire
     $budget_min = $_POST['budget_min'];
     $budget_max = $_POST['budget_max'];
     $dispo_dates = $_POST['dispo_date'];
@@ -28,9 +30,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $transport = isset($_POST['transport']) ? implode(', ', $_POST['transport']) : '';
     $pref_countries = isset($_POST['pref_countries']) ? implode(', ', $_POST['pref_countries']) : '';
     $non_pref_countries = isset($_POST['non_pref_countries']) ? implode(', ', $_POST['non_pref_countries']) : '';
-
-    // Récupération de l'ID de l'utilisateur connecté
-    $userId = $_SESSION['user_id'];
 
     // Connexion à la base de données (à adapter avec vos informations d'accès)
     $host = 'db';
@@ -47,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-    
+
     $stmt = $connection->prepare($insert_query);
     $stmt->bind_param("iiisssss", $userId, $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
