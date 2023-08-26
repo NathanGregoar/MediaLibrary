@@ -29,38 +29,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pref_countries = isset($_POST['pref_countries']) ? implode(', ', $_POST['pref_countries']) : '';
     $non_pref_countries = isset($_POST['non_pref_countries']) ? implode(', ', $_POST['non_pref_countries']) : '';
 
-    $connection = new mysqli($host, $username, $password, $dbName);
+    // Connexion à la base de données (à adapter avec vos informations d'accès)
+    $host = 'db';
+    $dbuser = 'nathan';
+    $dbpassword = '444719';
+    $dbname = 'media_library';
+
+    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
     if ($connection->connect_error) {
-        die('Erreur de connexion à la base de données : ' . $connection->connect_error);
+        die('Erreur de connexion : ' . $connection->connect_error);
     }
-
-    // Utilisation de requête préparée pour éviter les injections SQL
+    
+    // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $connection->prepare($insert_query);
-    $stmt->bind_param(
-        "siisssss",
-        $added_by,
-        $budget_min,
-        $budget_max,
-        $dispo_dates,
-        $not_dispo_dates,
-        $transport,
-        $pref_countries,
-        $non_pref_countries
-    );
-
-    if ($stmt->execute()) {
+                     VALUES (NULL, $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
+    
+    if ($conn->query($insert_query) === TRUE) {
         $successMessage = "Enregistrement réussi !";
     } else {
-        $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
+        $errorMessage = "Erreur lors de l'enregistrement : " . $conn->error;
     }
-
-    // Fermeture de la requête et de la connexion
-    $stmt->close();
-    $connection->close();
+    
+    // Fermeture de la connexion
+    $conn->close();
 }
 ?>
 
