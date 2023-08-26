@@ -78,6 +78,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <label for="bateau" class="transport-label">Bateau</label>
                 </div>
             </div>
+        </div>
             <div class="form-column">
                 <div class="input-group">
                     <label for="dispo_date">Mes disponibilités :</label><br>
@@ -90,7 +91,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
                 </div>
             </div>
-        </div>
         <!-- Bouton Enregistrer -->
         <div class="centered">
             <div class="button-group">
