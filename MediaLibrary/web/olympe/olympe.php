@@ -41,6 +41,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <small>(Transport & Location compris)</small><br>
                     <input type="number" id="budget_min" name="budget_min" min="1" required>
                 </div>
+            </div>
+            <div class="form-column">
                 <div class="input-group">
                     <label for="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</label><br>
                     <small>(5 Pays Max)</small><br>
@@ -54,6 +56,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <small>(Transport & Location compris)</small><br>
                     <input type="number" id="budget_max" name="budget_max" min="1" required>
                 </div>
+            </div>
+            <div class="form-column">
                 <div class="input-group">
                     <label for="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</label><br>
                     <small>(3 Pays Max)</small><br>
@@ -63,7 +67,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
         <div class="form-row">
-            <!-- <div class="form-column"> -->
+            <div class="form-column" colspan="2">
                 <!-- Partie Transport allé-retour -->
                 <div class="transport-group">
                     <label>Transport allé-retour :</label><br>
@@ -76,9 +80,10 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <label for="bus" class="transport-label">Bus</label>
                     <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
                     <label for="bateau" class="transport-label">Bateau</label>
-                <!-- </div> -->
+                </div>
             </div>
         </div>
+        <div class="form-row">
             <div class="form-column">
                 <div class="input-group">
                     <label for="dispo_date">Mes disponibilités :</label><br>
@@ -91,6 +96,9 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
                 </div>
             </div>
+        </div>
+        <!-- Ligne horizontale -->
+        <hr>
         <!-- Bouton Enregistrer -->
         <div class="centered">
             <div class="button-group">
