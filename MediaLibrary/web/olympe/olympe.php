@@ -29,24 +29,38 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pref_countries = isset($_POST['pref_countries']) ? implode(', ', $_POST['pref_countries']) : '';
     $non_pref_countries = isset($_POST['non_pref_countries']) ? implode(', ', $_POST['non_pref_countries']) : '';
 
-    $connection = mysqli_connect($host, $username, $password, $dbName);
+    $connection = new mysqli($host, $username, $password, $dbName);
 
-    if (!$connection) {
-        die('Erreur de connexion à la base de données : ' . mysqli_connect_error());
+    if ($connection->connect_error) {
+        die('Erreur de connexion à la base de données : ' . $connection->connect_error);
     }
-    
-    // Préparation de la requête d'insertion
+
+    // Utilisation de requête préparée pour éviter les injections SQL
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                     VALUES (NULL, $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
-    
-    if ($conn->query($insert_query) === TRUE) {
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+    $stmt = $connection->prepare($insert_query);
+    $stmt->bind_param(
+        "siisssss",
+        $added_by,
+        $budget_min,
+        $budget_max,
+        $dispo_dates,
+        $not_dispo_dates,
+        $transport,
+        $pref_countries,
+        $non_pref_countries
+    );
+
+    if ($stmt->execute()) {
         $successMessage = "Enregistrement réussi !";
     } else {
-        $errorMessage = "Erreur lors de l'enregistrement : " . $conn->error;
+        $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
     }
-    
-    // Fermeture de la connexion
-    $conn->close();
+
+    // Fermeture de la requête et de la connexion
+    $stmt->close();
+    $connection->close();
 }
 ?>
 
