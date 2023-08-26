@@ -41,8 +41,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <small>(Transport & Location compris)</small><br>
                     <input type="number" id="budget_min" name="budget_min" min="1" required>
                 </div>
-            </div>
-            <div class="form-column">
                 <div class="input-group">
                     <label for="choosePrefCountriesBtn">Pays ou j'ai envie de partir :</label><br>
                     <small>(5 Pays Max)</small><br>
@@ -56,8 +54,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <small>(Transport & Location compris)</small><br>
                     <input type="number" id="budget_max" name="budget_max" min="1" required>
                 </div>
-            </div>
-            <div class="form-column">
                 <div class="input-group">
                     <label for="chooseNonPrefCountriesBtn">Pays ou je ne veux pas partir :</label><br>
                     <small>(3 Pays Max)</small><br>
@@ -65,9 +61,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <div id="nonPrefCountries"></div>
                 </div>
             </div>
-        </div>
-        <div class="form-row">
-            <div class="form-column" colspan="2">
+            <div class="form-column">
                 <!-- Partie Transport allé-retour -->
                 <div class="transport-group">
                     <label>Transport allé-retour :</label><br>
