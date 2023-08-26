@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?php echo $username; echo $loggedInUser?> - Choix de la destination Summer 2024</h1>
+    <h1>Bienvenue dans l'Olympe <?php echo $username; echo $loggedInUser['id']?> - Choix de la destination Summer 2024</h1>
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
