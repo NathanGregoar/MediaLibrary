@@ -29,6 +29,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pref_countries = isset($_POST['pref_countries']) ? implode(', ', $_POST['pref_countries']) : '';
     $non_pref_countries = isset($_POST['non_pref_countries']) ? implode(', ', $_POST['non_pref_countries']) : '';
 
+    // Récupération de l'ID de l'utilisateur connecté
+    $userId = $_SESSION['user_id'];
+
     // Connexion à la base de données (à adapter avec vos informations d'accès)
     $host = 'db';
     $dbuser = 'nathan';
@@ -43,7 +46,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                     VALUES (NULL, $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
+                     VALUES ($userId, $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
     
     if ($conn->query($insert_query) === TRUE) {
         $successMessage = "Enregistrement réussi !";
