@@ -47,7 +47,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                      VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $connection->prepare($insert_query);
-    $stmt->bind_param("iiisssss", $userId, $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
+    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
     if ($stmt->execute()) {
         $successMessage = "Enregistrement réussi !";
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?php echo $username; echo $loggedInUser['id']?> - Choix de la destination Summer 2024</h1>
+    <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Choix de la destination Summer 2024</h1>
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
