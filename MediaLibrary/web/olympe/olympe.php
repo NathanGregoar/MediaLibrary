@@ -50,10 +50,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
     if ($stmt->execute()) {
-        $successMessage = "Enregistrement réussi !";
+        echo '<script>document.getElementById("successMessage").style.display = "block";</script>';
     } else {
         $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-    }
+        echo '<script>document.getElementById("errorMessage").innerHTML = "Erreur lors de l\'enregistrement : ' . addslashes($stmt->error) . '";</script>';
+        echo '<script>document.getElementById("errorMessage").style.display = "block";</script>';
+    }    
 
     // Fermeture de la connexion
     $stmt->close();
@@ -143,6 +145,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </form>
+
+    <div id="successMessage" class="alert alert-success" style="display: none;">
+        Enregistrement réussi !
+    </div>
+    <div id="errorMessage" class="alert alert-error" style="display: none;">
+        Erreur lors de l'enregistrement : [message d'erreur]
+    </div>
 
     <div id="prefCountriesModal" class="modal">
         <div class="modal-content">
