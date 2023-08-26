@@ -235,3 +235,11 @@ select.country-select:focus {
     width: 48%;
     margin-bottom: 15px;
 }
+
+.subcolumn {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    margin-bottom: 15px;
+}
