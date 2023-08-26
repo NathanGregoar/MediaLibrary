@@ -283,17 +283,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 if (casePays.checked) {
                     paysPreferesSelectionnes.push(casePays.value);
                 }
-                casePays.disabled = (paysPreferesSelectionnes.length >= LIMITE_PAYS_PREFERES) && !casePays.checked;
             });
 
             casesPaysNonPreferes.forEach(casePays => {
                 if (casePays.checked) {
                     paysNonPreferesSelectionnes.push(casePays.value);
                 }
-                casePays.disabled = (paysNonPreferesSelectionnes.length >= LIMITE_PAYS_NON_PREFERES) && !casePays.checked;
             });
 
+            desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
+            desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
+
             mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
+        };
+
+        const desactiverCasesNonSelectionnees = (paysSelectionnes, casesPays, limite) => {
+            casesPays.forEach(casePays => {
+                casePays.disabled = !casePays.checked && paysSelectionnes.length >= limite;
+            });
         };
 
         const mettreAJourListesTopPays = (paysPreferesSelectionnes, paysNonPreferesSelectionnes) => {
