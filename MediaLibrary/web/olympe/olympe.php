@@ -77,7 +77,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     </div>
                 </div>
             </div>
-            <div class="form-column">
+            <!-- <div class="form-column">
                 <div class="transport-group">
                     <label>Transport allé-retour :</label><br>
                     <small>(Coché : Accepté / Pas coché : Refusé)</small><br>
@@ -90,7 +90,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
                     <label for="bateau" class="transport-label">Bateau</label>
                 </div>
-            </div>
+            </div> -->
         </div>
         <div class="centered">
             <div class="button-group">
