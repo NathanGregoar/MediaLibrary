@@ -230,3 +230,8 @@ select.country-select:focus {
 .submit-button:hover {
     background-color: #0056b3;
 }
+
+.form-subcolumn {
+    width: 48%; /* Each subcolumn takes half the width of the form column */
+    margin-bottom: 15px;
+}

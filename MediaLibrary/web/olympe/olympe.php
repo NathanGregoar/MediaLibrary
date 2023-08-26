@@ -72,13 +72,17 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
         <div class="form-column">
-            <div class="input-group">
-                <label for="dispo_date">Mes disponibilités :</label><br>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
+            <div class="form-subcolumn">
+                <div class="input-group">
+                    <label for="dispo_date">Mes disponibilités :</label><br>
+                    <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
+                </div>
             </div>
-            <div class="input-group">
-                <label for="not_dispo_date">Mes non-disponibilités :</label><br>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
+            <div class="form-subcolumn">
+                <div class="input-group">
+                    <label for="not_dispo_date">Mes non-disponibilités :</label><br>
+                    <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
+                </div>
             </div>
         </div>
     </div>
