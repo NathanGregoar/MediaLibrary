@@ -243,6 +243,12 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
         closePrefCountriesModal.addEventListener('click', function() {
             prefCountriesModal.style.display = 'none';
         });
+        // Close the modal if user clicks outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === PrefCountriesModal) {
+                PrefCountriesModal.style.display = 'none';
+            }
+        });
     </script>
 
     <script>
