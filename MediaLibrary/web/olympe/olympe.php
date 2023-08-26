@@ -63,7 +63,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
         <div class="form-row">
-            <div class="form-column">
+            <!-- <div class="form-column"> -->
                 <!-- Partie Transport allé-retour -->
                 <div class="transport-group">
                     <label>Transport allé-retour :</label><br>
@@ -76,7 +76,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <label for="bus" class="transport-label">Bus</label>
                     <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
                     <label for="bateau" class="transport-label">Bateau</label>
-                </div>
+                <!-- </div> -->
             </div>
             <div class="form-column">
                 <div class="input-group">
