@@ -49,7 +49,7 @@ h2 {
     color: white;
 }
 
-.form-container {
+/* .form-container {
     display: flex;
     justify-content: space-between;
     width: 90%;
@@ -70,7 +70,7 @@ h2 {
 .form-column {
     flex: 1;
     padding: 0 15px;
-}
+} */
 
 .input-group {
     margin-bottom: 20px;
@@ -193,10 +193,4 @@ select.country-select:focus {
 
 .country-list label {
     display: block;
-}
-
-.centered {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
 }
