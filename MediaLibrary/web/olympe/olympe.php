@@ -78,6 +78,8 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                     <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
                 </div>
             </div>
+        </div>
+        <div class="form-column">
             <div class="form-subcolumn">
                 <div class="input-group">
                     <label for="not_dispo_date">Mes non-disponibilités :</label><br>
