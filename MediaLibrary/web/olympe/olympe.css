@@ -237,7 +237,7 @@ select.country-select:focus {
 }
 
 .subcolumn {
-    width: 50%;
+    width: 48%;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
