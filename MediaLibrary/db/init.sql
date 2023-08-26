@@ -89,5 +89,19 @@ CREATE TABLE IF NOT EXISTS ecollyday (
   FOREIGN KEY (user_id) REFERENCES users(id)
 );
 
+CREATE TABLE IF NOT EXISTS olympe (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  added_by INT,
+  budget_min INT,
+  budget_max INT,
+  dispo VARCHAR(255),
+  indispo VARCHAR(255),
+  pays_oui VARCHAR(255),
+  pays_non VARCHAR(255),
+  coef_pays INT,
+  transport VARCHAR(255),
+  FOREIGN KEY (added_by) REFERENCES olympe(id)
+);
+
 GRANT ALL PRIVILEGES ON media_library.* TO 'nathan'@'%' IDENTIFIED BY '444719';
 FLUSH PRIVILEGES;
