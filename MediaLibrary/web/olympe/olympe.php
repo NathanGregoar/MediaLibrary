@@ -7,7 +7,7 @@ session_start();
 
 $username = $_SESSION['username'] ?? '';
 $email = $_SESSION['email'] ?? '';
-$userId = $_SESSION['user_id'] ?? 0; // Assurez-vous de fournir une valeur par défaut appropriée.
+$loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
 if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?php echo $username; echo $userId?> - Choix de la destination Summer 2024</h1>
+    <h1>Bienvenue dans l'Olympe <?php echo $username; echo $loggedInUser?> - Choix de la destination Summer 2024</h1>
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
