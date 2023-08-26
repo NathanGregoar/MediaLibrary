@@ -43,19 +43,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($connection->connect_error) {
         die('Erreur de connexion : ' . $connection->connect_error);
     }
-    
+
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                     VALUES ($userId, $budget_min, $budget_max, '$dispo_dates', '$not_dispo_dates', '$transport', '$pref_countries', '$non_pref_countries')";
+                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
     
-    if ($conn->query($insert_query) === TRUE) {
+    $stmt = $connection->prepare($insert_query);
+    $stmt->bind_param("iiisssss", $userId, $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
+
+    if ($stmt->execute()) {
         $successMessage = "Enregistrement réussi !";
     } else {
-        $errorMessage = "Erreur lors de l'enregistrement : " . $conn->error;
+        $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
     }
-    
+
     // Fermeture de la connexion
-    $conn->close();
+    $stmt->close();
+    $connection->close();
 }
 ?>
 
