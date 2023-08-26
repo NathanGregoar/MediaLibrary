@@ -190,7 +190,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="top-countries">
                 <div class="top-countries-list">
                     <h3>Top 5 Preferred Countries:</h3>
-                    <ul id="topPreferredCountries"></ul>
+                    <ol id="topPreferredCountries"></ol>
                 </div>
             </div>
 
@@ -234,7 +234,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="top-countries">
                 <div class="top-countries-list">
                     <h3>Top 3 Non-Preferred Countries:</h3>
-                    <ul id="topNonPreferredCountries"></ul>
+                    <ol id="topNonPreferredCountries"></ol>
                 </div>
             </div>
 
