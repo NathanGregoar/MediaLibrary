@@ -53,6 +53,7 @@ h2 {
     display: flex;
     justify-content: space-between;
     width: 90%;
+    height: auto;
     margin: 50px auto;
     padding: 30px;
     background-color: #ffffff;
@@ -198,5 +199,4 @@ select.country-select:focus {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    width: 90%;
 }
