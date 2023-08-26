@@ -82,7 +82,6 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
     </div>
-    <hr>
     <div class="centered">
         <div class="button-group">
             <button type="submit" class="submit-button">Enregistrer</button>

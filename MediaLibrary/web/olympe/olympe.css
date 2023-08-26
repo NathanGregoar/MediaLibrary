@@ -194,3 +194,62 @@ select.country-select:focus {
 .country-list label {
     display: block;
 }
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+    width: 80%;
+    margin: 0 auto;
+}
+
+.form-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 20px;
+}
+
+.form-column {
+    width: 48%;
+}
+
+.input-group {
+    margin-bottom: 15px;
+}
+
+.transport-group {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.transport-checkbox {
+    margin-right: 10px;
+}
+
+.centered {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+}
+
+.button-group {
+    margin-top: 20px;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
