@@ -92,11 +92,11 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
             </div>
         </div>
         <!-- Bouton Enregistrer -->
-        <div class="centered">
-            <div class="button-group">
+        <!-- <div class="centered"> -->
+            <!-- <div class="button-group"> -->
                 <button type="submit" class="submit-button">Enregistrer</button>
-            </div>
-        </div>
+            <!-- </div> -->
+        <!-- </div> -->
     </form>
 
     <div id="prefCountriesModal" class="modal">
