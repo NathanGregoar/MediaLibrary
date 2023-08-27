@@ -361,60 +361,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         });
     </script>
 
-<script>
-    // Récupérer les éléments nécessaires
-    const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
-    const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
-    const prefCountriesModal = document.getElementById('prefCountriesModal');
-    const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
-    const prefCountriesInput = document.getElementById('prefCountriesInput');
-    const nonPrefCountriesInput = document.getElementById('nonPrefCountriesInput');
+    <script>
+        // Récupérer les éléments nécessaires
+        const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
+        const prefCountriesModal = document.getElementById('prefCountriesModal');
+        const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
 
-    // Liste des pays sélectionnés
-    let selectedPrefCountries = [];
-    let selectedNonPrefCountries = [];
+        // Afficher la fenêtre modale lors du clic sur le bouton
+        choosePrefCountriesBtn.addEventListener('click', function() {
+            prefCountriesModal.style.display = 'block';
+        });
 
-    // Afficher la fenêtre modale lors du clic sur le bouton
-    choosePrefCountriesBtn.addEventListener('click', function() {
-        prefCountriesModal.style.display = 'block';
-    });
+        // Fermer la fenêtre modale lors du clic sur le bouton de fermeture
+        closePrefCountriesModal.addEventListener('click', function() {
+            prefCountriesModal.style.display = 'none';
+        });
+    </script>
 
-    // Fermer la fenêtre modale lors du clic sur le bouton de fermeture
-    closePrefCountriesModal.addEventListener('click', function() {
-        prefCountriesModal.style.display = 'none';
-    });
+    <script>
+        // Modal handling for non preferred countries
+        const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
+        const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
+        const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
 
-    // Gérer les sélections de pays
-    function handleCountrySelection(event, selectedCountries) {
-        const country = event.target.value;
-        if (event.target.checked) {
-            selectedCountries.push(country);
-        } else {
-            const index = selectedCountries.indexOf(country);
-            if (index !== -1) {
-                selectedCountries.splice(index, 1);
+        chooseNonPrefCountriesBtn.addEventListener('click', () => {
+            nonPrefCountriesModal.style.display = 'flex';
+        });
+
+        closeNonPrefCountriesModal.addEventListener('click', () => {
+            nonPrefCountriesModal.style.display = 'none';
+        });
+
+        // Close the modal if user clicks outside the modal content
+        window.addEventListener('click', (event) => {
+            if (event.target === nonPrefCountriesModal) {
+                nonPrefCountriesModal.style.display = 'none';
             }
-        }
-        updateSelectedCountries();
-    }
-
-    casesPaysPreferes.forEach(casePays => {
-        casePays.addEventListener('change', event => {
-            handleCountrySelection(event, selectedPrefCountries);
         });
-    });
-
-    casesPaysNonPreferes.forEach(casePays => {
-        casePays.addEventListener('change', event => {
-            handleCountrySelection(event, selectedNonPrefCountries);
-        });
-    });
-
-    // Mettre à jour les champs de formulaire cachés avec les pays sélectionnés
-    function updateSelectedCountries() {
-        prefCountriesInput.value = selectedPrefCountries.join(',');
-        nonPrefCountriesInput.value = selectedNonPrefCountries.join(',');
-    }
-</script>
+    </script>
 </body>
 </html>
