@@ -157,9 +157,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         Erreur lors de l'enregistrement : [message d'erreur]
     </div>
 
-    <input type="hidden" name="pref_countries[]" id="prefCountriesInput">
-    <input type="hidden" name="non_pref_countries[]" id="nonPrefCountriesInput">
-
     <div id="prefCountriesModal" class="modal">
         <div class="modal-content">
             <h2>Pays ou j'ai envie de partir (5 choix max)</h2>
