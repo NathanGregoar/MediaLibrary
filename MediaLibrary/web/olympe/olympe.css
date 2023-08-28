@@ -234,9 +234,16 @@ select.country-select:focus {
 }
 
 .form-column {
-    display: grid;
-    grid-template-rows: auto;
+    display: flex;
+    flex-direction: column;
     gap: 10px;
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+    gap: 20px;
+    align-items: center; /* Pour aligner les éléments verticalement */
 }
 
 .subcolumn {
