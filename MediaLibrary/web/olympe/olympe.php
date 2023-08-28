@@ -43,15 +43,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Convertir les tableaux de pays en chaînes de caractères séparées par des virgules
-    $pref_countries_str = implode(', ', $pref_countries);
-    $non_pref_countries_str = implode(', ', $non_pref_countries);
+    $pays_oui = implode(', ', $pref_countries);
+    $pays_non = implode(', ', $non_pref_countries);
 
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $connection->prepare($insert_query);
-    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries_str, $non_pref_countries_str);
+    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pays_oui, $pays_non);
 
     if ($stmt->execute()) {
         echo '<script>document.getElementById("successMessage").style.display = "block";</script>';
