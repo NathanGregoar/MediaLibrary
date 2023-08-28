@@ -132,9 +132,9 @@ select.country-select:focus {
     color: white;
 }
 
-#dispo_date {
+/* #dispo_date {
     display: none;
-}
+} */
 
 #not_dispo_date {
     display: none;
