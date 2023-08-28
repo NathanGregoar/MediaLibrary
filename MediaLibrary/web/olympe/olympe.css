@@ -178,7 +178,7 @@ h2 {
 }
 
 /* Styles pour les éléments du formulaire */
-.input-group {
+.flex {
     display: flex;
     flex-direction: column;
     gap: 5px;
