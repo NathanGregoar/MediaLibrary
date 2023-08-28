@@ -91,8 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
                         <small>(5 Pays Max)</small><br>
                         <button type="button" id="choosePrefCountriesBtn">Choisir</button>
-                        <input placeholder="Pays pref" name="pref_countries_selected" id="pref_countries_selected">
-                        <!-- <div id="prefCountries"></div> -->
+                        <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
                     </div>
                 </div>
                 <div class="subcolumn">
@@ -106,7 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <small>(3 Pays Max)</small><br>
                         <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
                         <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
-                        <div id="nonPrefCountries"></div>
                     </div>
                 </div>
             </div>
@@ -398,11 +396,29 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             nonPrefCountriesModal.style.display = 'flex';
         });
 
-        // Fermer la modal des pays que vous ne voulez pas visiter
         closeNonPrefCountriesModal.addEventListener('click', () => {
             const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
-            document.getElementById('non_pref_countries_selected').value = selectedNonPrefCountries.join(',');
+            const nonPrefCountriesSelectedInput = document.getElementById('non_pref_countries_selected');
+            
+            // Mettez à jour la valeur du champ de saisie avec les pays non préférés
+            nonPrefCountriesSelectedInput.value = selectedNonPrefCountries.join(',');
+            
+            // Fermez la modal
             nonPrefCountriesModal.style.display = 'none';
+        });
+
+        // Ajoutez ceci pour également mettre à jour le champ de saisie si l'utilisateur clique en dehors de la modal
+        window.addEventListener('click', (event) => {
+            if (event.target === nonPrefCountriesModal) {
+                const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+                const nonPrefCountriesSelectedInput = document.getElementById('non_pref_countries_selected');
+                
+                // Mettez à jour la valeur du champ de saisie avec les pays non préférés
+                nonPrefCountriesSelectedInput.value = selectedNonPrefCountries.join(',');
+                
+                // Fermez la modal
+                nonPrefCountriesModal.style.display = 'none';
+            }
         });
 
         // Fermer la modal si l'utilisateur clique en dehors de la modal
