@@ -182,7 +182,7 @@ h2 {
     display: flex;
     flex-direction: column;
     gap: 5px;
-    overflow: hidden; /* Empêche le débordement du contenu */
+    overflow: hidden;
 }
 
 /* Alignement des éléments centrés */
