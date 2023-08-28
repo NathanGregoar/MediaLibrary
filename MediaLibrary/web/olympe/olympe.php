@@ -50,10 +50,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
     if ($stmt->execute()) {
-        $successMessage = "Enregistrement réussi !";
+        showAlert("Enregistrement réussi !", "alert-success");
     } else {
-        $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-    }    
+        showAlert("Erreur lors de l'enregistrement : " + $stmt->error, "alert-error");
+    }   
 
     // Fermeture de la connexion
     $stmt->close();
@@ -76,6 +76,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Choix de la destination Summer 2024</h1>
+
+    <div id="alertBox" class="alert-box"></div>
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
@@ -261,6 +263,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 input.classList.remove('invalid');
                 input.classList.add('valid');
             }
+        }
+
+
+        function showAlert(message, type) {
+            const alertBox = document.getElementById('alertBox');
+            alertBox.innerHTML = message;
+            alertBox.classList.add(type);
+            alertBox.style.display = 'block';
+
+            // Masquer le message après quelques secondes (facultatif)
+            setTimeout(() => {
+                alertBox.style.display = 'none';
+                alertBox.classList.remove(type);
+                alertBox.innerHTML = '';
+            }, 5000); // Afficher le message pendant 5 secondes, puis le masquer
         }
     </script>
 
