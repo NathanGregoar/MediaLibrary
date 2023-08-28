@@ -251,7 +251,16 @@ input[type="checkbox"] {
     height: 60%;
     justify-content: center;
     align-items: center;
-    background-color: rgba(255, 255, 255, 0.8); /* Fond semi-transparent */
+    background-color: white;
+}
+
+.top-countries {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.top-countries-list {
+    text-align: left;
 }
 
 /* Styles pour les boutons de fermeture */
