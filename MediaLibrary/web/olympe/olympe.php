@@ -287,8 +287,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const isValidPrefCountries = selectedPrefCountries.length > 0;
             const isValidNonPrefCountries = selectedNonPrefCountries.length > 0;
             const isValidTransport = selectedTransport.length > 0;
-            const isValidDispoDate = validateDateSelection(); // Appel à la fonction ici
-            const isValidNotDispoDate = validateDateSelection(); // Appel à la fonction ici
+            const isValidDispoDate = dispoDateInput.value.trim() !== '';
+            const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
+            const isValidDispoDate = validateDateSelection();
+            const isValidNotDispoDate = validateDateSelection();
 
             return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate;
         }
