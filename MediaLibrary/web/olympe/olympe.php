@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Formulaire -->
     <form method="post" class="form-container">
         <div class="form-grid">
-            <div class="input-group">
+            <div class="input-group">   
                 <label for="budget_min">Budget min :</label>
                 <small>(Transport & Location compris)</small>
                 <input type="number" id="budget_min" name="budget_min" min="1" required><br>
@@ -90,22 +90,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <button type="button" id="choosePrefCountriesBtn">Choisir</button>
                 <input type="hidden" name="pref_countries_selected" id="pref_countries_selected"><br>
 
-                <label>Transport allé-retour :</label>
-                <small>(Coché : Accepté / Pas coché : Refusé)</small>
-                <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
-                <label for="train" class="transport-label">Train</label>
-                <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                <label for="avion" class="transport-label">Avion</label>
-                <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
-                <label for="bus" class="transport-label">Bus</label>
-                <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
-                <label for="bateau" class="transport-label">Bateau</label>
+                <div class="transport-group input-group">
+                    <label>Transport allé-retour :</label>
+                    <small>(Coché : Accepté / Pas coché : Refusé)</small>
+                    <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
+                    <label for="train" class="transport-label">Train</label>
+                    <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
+                    <label for="avion" class="transport-label">Avion</label>
+                    <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
+                    <label for="bus" class="transport-label">Bus</label>
+                    <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
+                    <label for="bateau" class="transport-label">Bateau</label>
+                </div>
             </div>
             <div class="input-group">
                 <label for="budget_max">Budget max :</label>
                 <small>(Transport & Location compris)</small>
                 <input type="number" id="budget_max" name="budget_max" min="1" required><br>
-                
+
                 <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label>
                 <small>(3 Pays Max)</small>
                 <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
