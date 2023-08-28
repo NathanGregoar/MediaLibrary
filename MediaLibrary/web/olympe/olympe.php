@@ -374,7 +374,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
             prefCountriesSelectedInput.value = selectedPrefCountries.join(', ');
             prefCountriesModal.style.display = 'none';
-            document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', '); // Supprimez cette ligne
         });
 
         // Afficher la modal des pays que vous ne voulez pas visiter lors du clic sur le bouton
