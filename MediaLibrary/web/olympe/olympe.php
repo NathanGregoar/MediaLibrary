@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
                         <small>(5 Pays Max)</small><br>
                         <button type="button" id="choosePrefCountriesBtn">Choisir</button>
-                        <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
+                        <input placeholder="Pays pref" name="pref_countries_selected" id="pref_countries_selected">
                         <div id="prefCountries"></div>
                     </div>
                 </div>
