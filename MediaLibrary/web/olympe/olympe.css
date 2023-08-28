@@ -124,18 +124,21 @@ h2 {
     border-radius: 4px;
     margin: auto;
     width: 20%;
-    border-style: solid;
-    border-color: red;
-    border-radius: 5px;
 }
 
 .alert-success {
     background-color: #dff0d8;
+    border-style: solid;
+    border-color: green;
+    border-radius: 5px;
     color: #3c763d;
 }
 
 .alert-error {
     background-color: #f2dede;
+    border-style: solid;
+    border-color: red;
+    border-radius: 5px;
     color: #a94442;
 }
 
