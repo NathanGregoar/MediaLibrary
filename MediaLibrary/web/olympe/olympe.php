@@ -1,5 +1,5 @@
 <?php
-require_once '../utils/²uth.php';
+require_once '../utils/auth.php';
 require_once '../utils/config.php';
 
 // Démarrage de la session
