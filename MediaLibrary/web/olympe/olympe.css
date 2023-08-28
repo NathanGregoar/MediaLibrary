@@ -227,16 +227,21 @@ select.country-select:focus {
 
 /* ----------------------- */µ
 
+/* Style pour le formulaire */
 .form-container {
     display: grid;
-    grid-template-columns: repeat(4, 1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 20px;
-    border-radius: 5px;
-    border: black;
-    border-style: solid;
     width: 90%;
+    margin: 0 auto;
+    padding: 20px;
+    border: 2px solid #3498db; /* Couleur de bordure */
+    border-radius: 10px;
+    background-color: #f2f2f2; /* Couleur de fond */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
 }
 
+/* Autres styles */
 .form-column {
     display: flex;
     flex-direction: column;
@@ -245,24 +250,12 @@ select.country-select:focus {
 
 .form-row {
     display: grid;
-    grid-template-columns: auto auto auto auto;
+    grid-template-columns: auto auto auto;
     gap: 20px;
-    align-items: center; /* Pour aligner les éléments verticalement */
+    align-items: center;
 }
 
-.subcolumn {
-    display: grid;
-    grid-template-rows: auto;
-    gap: 10px;
-}
-
-.input-group {
-    display: flex;
-    flex-direction: column;
-    gap: 5px;
-}
-
-.transport-group {
+.input-group, .transport-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
