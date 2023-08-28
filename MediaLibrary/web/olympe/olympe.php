@@ -108,20 +108,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     </div>
                 </div>
             </div>
-            <div class="form-column">
-                <div class="subcolumn">
-                    <div class="input-group">
-                        <label for="dispo_date">Mes disponibilités :</label><br>
-                        <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
-                    </div>
-                </div>
-                <div class="subcolumn">
-                    <div class="input-group">
-                        <label for="not_dispo_date">Mes non-disponibilités :</label><br>
-                        <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
-                    </div>
-                </div>
-            </div>
+
             <div class="form-column">
                 <div class="transport-group">
                     <label>Transport allé-retour :</label><br>
@@ -136,7 +123,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label for="bateau" class="transport-label">Bateau</label>
                 </div>
             </div>
+
+            <div class="form-column">
+                <div class="subcolumn">
+                    <div class="input-group">
+                        <label for="dispo_date">Mes disponibilités :</label><br>
+                        <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
+                    </div>
+                </div>
+                <div class="subcolumn">
+                    <div class="input-group">
+                        <label for="not_dispo_date">Mes non-disponibilités :</label><br>
+                        <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
+                    </div>
+                </div>
+            </div>
         </div>
+        
         <div class="centered">
             <div class="button-group">
                 <button type="submit" class="submit-button">Enregistrer</button>
