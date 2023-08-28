@@ -131,6 +131,7 @@ h2 {
     border-style: solid;
     border-color: green;
     border-radius: 5px;
+    padding: 10px;
     color: #3c763d;
 }
 
@@ -139,6 +140,7 @@ h2 {
     border-style: solid;
     border-color: red;
     border-radius: 5px;
+    padding: 10px;
     color: #a94442;
 }
 
