@@ -52,13 +52,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if ($stmt->execute()) {
         showAlert("Enregistrement réussi !", "alert-success");
     } else {
-        showAlert("Erreur lors de l'enregistrement : " + $stmt->error, "alert-error");
+        showAlert("Erreur lors de l'enregistrement : " . $stmt->error, "alert-error");
     }   
-
-    // Fermeture de la connexion
     $stmt->close();
     $connection->close();
-}
+    }
 ?>
 
 <!DOCTYPE html>
