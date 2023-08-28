@@ -92,12 +92,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <input type="hidden" name="pref_countries_selected" id="pref_countries_selected"><br>
                 </div>
 
-                <label>Transport allé-retour :</label>
-                <small>(Coché : Accepté / Pas coché : Refusé)</small>
+                <label>Transport allé-retour :</label><br>
+                <small>(Coché : Accepté / Pas coché : Refusé)</small><br>
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                <label for="avion" class="transport-label">Avion</label>
+                <label for="avion" class="transport-label">Avion</label><br>
                 <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
                 <label for="bus" class="transport-label">Bus</label>
                 <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
