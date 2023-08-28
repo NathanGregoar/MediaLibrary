@@ -269,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             
             if (!isValid) {
                 event.preventDefault(); // Empêche l'envoi du formulaire s'il n'est pas valide
-                messageContainer.innerHTML = '<div class="alert alert-error">Complétez le formulaire correctement !</div>';
+                messageContainer.innerHTML = '<div class="alert alert-error">Les dates sélectionnées ne sont pas correctes.</div>';
                 messageContainer.style.display = 'block';
             }
         });
@@ -289,8 +289,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const isValidTransport = selectedTransport.length > 0;
             const isValidDispoDate = dispoDateInput.value.trim() !== '';
             const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
+            const isValidDateSelection = validateDateSelection();
 
-            return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate;
+            return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate && isValidDateSelection;
         }
 
         function validateBudget(budgetMin, budgetMax) {
@@ -312,6 +313,39 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 messageContainer.innerHTML = '<div class="alert alert-error">La valeur budget max doit être plus grande que budget min.</div>';
                 messageContainer.style.display = 'block';
                 return false;
+            }
+
+            return true;
+        }
+
+        function validateDateSelection() {
+            const dispoDateInput = document.getElementById('dispo_date');
+            const notDispoDateInput = document.getElementById('not_dispo_date');
+
+            const dispoDates = dispoDateInput.value.trim().split(',').map(dateStr => new Date(dateStr));
+            const notDispoDates = notDispoDateInput.value.trim().split(',').map(dateStr => new Date(dateStr));
+
+            const today = new Date();
+
+            // Vérification de la sélection de dates
+            for (const dispoDate of dispoDates) {
+                if (dispoDate < today) {
+                    return false;
+                }
+
+                if (notDispoDates.includes(dispoDate.toISOString())) {
+                    return false;
+                }
+            }
+
+            for (const notDispoDate of notDispoDates) {
+                if (notDispoDate < today) {
+                    return false;
+                }
+
+                if (dispoDates.includes(new Date(notDispoDate))) {
+                    return false;
+                }
             }
 
             return true;
