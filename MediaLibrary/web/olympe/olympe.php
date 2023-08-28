@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
                 <label for="bateau" class="transport-label">Bateau</label>
             </div>
-            <div class="input-group">
+            <div class="input-group flex">
                 <label for="budget_max">Budget max :</label>
                 <small>(Transport & Location compris)</small>
                 <input type="number" id="budget_max" name="budget_max" min="1" required><br>
