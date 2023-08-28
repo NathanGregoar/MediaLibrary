@@ -259,6 +259,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </script>
 
+    <!-- Vérification du form -->
+    <script>
+        const form = document.querySelector('.form-container');
+        const messageContainer = document.getElementById('messageContainer');
+
+        form.addEventListener('submit', function (event) {
+            const isValid = validateForm();
+            
+            if (!isValid) {
+                event.preventDefault(); // Empêche l'envoi du formulaire s'il n'est pas valide
+                messageContainer.innerHTML = '<div class="alert alert-error">Tous les champs doivent être remplis et une sélection doit être faite dans chaque section.</div>';
+                messageContainer.style.display = 'block';
+            }
+        });
+
+        function validateForm() {
+            const budgetMinInput = document.getElementById('budget_min');
+            const budgetMaxInput = document.getElementById('budget_max');
+            const selectedPrefCountries = document.querySelectorAll('[name="pref_countries[]"]:checked');
+            const selectedNonPrefCountries = document.querySelectorAll('[name="non_pref_countries[]"]:checked');
+            const selectedTransport = document.querySelectorAll('[name="transport[]"]:checked');
+            const dispoDateInput = document.getElementById('dispo_date');
+            const notDispoDateInput = document.getElementById('not_dispo_date');
+
+            const isValidBudget = budgetMinInput.value.trim() !== '' && budgetMaxInput.value.trim() !== '';
+            const isValidPrefCountries = selectedPrefCountries.length > 0;
+            const isValidNonPrefCountries = selectedNonPrefCountries.length > 0;
+            const isValidTransport = selectedTransport.length > 0;
+            const isValidDispoDate = dispoDateInput.value.trim() !== '';
+            const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
+
+            return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate;
+        }
+    </script>
+
     <script>
         const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
         const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');

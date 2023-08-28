@@ -117,8 +117,7 @@ h2 {
     background-color: #0056b3;
 }
 
-.messageContainer {
-    display: none;
+#messageContainer {
     padding: 10px;
     margin: 10px 0;
     font-size: 14px;
