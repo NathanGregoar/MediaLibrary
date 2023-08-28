@@ -283,7 +283,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const dispoDateInput = document.getElementById('dispo_date');
             const notDispoDateInput = document.getElementById('not_dispo_date');
 
-            const isValidBudget = budgetMinInput.value.trim() !== '' && budgetMaxInput.value.trim() !== '';
+            const isValidBudget = validateBudget(budgetMinInput.value, budgetMaxInput.value);
             const isValidPrefCountries = selectedPrefCountries.length > 0;
             const isValidNonPrefCountries = selectedNonPrefCountries.length > 0;
             const isValidTransport = selectedTransport.length > 0;
@@ -291,6 +291,30 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
 
             return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate;
+        }
+
+        function validateBudget(budgetMin, budgetMax) {
+            const parsedBudgetMin = parseFloat(budgetMin);
+            const parsedBudgetMax = parseFloat(budgetMax);
+
+            if (isNaN(parsedBudgetMin) || isNaN(parsedBudgetMax)) {
+                return false;
+            }
+
+            if (parsedBudgetMax <= parsedBudgetMin) {
+                const budgetMaxInput = document.getElementById('budget_max');
+                const budgetMinInput = document.getElementById('budget_min');
+                budgetMaxInput.classList.remove('valid');
+                budgetMaxInput.classList.add('invalid');
+                budgetMinInput.classList.remove('valid');
+                budgetMinInput.classList.add('invalid');
+
+                messageContainer.innerHTML = '<div class="alert alert-error">La valeur budget max doit être plus grande que budget min.</div>';
+                messageContainer.style.display = 'block';
+                return false;
+            }
+
+            return true;
         }
     </script>
 
