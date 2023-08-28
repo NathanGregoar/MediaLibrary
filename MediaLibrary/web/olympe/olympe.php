@@ -139,7 +139,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div id="prefCountriesModal" class="modal modal-content">
         <div class="modal-content">
-            <h2>Pays ou j'ai envie de partir (5 choix max)</h2>
+            <h2>Pays ou j'ai envie de partir</h2>
+            <small>(5 Pays Max)</small>
             <div class="country-list">
                 <label><input type="checkbox" name="pref_countries[]" value="allemagne">Allemagne</label>
                 <label><input type="checkbox" name="pref_countries[]" value="autriche">Autriche</label>
