@@ -27,8 +27,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dispo_dates = $_POST['dispo_date'];
     $not_dispo_dates = $_POST['not_dispo_date'];
     $transport = isset($_POST['transport']) ? implode(', ', $_POST['transport']) : '';
-    $pref_countries = isset($_POST['pref_countries']) ? $_POST['pref_countries'] : [];
-    $non_pref_countries = isset($_POST['non_pref_countries']) ? $_POST['non_pref_countries'] : [];
 
     // Connexion à la base de données (à adapter avec vos informations d'accès)
     $host = 'db';
