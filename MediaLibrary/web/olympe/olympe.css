@@ -164,10 +164,10 @@ h2 {
     width: 90%;
     margin: 0 auto;
     padding: 20px;
-    padding-bottom: 20px;
-    border: 2px solid #3498db; /* Couleur de bordure */
+    background-color: #f8f8f8;
+    border: 2px solid #3498db;
     border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 .form-grid {
@@ -185,16 +185,76 @@ h2 {
     overflow: hidden;
 }
 
-/* Alignement des éléments centrés */
+/* Styles pour les groupes d'éléments */
+.input-group, .transport-group {
+    margin-bottom: 15px;
+    padding: 10px;
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 5px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+/* Styles pour les labels */
+.input-group label, .transport-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    color: #333;
+}
+
+/* Styles pour les petites notes */
+.input-group small, .transport-group small {
+    color: #888;
+}
+
+/* Styles pour les boutons */
+button {
+    padding: 8px 15px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #2580b3;
+}
+
+/* Styles pour les champs de saisie et cases à cocher */
+input[type="number"],
+input[type="text"],
+input[type="checkbox"] {
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    width: 100%;
+}
+
+/* Styles pour les cases à cocher */
+.transport-group .checkboxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+/* Styles pour les cases à cocher et les labels associés */
+.transport-group input[type="checkbox"] {
+    margin-top: 2px;
+}
+
+/* Styles pour les éléments centrés */
 .centered {
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+/* Styles pour les boutons groupés */
 .button-group {
     display: flex;
     justify-content: center;
     gap: 10px;
 }
-

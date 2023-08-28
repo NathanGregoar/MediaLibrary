@@ -80,7 +80,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Formulaire -->
     <form method="post" class="form-container">
     <div class="form-grid">
-    <div class="input-group">
+        <div class="input-group">
             <label for="budget_min">Budget min :</label><br>
             <small>(Transport & Location compris)</small><br>
             <input type="number" id="budget_min" name="budget_min" min="1" required>
@@ -103,7 +103,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
         </div>
         <div class="input-group">
-            <label for="not_dispo_date">Mes non-disponibilités :</label><br>
+            <label for="not_dispo_date">Mes indisponibilités :</label><br>
             <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
         </div>
         <div class="transport-group">
