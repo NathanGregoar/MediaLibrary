@@ -140,7 +140,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div id="prefCountriesModal" class="modal modal-content">
         <div class="modal-content">
             <h2>Pays ou j'ai envie de partir</h2>
-            <small>(5 Pays Max)</small>
             <div class="country-list">
                 <label><input type="checkbox" name="pref_countries[]" value="allemagne">Allemagne</label>
                 <label><input type="checkbox" name="pref_countries[]" value="autriche">Autriche</label>
@@ -170,11 +169,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label><input type="checkbox" name="pref_countries[]" value="slovenie">Slovénie</label>
                 <label><input type="checkbox" name="pref_countries[]" value="suede">Suède</label>
             </div>
-            <button id="closePrefCountriesModal">Fermer</button>
+            <button id="closePrefCountriesModal">Fermer & sauvegarder</button>
 
             <div class="top-countries">
                 <div class="top-countries-list">
-                    <h3>Top 5 Preferred Countries:</h3>
+                    <h3>Mes 5 pays sélectionnés :</h3>
                     <ol id="topPreferredCountries"></ol>
                 </div>
             </div>
@@ -184,7 +183,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <div id="nonPrefCountriesModal" class="modal modal-content">
         <div class="modal-content">
-            <h2>Pays ou je ne veux pas partir (3 choix max)</h2>
+            <h2>Pays ou je ne veux pas partir</h2>
             <div class="country-list">
                 <label><input type="checkbox" name="non_pref_countries[]" value="allemagne">Allemagne</label>
                 <label><input type="checkbox" name="non_pref_countries[]" value="autriche">Autriche</label>
@@ -214,11 +213,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label><input type="checkbox" name="non_pref_countries[]" value="slovenie">Slovénie</label>
                 <label><input type="checkbox" name="non_pref_countries[]" value="suede">Suède</label>
             </div>
-            <button id="closeNonPrefCountriesModal">Fermer</button>
+            <button id="closeNonPrefCountriesModal">Fermer & sauvegarder</button>
 
             <div class="top-countries">
                 <div class="top-countries-list">
-                    <h3>Top 3 Non-Preferred Countries:</h3>
+                    <h3>Mes 3 pays sélectionnés :</h3>
                     <ol id="topNonPreferredCountries"></ol>
                 </div>
             </div>
