@@ -54,11 +54,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pays_oui, $pays_non);
 
     if ($stmt->execute()) {
-        echo '<script>document.getElementById("successMessage").style.display = "block";</script>';
+        $successMessage = "Enregistrement réussi !";
     } else {
         $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-        echo '<script>document.getElementById("errorMessage").innerHTML = "Erreur lors de l\'enregistrement : ' . addslashes($stmt->error) . '";</script>';
-        echo '<script>document.getElementById("errorMessage").style.display = "block";</script>';
     }    
 
     // Fermeture de la connexion
@@ -66,6 +64,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $connection->close();
 }
 ?>
+
 
 <!DOCTYPE html>
 <html>
