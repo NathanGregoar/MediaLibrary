@@ -121,18 +121,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label for="not_dispo_date">Mes indisponibilités :</label>
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
-            <!-- <div class="transport-group" style="grid-column: span 2;">
-                <label>Transport allé-retour :</label>
-                <small>(Coché : Accepté / Pas coché : Refusé)</small>
-                <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
-                <label for="train" class="transport-label">Train</label>
-                <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                <label for="avion" class="transport-label">Avion</label>
-                <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
-                <label for="bus" class="transport-label">Bus</label>
-                <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
-                <label for="bateau" class="transport-label">Bateau</label>
-            </div> -->
         </div>
 
         <div class="centered">
@@ -149,7 +137,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         Erreur lors de l'enregistrement : [message d'erreur]
     </div>
 
-    <div id="prefCountriesModal" class="modal">
+    <div id="prefCountriesModal" class="modal modal-content">
         <div class="modal-content">
             <h2>Pays ou j'ai envie de partir (5 choix max)</h2>
             <div class="country-list">
@@ -193,7 +181,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         </div>
     </div>
 
-    <div id="nonPrefCountriesModal" class="modal">
+    <div id="nonPrefCountriesModal" class="modal modal-content">
         <div class="modal-content">
             <h2>Pays ou je ne veux pas partir (3 choix max)</h2>
             <div class="country-list">
