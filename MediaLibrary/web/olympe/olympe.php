@@ -287,8 +287,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const isValidPrefCountries = selectedPrefCountries.length > 0;
             const isValidNonPrefCountries = selectedNonPrefCountries.length > 0;
             const isValidTransport = selectedTransport.length > 0;
-            const isValidDispoDate = dispoDateInput.value.trim() !== '';
-            const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
+            const isValidDispoDate = validateDateSelection(); // Appel à la fonction ici
+            const isValidNotDispoDate = validateDateSelection(); // Appel à la fonction ici
 
             return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate;
         }
@@ -320,33 +320,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         function validateDateSelection() {
             const dispoDateInput = document.getElementById('dispo_date');
             const notDispoDateInput = document.getElementById('not_dispo_date');
+            const messageContainer = document.getElementById('messageContainer');
+            const today = new Date();
 
+            // Convertir les dates en tableau de Date objects
             const dispoDates = dispoDateInput.value.trim().split(',').map(dateStr => new Date(dateStr));
             const notDispoDates = notDispoDateInput.value.trim().split(',').map(dateStr => new Date(dateStr));
 
-            const today = new Date();
-
-            // Vérification de la sélection de dates
-            for (const dispoDate of dispoDates) {
-                if (dispoDate < today) {
+            // Vérifier que les dates ne sont pas antérieures à la date actuelle
+            for (const date of dispoDates.concat(notDispoDates)) {
+                if (date < today) {
+                    messageContainer.innerHTML = '<div class="alert alert-error">Les dates sélectionnées ne sont pas correctes.</div>';
+                    messageContainer.style.display = 'block';
                     return false;
                 }
+            }
 
+            // Vérifier les chevauchements entre disponibilités et indisponibilités
+            for (const dispoDate of dispoDates) {
                 if (notDispoDates.includes(dispoDate.toISOString())) {
+                    messageContainer.innerHTML = '<div class="alert alert-error">Les dates sélectionnées ne sont pas correctes.</div>';
+                    messageContainer.style.display = 'block';
                     return false;
                 }
             }
 
             for (const notDispoDate of notDispoDates) {
-                if (notDispoDate < today) {
-                    return false;
-                }
-
                 if (dispoDates.includes(new Date(notDispoDate))) {
+                    messageContainer.innerHTML = '<div class="alert alert-error">Les dates sélectionnées ne sont pas correctes.</div>';
+                    messageContainer.style.display = 'block';
                     return false;
                 }
             }
 
+            // Si toutes les validations passent, masquer le message d'erreur
+            messageContainer.style.display = 'none';
             return true;
         }
     </script>
