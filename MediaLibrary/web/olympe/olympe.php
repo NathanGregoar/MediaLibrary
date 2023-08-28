@@ -270,12 +270,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             alertBox.classList.add(type);
             alertBox.style.display = 'block';
 
-            // Masquer le message après quelques secondes (facultatif)
             setTimeout(() => {
                 alertBox.style.display = 'none';
                 alertBox.classList.remove(type);
                 alertBox.innerHTML = '';
-            }, 5000); // Afficher le message pendant 5 secondes, puis le masquer
+            }, 5000);
         }
     </script>
 
