@@ -93,6 +93,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="budget_max">Budget max :</label><br>
             <small>(Transport & Location compris)</small><br>
             <input type="number" id="budget_max" name="budget_max" min="1" required>
+            <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
+            <small>(3 Pays Max)</small><br>
+            <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
+            <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
         </div>
         <div class="input-group">
             <label for="dispo_date">Mes disponibilités :</label><br>
@@ -101,18 +105,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="input-group">
             <label for="not_dispo_date">Mes non-disponibilités :</label><br>
             <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
-        </div>
-        <!-- <div class="input-group">
-            <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
-            <small>(5 Pays Max)</small><br>
-            <button type="button" id="choosePrefCountriesBtn">Choisir</button>
-            <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
-        </div> -->
-        <div class="input-group">
-            <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
-            <small>(3 Pays Max)</small><br>
-            <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
-            <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
         </div>
         <div class="transport-group">
             <label>Transport allé-retour :</label><br>
