@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
-    <div class="form-row">
+    <div class="form-grid">
         <div class="input-group">
             <label for="budget_min">Budget min :</label><br>
             <small>(Transport & Location compris)</small><br>
@@ -98,9 +98,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="not_dispo_date">Mes non-disponibilités :</label><br>
             <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
         </div>
-    </div>
-
-    <div class="form-row">
         <div class="input-group">
             <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
             <small>(5 Pays Max)</small><br>
@@ -113,9 +110,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
             <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
         </div>
-    </div>
-
-    <div class="form-row">
         <div class="transport-group">
             <label>Transport allé-retour :</label><br>
             <small>(Coché : Accepté / Pas coché : Refusé)</small><br>

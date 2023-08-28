@@ -163,44 +163,31 @@ h2 {
 
 /* ----------------------- */µ
 
+/* Styles pour le formulaire */
 .form-container {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
     width: 90%;
     margin: 0 auto;
+    background-color: red; /* Background rouge */
     padding: 20px;
     border: 2px solid #3498db; /* Couleur de bordure */
     border-radius: 10px;
-    background-color: #f2f2f2; /* Couleur de fond */
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
 }
 
-.form-row {
+.form-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, 1fr);
     gap: 20px;
-    align-items: start; /* Aligner les éléments en haut de la ligne */
 }
 
-.form-column {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-.subcolumn {
-    display: grid;
-    grid-template-rows: auto;
-    gap: 10px;
-}
-
+/* Styles pour les éléments du formulaire */
 .input-group, .transport-group {
     display: flex;
     flex-direction: column;
     gap: 5px;
 }
 
+/* Alignement des éléments centrés */
 .centered {
     display: flex;
     justify-content: center;
