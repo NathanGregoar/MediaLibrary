@@ -80,10 +80,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <!-- Formulaire -->
     <form method="post" class="form-container">
     <div class="form-grid">
-        <div class="input-group">
+    <div class="input-group">
             <label for="budget_min">Budget min :</label><br>
             <small>(Transport & Location compris)</small><br>
             <input type="number" id="budget_min" name="budget_min" min="1" required>
+            <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
+            <small>(5 Pays Max)</small><br>
+            <button type="button" id="choosePrefCountriesBtn">Choisir</button>
+            <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
         </div>
         <div class="input-group">
             <label for="budget_max">Budget max :</label><br>
@@ -98,12 +102,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <label for="not_dispo_date">Mes non-disponibilités :</label><br>
             <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
         </div>
-        <div class="input-group">
+        <!-- <div class="input-group">
             <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
             <small>(5 Pays Max)</small><br>
             <button type="button" id="choosePrefCountriesBtn">Choisir</button>
             <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
-        </div>
+        </div> -->
         <div class="input-group">
             <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
             <small>(3 Pays Max)</small><br>
