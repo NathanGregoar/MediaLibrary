@@ -126,10 +126,6 @@ h2 {
     gap: 10px;
 }
 
-.country-list label {
-    display: block;
-}
-
 .submit-button {
     padding: 10px 20px;
     background-color: #007bff;
@@ -167,8 +163,8 @@ h2 {
 .form-container {
     width: 90%;
     margin: 0 auto;
-    background-color: red; /* Background rouge */
     padding: 20px;
+    padding-bottom: 20px;
     border: 2px solid #3498db; /* Couleur de bordure */
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Ombre légère */
