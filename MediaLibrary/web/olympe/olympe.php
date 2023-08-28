@@ -106,7 +106,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <label for="not_dispo_date">Mes indisponibilités :</label>
                 <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
             </div>
-            <div class="transport-group">
+            <div class="transport-group" style="grid-column: span 2;">
                 <label>Transport allé-retour :</label>
                 <small>(Coché : Accepté / Pas coché : Refusé)</small>
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
