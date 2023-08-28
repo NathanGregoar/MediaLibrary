@@ -1,5 +1,5 @@
 <?php
-require_once '../utils/auth.php';
+require_once '../utils/²uth.php';
 require_once '../utils/config.php';
 
 // Démarrage de la session
@@ -359,39 +359,47 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </script>
 
     <script>
-        // Récupérer les éléments nécessaires
+        // Récupérer les éléments nécessaires pour les modales
         const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
         const prefCountriesModal = document.getElementById('prefCountriesModal');
         const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
-
-        // Afficher la fenêtre modale lors du clic sur le bouton
-        choosePrefCountriesBtn.addEventListener('click', function() {
-            prefCountriesModal.style.display = 'block';
-        });
-
-        // Fermer la fenêtre modale lors du clic sur le bouton de fermeture
-        closePrefCountriesModal.addEventListener('click', function() {
-            prefCountriesModal.style.display = 'none';
-        });
-    </script>
-
-    <script>
-        // Modal handling for non preferred countries
         const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
         const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
         const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
 
+        // Afficher la modal des pays que vous voulez visiter lors du clic sur le bouton
+        choosePrefCountriesBtn.addEventListener('click', function() {
+            prefCountriesModal.style.display = 'block';
+        });
+
+        // Fermer la modal des pays que vous voulez visiter
+        closePrefCountriesModal.addEventListener('click', function() {
+            const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+            document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', ');
+            prefCountriesModal.style.display = 'none';
+        });
+
+        // Afficher la modal des pays que vous ne voulez pas visiter lors du clic sur le bouton
         chooseNonPrefCountriesBtn.addEventListener('click', () => {
             nonPrefCountriesModal.style.display = 'flex';
         });
 
+        // Fermer la modal des pays que vous ne voulez pas visiter
         closeNonPrefCountriesModal.addEventListener('click', () => {
+            const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+            document.querySelector('#nonPrefCountries').innerHTML = selectedNonPrefCountries.join(', ');
             nonPrefCountriesModal.style.display = 'none';
         });
 
-        // Close the modal if user clicks outside the modal content
+        // Fermer la modal si l'utilisateur clique en dehors de la modal
         window.addEventListener('click', (event) => {
-            if (event.target === nonPrefCountriesModal) {
+            if (event.target === prefCountriesModal) {
+                const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+                document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', ');
+                prefCountriesModal.style.display = 'none';
+            } else if (event.target === nonPrefCountriesModal) {
+                const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+                document.querySelector('#nonPrefCountries').innerHTML = selectedNonPrefCountries.join(', ');
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
