@@ -371,10 +371,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Fermer la modal des pays que vous voulez visiter
         closePrefCountriesModal.addEventListener('click', function() {
             const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
-            document.getElementById('pref_countries_selected').value = selectedPrefCountries.join(', ');
+            const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
+            prefCountriesSelectedInput.value = selectedPrefCountries.join(', ');
             prefCountriesModal.style.display = 'none';
-            // Mettre à jour le champ d'entrée avec les pays sélectionnés
-            document.getElementById('pref_countries_selected').value = selectedPrefCountries.join(', ');
+            document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', '); // Supprimez cette ligne
         });
 
         // Afficher la modal des pays que vous ne voulez pas visiter lors du clic sur le bouton
