@@ -269,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             
             if (!isValid) {
                 event.preventDefault(); // Empêche l'envoi du formulaire s'il n'est pas valide
-                messageContainer.innerHTML = '<div class="alert alert-error">Tous les champs doivent être remplis et une sélection doit être faite dans chaque section.</div>';
+                messageContainer.innerHTML = '<div class="alert alert-error">Complétez le formulaire correctement !</div>';
                 messageContainer.style.display = 'block';
             }
         });
