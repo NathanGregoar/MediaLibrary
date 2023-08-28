@@ -27,6 +27,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dispo_dates = $_POST['dispo_date'];
     $not_dispo_dates = $_POST['not_dispo_date'];
     $transport = isset($_POST['transport']) ? implode(', ', $_POST['transport']) : '';
+    $pref_countries = isset($_POST['pref_countries_selected']) ? $_POST['pref_countries_selected'] : '';
+    $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? $_POST['non_pref_countries_selected'] : '';
 
     // Connexion à la base de données (à adapter avec vos informations d'accès)
     $host = 'db';
@@ -40,16 +42,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die('Erreur de connexion : ' . $connection->connect_error);
     }
 
-    // Convertir les tableaux de pays en chaînes de caractères séparées par des virgules
-    $pays_oui = $_POST['pref_countries_selected'] ?? '';
-    $pays_non = $_POST['non_pref_countries_selected'] ?? '';
-
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
                     VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt = $connection->prepare($insert_query);
-    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pays_oui, $pays_non);
+    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
     if ($stmt->execute()) {
         $successMessage = "Enregistrement réussi !";
@@ -62,7 +60,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $connection->close();
 }
 ?>
-
 
 <!DOCTYPE html>
 <html>
