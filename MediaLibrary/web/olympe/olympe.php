@@ -269,7 +269,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             
             if (!isValid) {
                 event.preventDefault(); // Empêche l'envoi du formulaire s'il n'est pas valide
-                messageContainer.innerHTML = '<div class="alert alert-error">Les dates sélectionnées ne sont pas correctes.</div>';
+                messageContainer.innerHTML = '<div class="alert alert-error">Complétez le formulaire correctement !</div>';
                 messageContainer.style.display = 'block';
             }
         });
@@ -289,9 +289,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const isValidTransport = selectedTransport.length > 0;
             const isValidDispoDate = dispoDateInput.value.trim() !== '';
             const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
-            const isValidDateSelection = validateDateSelection();
 
-            return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate && isValidDateSelection;
+            return isValidBudget && isValidPrefCountries && isValidNonPrefCountries && isValidTransport && isValidDispoDate && isValidNotDispoDate;
         }
 
         function validateBudget(budgetMin, budgetMax) {
