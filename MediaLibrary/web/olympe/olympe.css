@@ -169,17 +169,17 @@ h2 {
     gap: 20px;
 }
 
+.form-row {
+    display: grid;
+    grid-template-columns: auto auto;
+    gap: 20px;
+    align-items: start; /* Aligner les éléments en haut de la ligne */
+}
+
 .form-column {
     display: flex;
     flex-direction: column;
     gap: 10px;
-}
-
-.form-row {
-    display: grid;
-    grid-template-columns: auto auto auto auto;
-    gap: 20px;
-    align-items: center; /* Pour aligner les éléments verticalement */
 }
 
 .subcolumn {
