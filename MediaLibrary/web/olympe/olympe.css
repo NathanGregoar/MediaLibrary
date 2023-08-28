@@ -197,3 +197,8 @@ h2 {
     justify-content: center;
     gap: 10px;
 }
+
+.checkboxes {
+    display: flex;
+    gap: 10px; /* Espace entre les checkboxes */
+}
