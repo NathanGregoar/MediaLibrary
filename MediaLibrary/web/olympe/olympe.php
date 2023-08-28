@@ -474,19 +474,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
-
-        // Fermer la modal si l'utilisateur clique en dehors de la modal
-        window.addEventListener('click', (event) => {
-            if (event.target === prefCountriesModal) {
-                const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
-                document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', ');
-                prefCountriesModal.style.display = 'none';
-            } else if (event.target === nonPrefCountriesModal) {
-                const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
-                document.querySelector('#nonPrefCountries').innerHTML = selectedNonPrefCountries.join(', ');
-                nonPrefCountriesModal.style.display = 'none';
-            }
-        });
     </script>
 </body>
 </html>
