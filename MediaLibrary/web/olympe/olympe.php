@@ -75,7 +75,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Banane Bienvenue dans l'Olympe <?php echo $username;?> - Choix de la destination Summer 2024</h1>
+    <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Choix de la destination Summer 2024</h1>
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
@@ -92,7 +92,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <small>(5 Pays Max)</small><br>
                         <button type="button" id="choosePrefCountriesBtn">Choisir</button>
                         <input placeholder="Pays pref" name="pref_countries_selected" id="pref_countries_selected">
-                        <div id="prefCountries"></div>
+                        <!-- <div id="prefCountries"></div> -->
                     </div>
                 </div>
                 <div class="subcolumn">
@@ -363,20 +363,37 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
         const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
 
-        // Afficher la modal des pays que vous voulez visiter lors du clic sur le bouton
+        // Pays pref
         choosePrefCountriesBtn.addEventListener('click', function() {
             prefCountriesModal.style.display = 'block';
         });
 
-        // Fermer la modal des pays que vous voulez visiter
         closePrefCountriesModal.addEventListener('click', function() {
             const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
             const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
+            
+            // Mettez à jour la valeur du champ de saisie avec les pays sélectionnés
             prefCountriesSelectedInput.value = selectedPrefCountries.join(', ');
+            
+            // Fermez la modal
             prefCountriesModal.style.display = 'none';
         });
 
-        // Afficher la modal des pays que vous ne voulez pas visiter lors du clic sur le bouton
+        // Ajoutez ceci pour également mettre à jour le champ de saisie si l'utilisateur clique en dehors de la modal
+        window.addEventListener('click', (event) => {
+            if (event.target === prefCountriesModal) {
+                const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+                const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
+                
+                // Mettez à jour la valeur du champ de saisie avec les pays sélectionnés
+                prefCountriesSelectedInput.value = selectedPrefCountries.join(', ');
+                
+                // Fermez la modal
+                prefCountriesModal.style.display = 'none';
+            }
+        });
+
+        // Pays non pref
         chooseNonPrefCountriesBtn.addEventListener('click', () => {
             nonPrefCountriesModal.style.display = 'flex';
         });
