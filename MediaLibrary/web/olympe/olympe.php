@@ -77,6 +77,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Choix de la destination Summer 2024</h1>
 
+    <div id="messageContainer">
+        <?php if (!empty($successMessage)) : ?>
+            <div class="alert alert-success"><?php echo $successMessage; ?></div>
+        <?php endif; ?>
+        <?php if (!empty($errorMessage)) : ?>
+            <div class="alert alert-error"><?php echo $errorMessage; ?></div>
+        <?php endif; ?>
+    </div>
+
     <!-- Formulaire -->
     <form method="post" class="form-container">
         <div class="form-grid">
@@ -93,7 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 </div>
 
                 <label>Transport allé-retour :</label><br>
-                <small>(Coché : Accepté / Pas coché : Refusé)</small><br>
+                <small>(Coché : Accepté / Pas coché : C'est mort)</small><br>
                 <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
                 <label for="train" class="transport-label">Train</label>
                 <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
