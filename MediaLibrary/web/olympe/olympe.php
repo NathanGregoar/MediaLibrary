@@ -79,65 +79,63 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Formulaire -->
     <form method="post" class="form-container">
-        <div class="form-row">
-            <div class="input-group">
-                <label for="budget_min">Budget min :</label><br>
-                <small>(Transport & Location compris)</small><br>
-                <input type="number" id="budget_min" name="budget_min" min="1" required>
-            </div>
-            <div class="input-group">
-                <label for="budget_max">Budget max :</label><br>
-                <small>(Transport & Location compris)</small><br>
-                <input type="number" id="budget_max" name="budget_max" min="1" required>
-            </div>
+    <div class="form-row">
+        <div class="input-group">
+            <label for="budget_min">Budget min :</label><br>
+            <small>(Transport & Location compris)</small><br>
+            <input type="number" id="budget_min" name="budget_min" min="1" required>
         </div>
+        <div class="input-group">
+            <label for="budget_max">Budget max :</label><br>
+            <small>(Transport & Location compris)</small><br>
+            <input type="number" id="budget_max" name="budget_max" min="1" required>
+        </div>
+        <div class="input-group">
+            <label for="dispo_date">Mes disponibilités :</label><br>
+            <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
+        </div>
+        <div class="input-group">
+            <label for="not_dispo_date">Mes non-disponibilités :</label><br>
+            <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
+        </div>
+    </div>
 
-        <div class="form-row">
-            <div class="input-group">
-                <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
-                <small>(5 Pays Max)</small><br>
-                <button type="button" id="choosePrefCountriesBtn">Choisir</button>
-                <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
-            </div>
-            <div class="input-group">
-                <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
-                <small>(3 Pays Max)</small><br>
-                <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
-                <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
-            </div>
+    <div class="form-row">
+        <div class="input-group">
+            <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
+            <small>(5 Pays Max)</small><br>
+            <button type="button" id="choosePrefCountriesBtn">Choisir</button>
+            <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
         </div>
+        <div class="input-group">
+            <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
+            <small>(3 Pays Max)</small><br>
+            <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
+            <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
+        </div>
+    </div>
 
-        <div class="form-row">
-            <div class="input-group">
-                <label for="dispo_date">Mes disponibilités :</label><br>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
-            </div>
-            <div class="input-group">
-                <label for="not_dispo_date">Mes non-disponibilités :</label><br>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
-            </div>
-            <div class="form-column">
-                <div class="transport-group">
-                    <label>Transport allé-retour :</label><br>
-                    <small>(Coché : Accepté / Pas coché : Refusé)</small><br>
-                    <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
-                    <label for="train" class="transport-label">Train</label>
-                    <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                    <label for="avion" class="transport-label">Avion</label>
-                    <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
-                    <label for="bus" class="transport-label">Bus</label>
-                    <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
-                    <label for="bateau" class="transport-label">Bateau</label>
-                </div>
-            </div>
+    <div class="form-row">
+        <div class="transport-group">
+            <label>Transport allé-retour :</label><br>
+            <small>(Coché : Accepté / Pas coché : Refusé)</small><br>
+            <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
+            <label for="train" class="transport-label">Train</label>
+            <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
+            <label for="avion" class="transport-label">Avion</label>
+            <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
+            <label for="bus" class="transport-label">Bus</label>
+            <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
+            <label for="bateau" class="transport-label">Bateau</label>
         </div>
+    </div>
 
-        <div class="centered">
-            <div class="button-group">
-                <button type="submit" class="submit-button">Enregistrer</button>
-            </div>
+    <div class="centered">
+        <div class="button-group">
+            <button type="submit" class="submit-button">Enregistrer</button>
         </div>
-    </form>
+    </div>
+</form>
 
     <div id="successMessage" class="alert alert-success" style="display: none;">
         Enregistrement réussi !
