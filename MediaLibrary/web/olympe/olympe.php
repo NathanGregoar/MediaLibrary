@@ -43,8 +43,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     }
 
     // Convertir les tableaux de pays en chaînes de caractères séparées par des virgules
-    $pays_oui = implode(', ', $pref_countries);
-    $pays_non = implode(', ', $non_pref_countries);
+    $pays_oui = $_POST['pref_countries_selected'] ?? '';
+    $pays_non = $_POST['non_pref_countries_selected'] ?? '';
 
     // Préparation de la requête d'insertion
     $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
@@ -96,6 +96,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label><br>
                         <small>(5 Pays Max)</small><br>
                         <button type="button" id="choosePrefCountriesBtn">Choisir</button>
+                        <input type="hidden" name="pref_countries_selected" id="pref_countries_selected">
                         <div id="prefCountries"></div>
                     </div>
                 </div>
@@ -109,6 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label><br>
                         <small>(3 Pays Max)</small><br>
                         <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
+                        <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
                         <div id="nonPrefCountries"></div>
                     </div>
                 </div>
@@ -374,7 +376,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Fermer la modal des pays que vous voulez visiter
         closePrefCountriesModal.addEventListener('click', function() {
             const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
-            document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', ');
+            document.getElementById('pref_countries_selected').value = selectedPrefCountries.join(',');
             prefCountriesModal.style.display = 'none';
         });
 
@@ -386,7 +388,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Fermer la modal des pays que vous ne voulez pas visiter
         closeNonPrefCountriesModal.addEventListener('click', () => {
             const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
-            document.querySelector('#nonPrefCountries').innerHTML = selectedNonPrefCountries.join(', ');
+            document.getElementById('non_pref_countries_selected').value = selectedNonPrefCountries.join(',');
             nonPrefCountriesModal.style.display = 'none';
         });
 
