@@ -130,29 +130,29 @@ if ($resultTransport) {
     }
 }
 
-// Requête SQL pour récupérer les moyens de transport non choisis par chaque utilisateur
-$queryTransportNonChoisi = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
-$resultTransportNonChoisi = $connection->query($queryTransportNonChoisi);
+// Requête SQL pour récupérer les moyens de transport choisis par chaque utilisateur
+$queryTransportChoisi = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
+$resultTransportChoisi = $connection->query($queryTransportChoisi);
 
-$transportNonChoisiData = [
+$transportChoisiData = [
     "train" => 0,
     "avion" => 0,
     "bus" => 0,
     "bateau" => 0
 ];
 
-$transportOptions = ['train', 'avion', 'bus', 'bateau'];
-
-if ($resultTransportNonChoisi) {
-    while ($rowTransportNonChoisi = $resultTransportNonChoisi->fetch_assoc()) {
-        $transportChoisiList = explode(',', $rowTransportNonChoisi['transport']);
-        $transportNonChoisiList = array_diff($transportOptions, $transportChoisiList);
-
-        foreach ($transportNonChoisiList as $transportNonChoisi) {
-            $transportNonChoisiData[$transportNonChoisi]++;
+if ($resultTransportChoisi) {
+    while ($rowTransportChoisi = $resultTransportChoisi->fetch_assoc()) {
+        $transportChoisiList = explode(',', $rowTransportChoisi['transport']);
+        foreach ($transportChoisiList as $transportChoisi) {
+            $transportChoisiData[$transportChoisi]++;
         }
     }
 }
+
+$transportOptions = ['train', 'avion', 'bus', 'bateau'];
+
+$transportManquantData = array_diff($transportOptions, array_keys($transportChoisiData));
 
 $connection->close();
 ?>
@@ -392,43 +392,27 @@ $connection->close();
 
     <!-- Diagramme des moyens de transport non choisis -->
     <script>
-        var barChartTransportNonChoisi = document.getElementById('barChartTransportNonChoisi').getContext('2d');
+        var barChartTransportManquant = document.getElementById('barChartTransportManquant').getContext('2d');
 
-        var chartDataTransportNonChoisi = {
-            labels: ['Train', 'Avion', 'Bus', 'Bateau'],
+        var chartDataTransportManquant = {
+            labels: <?php echo json_encode($transportManquantData); ?>,
             datasets: [{
-                label: 'Train', // Mettez à jour ce texte par le nom de la colonne
-                data: [<?php echo $transportNonChoisiData["train"]; ?>, 0, 0, 0],
+                data: [<?php echo implode(", ", array_fill(0, count($transportManquantData), 1)); ?>],
                 backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                borderWidth: 1
-            }, {
-                label: 'Avion', // Mettez à jour ce texte par le nom de la colonne
-                data: [0, <?php echo $transportNonChoisiData["avion"]; ?>, 0, 0],
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderWidth: 1
-            }, {
-                label: 'Bus', // Mettez à jour ce texte par le nom de la colonne
-                data: [0, 0, <?php echo $transportNonChoisiData["bus"]; ?>, 0],
-                backgroundColor: 'rgba(255, 206, 86, 0.7)',
-                borderWidth: 1
-            }, {
-                label: 'Bateau', // Mettez à jour ce texte par le nom de la colonne
-                data: [0, 0, 0, <?php echo $transportNonChoisiData["bateau"]; ?>],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)',
                 borderWidth: 1
             }]
         };
 
-        var barConfigTransportNonChoisi = {
+        var barConfigTransportManquant = {
             type: 'bar',
-            data: chartDataTransportNonChoisi,
+            data: chartDataTransportManquant,
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 plugins: {
                     title: {
                         display: true,
-                        text: "Diagramme des moyens de transport non choisis"
+                        text: "Diagramme des moyens de transport manquants"
                     }
                 },
                 scales: {
@@ -441,18 +425,13 @@ $connection->close();
                 },
                 plugins: {
                     legend: {
-                        position: 'top',
-                        labels: {
-                            font: {
-                                size: 10
-                            }
-                        }
+                        display: false
                     }
                 }
             }
         };
 
-        var myBarChartTransportNonChoisi = new Chart(barChartTransportNonChoisi, barConfigTransportNonChoisi);
+        var myBarChartTransportManquant = new Chart(barChartTransportManquant, barConfigTransportManquant);
     </script>
 
 </body>
