@@ -379,24 +379,24 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         casesPaysPreferes.forEach(casePays => {
             casePays.addEventListener('change', () => {
                 mettreAJourTopPays();
-                const correspondingCase = Array.from(casesPaysNonPreferes).find(
+                const correspondingCases = Array.from(casesPaysNonPreferes).filter(
                     nonPrefCase => nonPrefCase.value === casePays.value
                 );
-                if (correspondingCase) {
+                correspondingCases.forEach(correspondingCase => {
                     correspondingCase.disabled = casePays.checked;
-                }
+                });
             });
         });
 
         casesPaysNonPreferes.forEach(casePays => {
             casePays.addEventListener('change', () => {
                 mettreAJourTopPays();
-                const correspondingCase = Array.from(casesPaysPreferes).find(
+                const correspondingCases = Array.from(casesPaysPreferes).filter(
                     prefCase => prefCase.value === casePays.value
                 );
-                if (correspondingCase) {
+                correspondingCases.forEach(correspondingCase => {
                     correspondingCase.disabled = casePays.checked;
-                }
+                });
             });
         });
     </script>
