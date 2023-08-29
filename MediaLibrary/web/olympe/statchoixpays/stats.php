@@ -130,6 +130,28 @@ if ($resultTransport) {
     }
 }
 
+// Requête SQL pour récupérer les moyens de transport non choisis par chaque utilisateur
+$queryTransportNonChoisi = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
+$resultTransportNonChoisi = $connection->query($queryTransportNonChoisi);
+
+$transportNonChoisiData = [
+    "train" => 0,
+    "avion" => 0,
+    "bus" => 0,
+    "bateau" => 0
+];
+
+if ($resultTransportNonChoisi) {
+    while ($rowTransportNonChoisi = $resultTransportNonChoisi->fetch_assoc()) {
+        $transportChoisiList = explode(',', $rowTransportNonChoisi['transport']);
+        $transportNonChoisiList = array_diff(['train', 'avion', 'bus', 'bateau'], $transportChoisiList);
+
+        foreach ($transportNonChoisiList as $transportNonChoisi) {
+            $transportNonChoisiData[$transportNonChoisi]++;
+        }
+    }
+}
+
 $connection->close();
 ?>
 
@@ -164,6 +186,10 @@ $connection->close();
 
     <div style="max-width: 20%;">
         <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
+    </div>
+
+    <div style="max-width: 20%;">
+        <canvas id="barChartTransportNonChoisi" aria-label="Diagramme des moyens de transport non choisis"></canvas>
     </div>
 
     <!-- Diagramme camembert pays -->
@@ -360,6 +386,71 @@ $connection->close();
         };
 
         var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
+    </script>
+
+    <!-- Diagramme des moyens de transport non choisis -->
+    <script>
+        var barChartTransportNonChoisi = document.getElementById('barChartTransportNonChoisi').getContext('2d');
+
+        var chartDataTransportNonChoisi = {
+            labels: ['Train', 'Avion', 'Bus', 'Bateau'],
+            datasets: [{
+                label: 'Train', // Mettez à jour ce texte par le nom de la colonne
+                data: [<?php echo $transportNonChoisiData["train"]; ?>, 0, 0, 0],
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderWidth: 1
+            }, {
+                label: 'Avion', // Mettez à jour ce texte par le nom de la colonne
+                data: [0, <?php echo $transportNonChoisiData["avion"]; ?>, 0, 0],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderWidth: 1
+            }, {
+                label: 'Bus', // Mettez à jour ce texte par le nom de la colonne
+                data: [0, 0, <?php echo $transportNonChoisiData["bus"]; ?>, 0],
+                backgroundColor: 'rgba(255, 206, 86, 0.7)',
+                borderWidth: 1
+            }, {
+                label: 'Bateau', // Mettez à jour ce texte par le nom de la colonne
+                data: [0, 0, 0, <?php echo $transportNonChoisiData["bateau"]; ?>],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
+                borderWidth: 1
+            }]
+        };
+
+        var barConfigTransportNonChoisi = {
+            type: 'bar',
+            data: chartDataTransportNonChoisi,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Diagramme des moyens de transport non choisis"
+                    }
+                },
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        position: 'top',
+                        labels: {
+                            font: {
+                                size: 10
+                            }
+                        }
+                    }
+                }
+            }
+        };
+
+        var myBarChartTransportNonChoisi = new Chart(barChartTransportNonChoisi, barConfigTransportNonChoisi);
     </script>
 
 </body>
