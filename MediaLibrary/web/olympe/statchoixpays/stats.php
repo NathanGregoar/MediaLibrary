@@ -174,10 +174,14 @@ $connection->close();
                     <li><?php echo ucfirst($transport) . ": " . $count; ?></li>
                 <?php } ?>
             </ul>
-            <?php if (isset($missingTransportDataByUser[$userId])) { ?>
+            
+            <?php
+            $userMissingTransportData = $missingTransportDataByUser[$userId];
+            if (!empty($userMissingTransportData)) {
+            ?>
                 <p>Transports manquants pour l'utilisateur <?php echo $userId; ?>:</p>
                 <ul>
-                    <?php foreach ($missingTransportDataByUser[$userId] as $missingTransport) { ?>
+                    <?php foreach ($userMissingTransportData as $missingTransport) { ?>
                         <li><?php echo ucfirst($missingTransport) . ": 1"; ?></li>
                     <?php } ?>
                 </ul>
