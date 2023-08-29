@@ -306,24 +306,19 @@ $connection->close();
         var chartDataTransport = {
             labels: ['Train', 'Avion', 'Bus', 'Bateau'], // Utilisez les noms avec majuscule ici
             datasets: [{
-                label: 'Train',
-                data: [<?php echo $transportData["train"]; ?>],
-                backgroundColor: 'rgba(255, 99, 132, 0.7)', // Couleur pour Train
-                borderWidth: 1
-            }, {
-                label: 'Avion',
-                data: [<?php echo $transportData["avion"]; ?>],
-                backgroundColor: 'rgba(54, 162, 235, 0.7)', // Couleur pour Avion
-                borderWidth: 1
-            }, {
-                label: 'Bus',
-                data: [<?php echo $transportData["bus"]; ?>],
-                backgroundColor: 'rgba(255, 206, 86, 0.7)', // Couleur pour Bus
-                borderWidth: 1
-            }, {
-                label: 'Bateau',
-                data: [<?php echo $transportData["bateau"]; ?>],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour Bateau
+                label: 'Moyens de transport',
+                data: [
+                    <?php echo $transportData["train"]; ?>,
+                    <?php echo $transportData["avion"]; ?>,
+                    <?php echo $transportData["bus"]; ?>,
+                    <?php echo $transportData["bateau"]; ?>
+                ],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)', // Couleur pour Train
+                    'rgba(54, 162, 235, 0.7)', // Couleur pour Avion
+                    'rgba(255, 206, 86, 0.7)', // Couleur pour Bus
+                    'rgba(75, 192, 192, 0.7)' // Couleur pour Bateau
+                ],
                 borderWidth: 1
             }]
         };
