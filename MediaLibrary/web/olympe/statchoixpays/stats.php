@@ -107,6 +107,10 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <div style="max-width: 20%;">
+        <canvas id="barChartBudget" aria-label="Diagramme des budgets"></canvas>
+    </div>
+
+    <div style="max-width: 20%;">
         <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
     </div>
 
@@ -114,6 +118,8 @@ $connection->close();
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
 
+
+    <!-- Diagramme camembert pays -->
     <script>
     // Récupération du contexte du canvas pour le diagramme des pays oui
     var pieChartPaysOui = document.getElementById('pieChartPaysOui').getContext('2d');
@@ -184,5 +190,64 @@ $connection->close();
     var myPieChartPaysNon = new Chart(pieChartPaysNon, pieConfigPaysNon);
     </script>
 
+    <!-- Diagramme battonnet budget-->
+    <script>
+    // Récupération du contexte du canvas pour le diagramme des budgets
+    var barChartBudget = document.getElementById('barChartBudget').getContext('2d');
+
+    // Calcul des valeurs de budget min, moyen et max
+    var budgets = [
+        <?php
+        $budgets = [];
+
+        $queryBudgets = "SELECT budget FROM olympe WHERE budget IS NOT NULL";
+        $resultBudgets = $connection->query($queryBudgets);
+
+        if ($resultBudgets) {
+            while ($rowBudget = $resultBudgets->fetch_assoc()) {
+                $budgets[] = (float)$rowBudget['budget'];
+            }
+        }
+
+        $minBudget = min($budgets);
+        $maxBudget = max($budgets);
+        $averageBudget = array_sum($budgets) / count($budgets);
+
+        echo $minBudget . ', ' . $averageBudget . ', ' . $maxBudget;
+        ?>
+    ];
+
+    // Configuration des données pour le graphique des budgets
+    var chartDataBudget = {
+        datasets: [{
+            data: budgets,
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+        }],
+        labels: ['Budget Min', 'Budget Moyen', 'Budget Max'],
+    };
+
+    // Configuration du graphique en bâtonnet pour les budgets
+    var barConfigBudget = {
+        type: 'bar',
+        data: chartDataBudget,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Diagramme des budgets",
+                },
+            },
+            legend: {
+                display: false,
+            },
+        },
+    };
+
+    // Création du graphique en bâtonnet pour les budgets
+    var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
+    </script>
+    
 </body>
 </html>
