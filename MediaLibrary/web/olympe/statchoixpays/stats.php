@@ -122,7 +122,8 @@ if ($resultTransport) {
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
         foreach ($transportList as $transport) {
             $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
-            if (array_key_exists($transport, $transportData)) {
+            $transport = strtolower($transport); // Convertir en minuscules
+            if (isset($transportData[$transport])) {
                 $transportData[$transport]++;
             }
         }
@@ -303,10 +304,10 @@ $connection->close();
 
     // Configuration des données pour le graphique des moyens de transport
     var chartDataTransport = {
-        labels: ['Train', 'Avion', 'Bus', 'Bateau'],
+        labels: ['train', 'avion', 'bus', 'bateau'], // Utilisez les noms en minuscules ici
         datasets: [{
             label: 'Nombre de personnes',
-            data: [<?php echo $transportData["Train"]; ?>, <?php echo $transportData["Avion"]; ?>, <?php echo $transportData["Bus"]; ?>, <?php echo $transportData["Bateau"]; ?>],
+            data: [<?php echo $transportData["train"]; ?>, <?php echo $transportData["avion"]; ?>, <?php echo $transportData["bus"]; ?>, <?php echo $transportData["bateau"]; ?>],
             backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour les barres
             borderWidth: 1
         }]
