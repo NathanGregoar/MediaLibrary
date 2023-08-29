@@ -318,86 +318,64 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </script>
 
-    <script>
-        const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
-        const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
-        const topPaysPreferes = document.getElementById('topPreferredCountries');
-        const topPaysNonPreferes = document.getElementById('topNonPreferredCountries');
+<script>
+    const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
+    const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
+    const topPaysPreferes = document.getElementById('topPreferredCountries');
+    const topPaysNonPreferes = document.getElementById('topNonPreferredCountries');
 
-        const LIMITE_PAYS_PREFERES = 5;
-        const LIMITE_PAYS_NON_PREFERES = 3;
+    const LIMITE_PAYS_PREFERES = 5;
+    const LIMITE_PAYS_NON_PREFERES = 3;
 
-        const mettreAJourTopPays = () => {
-            let paysPreferesSelectionnes = [];
-            let paysNonPreferesSelectionnes = [];
-
-            casesPaysPreferes.forEach(casePays => {
-                if (casePays.checked) {
-                    paysPreferesSelectionnes.push(casePays.value);
-                }
-            });
-
-            casesPaysNonPreferes.forEach(casePays => {
-                if (casePays.checked) {
-                    paysNonPreferesSelectionnes.push(casePays.value);
-                }
-            });
-
-            desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
-            desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
-
-            mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
-        };
-
-        const desactiverCasesNonSelectionnees = (paysSelectionnes, casesPays, limite) => {
-            casesPays.forEach(casePays => {
-                casePays.disabled = !casePays.checked && paysSelectionnes.length >= limite;
-            });
-        };
-
-        const mettreAJourListesTopPays = (paysPreferesSelectionnes, paysNonPreferesSelectionnes) => {
-            topPaysPreferes.innerHTML = paysPreferesSelectionnes
-                .slice(0, LIMITE_PAYS_PREFERES)
-                .map(pays => `<li>${pays}</li>`)
-                .join('');
-
-            topPaysNonPreferes.innerHTML = paysNonPreferesSelectionnes
-                .slice(0, LIMITE_PAYS_NON_PREFERES)
-                .map(pays => `<li>${pays}</li>`)
-                .join('');
-        };
+    const mettreAJourTopPays = () => {
+        let paysPreferesSelectionnes = [];
+        let paysNonPreferesSelectionnes = [];
 
         casesPaysPreferes.forEach(casePays => {
-            casePays.addEventListener('change', mettreAJourTopPays);
+            if (casePays.checked) {
+                paysPreferesSelectionnes.push(casePays.value);
+            }
         });
 
         casesPaysNonPreferes.forEach(casePays => {
-            casePays.addEventListener('change', mettreAJourTopPays);
+            if (casePays.checked) {
+                paysNonPreferesSelectionnes.push(casePays.value);
+            }
         });
 
-        // Check case cochée dans pays
-        casesPaysPreferes.forEach(casePays => {
-            casePays.addEventListener('change', () => {
-                mettreAJourTopPays();
-                if (casePays.checked) {
-                    desactiverCasesNonSelectionnees([casePays.value], casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
-                } else {
-                    desactiverCasesNonSelectionnees([], casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
-                }
-            });
-        });
+        desactiverCasesSelectionnees(paysPreferesSelectionnes, casesPaysNonPreferes);
+        desactiverCasesSelectionnees(paysNonPreferesSelectionnes, casesPaysPreferes);
 
-        casesPaysNonPreferes.forEach(casePays => {
-            casePays.addEventListener('change', () => {
-                mettreAJourTopPays();
-                if (casePays.checked) {
-                    desactiverCasesNonSelectionnees([casePays.value], casesPaysPreferes, LIMITE_PAYS_PREFERES);
-                } else {
-                    desactiverCasesNonSelectionnees([], casesPaysPreferes, LIMITE_PAYS_PREFERES);
-                }
-            });
+        mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
+    };
+
+    const desactiverCasesSelectionnees = (paysSelectionnes, casesPays) => {
+        casesPays.forEach(casePays => {
+            casePays.disabled = paysSelectionnes.includes(casePays.value);
         });
-    </script>
+    };
+
+    const mettreAJourListesTopPays = (paysPreferesSelectionnes, paysNonPreferesSelectionnes) => {
+        topPaysPreferes.innerHTML = paysPreferesSelectionnes
+            .slice(0, LIMITE_PAYS_PREFERES)
+            .map(pays => `<li>${pays}</li>`)
+            .join('');
+
+        topPaysNonPreferes.innerHTML = paysNonPreferesSelectionnes
+            .slice(0, LIMITE_PAYS_NON_PREFERES)
+            .map(pays => `<li>${pays}</li>`)
+            .join('');
+    };
+
+    casesPaysPreferes.forEach(casePays => {
+        casePays.addEventListener('change', mettreAJourTopPays);
+    });
+
+    casesPaysNonPreferes.forEach(casePays => {
+        casePays.addEventListener('change', mettreAJourTopPays);
+    });
+</script>
+
 
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
