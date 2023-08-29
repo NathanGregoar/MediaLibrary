@@ -395,10 +395,10 @@ $connection->close();
     </script>
 
     <!-- Diagramme des moyens de transport non choisis -->
-    <script>
-    var barChartTransportManquant = document.getElementById('barChartTransportManquant').getContext('2d');
+<script>
+    var barChartTransportNonChoisi = document.getElementById('barChartTransportNonChoisi').getContext('2d');
 
-    var chartDataTransportManquant = {
+    var chartDataTransportNonChoisi = {
         labels: <?php echo json_encode(array_keys($transportManquantData)); ?>,
         datasets: [{
             data: <?php echo json_encode(array_values($transportManquantData)); ?>,
@@ -407,16 +407,16 @@ $connection->close();
         }]
     };
 
-    var barConfigTransportManquant = {
+    var barConfigTransportNonChoisi = {
         type: 'bar',
-        data: chartDataTransportManquant,
+        data: chartDataTransportNonChoisi,
         options: {
             responsive: true,
             maintainAspectRatio: false,
             plugins: {
                 title: {
                     display: true,
-                    text: "Diagramme des moyens de transport manquants"
+                    text: "Diagramme des moyens de transport non choisis"
                 }
             },
             scales: {
@@ -435,7 +435,7 @@ $connection->close();
         }
     };
 
-    var myBarChartTransportManquant = new Chart(barChartTransportManquant, barConfigTransportManquant);
+    var myBarChartTransportNonChoisi = new Chart(barChartTransportNonChoisi, barConfigTransportNonChoisi);
 </script>
 
 </body>
