@@ -28,21 +28,29 @@ if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-// Requête SQL pour compter le nombre d'enregistrements dans la table "olympe"
-$query = "SELECT COUNT(id) AS total FROM olympe";
-$result = $connection->query($query);
+// Requête SQL pour récupérer les pays enregistrés dans le champ "pays_oui"
+$queryPays = "SELECT pays_oui FROM olympe WHERE pays_oui IS NOT NULL";
+$resultPays = $connection->query($queryPays);
 
-if ($result) {
-    $row = $result->fetch_assoc();
-    $totalGods = $row['total'];
-} else {
-    $totalGods = 0; // En cas d'erreur dans la requête
+$paysData = []; // Tableau pour stocker les données des pays
+
+if ($resultPays) {
+    while ($rowPays = $resultPays->fetch_assoc()) {
+        $paysList = explode(',', $rowPays['pays_oui']); // Séparer les pays par des virgules
+        foreach ($paysList as $pays) {
+            $pays = trim($pays); // Supprimer les espaces autour du nom du pays
+            if (!empty($pays)) {
+                if (!isset($paysData[$pays])) {
+                    $paysData[$pays] = 1;
+                } else {
+                    $paysData[$pays]++;
+                }
+            }
+        }
+    }
 }
 
 $connection->close();
-
-// Détermine si le texte doit être au singulier ou au pluriel
-$text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
 ?>
 
 <!DOCTYPE html>
@@ -73,10 +81,10 @@ $text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe o
     // Configuration des données pour le graphique
     var chartData = {
         datasets: [{
-            data: [<?php echo $totalGods; ?>, <?php echo $totalGods; ?> - <?php echo $totalGods; ?>], // Les valeurs des pays_oui et des autres pays
-            backgroundColor: ['#FF6384', '#36A2EB'], // Couleurs pour chaque segment
+            data: [<?php echo implode(",", array_values($paysData)); ?>],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8E44AD', '#16A085'], // Ajoutez plus de couleurs si nécessaire
         }],
-        labels: ['Pays Oui', 'Autres Pays'], // Labels pour chaque segment
+        labels: <?php echo json_encode(array_keys($paysData)); ?>,
     };
 
     // Configuration du graphique camembert
@@ -88,20 +96,6 @@ $text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe o
             maintainAspectRatio: false,
             legend: {
                 position: 'bottom',
-            },
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'bottom',
-                },
-            },
-            layout: {
-                padding: {
-                    left: 0,
-                    right: 0,
-                    top: 0,
-                    bottom: 0,
-                },
             },
         },
     };
