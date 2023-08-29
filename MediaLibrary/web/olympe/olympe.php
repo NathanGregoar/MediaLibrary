@@ -343,15 +343,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         });
 
-        desactiverCasesSelectionnees(paysPreferesSelectionnes, casesPaysNonPreferes);
-        desactiverCasesSelectionnees(paysNonPreferesSelectionnes, casesPaysPreferes);
+        desactiverCasesSelectionnees(paysPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
+        desactiverCasesSelectionnees(paysNonPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
 
         mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
     };
 
-    const desactiverCasesSelectionnees = (paysSelectionnes, casesPays) => {
+    const desactiverCasesSelectionnees = (paysSelectionnes, casesPays, limite) => {
+        let paysSelectionnesCount = 0;
+
         casesPays.forEach(casePays => {
-            casePays.disabled = paysSelectionnes.includes(casePays.value);
+            if (paysSelectionnes.includes(casePays.value)) {
+                paysSelectionnesCount++;
+            }
+
+            casePays.disabled = paysSelectionnesCount >= limite && !casePays.checked;
         });
     };
 
@@ -375,7 +381,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         casePays.addEventListener('change', mettreAJourTopPays);
     });
 </script>
-
 
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
