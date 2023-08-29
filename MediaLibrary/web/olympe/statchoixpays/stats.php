@@ -167,18 +167,22 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <div>
-        <p>Transports voulu:</p>
-        <ul>
-            <?php foreach ($transportData as $transport => $count) { ?>
-                <li><?php echo ucfirst($transport) . ": " . $count; ?></li>
+        <?php foreach ($transportDataByUser as $userId => $userTransportData) { ?>
+            <p>Transports voulu pour l'utilisateur <?php echo $userId; ?>:</p>
+            <ul>
+                <?php foreach ($userTransportData as $transport => $count) { ?>
+                    <li><?php echo ucfirst($transport) . ": " . $count; ?></li>
+                <?php } ?>
+            </ul>
+            <?php if (isset($missingTransportDataByUser[$userId])) { ?>
+                <p>Transports manquants pour l'utilisateur <?php echo $userId; ?>:</p>
+                <ul>
+                    <?php foreach ($missingTransportDataByUser[$userId] as $missingTransport) { ?>
+                        <li><?php echo ucfirst($missingTransport) . ": 1"; ?></li>
+                    <?php } ?>
+                </ul>
             <?php } ?>
-        </ul>
-        <p>Transports manquants:</p>
-        <ul>
-            <?php foreach ($missingTransportData as $transport => $count) { ?>
-                <li><?php echo ucfirst($transport) . ": " . $count; ?></li>
-            <?php } ?>
-        </ul>
+        <?php } ?>
     </div>
 
     <div style="max-width: 20%;">
