@@ -86,6 +86,26 @@ if ($resultPays) {
     }
 }
 
+// Récupère les budgets min et max
+$queryBudgetMin = "SELECT MIN(budget_min) AS minBudget FROM olympe";
+$queryBudgetMax = "SELECT MAX(budget_max) AS maxBudget FROM olympe";
+
+$resultBudgetMin = $connection->query($queryBudgetMin);
+$resultBudgetMax = $connection->query($queryBudgetMax);
+
+$minBudget = 0;
+$maxBudget = 0;
+
+if ($resultBudgetMin && $resultBudgetMax) {
+    $rowMin = $resultBudgetMin->fetch_assoc();
+    $minBudget = $rowMin['minBudget'];
+
+    $rowMax = $resultBudgetMax->fetch_assoc();
+    $maxBudget = $rowMax['maxBudget'];
+}
+
+$averageBudget = ($minBudget + $maxBudget) / 2;
+
 $connection->close();
 ?>
 
@@ -105,6 +125,10 @@ $connection->close();
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
+
+    <div style="max-width: 20%;">
+        <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
+    </div>
 
     <div style="max-width: 20%;">
         <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
@@ -184,6 +208,43 @@ $connection->close();
 
     // Création du graphique camembert pour les pays non
     var myPieChartPaysNon = new Chart(pieChartPaysNon, pieConfigPaysNon);
+    </script>
+
+    <!-- Budget min et max -->
+    <script>
+    var barChartBudget = document.getElementById('barChartBudget').getContext('2d');
+
+    var chartDataBudget = {
+        labels: ['Budget Min', 'Moyenne', 'Budget Max'],
+        datasets: [{
+            label: 'Budgets',
+            data: [<?php echo $minBudget; ?>, <?php echo $averageBudget; ?>, <?php echo $maxBudget; ?>],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            borderWidth: 1
+        }]
+    };
+
+    var barConfigBudget = {
+        type: 'bar',
+        data: chartDataBudget,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Diagramme des budgets min, moyenne et max'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true
+                }
+            }
+        }
+    };
+
+    var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
 
 </body>
