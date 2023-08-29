@@ -130,34 +130,6 @@ if ($resultTransport) {
     }
 }
 
-// Requête SQL pour récupérer les moyens de transport choisis par chaque utilisateur
-$queryTransportChoisi = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
-$resultTransportChoisi = $connection->query($queryTransportChoisi);
-
-$transportOptions = ['train', 'avion', 'bus', 'bateau'];
-
-$transportChoisiData = [
-    "train" => 0,
-    "avion" => 0,
-    "bus" => 0,
-    "bateau" => 0
-];
-
-$transportManquantData = array_fill_keys($transportOptions, 0);
-
-if ($resultTransportChoisi) {
-    while ($rowTransportChoisi = $resultTransportChoisi->fetch_assoc()) {
-        $transportChoisiList = explode(',', $rowTransportChoisi['transport']);
-        foreach ($transportChoisiList as $transportChoisi) {
-            if (isset($transportChoisiData[$transportChoisi])) {
-                $transportChoisiData[$transportChoisi]++;
-            }
-        }
-    }
-
-    $transportManquantData = array_diff_key($transportManquantData, $transportChoisiData);
-}
-
 $connection->close();
 ?>
 
@@ -192,10 +164,6 @@ $connection->close();
 
     <div style="max-width: 20%;">
         <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
-    </div>
-
-    <div style="max-width: 20%;">
-        <canvas id="barChartTransportManquant" aria-label="Diagramme des moyens de transport manquants"></canvas>
     </div>
 
     <!-- Diagramme camembert pays -->
@@ -392,50 +360,6 @@ $connection->close();
         };
 
         var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
-    </script>
-
-    <!-- Diagramme des moyens de transport manquants -->
-    <script>
-        var barChartTransportManquant = document.getElementById('barChartTransportManquant').getContext('2d');
-
-        var chartDataTransportManquant = {
-            labels: <?php echo json_encode(array_keys($transportManquantData)); ?>,
-            datasets: [{
-                data: <?php echo json_encode(array_values($transportManquantData)); ?>,
-                backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                borderWidth: 1
-            }]
-        };
-
-        var barConfigTransportManquant = {
-            type: 'bar',
-            data: chartDataTransportManquant,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: "Diagramme des moyens de transport manquants"
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
-                }
-            }
-        };
-
-        var myBarChartTransportManquant = new Chart(barChartTransportManquant, barConfigTransportManquant);
     </script>
 
 </body>
