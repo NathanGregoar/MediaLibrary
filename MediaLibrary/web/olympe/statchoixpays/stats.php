@@ -138,6 +138,10 @@ $connection->close();
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
 
+    <div style="max-width: 20%;">
+        <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
+    </div>
+
 
     <!-- Diagramme camembert pays -->
     <script>
@@ -268,6 +272,69 @@ $connection->close();
     };
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
+    </script>
+
+    <!-- Transport  -->
+    <script>
+    // Récupération du contexte du canvas pour le diagramme des moyens de transport
+    var barChartTransport = document.getElementById('barChartTransport').getContext('2d');
+
+    // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
+    $queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
+    $resultTransport = $connection->query($queryTransport);
+
+    $transportData = {
+        "Train": 0,
+        "Avion": 0,
+        "Bus": 0,
+        "Bateau": 0
+    };
+
+    if ($resultTransport) {
+        while ($rowTransport = $resultTransport->fetch_assoc()) {
+            $transportList = explode(',', $rowTransport['transport']);
+            foreach ($transportList as $transport) {
+                $transport = trim($transport);
+                if (array_key_exists($transport, $transportData)) {
+                    $transportData[$transport]++;
+                }
+            }
+        }
+    }
+
+    // Configuration des données pour le graphique des moyens de transport
+    var chartDataTransport = {
+        labels: Object.keys($transportData),
+        datasets: [{
+            label: 'Nombre de personnes',
+            data: Object.values($transportData),
+            backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour les barres
+            borderWidth: 1
+        }]
+    };
+
+    var barConfigTransport = {
+        type: 'bar',
+        data: chartDataTransport,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: 'Diagramme des moyens de transport'
+                }
+            },
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    stepSize: 1 // Pour afficher les valeurs entières sur l'axe y
+                }
+            }
+        }
+    };
+
+    var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
     </script>
 
 </body>
