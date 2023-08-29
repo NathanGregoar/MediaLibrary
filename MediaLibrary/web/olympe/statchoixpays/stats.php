@@ -39,6 +39,9 @@ if ($result) {
     $totalGods = 0; // En cas d'erreur dans la requête
 }
 
+// Détermine si le texte doit être au singulier ou au pluriel
+$text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
+
 // Requête SQL pour récupérer les pays enregistrés dans le champ "pays_oui"
 $queryPays = "SELECT pays_oui FROM olympe WHERE pays_oui IS NOT NULL";
 $resultPays = $connection->query($queryPays);
