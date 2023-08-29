@@ -150,12 +150,6 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <div>
-        <?php foreach ($transportData as $transport => $count): ?>
-            <p><?php echo ucfirst($transport) . ': ' . $count; ?></p>
-        <?php endforeach; ?>
-    </div>
-
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
@@ -305,54 +299,60 @@ $connection->close();
 
     <!-- Transport -->
     <script>
-    // Récupération du contexte du canvas pour le diagramme des moyens de transport
-    var barChartTransport = document.getElementById('barChartTransport').getContext('2d');
+        // Récupération du contexte du canvas pour le diagramme des moyens de transport
+        var barChartTransport = document.getElementById('barChartTransport').getContext('2d');
 
-    // Configuration des données pour le graphique des moyens de transport
-    var chartDataTransport = {
-        labels: ['train', 'avion', 'bus', 'bateau'], // Utilisez les noms en minuscules ici
-        datasets: [{
-            label: 'Nombre de personnes',
-            data: [<?php echo $transportData["train"]; ?>, <?php echo $transportData["avion"]; ?>, <?php echo $transportData["bus"]; ?>, <?php echo $transportData["bateau"]; ?>],
-            backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour les barres
-            borderWidth: 1
-        }]
-    };
+        // Configuration des données pour le graphique des moyens de transport
+        var chartDataTransport = {
+            labels: ['Train', 'Avion', 'Bus', 'Bateau'], // Utilisez les noms avec majuscule ici
+            datasets: [{
+                label: 'Nombre de personnes',
+                data: [<?php echo $transportData["train"]; ?>, <?php echo $transportData["avion"]; ?>, <?php echo $transportData["bus"]; ?>, <?php echo $transportData["bateau"]; ?>],
+                backgroundColor: [
+                    'rgba(255, 99, 132, 0.7)', // Couleur pour Train
+                    'rgba(54, 162, 235, 0.7)', // Couleur pour Avion
+                    'rgba(255, 206, 86, 0.7)', // Couleur pour Bus
+                    'rgba(75, 192, 192, 0.7)' // Couleur pour Bateau
+                ],
+                borderWidth: 1
+            }]
+        };
 
-    var barConfigTransport = {
-        type: 'bar',
-        data: chartDataTransport,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: "Diagramme des moyens de transport"
-                }
-            },
-            scales: {
-                x: {
-                    stacked: true // Les barres seront empilées horizontalement
+        var barConfigTransport = {
+            type: 'bar',
+            data: chartDataTransport,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Diagramme des moyens de transport"
+                    }
                 },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    position: 'top', // Vous pouvez ajuster la position ici
-                    labels: {
-                        font: {
-                            size: 10 // Vous pouvez ajuster la taille de la police ici
+                scales: {
+                    x: {
+                        stacked: true // Les barres seront empilées horizontalement
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'top', // Vous pouvez ajuster la position ici
+                        labels: {
+                            font: {
+                                size: 10 // Vous pouvez ajuster la taille de la police ici
+                            }
                         }
                     }
                 }
             }
-        }
-    };
+        };
 
-    var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
+        var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
     </script>
 
 </body>
