@@ -306,7 +306,7 @@ $connection->close();
         var chartDataTransport = {
             labels: ['Train', 'Avion', 'Bus', 'Bateau'], // Utilisez les noms avec majuscule ici
             datasets: [{
-                label: 'Moyens de transport',
+                label: 'Moyens de transport', // Cela sera utilisé comme étiquette dans la légende
                 data: [
                     <?php echo $transportData["train"]; ?>,
                     <?php echo $transportData["avion"]; ?>,
