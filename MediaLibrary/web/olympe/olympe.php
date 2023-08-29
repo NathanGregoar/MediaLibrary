@@ -39,7 +39,7 @@ $stmt_check->close();
 
 // Redirection vers la page "olympestat.php" si des enregistrements existent
 if ($existingRecords > 0) {
-    header("Location: /statchoixpays/stats.php");
+    header("Location: ../olympe/statchoixpays/stats.php");
     exit();
 }
 
