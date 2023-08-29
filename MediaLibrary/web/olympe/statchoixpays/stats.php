@@ -107,24 +107,6 @@ if ($resultBudgetMin && $resultBudgetMax) {
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
 // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
-$queryTransport = "SELECT transport, transport_non FROM olympe WHERE transport IS NOT NULL";
-$resultTransport = $connection->query($queryTransport);
-
-$transportData = [
-    "train" => 0,
-    "avion" => 0,
-    "bus" => 0,
-    "bateau" => 0
-];
-
-$missingTransportData = [
-    "train" => 0,
-    "avion" => 0,
-    "bus" => 0,
-    "bateau" => 0
-];
-
-// Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
 $queryTransport = "SELECT transport, added_by FROM olympe WHERE transport IS NOT NULL";
 $resultTransport = $connection->query($queryTransport);
 
