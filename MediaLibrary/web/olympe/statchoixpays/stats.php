@@ -136,7 +136,7 @@ $connection->close();
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position: 'bottom',
+                // position: 'bottom',
             },
         },
     };
