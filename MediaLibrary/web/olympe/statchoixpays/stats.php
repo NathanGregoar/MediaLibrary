@@ -299,26 +299,29 @@ $connection->close();
 
     <!-- Transport -->
     <script>
-        // Récupération du contexte du canvas pour le diagramme des moyens de transport
         var barChartTransport = document.getElementById('barChartTransport').getContext('2d');
 
-        // Configuration des données pour le graphique des moyens de transport
         var chartDataTransport = {
-            labels: ['Train', 'Avion', 'Bus', 'Bateau'], // Utilisez les noms avec majuscule ici
+            labels: ['Train', 'Avion', 'Bus', 'Bateau'],
             datasets: [{
-                label: 'Moyens de transport', // Cela sera utilisé comme étiquette dans la légende
-                data: [
-                    <?php echo $transportData["train"]; ?>,
-                    <?php echo $transportData["avion"]; ?>,
-                    <?php echo $transportData["bus"]; ?>,
-                    <?php echo $transportData["bateau"]; ?>
-                ],
-                backgroundColor: [
-                    'rgba(255, 99, 132, 0.7)', // Couleur pour Train
-                    'rgba(54, 162, 235, 0.7)', // Couleur pour Avion
-                    'rgba(255, 206, 86, 0.7)', // Couleur pour Bus
-                    'rgba(75, 192, 192, 0.7)' // Couleur pour Bateau
-                ],
+                label: 'Train', // Mettez à jour ce texte par le nom de la colonne
+                data: [<?php echo $transportData["train"]; ?>, 0, 0, 0],
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderWidth: 1
+            }, {
+                label: 'Avion', // Mettez à jour ce texte par le nom de la colonne
+                data: [0, <?php echo $transportData["avion"]; ?>, 0, 0],
+                backgroundColor: 'rgba(54, 162, 235, 0.7)',
+                borderWidth: 1
+            }, {
+                label: 'Bus', // Mettez à jour ce texte par le nom de la colonne
+                data: [0, 0, <?php echo $transportData["bus"]; ?>, 0],
+                backgroundColor: 'rgba(255, 206, 86, 0.7)',
+                borderWidth: 1
+            }, {
+                label: 'Bateau', // Mettez à jour ce texte par le nom de la colonne
+                data: [0, 0, 0, <?php echo $transportData["bateau"]; ?>],
+                backgroundColor: 'rgba(75, 192, 192, 0.7)',
                 borderWidth: 1
             }]
         };
@@ -337,7 +340,7 @@ $connection->close();
                 },
                 scales: {
                     x: {
-                        stacked: true // Les barres seront empilées horizontalement
+                        stacked: true
                     },
                     y: {
                         beginAtZero: true
@@ -345,11 +348,10 @@ $connection->close();
                 },
                 plugins: {
                     legend: {
-                        display: true,
-                        position: 'top', // Vous pouvez ajuster la position ici
+                        position: 'top',
                         labels: {
                             font: {
-                                size: 10 // Vous pouvez ajuster la taille de la police ici
+                                size: 10
                             }
                         }
                     }
