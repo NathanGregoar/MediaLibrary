@@ -106,10 +106,9 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <fieldset style="max-width: 20%; max-height: 30%">
-    <label>Les pays ou l'Olympe veut partir :</label>
+    <div style="max-width: 20%;">
         <canvas id="pieChartPaysOui"></canvas>
-    </fieldset>
+    </div>
 
     <div style="max-width: 20%;">
         <canvas id="pieChartPaysNon"></canvas>
