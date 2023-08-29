@@ -42,7 +42,8 @@ if ($result) {
 $connection->close();
 
 // Détermine si le texte doit être au singulier ou au pluriel
-$text = ($totalGods === 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
+$text = ($totalGods === 1) ? "Dieu" : "Dieux";
+$verb = ($totalGods === 1) ? "a" : "ont";
 ?>
 
 <!DOCTYPE html>
@@ -59,6 +60,6 @@ $text = ($totalGods === 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe 
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
-    <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
+    <h2><?php echo $text . " de l'Olympe " . $verb . " répondu au formulaire !"; ?></h2>
 </body>
 </html>
