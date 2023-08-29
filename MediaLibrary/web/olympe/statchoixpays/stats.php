@@ -212,8 +212,6 @@ $connection->close();
 
     <!-- Budget min et max -->
     <script>
-    var barChartBudget = document.getElementById('barChartBudget').getContext('2d');
-
     var chartDataBudget = {
         labels: ['Budget Min', 'Moyenne', 'Budget Max'],
         datasets: [{
@@ -239,6 +237,17 @@ $connection->close();
             scales: {
                 y: {
                     beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: true,
+                    position: 'top', // Vous pouvez ajuster la position ici
+                    labels: {
+                        font: {
+                            size: 14 // Vous pouvez ajuster la taille de la police ici
+                        }
+                    }
                 }
             }
         }
