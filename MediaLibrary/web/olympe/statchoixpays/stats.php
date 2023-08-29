@@ -107,7 +107,7 @@ if ($resultBudgetMin && $resultBudgetMax) {
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
 // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
-$queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
+$queryTransport = "SELECT transport, transport_non FROM olympe WHERE transport IS NOT NULL";
 $resultTransport = $connection->query($queryTransport);
 
 $transportData = [
@@ -117,9 +117,19 @@ $transportData = [
     "bateau" => 0
 ];
 
+$missingTransportData = [
+    "train" => 0,
+    "avion" => 0,
+    "bus" => 0,
+    "bateau" => 0
+];
+
 if ($resultTransport) {
     while ($rowTransport = $resultTransport->fetch_assoc()) {
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
+        $transportNonList = explode(',', $rowTransport['transport_non']); // Séparer les moyens de transport non voulu par des virgules
+
+        // Compter les moyens de transport voulu
         foreach ($transportList as $transport) {
             $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
             $transport = strtolower($transport); // Convertir en minuscules
@@ -127,33 +137,19 @@ if ($resultTransport) {
                 $transportData[$transport]++;
             }
         }
-    }
-}
 
-// Requête SQL pour récupérer les moyens de transport non voulu enregistrés dans la colonne "transport_non"
-$queryTransportNon = "SELECT transport_non FROM olympe WHERE transport_non IS NOT NULL";
-$resultTransportNon = $connection->query($queryTransportNon);
-
-$transportNonData = [
-    "train" => 0,
-    "avion" => 0,
-    "bus" => 0,
-    "bateau" => 0
-];
-
-if ($resultTransportNon) {
-    while ($rowTransportNon = $resultTransportNon->fetch_assoc()) {
-        $transportNonList = explode(',', $rowTransportNon['transport_non']); // Séparer les moyens de transport non voulu par des virgules
-        foreach ($transportNonList as $transportNon) {
-            $transportNon = trim($transportNon); // Supprimer les espaces autour du nom du moyen de transport non voulu
-            $transportNon = strtolower($transportNon); // Convertir en minuscules
-            if (array_key_exists($transportNon, $transportNonData)) {
-                $transportNonData[$transportNon]++;
+        // Compter les moyens de transport manquants / non voulu
+        foreach ($missingTransportData as $transport => $count) {
+            if (in_array($transport, $transportNonList)) {
+                $missingTransportData[$transport]++;
             }
         }
     }
 }
 
+// Calculer le total de transports voulu et non voulu
+$totalTransportVoulu = array_sum($transportData);
+$totalTransportNonVoulu = array_sum($missingTransportData);
 
 $connection->close();
 ?>
@@ -175,6 +171,11 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
+    <div>
+        <p>Transports voulu: <?php echo $totalTransportVoulu; ?></p>
+        <p>Transports non voulu: <?php echo $totalTransportNonVoulu; ?></p>
+    </div>
+
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
@@ -189,10 +190,6 @@ $connection->close();
 
     <div style="max-width: 20%;">
         <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
-    </div>
-
-    <div style="max-width: 20%;">
-        <canvas id="barChartTransportNon" aria-label="Diagramme des moyens de transport non voulu"></canvas>
     </div>
 
     <!-- Diagramme camembert pays -->
@@ -390,55 +387,6 @@ $connection->close();
 
         var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
     </script>
-
-<script>
-var barChartTransportNon = document.getElementById('barChartTransportNon').getContext('2d');
-
-var chartDataTransportNon = {
-    labels: ['Train', 'Avion', 'Bus', 'Bateau'],
-    datasets: [{
-        label: 'Transport non voulu',
-        data: [<?php echo $transportNonData["train"]; ?>, <?php echo $transportNonData["avion"]; ?>, <?php echo $transportNonData["bus"]; ?>, <?php echo $transportNonData["bateau"]; ?>],
-        backgroundColor: 'rgba(255, 99, 132, 0.7)',
-        borderWidth: 1
-    }]
-};
-
-var barConfigTransportNon = {
-    type: 'bar',
-    data: chartDataTransportNon,
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            title: {
-                display: true,
-                text: "Diagramme des moyens de transport non voulu"
-            }
-        },
-        scales: {
-            x: {
-                stacked: true
-            },
-            y: {
-                beginAtZero: true
-            }
-        },
-        plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    font: {
-                        size: 10
-                    }
-                }
-            }
-        }
-    }
-};
-
-var myBarChartTransportNon = new Chart(barChartTransportNon, barConfigTransportNon);
-</script>
 
 </body>
 </html>
