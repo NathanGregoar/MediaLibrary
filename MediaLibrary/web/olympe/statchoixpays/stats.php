@@ -111,10 +111,10 @@ $queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
 $resultTransport = $connection->query($queryTransport);
 
 $transportData = [
-    "Train" => 0,
-    "Avion" => 0,
-    "Bus" => 0,
-    "Bateau" => 0
+    "train" => 0,
+    "avion" => 0,
+    "bus" => 0,
+    "bateau" => 0
 ];
 
 if ($resultTransport) {
@@ -122,7 +122,7 @@ if ($resultTransport) {
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
         foreach ($transportList as $transport) {
             $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
-            $transport = ucfirst(strtolower($transport)); // Convertir en majuscule la première lettre et le reste en minuscules
+            $transport = strtolower($transport); // Convertir en minuscules
             if (array_key_exists($transport, $transportData)) {
                 $transportData[$transport]++;
             }
