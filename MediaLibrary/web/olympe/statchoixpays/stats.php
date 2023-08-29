@@ -106,6 +106,29 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
+// Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
+$queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
+$resultTransport = $connection->query($queryTransport);
+
+$transportData = [
+    "Train" => 0,
+    "Avion" => 0,
+    "Bus" => 0,
+    "Bateau" => 0
+];
+
+if ($resultTransport) {
+    while ($rowTransport = $resultTransport->fetch_assoc()) {
+        $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
+        foreach ($transportList as $transport) {
+            $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
+            if (array_key_exists($transport, $transportData)) {
+                $transportData[$transport]++;
+            }
+        }
+    }
+}
+
 $connection->close();
 ?>
 
@@ -141,7 +164,6 @@ $connection->close();
     <div style="max-width: 20%;">
         <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
     </div>
-
 
     <!-- Diagramme camembert pays -->
     <script>
@@ -274,40 +296,17 @@ $connection->close();
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
 
-    <!-- Transport  -->
+    <!-- Transport -->
     <script>
     // Récupération du contexte du canvas pour le diagramme des moyens de transport
     var barChartTransport = document.getElementById('barChartTransport').getContext('2d');
 
-    // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
-    $queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
-    $resultTransport = $connection->query($queryTransport);
-
-    $transportData = {
-        "Train": 0,
-        "Avion": 0,
-        "Bus": 0,
-        "Bateau": 0
-    };
-
-    if ($resultTransport) {
-        while ($rowTransport = $resultTransport->fetch_assoc()) {
-            $transportList = explode(',', $rowTransport['transport']);
-            foreach ($transportList as $transport) {
-                $transport = trim($transport);
-                if (array_key_exists($transport, $transportData)) {
-                    $transportData[$transport]++;
-                }
-            }
-        }
-    }
-
     // Configuration des données pour le graphique des moyens de transport
     var chartDataTransport = {
-        labels: Object.keys($transportData),
+        labels: ['Train', 'Avion', 'Bus', 'Bateau'],
         datasets: [{
             label: 'Nombre de personnes',
-            data: Object.values($transportData),
+            data: [<?php echo $transportData["Train"]; ?>, <?php echo $transportData["Avion"]; ?>, <?php echo $transportData["Bus"]; ?>, <?php echo $transportData["Bateau"]; ?>],
             backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour les barres
             borderWidth: 1
         }]
@@ -322,13 +321,25 @@ $connection->close();
             plugins: {
                 title: {
                     display: true,
-                    text: 'Diagramme des moyens de transport'
+                    text: "Diagramme des moyens de transport"
                 }
             },
             scales: {
+                x: {
+                    stacked: true // Les barres seront empilées horizontalement
+                },
                 y: {
-                    beginAtZero: true,
-                    stepSize: 1 // Pour afficher les valeurs entières sur l'axe y
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top', // Vous pouvez ajuster la position ici
+                    labels: {
+                        font: {
+                            size: 10 // Vous pouvez ajuster la taille de la police ici
+                        }
+                    }
                 }
             }
         }
