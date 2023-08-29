@@ -1,6 +1,6 @@
 <?php
-require_once '../../utils/auth.php';
-require_once '../../utils/config.php';
+require_once '../utils/auth.php';
+require_once '../utils/config.php';
 
 // Démarrage de la session
 session_start();
