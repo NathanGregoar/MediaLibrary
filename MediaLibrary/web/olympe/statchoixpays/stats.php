@@ -42,6 +42,28 @@ if ($result) {
 // Détermine si le texte doit être au singulier ou au pluriel
 $text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
 
+// Requête SQL pour récupérer les pays enregistrés dans le champ "pays_non" de tous les utilisateurs
+$queryPaysNon = "SELECT pays_non FROM olympe WHERE pays_non IS NOT NULL";
+$resultPaysNon = $connection->query($queryPaysNon);
+
+$paysNonData = []; // Tableau pour stocker les données des pays non
+
+if ($resultPaysNon) {
+    while ($rowPaysNon = $resultPaysNon->fetch_assoc()) {
+        $paysNonList = explode(',', $rowPaysNon['pays_non']); // Séparer les pays par des virgules
+        foreach ($paysNonList as $paysNon) {
+            $paysNon = trim($paysNon); // Supprimer les espaces autour du nom du pays
+            if (!empty($paysNon)) {
+                if (!isset($paysNonData[$paysNon])) {
+                    $paysNonData[$paysNon] = 1;
+                } else {
+                    $paysNonData[$paysNon]++;
+                }
+            }
+        }
+    }
+}
+
 // Requête SQL pour récupérer les pays enregistrés dans le champ "pays_oui"
 $queryPays = "SELECT pays_oui FROM olympe WHERE pays_oui IS NOT NULL";
 $resultPays = $connection->query($queryPays);
@@ -53,7 +75,7 @@ if ($resultPays) {
         $paysList = explode(',', $rowPays['pays_oui']); // Séparer les pays par des virgules
         foreach ($paysList as $pays) {
             $pays = trim($pays); // Supprimer les espaces autour du nom du pays
-            if (!empty($pays)) {
+            if (!empty($pays) && !array_key_exists($pays, $paysNonData)) {
                 if (!isset($paysData[$pays])) {
                     $paysData[$pays] = 1;
                 } else {
@@ -85,15 +107,19 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <div style="max-width: 20%;">
-        <canvas id="pieChart"></canvas>
+        <canvas id="pieChartPaysOui"></canvas>
+    </div>
+
+    <div style="max-width: 20%;">
+        <canvas id="pieChartPaysNon"></canvas>
     </div>
 
     <script>
-    // Récupération du contexte du canvas
-    var pieChart = document.getElementById('pieChart').getContext('2d');
+    // Récupération du contexte du canvas pour le diagramme des pays oui
+    var pieChartPaysOui = document.getElementById('pieChartPaysOui').getContext('2d');
 
-    // Configuration des données pour le graphique
-    var chartData = {
+    // Configuration des données pour le graphique des pays oui
+    var chartDataPaysOui = {
         datasets: [{
             data: [<?php echo implode(",", array_values($paysData)); ?>],
             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8E44AD', '#16A085'], // Ajoutez plus de couleurs si nécessaire
@@ -101,10 +127,10 @@ $connection->close();
         labels: <?php echo json_encode(array_keys($paysData)); ?>,
     };
 
-    // Configuration du graphique camembert
-    var pieConfig = {
+    // Configuration du graphique camembert pour les pays oui
+    var pieConfigPaysOui = {
         type: 'pie',
-        data: chartData,
+        data: chartDataPaysOui,
         options: {
             responsive: true,
             maintainAspectRatio: false,
@@ -114,8 +140,36 @@ $connection->close();
         },
     };
 
-    // Création du graphique camembert
-    var myPieChart = new Chart(pieChart, pieConfig);
+    // Création du graphique camembert pour les pays oui
+    var myPieChartPaysOui = new Chart(pieChartPaysOui, pieConfigPaysOui);
+
+    // Récupération du contexte du canvas pour le diagramme des pays non
+    var pieChartPaysNon = document.getElementById('pieChartPaysNon').getContext('2d');
+
+    // Configuration des données pour le graphique des pays non
+    var chartDataPaysNon = {
+        datasets: [{
+            data: [<?php echo implode(",", array_values($paysNonData)); ?>],
+            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#8E44AD', '#16A085'], // Ajoutez plus de couleurs si nécessaire
+        }],
+        labels: <?php echo json_encode(array_keys($paysNonData)); ?>,
+    };
+
+    // Configuration du graphique camembert pour les pays non
+    var pieConfigPaysNon = {
+        type: 'pie',
+        data: chartDataPaysNon,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            legend: {
+                position: 'bottom',
+            },
+        },
+    };
+
+    // Création du graphique camembert pour les pays non
+    var myPieChartPaysNon = new Chart(pieChartPaysNon, pieConfigPaysNon);
     </script>
 
 </body>
