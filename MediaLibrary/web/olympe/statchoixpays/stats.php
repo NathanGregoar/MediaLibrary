@@ -28,6 +28,17 @@ if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
+// Requête SQL pour compter le nombre d'enregistrements dans la table "olympe"
+$query = "SELECT COUNT(id) AS total FROM olympe";
+$result = $connection->query($query);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalGods = $row['total'];
+} else {
+    $totalGods = 0; // En cas d'erreur dans la requête
+}
+
 // Requête SQL pour récupérer les pays enregistrés dans le champ "pays_oui"
 $queryPays = "SELECT pays_oui FROM olympe WHERE pays_oui IS NOT NULL";
 $resultPays = $connection->query($queryPays);
