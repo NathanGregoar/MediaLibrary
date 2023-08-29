@@ -134,6 +134,12 @@ $connection->close();
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Diagramme des pays où l'Olympe veut partir",
+                },
+            },
             legend: {
                 position: 'bottom',
             },
@@ -162,6 +168,12 @@ $connection->close();
         options: {
             responsive: true,
             maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Diagramme des pays où l'Olympe ne veut pas partir",
+                },
+            },
             legend: {
                 position: 'bottom',
             },
