@@ -118,7 +118,7 @@ $transportDataByUser = []; // Comptage des moyens de transport trouvés
 $missingTransportDataByUser = []; // Comptage des moyens de transport manquants
 
 // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport" avec l'ID de l'utilisateur
-$queryTransport = "SELECT id, transport, transport_non FROM olympe WHERE transport IS NOT NULL";
+$queryTransport = "SELECT id, transport FROM olympe WHERE transport IS NOT NULL";
 $resultTransport = $connection->query($queryTransport);
 
 if ($resultTransport) {
