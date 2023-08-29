@@ -346,8 +346,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
             desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
-            desactiverCasesSelectionneesInversement(paysPreferesSelectionnes, casesPaysNonPreferes);
-            desactiverCasesSelectionneesInversement(paysNonPreferesSelectionnes, casesPaysPreferes);
+            desactiverCasesSelectionneesInversement(paysPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_PREFERES);
+            desactiverCasesSelectionneesInversement(paysNonPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_NON_PREFERES);
 
             mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
         };
@@ -363,12 +363,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             });
         };
 
-        const desactiverCasesSelectionneesInversement = (paysSelectionnes, casesPaysInverse) => {
+        const desactiverCasesSelectionneesInversement = (paysSelectionnes, casesPaysInverse, limite) => {
             casesPaysInverse.forEach(casePays => {
-                casePays.disabled = paysSelectionnes.includes(casePays.value);
-                if (casePays.disabled) {
+                if (!casePays.checked && paysSelectionnes.length >= limite) {
+                    casePays.disabled = true;
                     casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
                 } else {
+                    casePays.disabled = false;
                     casePays.parentNode.style.color = '';
                 }
             });
