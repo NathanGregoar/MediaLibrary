@@ -375,17 +375,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             casePays.addEventListener('change', mettreAJourTopPays);
         });
 
+        // Check case cochée dans pays
         casesPaysPreferes.forEach(casePays => {
             casePays.addEventListener('change', () => {
                 mettreAJourTopPays();
-                desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_PREFERES);
+                if (casePays.checked) {
+                    desactiverCasesNonSelectionnees([casePays.value], casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
+                } else {
+                    desactiverCasesNonSelectionnees([], casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
+                }
             });
         });
 
         casesPaysNonPreferes.forEach(casePays => {
             casePays.addEventListener('change', () => {
                 mettreAJourTopPays();
-                desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_NON_PREFERES);
+                if (casePays.checked) {
+                    desactiverCasesNonSelectionnees([casePays.value], casesPaysPreferes, LIMITE_PAYS_PREFERES);
+                } else {
+                    desactiverCasesNonSelectionnees([], casesPaysPreferes, LIMITE_PAYS_PREFERES);
+                }
             });
         });
     </script>
