@@ -107,43 +107,27 @@ if ($resultBudgetMin && $resultBudgetMax) {
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
 // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
-$queryTransport = "SELECT transport, transport_non FROM olympe WHERE transport IS NOT NULL";
+$queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
 $resultTransport = $connection->query($queryTransport);
 
-// Tableau pour stocker les noms des moyens de transport
-$transportTypes = ["train", "avion", "bus", "bateau"];
-
-// Tableaux pour stocker les données de transports par utilisateur
-$transportDataByUser = []; // Comptage des moyens de transport trouvés
-$missingTransportDataByUser = []; // Comptage des moyens de transport manquants
-
-// Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport" avec l'ID de l'utilisateur
-$queryTransport = "SELECT id, transport FROM olympe WHERE transport IS NOT NULL";
-$resultTransport = $connection->query($queryTransport);
+$transportData = [
+    "train" => 0,
+    "avion" => 0,
+    "bus" => 0,
+    "bateau" => 0
+];
 
 if ($resultTransport) {
     while ($rowTransport = $resultTransport->fetch_assoc()) {
-        $userId = $rowTransport['id']; // ID utilisateur
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
-
-        // Initialiser les compteurs pour chaque utilisateur
-        if (!isset($transportDataByUser[$userId])) {
-            $transportDataByUser[$userId] = array_fill_keys($transportTypes, 0);
-        }
-
         foreach ($transportList as $transport) {
             $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
             $transport = strtolower($transport); // Convertir en minuscules
-            if (in_array($transport, $transportTypes)) {
-                $transportDataByUser[$userId][$transport]++;
+            if (array_key_exists($transport, $transportData)) {
+                $transportData[$transport]++;
             }
         }
     }
-}
-
-// Calcul des moyens de transport manquants pour chaque utilisateur
-foreach ($transportDataByUser as $userId => $userTransportData) {
-    $missingTransportDataByUser[$userId] = array_diff($transportTypes, array_keys($userTransportData));
 }
 
 $connection->close();
@@ -165,29 +149,6 @@ $connection->close();
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
-
-    <div>
-        <?php foreach ($transportDataByUser as $userId => $userTransportData) { ?>
-            <p>Transports voulu pour l'utilisateur <?php echo $userId; ?>:</p>
-            <ul>
-                <?php foreach ($userTransportData as $transport => $count) { ?>
-                    <li><?php echo ucfirst($transport) . ": " . $count; ?></li>
-                <?php } ?>
-            </ul>
-            
-            <?php
-            $userMissingTransportData = $missingTransportDataByUser[$userId];
-            if (!empty($userMissingTransportData)) {
-            ?>
-                <p>Transports manquants pour l'utilisateur <?php echo $userId; ?>:</p>
-                <ul>
-                    <?php foreach ($userMissingTransportData as $missingTransport) { ?>
-                        <li><?php echo ucfirst($missingTransport) . ": 1"; ?></li>
-                    <?php } ?>
-                </ul>
-            <?php } ?>
-        <?php } ?>
-    </div>
 
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
