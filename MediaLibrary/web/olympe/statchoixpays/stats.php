@@ -124,23 +124,19 @@ $missingTransportData = [
     "bateau" => 0
 ];
 
+// Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
+$queryTransport = "SELECT transport, added_by FROM olympe WHERE transport IS NOT NULL";
+$resultTransport = $connection->query($queryTransport);
+
 if ($resultTransport) {
     while ($rowTransport = $resultTransport->fetch_assoc()) {
+        $addedBy = $rowTransport['added_by']; // ID utilisateur
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
-        $transportNonList = explode(',', $rowTransport['transport_non']); // Séparer les moyens de transport non voulu par des virgules
 
-        // Compter les moyens de transport voulu
-        foreach ($transportList as $transport) {
-            $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
-            $transport = strtolower($transport); // Convertir en minuscules
-            if (array_key_exists($transport, $transportData)) {
+        foreach ($transportData as $transport => $count) {
+            if (in_array($transport, $transportList)) {
                 $transportData[$transport]++;
-            }
-        }
-
-        // Compter les moyens de transport manquants / non voulu
-        foreach ($missingTransportData as $transport => $count) {
-            if (in_array($transport, $transportNonList)) {
+            } else {
                 $missingTransportData[$transport]++;
             }
         }
