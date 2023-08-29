@@ -346,6 +346,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
             desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
+            desactiverCasesSelectionneesInversement(paysPreferesSelectionnes, casesPaysNonPreferes);
+            desactiverCasesSelectionneesInversement(paysNonPreferesSelectionnes, casesPaysPreferes);
 
             mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
         };
@@ -357,6 +359,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
                 } else {
                     casePays.parentNode.style.color = ''; // Réinitialiser la couleur si activé
+                }
+            });
+        };
+
+        const desactiverCasesSelectionneesInversement = (paysSelectionnes, casesPaysInverse) => {
+            casesPaysInverse.forEach(casePays => {
+                casePays.disabled = paysSelectionnes.includes(casePays.value);
+                if (casePays.disabled) {
+                    casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
+                } else {
+                    casePays.parentNode.style.color = '';
                 }
             });
         };
