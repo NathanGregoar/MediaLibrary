@@ -106,16 +106,14 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <div class="fixed-diagrams">
-        <fieldset style="max-width: 20%;">
-            <legend>Pays où l'Olympe veut partir :</legend>
-            <canvas id="pieChartPaysOui"></canvas>
-        </fieldset>
+    <div style="max-width: 20%;">
+        <h3>Pays ou l'Olympe veut partir :</h3>
+        <canvas id="pieChartPaysOui"></canvas>
+    </div>
 
-        <fieldset style="max-width: 20%;">
-            <legend>Pays où l'Olympe ne veut pas partir :</legend>
-            <canvas id="pieChartPaysNon"></canvas>
-        </fieldset>
+    <div style="max-width: 20%;">
+        <h3>Pays ou l'Olympe ne veut pas partir :</h3>
+        <canvas id="pieChartPaysNon"></canvas>
     </div>
 
     <script>
