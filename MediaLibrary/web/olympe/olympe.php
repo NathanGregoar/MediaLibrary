@@ -326,6 +326,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         const LIMITE_PAYS_PREFERES = 5;
         const LIMITE_PAYS_NON_PREFERES = 3;
+        const DISABLED_TEXT_COLOR = 'red'; // Couleur du texte pour les pays désactivés
 
         const mettreAJourTopPays = () => {
             let paysPreferesSelectionnes = [];
@@ -352,6 +353,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         const desactiverCasesNonSelectionnees = (paysSelectionnes, casesPays, limite) => {
             casesPays.forEach(casePays => {
                 casePays.disabled = !casePays.checked && paysSelectionnes.length >= limite;
+                if (casePays.disabled) {
+                    casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
+                } else {
+                    casePays.parentNode.style.color = ''; // Réinitialiser la couleur si activé
+                }
             });
         };
 
@@ -374,8 +380,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         casesPaysNonPreferes.forEach(casePays => {
             casePays.addEventListener('change', mettreAJourTopPays);
         });
-
-        // Check case cochée dans pays
     </script>
 
     <!-- Inclure le script pour le calendrier -->
