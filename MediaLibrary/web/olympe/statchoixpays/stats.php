@@ -141,10 +141,12 @@ $transportNonChoisiData = [
     "bateau" => 0
 ];
 
+$transportOptions = ['train', 'avion', 'bus', 'bateau'];
+
 if ($resultTransportNonChoisi) {
     while ($rowTransportNonChoisi = $resultTransportNonChoisi->fetch_assoc()) {
         $transportChoisiList = explode(',', $rowTransportNonChoisi['transport']);
-        $transportNonChoisiList = array_diff(['train', 'avion', 'bus', 'bateau'], $transportChoisiList);
+        $transportNonChoisiList = array_diff($transportOptions, $transportChoisiList);
 
         foreach ($transportNonChoisiList as $transportNonChoisi) {
             $transportNonChoisiData[$transportNonChoisi]++;
