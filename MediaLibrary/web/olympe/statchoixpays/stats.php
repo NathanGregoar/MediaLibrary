@@ -195,7 +195,7 @@ $connection->close();
     </div>
 
     <div style="max-width: 20%;">
-        <canvas id="barChartTransportNonChoisi" aria-label="Diagramme des moyens de transport non choisis"></canvas>
+        <canvas id="barChartTransportManquant" aria-label="Diagramme des moyens de transport manquants"></canvas>
     </div>
 
     <!-- Diagramme camembert pays -->
@@ -394,49 +394,49 @@ $connection->close();
         var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
     </script>
 
-    <!-- Diagramme des moyens de transport non choisis -->
-<script>
-    var barChartTransportNonChoisi = document.getElementById('barChartTransportNonChoisi').getContext('2d');
+    <!-- Diagramme des moyens de transport manquants -->
+    <script>
+        var barChartTransportManquant = document.getElementById('barChartTransportManquant').getContext('2d');
 
-    var chartDataTransportNonChoisi = {
-        labels: <?php echo json_encode(array_keys($transportManquantData)); ?>,
-        datasets: [{
-            data: <?php echo json_encode(array_values($transportManquantData)); ?>,
-            backgroundColor: 'rgba(255, 99, 132, 0.7)',
-            borderWidth: 1
-        }]
-    };
+        var chartDataTransportManquant = {
+            labels: <?php echo json_encode(array_keys($transportManquantData)); ?>,
+            datasets: [{
+                data: <?php echo json_encode(array_values($transportManquantData)); ?>,
+                backgroundColor: 'rgba(255, 99, 132, 0.7)',
+                borderWidth: 1
+            }]
+        };
 
-    var barConfigTransportNonChoisi = {
-        type: 'bar',
-        data: chartDataTransportNonChoisi,
-        options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-                title: {
-                    display: true,
-                    text: "Diagramme des moyens de transport non choisis"
-                }
-            },
-            scales: {
-                x: {
-                    stacked: true
+        var barConfigTransportManquant = {
+            type: 'bar',
+            data: chartDataTransportManquant,
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    title: {
+                        display: true,
+                        text: "Diagramme des moyens de transport manquants"
+                    }
                 },
-                y: {
-                    beginAtZero: true
-                }
-            },
-            plugins: {
-                legend: {
-                    display: false
+                scales: {
+                    x: {
+                        stacked: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                },
+                plugins: {
+                    legend: {
+                        display: false
+                    }
                 }
             }
-        }
-    };
+        };
 
-    var myBarChartTransportNonChoisi = new Chart(barChartTransportNonChoisi, barConfigTransportNonChoisi);
-</script>
+        var myBarChartTransportManquant = new Chart(barChartTransportManquant, barConfigTransportManquant);
+    </script>
 
 </body>
 </html>
