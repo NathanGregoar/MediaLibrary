@@ -112,7 +112,6 @@ $connection->close();
     </div>
 
     <div style="max-width: 20%;">
-        <h3>Pays ou l'Olympe ne veut pas partir :</h3>
         <canvas id="pieChartPaysNon"></canvas>
     </div>
 
@@ -165,7 +164,7 @@ $connection->close();
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                position: 'bottom',
+                // position: 'bottom',
             },
         },
     };
