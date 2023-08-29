@@ -106,15 +106,17 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <fieldset style="max-width: 20%;">
-        <legend>Pays où l'Olympe veut partir :</legend>
-        <canvas id="pieChartPaysOui"></canvas>
-    </fieldset>
+    <div class="fixed-diagrams">
+        <fieldset style="max-width: 20%;">
+            <legend>Pays où l'Olympe veut partir :</legend>
+            <canvas id="pieChartPaysOui"></canvas>
+        </fieldset>
 
-    <fieldset style="max-width: 20%;">
-        <legend>Pays où l'Olympe ne veut pas partir :</legend>
-        <canvas id="pieChartPaysNon"></canvas>
-    </fieldset>
+        <fieldset style="max-width: 20%;">
+            <legend>Pays où l'Olympe ne veut pas partir :</legend>
+            <canvas id="pieChartPaysNon"></canvas>
+        </fieldset>
+    </div>
 
     <script>
     // Récupération du contexte du canvas pour le diagramme des pays oui
