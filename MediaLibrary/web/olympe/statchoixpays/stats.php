@@ -259,7 +259,7 @@ $connection->close();
                     position: 'top', // Vous pouvez ajuster la position ici
                     labels: {
                         font: {
-                            size: 14 // Vous pouvez ajuster la taille de la police ici
+                            size: 10 // Vous pouvez ajuster la taille de la police ici
                         }
                     }
                 }
