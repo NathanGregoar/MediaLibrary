@@ -16,6 +16,33 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     exit();
 }
 
+// Connexion à la base de données (à adapter avec vos informations d'accès)
+$host = 'db';
+$dbuser = 'nathan';
+$dbpassword = '444719';
+$dbname = 'media_library';
+
+$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+if ($connection->connect_error) {
+    die('Erreur de connexion : ' . $connection->connect_error);
+}
+
+// Vérification si l'ID de l'utilisateur existe en base de données
+$check_query = "SELECT COUNT(*) FROM olympe WHERE added_by = ?";
+$stmt_check = $connection->prepare($check_query);
+$stmt_check->bind_param("i", $loggedInUser['id']);
+$stmt_check->execute();
+$stmt_check->bind_result($existingRecords);
+$stmt_check->fetch();
+$stmt_check->close();
+
+// Redirection vers la page "olympestat.php" si des enregistrements existent
+if ($existingRecords > 0) {
+    header("Location: olympstat.php");
+    exit();
+}
+
 // Variables pour afficher les messages d'état
 $successMessage = '';
 $errorMessage = '';
