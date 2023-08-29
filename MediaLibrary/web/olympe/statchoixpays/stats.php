@@ -134,6 +134,8 @@ if ($resultTransport) {
 $queryTransportChoisi = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
 $resultTransportChoisi = $connection->query($queryTransportChoisi);
 
+$transportOptions = ['train', 'avion', 'bus', 'bateau'];
+
 $transportChoisiData = [
     "train" => 0,
     "avion" => 0,
@@ -141,18 +143,20 @@ $transportChoisiData = [
     "bateau" => 0
 ];
 
+$transportManquantData = array_fill_keys($transportOptions, 0);
+
 if ($resultTransportChoisi) {
     while ($rowTransportChoisi = $resultTransportChoisi->fetch_assoc()) {
         $transportChoisiList = explode(',', $rowTransportChoisi['transport']);
         foreach ($transportChoisiList as $transportChoisi) {
-            $transportChoisiData[$transportChoisi]++;
+            if (isset($transportChoisiData[$transportChoisi])) {
+                $transportChoisiData[$transportChoisi]++;
+            }
         }
     }
+
+    $transportManquantData = array_diff_key($transportManquantData, $transportChoisiData);
 }
-
-$transportOptions = ['train', 'avion', 'bus', 'bateau'];
-
-$transportManquantData = array_diff($transportOptions, array_keys($transportChoisiData));
 
 $connection->close();
 ?>
@@ -392,47 +396,47 @@ $connection->close();
 
     <!-- Diagramme des moyens de transport non choisis -->
     <script>
-        var barChartTransportManquant = document.getElementById('barChartTransportManquant').getContext('2d');
+    var barChartTransportManquant = document.getElementById('barChartTransportManquant').getContext('2d');
 
-        var chartDataTransportManquant = {
-            labels: <?php echo json_encode($transportManquantData); ?>,
-            datasets: [{
-                data: [<?php echo implode(", ", array_fill(0, count($transportManquantData), 1)); ?>],
-                backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                borderWidth: 1
-            }]
-        };
+    var chartDataTransportManquant = {
+        labels: <?php echo json_encode(array_keys($transportManquantData)); ?>,
+        datasets: [{
+            data: <?php echo json_encode(array_values($transportManquantData)); ?>,
+            backgroundColor: 'rgba(255, 99, 132, 0.7)',
+            borderWidth: 1
+        }]
+    };
 
-        var barConfigTransportManquant = {
-            type: 'bar',
-            data: chartDataTransportManquant,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: "Diagramme des moyens de transport manquants"
-                    }
+    var barConfigTransportManquant = {
+        type: 'bar',
+        data: chartDataTransportManquant,
+        options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+                title: {
+                    display: true,
+                    text: "Diagramme des moyens de transport manquants"
+                }
+            },
+            scales: {
+                x: {
+                    stacked: true
                 },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        display: false
-                    }
+                y: {
+                    beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
                 }
             }
-        };
+        }
+    };
 
-        var myBarChartTransportManquant = new Chart(barChartTransportManquant, barConfigTransportManquant);
-    </script>
+    var myBarChartTransportManquant = new Chart(barChartTransportManquant, barConfigTransportManquant);
+</script>
 
 </body>
 </html>
