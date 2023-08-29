@@ -258,21 +258,27 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
-        // Vérification des cases check pays
-        // const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
-        // const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
+        // Vérification des pays check
+        const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
+        const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
+        const topPaysPreferes = document.getElementById('topPreferredCountries');
+        const topPaysNonPreferes = document.getElementById('topNonPreferredCountries');
 
-        // casesPaysPreferes.forEach(casePaysPreferes => {
-        //     casePaysPreferes.addEventListener('change', function () {
-        //         const value = this.value;
+        casesPaysPreferes.forEach(casePaysPreferes => {
+            casePaysPreferes.addEventListener('change', function () {
+                const value = this.value;
 
-        //         casesPaysNonPreferes.forEach(casePaysNonPreferes => {
-        //             if (casePaysNonPreferes.value === value) {
-        //                 casePaysNonPreferes.disabled = this.checked;
-        //             }
-        //         });
-        //     });
-        // });
+                // Désactiver les cases correspondantes dans Pays où je ne veux pas aller
+                casesPaysNonPreferes.forEach(casePaysNonPreferes => {
+                    if (casePaysNonPreferes.value === value) {
+                        casePaysNonPreferes.disabled = this.checked;
+                    }
+                });
+
+                // Mettre à jour la liste des pays préférés
+                mettreAJourTopPays(casesPaysPreferes, topPaysPreferes, LIMITE_PAYS_PREFERES);
+            });
+        });
 
         casesPaysNonPreferes.forEach(casePaysNonPreferes => {
             casePaysNonPreferes.addEventListener('change', function () {
@@ -284,8 +290,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         casePaysPreferes.disabled = this.checked;
                     }
                 });
+
+                // Mettre à jour la liste des pays non préférés
+                mettreAJourTopPays(casesPaysNonPreferes, topPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
             });
         });
+
+        function mettreAJourTopPays(casesPays, topPays, limite) {
+            const paysSelectionnes = [...casesPays].filter(casePays => casePays.checked).map(casePays => casePays.value);
+            
+            topPays.innerHTML = paysSelectionnes
+                .slice(0, limite)
+                .map(pays => `<li>${pays}</li>`)
+                .join('');
+        }
     </script>
 
     <!-- Vérification du form -->
