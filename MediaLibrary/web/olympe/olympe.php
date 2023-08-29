@@ -318,66 +318,69 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </script>
 
-<script>
-    const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
-    const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
-    const topPaysPreferes = document.getElementById('topPreferredCountries');
-    const topPaysNonPreferes = document.getElementById('topNonPreferredCountries');
-    const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
-    const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
+    <script>
+        const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
+        const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
+        const topPaysPreferes = document.getElementById('topPreferredCountries');
+        const topPaysNonPreferes = document.getElementById('topNonPreferredCountries');
 
-    const LIMITE_PAYS_PREFERES = 5;
-    const LIMITE_PAYS_NON_PREFERES = 3;
-    const DISABLED_TEXT_COLOR = 'red'; // Couleur du texte pour les pays désactivés
+        const LIMITE_PAYS_PREFERES = 5;
+        const LIMITE_PAYS_NON_PREFERES = 3;
+        const DISABLED_TEXT_COLOR = 'red'; // Couleur du texte pour les pays désactivés
 
-    const mettreAJourTopPays = () => {
-        let paysPreferesSelectionnes = [];
-        let paysNonPreferesSelectionnes = [];
+        const mettreAJourTopPays = () => {
+            let paysPreferesSelectionnes = [];
+            let paysNonPreferesSelectionnes = [];
+
+            casesPaysPreferes.forEach(casePays => {
+                if (casePays.checked) {
+                    paysPreferesSelectionnes.push(casePays.value);
+                }
+            });
+
+            casesPaysNonPreferes.forEach(casePays => {
+                if (casePays.checked) {
+                    paysNonPreferesSelectionnes.push(casePays.value);
+                }
+            });
+
+            desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
+            desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
+
+            mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
+        };
+
+        const desactiverCasesNonSelectionnees = (paysSelectionnes, casesPays, limite) => {
+            casesPays.forEach(casePays => {
+                casePays.disabled = !casePays.checked && paysSelectionnes.length >= limite;
+                if (casePays.disabled) {
+                    casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
+                } else {
+                    casePays.parentNode.style.color = ''; // Réinitialiser la couleur si activé
+                }
+            });
+        };
+
+        const mettreAJourListesTopPays = (paysPreferesSelectionnes, paysNonPreferesSelectionnes) => {
+            topPaysPreferes.innerHTML = paysPreferesSelectionnes
+                .slice(0, LIMITE_PAYS_PREFERES)
+                .map(pays => `<li>${pays}</li>`)
+                .join('');
+
+            topPaysNonPreferes.innerHTML = paysNonPreferesSelectionnes
+                .slice(0, LIMITE_PAYS_NON_PREFERES)
+                .map(pays => `<li>${pays}</li>`)
+                .join('');
+        };
 
         casesPaysPreferes.forEach(casePays => {
-            if (casePays.checked) {
-                paysPreferesSelectionnes.push(casePays.value);
-            }
+            casePays.addEventListener('change', mettreAJourTopPays);
         });
 
         casesPaysNonPreferes.forEach(casePays => {
-            if (casePays.checked) {
-                paysNonPreferesSelectionnes.push(casePays.value);
-            }
+            casePays.addEventListener('change', mettreAJourTopPays);
         });
-
-        desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
-        desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
-
-        mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
-    };
-
-    const desactiverCasesNonSelectionnees = (paysSelectionnes, casesPays, limite) => {
-        casesPays.forEach(casePays => {
-            casePays.disabled = !casePays.checked && paysSelectionnes.length >= limite;
-            if (casePays.disabled) {
-                casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
-            } else {
-                casePays.parentNode.style.color = ''; // Réinitialiser la couleur si activé
-            }
-        });
-    };
-
-    const mettreAJourListesTopPays = (paysPreferesSelectionnes, paysNonPreferesSelectionnes) => {
-        topPaysPreferes.innerHTML = paysPreferesSelectionnes
-            .slice(0, LIMITE_PAYS_PREFERES)
-            .map(pays => `<li>${pays}</li>`)
-            .join('');
-
-        topPaysNonPreferes.innerHTML = paysNonPreferesSelectionnes
-            .slice(0, LIMITE_PAYS_NON_PREFERES)
-            .map(pays => `<li>${pays}</li>`)
-            .join('');
-    };
-
-    closePrefCountriesModal.addEventListener('click', mettreAJourTopPays);
-    closeNonPrefCountriesModal.addEventListener('click', mettreAJourTopPays);
-</script>
+    </script>
 
     <!-- Inclure le script pour le calendrier -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
