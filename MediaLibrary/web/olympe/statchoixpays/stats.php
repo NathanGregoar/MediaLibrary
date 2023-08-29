@@ -39,9 +39,6 @@ if ($result) {
     $totalGods = 0; // En cas d'erreur dans la requête
 }
 
-// Détermine si le texte doit être au singulier ou au pluriel
-$text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
-
 // Requête SQL pour récupérer les pays enregistrés dans le champ "pays_non" de tous les utilisateurs
 $queryPaysNon = "SELECT pays_non FROM olympe WHERE pays_non IS NOT NULL";
 $resultPaysNon = $connection->query($queryPaysNon);
@@ -86,6 +83,25 @@ if ($resultPays) {
     }
 }
 
+// Requête SQL pour récupérer les budgets
+$queryBudget = "SELECT budget FROM olympe WHERE budget IS NOT NULL";
+$resultBudget = $connection->query($queryBudget);
+
+$budgetData = []; // Tableau pour stocker les données de budgets
+
+if ($resultBudget) {
+    while ($rowBudget = $resultBudget->fetch_assoc()) {
+        $budget = $rowBudget['budget'];
+        if (!empty($budget)) {
+            $budgetData[] = (float)$budget;
+        }
+    }
+}
+
+$minBudget = min($budgetData);
+$maxBudget = max($budgetData);
+$avgBudget = array_sum($budgetData) / count($budgetData);
+
 $connection->close();
 ?>
 
@@ -106,20 +122,27 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <div style="max-width: 20%; height: 300px;">
-        <canvas id="barChartBudget" aria-label="Diagramme des budgets"></canvas>
-    </div>
+    <fieldset>
+        <legend>Pays où l'Olympe veut partir :</legend>
+        <div style="max-width: 20%;">
+            <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
+        </div>
+    </fieldset>
 
-    <div style="max-width: 20%;">
-        <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
-    </div>
+    <fieldset>
+        <legend>Pays où l'Olympe ne veut pas partir :</legend>
+        <div style="max-width: 20%;">
+            <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
+        </div>
+    </fieldset>
 
-    <div style="max-width: 20%;">
-        <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
-    </div>
+    <fieldset>
+        <legend>Diagramme des budgets :</legend>
+        <div style="max-width: 20%;">
+            <canvas id="barChartBudget" aria-label="Diagramme des budgets"></canvas>
+        </div>
+    </fieldset>
 
-
-    <!-- Diagramme camembert pays -->
     <script>
     // Récupération du contexte du canvas pour le diagramme des pays oui
     var pieChartPaysOui = document.getElementById('pieChartPaysOui').getContext('2d');
@@ -188,42 +211,17 @@ $connection->close();
 
     // Création du graphique camembert pour les pays non
     var myPieChartPaysNon = new Chart(pieChartPaysNon, pieConfigPaysNon);
-    </script>
 
-    <!-- Diagramme battonnet budget-->
-    <script>
     // Récupération du contexte du canvas pour le diagramme des budgets
     var barChartBudget = document.getElementById('barChartBudget').getContext('2d');
-
-    // Calcul des valeurs de budget min, moyen et max
-    var budgets = [
-        <?php
-        $budgets = [];
-
-        $queryBudgets = "SELECT budget FROM olympe WHERE budget IS NOT NULL";
-        $resultBudgets = $connection->query($queryBudgets);
-
-        if ($resultBudgets) {
-            while ($rowBudget = $resultBudgets->fetch_assoc()) {
-                $budgets[] = (float)$rowBudget['budget'];
-            }
-        }
-
-        $minBudget = min($budgets);
-        $maxBudget = max($budgets);
-        $averageBudget = array_sum($budgets) / count($budgets);
-
-        echo $minBudget . ', ' . $averageBudget . ', ' . $maxBudget;
-        ?>
-    ];
 
     // Configuration des données pour le graphique des budgets
     var chartDataBudget = {
         datasets: [{
-            data: budgets,
+            data: [<?php echo $minBudget; ?>, <?php echo $avgBudget; ?>, <?php echo $maxBudget; ?>],
             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            labels: ['Budget Min', 'Budget Moyen', 'Budget Max']
         }],
-        labels: ['Budget Min', 'Budget Moyen', 'Budget Max'],
     };
 
     // Configuration du graphique en bâtonnet pour les budgets
@@ -236,13 +234,13 @@ $connection->close();
             plugins: {
                 title: {
                     display: true,
-                    text: "Diagramme des budgets",
-                },
+                    text: "Diagramme des budgets"
+                }
             },
             legend: {
-                display: false,
-            },
-        },
+                display: false
+            }
+        }
     };
 
     // Création du graphique en bâtonnet pour les budgets
