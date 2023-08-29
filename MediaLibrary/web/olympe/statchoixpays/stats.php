@@ -106,7 +106,7 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <div style="max-width: 20%;">
+    <div style="max-width: 20%; height: 300px;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets"></canvas>
     </div>
 
@@ -248,6 +248,6 @@ $connection->close();
     // Création du graphique en bâtonnet pour les budgets
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
-    
+
 </body>
 </html>
