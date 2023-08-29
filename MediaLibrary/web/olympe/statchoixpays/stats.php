@@ -217,9 +217,19 @@ $connection->close();
     var chartDataBudget = {
         labels: ['Budget Min', 'Moyenne', 'Budget Max'],
         datasets: [{
-            label: 'Budgets',
-            data: [<?php echo $minBudget; ?>, <?php echo $averageBudget; ?>, <?php echo $maxBudget; ?>],
-            backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
+            label: 'Budget Min',
+            data: [<?php echo $minBudget; ?>, 0, 0], // Notez l'utilisation de 0 pour les autres valeurs
+            backgroundColor: 'rgba(255, 99, 132, 0.7)', // Couleur pour le budget min
+            borderWidth: 1
+        }, {
+            label: 'Moyenne',
+            data: [0, <?php echo $averageBudget; ?>, 0], // Notez l'utilisation de 0 pour les autres valeurs
+            backgroundColor: 'rgba(54, 162, 235, 0.7)', // Couleur pour la moyenne
+            borderWidth: 1
+        }, {
+            label: 'Budget Max',
+            data: [0, 0, <?php echo $maxBudget; ?>], // Notez l'utilisation de 0 pour les autres valeurs
+            backgroundColor: 'rgba(255, 206, 86, 0.7)', // Couleur pour le budget max
             borderWidth: 1
         }]
     };
@@ -236,12 +246,22 @@ $connection->close();
                     text: 'Diagramme des budgets min, moyenne et max'
                 }
             },
-            legend: {
-                position: 'bottom',
-            },
             scales: {
+                x: {
+                    stacked: true // Les barres seront empilées horizontalement
+                },
                 y: {
                     beginAtZero: true
+                }
+            },
+            plugins: {
+                legend: {
+                    position: 'top', // Vous pouvez ajuster la position ici
+                    labels: {
+                        font: {
+                            size: 14 // Vous pouvez ajuster la taille de la police ici
+                        }
+                    }
                 }
             }
         }
