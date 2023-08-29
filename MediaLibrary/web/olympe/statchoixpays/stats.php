@@ -150,6 +150,12 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
+    <div>
+        <?php foreach ($transportData as $transport => $count): ?>
+            <p><?php echo ucfirst($transport) . ': ' . $count; ?></p>
+        <?php endforeach; ?>
+    </div>
+
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
