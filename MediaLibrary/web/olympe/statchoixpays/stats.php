@@ -107,7 +107,6 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <div style="max-width: 20%;">
-        <h3>Pays ou l'Olympe veut partir :</h3>
         <canvas id="pieChartPaysOui"></canvas>
     </div>
 
@@ -136,7 +135,7 @@ $connection->close();
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                // position: 'bottom',
+                position: 'bottom',
             },
         },
     };
@@ -164,7 +163,7 @@ $connection->close();
             responsive: true,
             maintainAspectRatio: false,
             legend: {
-                // position: 'bottom',
+                position: 'bottom',
             },
         },
     };
