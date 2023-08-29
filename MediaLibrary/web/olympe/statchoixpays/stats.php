@@ -83,24 +83,20 @@ if ($resultPays) {
     }
 }
 
-// Requête SQL pour récupérer les budgets
-$queryBudget = "SELECT budget FROM olympe WHERE budget IS NOT NULL";
-$resultBudget = $connection->query($queryBudget);
+// Requête SQL pour récupérer le budget minimum et maximum
+$queryBudgetMinMax = "SELECT MIN(budget) AS min_budget, MAX(budget) AS max_budget FROM olympe WHERE budget IS NOT NULL";
+$resultBudgetMinMax = $connection->query($queryBudgetMinMax);
 
-$budgetData = []; // Tableau pour stocker les données de budgets
+$minBudget = 0;
+$maxBudget = 0;
 
-if ($resultBudget) {
-    while ($rowBudget = $resultBudget->fetch_assoc()) {
-        $budget = $rowBudget['budget'];
-        if (!empty($budget)) {
-            $budgetData[] = (float)$budget;
-        }
-    }
+if ($resultBudgetMinMax && $rowBudgetMinMax = $resultBudgetMinMax->fetch_assoc()) {
+    $minBudget = (float)$rowBudgetMinMax['min_budget'];
+    $maxBudget = (float)$rowBudgetMinMax['max_budget'];
 }
 
-$minBudget = !empty($budgetData) ? min($budgetData) : 0;
-$maxBudget = !empty($budgetData) ? max($budgetData) : 0;
-$avgBudget = !empty($budgetData) ? array_sum($budgetData) / count($budgetData) : 0;
+// Calcul de la moyenne des budgets minimum et maximum
+$avgBudget = ($minBudget + $maxBudget) / 2;
 
 $connection->close();
 ?>
@@ -123,6 +119,13 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <fieldset>
+        <legend>Diagramme des budgets :</legend>
+        <div style="max-width: 20%;">
+            <canvas id="barChartBudget" aria-label="Diagramme des budgets"></canvas>
+        </div>
+    </fieldset>
+
+    <fieldset>
         <legend>Pays où l'Olympe veut partir :</legend>
         <div style="max-width: 20%;">
             <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
@@ -133,13 +136,6 @@ $connection->close();
         <legend>Pays où l'Olympe ne veut pas partir :</legend>
         <div style="max-width: 20%;">
             <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
-        </div>
-    </fieldset>
-
-    <fieldset>
-        <legend>Diagramme des budgets :</legend>
-        <div style="max-width: 20%;">
-            <canvas id="barChartBudget" aria-label="Diagramme des budgets"></canvas>
         </div>
     </fieldset>
 
