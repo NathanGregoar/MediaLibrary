@@ -259,21 +259,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Vérification des cases check pays
-        const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
-        const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
+        // const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
+        // const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
 
-        casesPaysPreferes.forEach(casePaysPreferes => {
-            casePaysPreferes.addEventListener('change', function () {
-                const value = this.value;
+        // casesPaysPreferes.forEach(casePaysPreferes => {
+        //     casePaysPreferes.addEventListener('change', function () {
+        //         const value = this.value;
 
-                // Désactiver les cases correspondantes dans Pays où je ne veux pas aller
-                casesPaysNonPreferes.forEach(casePaysNonPreferes => {
-                    if (casePaysNonPreferes.value === value) {
-                        casePaysNonPreferes.disabled = this.checked;
-                    }
-                });
-            });
-        });
+        //         casesPaysNonPreferes.forEach(casePaysNonPreferes => {
+        //             if (casePaysNonPreferes.value === value) {
+        //                 casePaysNonPreferes.disabled = this.checked;
+        //             }
+        //         });
+        //     });
+        // });
 
         casesPaysNonPreferes.forEach(casePaysNonPreferes => {
             casePaysNonPreferes.addEventListener('change', function () {
