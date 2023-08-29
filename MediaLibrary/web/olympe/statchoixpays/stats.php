@@ -107,11 +107,11 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <div style="max-width: 20%;">
-        <canvas id="pieChartPaysOui"></canvas>
+        <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
     </div>
 
     <div style="max-width: 20%;">
-        <canvas id="pieChartPaysNon"></canvas>
+        <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
 
     <script>
