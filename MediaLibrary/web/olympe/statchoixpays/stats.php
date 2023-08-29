@@ -98,9 +98,9 @@ if ($resultBudget) {
     }
 }
 
-$minBudget = min($budgetData);
-$maxBudget = max($budgetData);
-$avgBudget = array_sum($budgetData) / count($budgetData);
+$minBudget = !empty($budgetData) ? min($budgetData) : 0;
+$maxBudget = !empty($budgetData) ? max($budgetData) : 0;
+$avgBudget = !empty($budgetData) ? array_sum($budgetData) / count($budgetData) : 0;
 
 $connection->close();
 ?>
