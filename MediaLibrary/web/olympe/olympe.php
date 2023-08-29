@@ -378,25 +378,45 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Check case cochée dans pays
         casesPaysPreferes.forEach(casePays => {
             casePays.addEventListener('change', () => {
-                mettreAJourTopPays();
-                const correspondingCases = Array.from(casesPaysNonPreferes).filter(
-                    nonPrefCase => nonPrefCase.value === casePays.value
-                );
-                correspondingCases.forEach(correspondingCase => {
-                    correspondingCase.disabled = casePays.checked;
-                });
+                if (casePays.checked) {
+                    // Désactiver la case correspondante dans "paysNonPreferes"
+                    const correspondingCase = Array.from(casesPaysNonPreferes).find(
+                        nonPrefCase => nonPrefCase.value === casePays.value
+                    );
+                    if (correspondingCase) {
+                        correspondingCase.disabled = true;
+                    }
+                } else {
+                    // Réactiver la case correspondante dans "paysNonPreferes"
+                    const correspondingCase = Array.from(casesPaysNonPreferes).find(
+                        nonPrefCase => nonPrefCase.value === casePays.value
+                    );
+                    if (correspondingCase) {
+                        correspondingCase.disabled = false;
+                    }
+                }
             });
         });
 
         casesPaysNonPreferes.forEach(casePays => {
             casePays.addEventListener('change', () => {
-                mettreAJourTopPays();
-                const correspondingCases = Array.from(casesPaysPreferes).filter(
-                    prefCase => prefCase.value === casePays.value
-                );
-                correspondingCases.forEach(correspondingCase => {
-                    correspondingCase.disabled = casePays.checked;
-                });
+                if (casePays.checked) {
+                    // Désactiver la case correspondante dans "paysPreferes"
+                    const correspondingCase = Array.from(casesPaysPreferes).find(
+                        prefCase => prefCase.value === casePays.value
+                    );
+                    if (correspondingCase) {
+                        correspondingCase.disabled = true;
+                    }
+                } else {
+                    // Réactiver la case correspondante dans "paysPreferes"
+                    const correspondingCase = Array.from(casesPaysPreferes).find(
+                        prefCase => prefCase.value === casePays.value
+                    );
+                    if (correspondingCase) {
+                        correspondingCase.disabled = false;
+                    }
+                }
             });
         });
     </script>
