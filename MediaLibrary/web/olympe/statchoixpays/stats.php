@@ -107,7 +107,7 @@ if ($resultBudgetMin && $resultBudgetMax) {
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
 // Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
-$queryTransport = "SELECT transport, transport_non FROM olympe WHERE transport IS NOT NULL";
+$queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
 $resultTransport = $connection->query($queryTransport);
 
 $transportData = [
@@ -117,19 +117,9 @@ $transportData = [
     "bateau" => 0
 ];
 
-$missingTransportData = [
-    "train" => 0,
-    "avion" => 0,
-    "bus" => 0,
-    "bateau" => 0
-];
-
 if ($resultTransport) {
     while ($rowTransport = $resultTransport->fetch_assoc()) {
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
-        $transportNonList = explode(',', $rowTransport['transport_non']); // Séparer les moyens de transport non voulu par des virgules
-
-        // Compter les moyens de transport voulu
         foreach ($transportList as $transport) {
             $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
             $transport = strtolower($transport); // Convertir en minuscules
@@ -137,19 +127,8 @@ if ($resultTransport) {
                 $transportData[$transport]++;
             }
         }
-
-        // Compter les moyens de transport manquants / non voulu
-        foreach ($missingTransportData as $transport => $count) {
-            if (in_array($transport, $transportNonList)) {
-                $missingTransportData[$transport]++;
-            }
-        }
     }
 }
-
-// Calculer le total de transports voulu et non voulu
-$totalTransportVoulu = array_sum($transportData);
-$totalTransportNonVoulu = array_sum($missingTransportData);
 
 $connection->close();
 ?>
@@ -170,11 +149,6 @@ $connection->close();
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
-
-    <div>
-        <p>Transports voulu: <?php echo $totalTransportVoulu; ?></p>
-        <p>Transports non voulu: <?php echo $totalTransportNonVoulu; ?></p>
-    </div>
 
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
