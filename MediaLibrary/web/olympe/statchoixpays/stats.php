@@ -122,8 +122,8 @@ if ($resultTransport) {
         $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
         foreach ($transportList as $transport) {
             $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
-            $transport = strtolower($transport); // Convertir en minuscules
-            if (isset($transportData[$transport])) {
+            $transport = ucfirst(strtolower($transport)); // Convertir en majuscule la première lettre et le reste en minuscules
+            if (array_key_exists($transport, $transportData)) {
                 $transportData[$transport]++;
             }
         }
