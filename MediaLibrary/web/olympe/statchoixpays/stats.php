@@ -217,7 +217,7 @@ $connection->close();
     var chartDataBudget = {
         labels: ['Budget Min', 'Moyenne', 'Budget Max'],
         datasets: [{
-            label: 'Budgets Min','Moyenne', 'Budget Max'
+            label: 'Budgets',
             data: [<?php echo $minBudget; ?>, <?php echo $averageBudget; ?>, <?php echo $maxBudget; ?>],
             backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56'],
             borderWidth: 1
