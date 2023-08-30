@@ -126,9 +126,9 @@ $connection->close();
 <head>
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.css' rel='stylesheet' />
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.js'></script>
 </head>
 <body>
     <div class="navbar">
