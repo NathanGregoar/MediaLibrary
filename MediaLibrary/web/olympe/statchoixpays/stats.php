@@ -114,9 +114,9 @@ $connection->close();
 <head>
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -373,27 +373,27 @@ $connection->close();
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
 
-    <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        var calendarEl = document.getElementById('availabilityCalendar');
-        
-        var commonDates = <?php echo json_encode($commonDates); ?>;
-        
-        var calendar = new FullCalendar.Calendar(calendarEl, {
-            initialView: 'dayGridMonth',
-            events: commonDates.map(function(date) {
-                return {
-                    title: 'Disponible',
-                    start: date,
-                    allDay: true
-                };
-            }),
-            eventColor: '#16A085' // Couleur des événements sur le calendrier
-        });
-
-        calendar.render();
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('availabilityCalendar');
+    
+    var commonDates = <?php echo json_encode($commonDates); ?>;
+    
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: commonDates.map(function(date) {
+            return {
+                title: 'Disponible',
+                start: date,
+                allDay: true
+            };
+        }),
+        eventColor: '#16A085' // Couleur des événements sur le calendrier
     });
-    </script>
+
+    calendar.render();
+});
+</script>
 
 </body>
 </html>
