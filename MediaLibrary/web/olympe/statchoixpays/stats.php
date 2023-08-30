@@ -132,7 +132,7 @@ $connection->close();
     <div>
     <?php
     // Requête SQL pour récupérer les dates de disponibilité des utilisateurs
-    $queryDates = "SELECT added_by, dates_dispo FROM olympe WHERE dates_dispo IS NOT NULL";
+    $queryDates = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
     $resultDates = $connection->query($queryDates);
 
     // Tableau pour stocker les dates de disponibilité par utilisateur
@@ -141,7 +141,7 @@ $connection->close();
     if ($resultDates) {
         while ($rowDates = $resultDates->fetch_assoc()) {
             $userId = $rowDates['added_by'];
-            $datesDispo = $rowDates['dates_dispo'];
+            $datesDispo = $rowDates['dispo'];
 
             $datesDispoArray = explode(',', $datesDispo); // Séparer les dates par des virgules
             $datesDispoByUser[$userId] = $datesDispoArray;
