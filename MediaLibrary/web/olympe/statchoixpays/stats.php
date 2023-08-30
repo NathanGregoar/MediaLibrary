@@ -171,20 +171,6 @@ echo '<div>';
 echo '<h4>Dates communes à tous les utilisateurs :</h4>';
 echo '<p>' . implode(', ', $commonDates) . '</p>';
 echo '</div>';
-
-function getUserName($userId) {
-    global $connection;
-
-    $query = "SELECT username FROM users WHERE id = $userId";
-    $result = $connection->query($query);
-
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['username'];
-    } else {
-        return "Utilisateur inconnu";
-    }
-}
 ?>
 
 
