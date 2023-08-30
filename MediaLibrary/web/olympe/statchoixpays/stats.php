@@ -397,7 +397,7 @@ $connection->close();
     console.log(commonAvailabilityDates);
 
 document.addEventListener('DOMContentLoaded', function() {
-    var commonAvailabilityDates = <?php echo json_encode($commonAvailabilityDates); ?>;
+    var commonAvailabilityDates = <?php echo $commonAvailabilityDates; ?>;
 
     var calendarEl = document.getElementById('availabilityCalendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
