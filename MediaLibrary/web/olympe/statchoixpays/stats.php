@@ -407,6 +407,9 @@ document.addEventListener('DOMContentLoaded', function () {
       return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
   }, $commonAvailabilityDates);
 
+  // Trier les dates en ordre chronologique
+  sort($commonAvailabilityDates);
+
   $connection->close();
   ?>
 
