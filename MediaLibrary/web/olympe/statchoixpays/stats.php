@@ -201,7 +201,7 @@ foreach ($transportByUser as $userId => $transportChoices) {
 echo '</ul>';
 
 // Supprimer les doublons des moyens de transport manquants
-$missingTransportByUser = array_unique($missingTransportByUser);
+$missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
 
 // Afficher les moyens de transport manquants par utilisateur
 if (!empty($missingTransportByUser)) {
@@ -231,6 +231,7 @@ function getUserName($userId) {
     }
 }
 ?>
+
 
 
 
