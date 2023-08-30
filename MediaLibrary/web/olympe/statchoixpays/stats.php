@@ -153,14 +153,34 @@ $connection->close();
         }
     }
 
+    // Fermer la connexion à la base de données
+    $connection->close();
+
+    // Trouver les dates communes à tous les utilisateurs
+    $commonDates = [];
+    $firstUser = true;
+
+    foreach ($datesDispoByUser as $datesDispoArray) {
+        if ($firstUser) {
+            $commonDates = $datesDispoArray;
+            $firstUser = false;
+        } else {
+            $commonDates = array_intersect($commonDates, $datesDispoArray);
+        }
+    }
+
     // Afficher les dates de disponibilité par utilisateur
     foreach ($datesDispoByUser as $userId => $datesDispoArray) {
         $userName = getUserName($userId); // Récupérer le nom d'utilisateur
         echo '<p><strong>' . $userName . '</strong> : ' . implode(', ', $datesDispoArray) . '</p>';
     }
-    $connection->close();
+
+    // Afficher les dates communes à tous les utilisateurs
+    echo '<h4>Dates communes à tous les utilisateurs :</h4>';
+    echo '<p>' . implode(', ', $commonDates) . '</p>';
     ?>
 </div>
+
 
 
 
