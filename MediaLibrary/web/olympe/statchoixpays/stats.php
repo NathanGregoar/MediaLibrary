@@ -151,7 +151,7 @@ if ($resultDates) {
 
 $connection->close();
 
-$commonDates = [];
+$commonDates = null;
 $firstUser = true;
 foreach ($datesDispoByUser as $datesDispoArray) {
     if ($firstUser) {
@@ -169,9 +169,14 @@ foreach ($datesDispoByUser as $userId => $datesDispoArray) {
 
 echo '<div>';
 echo '<h4>Dates communes à tous les utilisateurs :</h4>';
-echo '<p>' . implode(', ', $commonDates) . '</p>';
+if ($commonDates !== null && !empty($commonDates)) {
+    echo '<p>' . implode(', ', $commonDates) . '</p>';
+} else {
+    echo '<p>Aucune date commune trouvée.</p>';
+}
 echo '</div>';
 ?>
+
 
 
 
