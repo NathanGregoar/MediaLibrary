@@ -10,9 +10,9 @@ $email = $_SESSION['email'] ?? '';
 $loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
-if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
-    // Redirection vers la page d'accueil
-    header("Location: ../accueil/index.php");
+$allowedRoles = ["admin", "olympe"]; // Rôles autorisés
+if (!in_array($loggedInUser['role'], $allowedRoles)) {
+    header("Location: ../../accueil/index.php");
     exit();
 }
 
