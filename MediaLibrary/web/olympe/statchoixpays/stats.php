@@ -9,6 +9,9 @@ $username = $_SESSION['username'] ?? '';
 $email = $_SESSION['email'] ?? '';
 $loggedInUser = getLoggedInUser();
 
+// Obtenez le rôle de l'utilisateur actuellement connecté
+$userRole = $loggedInUser['role'];
+
 // Vérification si l'utilisateur est autorisé à accéder à la page
 if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     // Redirection vers la page d'accueil
@@ -127,6 +130,7 @@ $connection->close();
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
+    <h1><?php echo $username; ?> (<?php echo $userRole; ?>)</h1>
 
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
