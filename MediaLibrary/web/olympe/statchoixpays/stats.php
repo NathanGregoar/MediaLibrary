@@ -125,16 +125,19 @@ $averageBudget = ($minBudget + $maxBudget) / 2;
 $queryAllDispos = "SELECT dispo FROM olympe WHERE dispo IS NOT NULL";
 $resultAllDispos = $connection->query($queryAllDispos);
 
-$allDispos = []; // Tableau pour stocker les disponibilités de tous les utilisateurs
+$userDispos = []; // Tableau pour stocker les disponibilités par utilisateur
 
 if ($resultAllDispos) {
     while ($rowAllDispos = $resultAllDispos->fetch_assoc()) {
         $dispoDates = explode(',', $rowAllDispos['dispo']); // Séparer les dates par des virgules
-        $allDispos = array_merge($allDispos, $dispoDates);
+        $userDispos[] = $dispoDates;
     }
 }
-$allDispos = array_unique($allDispos); // Supprimer les doublons
-sort($allDispos); // Trier les dates par ordre croissant
+
+// Trouver les dates communes
+$commonDispos = call_user_func_array('array_intersect', $userDispos);
+$commonDispos = array_unique($commonDispos); // Supprimer les doublons
+sort($commonDispos); // Trier les dates par ordre croissant
 
 
 
@@ -406,7 +409,7 @@ document.addEventListener('DOMContentLoaded', function () {
             right: 'dayGridMonth,timeGridWeek,timeGridDay'
         },
         events: [
-            <?php foreach ($allDispos as $date) : ?>
+            <?php foreach ($commonDispos as $date) : ?>
             {
                 title: 'Disponible',
                 start: '<?php echo $date; ?>'
