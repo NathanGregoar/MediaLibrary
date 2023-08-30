@@ -158,7 +158,7 @@ $connection->close();
     $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
 
     // Affichage des données de transport pour chaque utilisateur (pour débogage)
-    echo '<h6>Transport souhaités :</h6>';
+    echo '<h4>Transport souhaités :</h4>';
     echo '<ul>';
     while ($rowUser = $resultUsers->fetch_assoc()) {
         $userId = $rowUser['added_by'];
@@ -298,7 +298,7 @@ $connection->close();
             plugins: {
                 title: {
                     display: true,
-                    text: 'Diagramme des budgets min, moyenne et max'
+                    text: "Diagramme des budgets",
                 }
             },
             scales: {
