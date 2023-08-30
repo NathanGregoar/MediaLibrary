@@ -161,6 +161,24 @@ $connection->close();
     // Récupération des moyens de transport
     $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
 
+    // Affichage des données de transport pour chaque utilisateur (pour débogage)
+    echo '<h3>Données de transport pour chaque utilisateur :</h3>';
+    echo '<ul>';
+    while ($rowUser = $resultUsers->fetch_assoc()) {
+        $userId = $rowUser['added_by'];
+
+        $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
+        $resultTransport = $connection->query($queryTransport);
+
+        $transportChoices = [];
+
+        while ($rowTransport = $resultTransport->fetch_assoc()) {
+            $transportChoices = explode(', ', $rowTransport['transport']);
+        }
+
+        echo '<li>Utilisateur ' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
+    }
+    echo '</ul>';
     // Création du tableau
     echo '<table>';
     echo '<thead><tr><th>Pseudos</th>';
