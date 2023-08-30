@@ -106,6 +106,21 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
+// Récupération des disponibilités de chaque utilisateur
+$queryDispos = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
+$resultDispos = $connection->query($queryDispos);
+
+$disposByUser = []; // Tableau pour stocker les disponibilités par utilisateur
+
+if ($resultDispos) {
+    while ($rowDispos = $resultDispos->fetch_assoc()) {
+        $userId = $rowDispos['added_by'];
+        $dispoDates = explode(',', $rowDispos['dispo']); // Séparer les dates par des virgules
+        $disposByUser[$userId] = $dispoDates;
+    }
+}
+
+
 $connection->close();
 ?>
 
@@ -137,6 +152,17 @@ $connection->close();
     <div style="max-width: 20%;">
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
+
+    <?php
+    echo '<h4>Disponibilités des utilisateurs :</h4>';
+    echo '<ul>';
+    foreach ($disposByUser as $userId => $dispoDates) {
+        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+        echo '<li>' . $userName . ': ' . implode(', ', $dispoDates) . '</li>';
+    }
+    echo '</ul>';
+    ?>
+
 
     <?php
     require_once '../../utils/auth.php';
