@@ -176,9 +176,10 @@ $connection->close();
             $transportChoices = explode(', ', $rowTransport['transport']);
         }
 
-        echo '<li>Utilisateur ' . getUserName($userId) . ': ' . implode('', $transportChoices) . '</li>';
+        echo '<li>Utilisateur ' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
     }
     echo '</ul>';
+
     // Création du tableau
     echo '<table>';
     echo '<thead><tr><th>Pseudos</th>';
@@ -208,7 +209,7 @@ $connection->close();
         foreach ($transportOptions as $transport) {
             // Vérifie si le moyen de transport est choisi par l'utilisateur
             $cellColor = in_array($transport, $transportChoices) ? 'green' : 'white';
-            echo '<td style="background-color: ' . $cellColor . ';"></td>';
+            echo '<td style="background-color: ' . $cellColor . ';">' . (in_array($transport, $transportChoices) ? 'X' : '') . '</td>';
         }
 
         echo '</tr>';
@@ -220,10 +221,10 @@ $connection->close();
     // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
     function getUserName($userId) {
         global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
-
+    
         $query = "SELECT username FROM users WHERE id = $userId";
         $result = $connection->query($query);
-
+    
         if ($result && $result->num_rows > 0) {
             $row = $result->fetch_assoc();
             return $row['username'];
