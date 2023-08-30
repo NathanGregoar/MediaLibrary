@@ -128,64 +128,6 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-
-    <?php
-$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-if ($connection->connect_error) {
-    die('Erreur de connexion : ' . $connection->connect_error);
-}
-
-$queryDates = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
-$resultDates = $connection->query($queryDates);
-
-$datesDispoByUser = [];
-if ($resultDates) {
-    while ($rowDates = $resultDates->fetch_assoc()) {
-        $userId = $rowDates['added_by'];
-        $datesDispo = $rowDates['dispo'];
-
-        $datesDispoArray = explode(',', $datesDispo);
-        $datesDispoByUser[$userId] = $datesDispoArray;
-    }
-}
-
-$connection->close();
-
-$commonDates = [];
-
-// Initialize common dates with the dates from the first user
-$firstUserDates = reset($datesDispoByUser);
-$commonDates = $firstUserDates;
-
-// Loop through each user's dates
-foreach ($datesDispoByUser as $datesDispoArray) {
-    // Find the common dates with the current user's dates
-    $commonDates = array_intersect($commonDates, $datesDispoArray);
-}
-
-foreach ($datesDispoByUser as $userId => $datesDispoArray) {
-    $userName = getUserName($userId);
-    echo '<p><strong>' . $userName . '</strong> : ' . implode(', ', $datesDispoArray) . '</p>';
-}
-
-echo '<div>';
-echo '<h4>Dates communes à tous les utilisateurs :</h4>';
-if (!empty($commonDates)) {
-    echo '<p>' . implode(', ', $commonDates) . '</p>';
-} else {
-    echo '<p>Aucune date commune trouvée.</p>';
-}
-echo '</div>';
-?>
-
-
-
-
-
-
-
-
-
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
@@ -429,6 +371,28 @@ echo '</div>';
     };
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
+    </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        var calendarEl = document.getElementById('availabilityCalendar');
+        
+        var commonDates = <?php echo json_encode($commonDates); ?>;
+        
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            events: commonDates.map(function(date) {
+                return {
+                    title: 'Disponible',
+                    start: date,
+                    allDay: true
+                };
+            }),
+            eventColor: '#16A085' // Couleur des événements sur le calendrier
+        });
+
+        calendar.render();
+    });
     </script>
 
 </body>
