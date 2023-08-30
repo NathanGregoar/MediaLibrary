@@ -2,20 +2,6 @@
 require_once '../../utils/auth.php';
 require_once '../../utils/config.php';
 
-// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-function getUserName($userId) {
-    global $connection;
-    $query = "SELECT username FROM users WHERE id = $userId";
-    $result = $connection->query($query);
-
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['username'];
-    } else {
-        return "Utilisateur inconnu";
-    }
-}
-
 // Démarrage de la session
 session_start();
 
@@ -25,81 +11,100 @@ $loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
 if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
+    // Redirection vers la page d'accueil
     header("Location: ../accueil/index.php");
     exit();
 }
 
-// Connexion à la base de données
+// Connexion à la base de données (à adapter avec vos informations d'accès)
+$host = 'db';
+$dbuser = 'nathan';
+$dbpassword = '444719';
+$dbname = 'media_library';
+
 $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-// Requête SQL pour compter le nombre total de dieux
-$queryTotalGods = "SELECT COUNT(id) AS total FROM olympe";
-$totalGodsResult = $connection->query($queryTotalGods);
-$totalGods = ($totalGodsResult && $totalGodsResult->num_rows > 0) ? $totalGodsResult->fetch_assoc()['total'] : 0;
+// Requête SQL pour compter le nombre d'enregistrements dans la table "olympe"
+$query = "SELECT COUNT(id) AS total FROM olympe";
+$result = $connection->query($query);
+
+if ($result) {
+    $row = $result->fetch_assoc();
+    $totalGods = $row['total'];
+} else {
+    $totalGods = 0; // En cas d'erreur dans la requête
+}
 
 // Détermine si le texte doit être au singulier ou au pluriel
 $text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
 
-// Requête SQL pour récupérer les pays enregistrés
-$queryPays = "SELECT pays_non, pays_oui FROM olympe WHERE pays_non IS NOT NULL OR pays_oui IS NOT NULL";
+// Requête SQL pour récupérer les pays enregistrés dans le champ "pays_non" de tous les utilisateurs
+$queryPaysNon = "SELECT pays_non FROM olympe WHERE pays_non IS NOT NULL";
+$resultPaysNon = $connection->query($queryPaysNon);
+
+$paysNonData = []; // Tableau pour stocker les données des pays non
+
+if ($resultPaysNon) {
+    while ($rowPaysNon = $resultPaysNon->fetch_assoc()) {
+        $paysNonList = explode(',', $rowPaysNon['pays_non']); // Séparer les pays par des virgules
+        foreach ($paysNonList as $paysNon) {
+            $paysNon = trim($paysNon); // Supprimer les espaces autour du nom du pays
+            if (!empty($paysNon)) {
+                if (!isset($paysNonData[$paysNon])) {
+                    $paysNonData[$paysNon] = 1;
+                } else {
+                    $paysNonData[$paysNon]++;
+                }
+            }
+        }
+    }
+}
+
+// Requête SQL pour récupérer les pays enregistrés dans le champ "pays_oui"
+$queryPays = "SELECT pays_oui FROM olympe WHERE pays_oui IS NOT NULL";
 $resultPays = $connection->query($queryPays);
 
-$paysData = [];
-$paysNonData = [];
+$paysData = []; // Tableau pour stocker les données des pays
 
 if ($resultPays) {
     while ($rowPays = $resultPays->fetch_assoc()) {
-        $paysNonList = explode(',', $rowPays['pays_non'] ?? '');
-        $paysOuiList = explode(',', $rowPays['pays_oui'] ?? '');
-
-        foreach ($paysNonList as $paysNon) {
-            $paysNon = trim($paysNon);
-            if (!empty($paysNon)) {
-                $paysNonData[$paysNon] = ($paysNonData[$paysNon] ?? 0) + 1;
-            }
-        }
-
-        foreach ($paysOuiList as $paysOui) {
-            $paysOui = trim($paysOui);
-            if (!empty($paysOui) && !array_key_exists($paysOui, $paysNonData)) {
-                $paysData[$paysOui] = ($paysData[$paysOui] ?? 0) + 1;
+        $paysList = explode(',', $rowPays['pays_oui']); // Séparer les pays par des virgules
+        foreach ($paysList as $pays) {
+            $pays = trim($pays); // Supprimer les espaces autour du nom du pays
+            if (!empty($pays) && !array_key_exists($pays, $paysNonData)) {
+                if (!isset($paysData[$pays])) {
+                    $paysData[$pays] = 1;
+                } else {
+                    $paysData[$pays]++;
+                }
             }
         }
     }
 }
 
-// Requête SQL pour récupérer les budgets min et max
-$queryBudgets = "SELECT MIN(budget_min) AS minBudget, MAX(budget_max) AS maxBudget FROM olympe";
-$resultBudgets = $connection->query($queryBudgets);
-$budgets = ($resultBudgets && $resultBudgets->num_rows > 0) ? $resultBudgets->fetch_assoc() : ['minBudget' => 0, 'maxBudget' => 0];
+// Récupère les budgets min et max
+$queryBudgetMin = "SELECT MIN(budget_min) AS minBudget FROM olympe";
+$queryBudgetMax = "SELECT MAX(budget_max) AS maxBudget FROM olympe";
 
-$minBudget = $budgets['minBudget'];
-$maxBudget = $budgets['maxBudget'];
+$resultBudgetMin = $connection->query($queryBudgetMin);
+$resultBudgetMax = $connection->query($queryBudgetMax);
+
+$minBudget = 0;
+$maxBudget = 0;
+
+if ($resultBudgetMin && $resultBudgetMax) {
+    $rowMin = $resultBudgetMin->fetch_assoc();
+    $minBudget = $rowMin['minBudget'];
+
+    $rowMax = $resultBudgetMax->fetch_assoc();
+    $maxBudget = $rowMax['maxBudget'];
+}
+
 $averageBudget = ($minBudget + $maxBudget) / 2;
-
-// Récupération des moyens de transport et des utilisateurs
-$transportOptions = ['avion', 'train', 'bus', 'bateau'];
-$queryTransportUsers = "SELECT DISTINCT added_by, transport FROM olympe";
-$resultTransportUsers = $connection->query($queryTransportUsers);
-
-$transportByUser = [];
-$missingTransportByUser = [];
-
-while ($rowTransportUser = $resultTransportUsers->fetch_assoc()) {
-    $userId = $rowTransportUser['added_by'];
-    $transportChoices = explode(',', $rowTransportUser['transport']);
-    $transportChoices = array_map('trim', array_map('strtolower', $transportChoices));
-    $transportByUser[$userId] = $transportChoices;
-
-    $missingForUser = array_diff($transportOptions, $transportChoices);
-    if (!empty($missingForUser)) {
-        $missingTransportByUser[$userId] = $missingForUser;
-    }
-}
 
 $connection->close();
 ?>
@@ -209,20 +214,20 @@ if (!empty($missingTransportByUser)) {
     echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
 }
 
-// // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-// function getUserName($userId) {
-//     global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+function getUserName($userId) {
+    global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
 
-//     $query = "SELECT username FROM users WHERE id = $userId";
-//     $result = $connection->query($query);
+    $query = "SELECT username FROM users WHERE id = $userId";
+    $result = $connection->query($query);
 
-//     if ($result && $result->num_rows > 0) {
-//         $row = $result->fetch_assoc();
-//         return $row['username'];
-//     } else {
-//         return "Utilisateur inconnu";
-//     }
-// }
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['username'];
+    } else {
+        return "Utilisateur inconnu";
+    }
+}
 
 $connection->close();
 ?>
