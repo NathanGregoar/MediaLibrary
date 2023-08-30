@@ -298,7 +298,10 @@ $connection->close();
             plugins: {
                 title: {
                     display: true,
-                    text: "Diagramme des budgets",
+                    text: "Diagramme des budgets", // Titre correctement configuré
+                    font: {
+                        size: 14 // Ajustez la taille de la police ici
+                    }
                 }
             },
             scales: {
