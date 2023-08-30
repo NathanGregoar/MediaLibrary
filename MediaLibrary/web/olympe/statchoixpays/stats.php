@@ -388,17 +388,21 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Requête SQL pour récupérer les dates de disponibilité en commun
   $queryDates = "SELECT dispo FROM olympe";
-  $resultDates = $connection->query($queryDates);
+$resultDates = $connection->query($queryDates);
 
-  if ($resultDates) {
-      while ($rowDates = $resultDates->fetch_assoc()) {
-          $dates = explode(',', $rowDates['dispo']);
-          $commonAvailabilityDates = array_intersect($commonAvailabilityDates, $dates);
-          if (empty($commonAvailabilityDates)) {
-              $commonAvailabilityDates = $dates;
-          }
-      }
-  }
+$commonAvailabilityDates = [];
+
+if ($resultDates) {
+    while ($rowDates = $resultDates->fetch_assoc()) {
+        $dates = explode(',', $rowDates['dispo']);
+        $commonAvailabilityDates = array_merge($commonAvailabilityDates, $dates);
+    }
+}
+
+$commonAvailabilityDates = array_unique($commonAvailabilityDates);
+$commonAvailabilityDates = array_map(function($date) {
+    return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
+}, $commonAvailabilityDates);
 
   $connection->close();
   ?>
