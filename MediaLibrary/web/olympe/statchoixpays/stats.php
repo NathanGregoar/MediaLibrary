@@ -156,8 +156,11 @@ $resultUsers = $connection->query($queryUsers);
 // Récupération des moyens de transport
 $transportOptions = ['avion', 'train', 'bus', 'bateau']; // Noms en minuscule et sans espace
 
-// Tableau pour stocker les moyens de transport manquants
-$missingTransport = [];
+// Tableau pour stocker les moyens de transport manquants par utilisateur
+$missingTransportByUser = [];
+
+// Tableau pour stocker les moyens de transport par utilisateur
+$transportByUser = [];
 
 // Parcourir chaque utilisateur
 while ($rowUser = $resultUsers->fetch_assoc()) {
@@ -177,25 +180,53 @@ while ($rowUser = $resultUsers->fetch_assoc()) {
     // Vérifier les moyens de transport manquants pour cet utilisateur
     $missingForUser = array_diff($transportOptions, $transportChoices);
 
-    // Ajouter les moyens de transport manquants au tableau global
-    $missingTransport = array_merge($missingTransport, $missingForUser);
+    // Stocker les moyens de transport pour cet utilisateur
+    $transportByUser[$userId] = $transportChoices;
+
+    // Stocker les moyens de transport manquants par utilisateur
+    if (!empty($missingForUser)) {
+        $missingTransportByUser[$userId] = $missingForUser;
+    }
 }
 
 $connection->close();
 
-// Supprimer les doublons des moyens de transport manquants
-$missingTransport = array_unique($missingTransport);
+// Afficher les utilisateurs et leurs moyens de transport sélectionnés
+echo '<h4>Transport souhaités par utilisateur :</h4>';
+echo '<ul>';
+foreach ($transportByUser as $userId => $transportChoices) {
+    echo '<li>' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
+}
+echo '</ul>';
 
-// Afficher les moyens de transport manquants
-if (!empty($missingTransport)) {
-    echo '<h4>Moyens de transport manquants :</h4>';
+// Supprimer les doublons des moyens de transport manquants
+$missingTransportByUser = array_unique($missingTransportByUser);
+
+// Afficher les moyens de transport manquants par utilisateur
+if (!empty($missingTransportByUser)) {
+    echo '<h4>Moyens de transport manquants par utilisateur :</h4>';
     echo '<ul>';
-    foreach ($missingTransport as $missing) {
-        echo '<li>' . ucfirst($missing) . '</li>'; // Afficher avec la première lettre en majuscule
+    foreach ($missingTransportByUser as $userId => $missingForUser) {
+        echo '<li>' . getUserName($userId) . ' : ' . implode(', ', $missingForUser) . '</li>';
     }
     echo '</ul>';
 } else {
-    echo '<h4>Tous les moyens de transport sont sélectionnés.</h4>';
+    echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
+}
+
+// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+function getUserName($userId) {
+    global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+
+    $query = "SELECT username FROM users WHERE id = $userId";
+    $result = $connection->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['username'];
+    } else {
+        return "Utilisateur inconnu";
+    }
 }
 ?>
 
