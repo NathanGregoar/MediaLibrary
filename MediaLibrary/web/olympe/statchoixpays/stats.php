@@ -388,27 +388,30 @@ document.addEventListener('DOMContentLoaded', function () {
 
   // Requête SQL pour récupérer les dates de disponibilité en commun
   $queryDates = "SELECT dispo FROM olympe";
-$resultDates = $connection->query($queryDates);
+  $resultDates = $connection->query($queryDates);
 
-$commonAvailabilityDates = [];
+  $usersAvailabilityDates = []; // Tableau pour stocker les dates de tous les utilisateurs
 
-if ($resultDates) {
-    while ($rowDates = $resultDates->fetch_assoc()) {
-        $dates = explode(',', $rowDates['dispo']);
-        $commonAvailabilityDates = array_merge($commonAvailabilityDates, $dates);
-    }
-}
+  if ($resultDates) {
+      while ($rowDates = $resultDates->fetch_assoc()) {
+          $dates = explode(',', $rowDates['dispo']);
+          $usersAvailabilityDates[] = $dates; // Ajouter les dates de chaque utilisateur dans un tableau
+      }
+  }
 
-$commonAvailabilityDates = array_unique($commonAvailabilityDates);
-$commonAvailabilityDates = array_map(function($date) {
-    return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
-}, $commonAvailabilityDates);
+  // Trouver les dates en commun en utilisant l'intersection des tableaux
+  $commonAvailabilityDates = call_user_func_array('array_intersect', $usersAvailabilityDates);
+
+  $commonAvailabilityDates = array_unique($commonAvailabilityDates);
+  $commonAvailabilityDates = array_map(function($date) {
+      return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
+  }, $commonAvailabilityDates);
 
   $connection->close();
   ?>
 
-  var calendarEl = document.getElementById('availabilityCalendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
+    var calendarEl = document.getElementById('availabilityCalendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth', // Vue mensuelle
     events: [
       <?php
