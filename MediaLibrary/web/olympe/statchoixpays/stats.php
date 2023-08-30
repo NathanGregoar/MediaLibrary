@@ -2,6 +2,20 @@
 require_once '../../utils/auth.php';
 require_once '../../utils/config.php';
 
+// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+function getUserName($userId) {
+    global $connection;
+    $query = "SELECT username FROM users WHERE id = $userId";
+    $result = $connection->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['username'];
+    } else {
+        return "Utilisateur inconnu";
+    }
+}
+
 // Démarrage de la session
 session_start();
 
@@ -84,20 +98,6 @@ while ($rowTransportUser = $resultTransportUsers->fetch_assoc()) {
     $missingForUser = array_diff($transportOptions, $transportChoices);
     if (!empty($missingForUser)) {
         $missingTransportByUser[$userId] = $missingForUser;
-    }
-}
-
-// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-function getUserName($userId) {
-    global $connection;
-    $query = "SELECT username FROM users WHERE id = $userId";
-    $result = $connection->query($query);
-
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['username'];
-    } else {
-        return "Utilisateur inconnu";
     }
 }
 
