@@ -394,6 +394,8 @@ $connection->close();
     </script>
 
 <script>
+    console.log(commonAvailabilityDates);
+
 document.addEventListener('DOMContentLoaded', function() {
     var commonAvailabilityDates = <?php echo json_encode($commonAvailabilityDates); ?>;
 
