@@ -114,6 +114,7 @@ $connection->close();
 <head>
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
     <div class="navbar">
