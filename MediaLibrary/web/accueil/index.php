@@ -65,7 +65,7 @@ $email = $_SESSION['email'];
             <?php
             // Vérification si l'utilisateur a accès a la page
             $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
-            if (!in_array($loggedInUser['role'], $allowedRoles)) {
+            if (in_array($loggedInUser['role'], $allowedRoles)) {
                 echo '<a href="../olympe/olympe.php" class="olympe">';
                 echo '<img src="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png" alt="olympe">';
                 echo '</a>';
