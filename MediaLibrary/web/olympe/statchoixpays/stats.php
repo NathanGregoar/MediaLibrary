@@ -394,6 +394,15 @@ var chartDataTransportSouhaite = {
     ]
 };
 
+// Configuration des données pour les tooltips (info bulles)
+var tooltipsTransportSouhaite = {};
+<?php
+foreach ($transportByUser as $userId => $transportChoices) {
+    $userName = getUserName($userId);
+    echo "tooltipsTransportSouhaite['$userId'] = '$userName';";
+}
+?>
+
 var barConfigTransportSouhaite = {
     type: 'bar',
     data: chartDataTransportSouhaite,
@@ -418,21 +427,16 @@ var barConfigTransportSouhaite = {
             }
         },
         plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    font: {
-                        size: 10
-                    }
-                }
-            },
             tooltip: {
                 callbacks: {
                     title: function(context) {
                         return context[0].label;
                     },
                     label: function(context) {
-                        return 'Utilisateurs : ' + context.parsed.y;
+                        var transport = context[0].label;
+                        var utilisateurs = context.parsed.y;
+                        var utilisateursList = tooltipsTransportSouhaite[transport];
+                        return 'Utilisateurs : ' + utilisateurs + ' (' + utilisateursList + ')';
                     }
                 }
             }
@@ -458,6 +462,16 @@ var chartDataTransportNonSouhaite = {
     ]
 };
 
+// Configuration des données pour les tooltips (info bulles)
+var tooltipsTransportNonSouhaite = {};
+<?php
+foreach ($missingTransportByUser as $userId => $missingForUser) {
+    $userName = getUserName($userId);
+    $missingList = implode(', ', $missingForUser);
+    echo "tooltipsTransportNonSouhaite['$userId'] = '$userName : $missingList';";
+}
+?>
+
 var barConfigTransportNonSouhaite = {
     type: 'bar',
     data: chartDataTransportNonSouhaite,
@@ -482,14 +496,6 @@ var barConfigTransportNonSouhaite = {
             }
         },
         plugins: {
-            legend: {
-                position: 'top',
-                labels: {
-                    font: {
-                        size: 10
-                    }
-                }
-            },
             tooltip: {
                 callbacks: {
                     title: function(context) {
@@ -497,9 +503,8 @@ var barConfigTransportNonSouhaite = {
                     },
                     label: function(context) {
                         var transport = context[0].label;
-                        var utilisateurs = context.parsed.y;
-                        var utilisateursList = <?php echo json_encode($utilisateursParTransportNonSouhaite); ?>;
-                        return 'Utilisateurs : ' + utilisateurs + ' (' + utilisateursList[transport].join(', ') + ')';
+                        var utilisateursInfo = tooltipsTransportNonSouhaite[transport];
+                        return utilisateursInfo || 'Aucun utilisateur';
                     }
                 }
             }
@@ -508,6 +513,7 @@ var barConfigTransportNonSouhaite = {
 };
 
 var myBarChartTransportNonSouhaite = new Chart(barChartTransportNonSouhaite, barConfigTransportNonSouhaite);
+
 </script>
 
 </body>
