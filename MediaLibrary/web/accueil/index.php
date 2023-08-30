@@ -12,6 +12,7 @@ if (isset($_POST['logout'])) {
     exit();
 }
 
+$loggedInUser = getLoggedInUser();
 $username = $_SESSION['username'];
 $email = $_SESSION['email'];
 ?>
@@ -24,7 +25,7 @@ $email = $_SESSION['email'];
 </head>
 <body>
     <header>
-        <h1 class="welcome-message">Bienvenue, <?php echo $username; ?> !</h1>
+        <h1 class="welcome-message">Bienvenue, <?php echo $username; $loggedInUser['role']?> !</h1>
         <form method="post" action="" class="logout-form">
             <input type="submit" name="logout" value="Déconnexion">
         </form>
