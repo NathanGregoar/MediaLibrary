@@ -106,6 +106,18 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
+// Requête SQL pour récupérer les dates communes
+$queryCommonDates = "SELECT date_commune FROM olympe_dates";
+$resultCommonDates = $connection->query($queryCommonDates);
+
+$commonDates = []; // Tableau pour stocker les dates communes
+
+if ($resultCommonDates) {
+    while ($rowCommonDate = $resultCommonDates->fetch_assoc()) {
+        $commonDates[] = $rowCommonDate['date_commune'];
+    }
+}
+
 $connection->close();
 ?>
 
