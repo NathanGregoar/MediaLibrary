@@ -139,60 +139,64 @@ $connection->close();
     </div>
 
     <?php
-    require_once '../../utils/auth.php';
-    require_once '../../utils/config.php';
+require_once '../../utils/auth.php';
+require_once '../../utils/config.php';
 
-    // Connexion à la base de données
-    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+// Connexion à la base de données
+$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
-    if ($connection->connect_error) {
-        die('Erreur de connexion : ' . $connection->connect_error);
+if ($connection->connect_error) {
+    die('Erreur de connexion : ' . $connection->connect_error);
+}
+
+// Récupération des utilisateurs ayant des enregistrements dans la table olympe
+$queryUsers = "SELECT DISTINCT added_by FROM olympe";
+$resultUsers = $connection->query($queryUsers);
+
+// Récupération des moyens de transport
+$transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
+
+// Tableau pour stocker les moyens de transport manquants
+$missingTransport = [];
+
+// Parcourir chaque utilisateur
+while ($rowUser = $resultUsers->fetch_assoc()) {
+    $userId = $rowUser['added_by'];
+
+    $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
+    $resultTransport = $connection->query($queryTransport);
+
+    $transportChoices = [];
+
+    while ($rowTransport = $resultTransport->fetch_assoc()) {
+        $transportChoices = explode(', ', $rowTransport['transport']);
     }
 
+    // Vérifier les moyens de transport manquants pour cet utilisateur
+    $missingForUser = array_diff($transportOptions, $transportChoices);
     
-    // Récupération des utilisateurs ayant des enregistrements dans la table olympe
-    $queryUsers = "SELECT DISTINCT added_by FROM olympe";
-    $resultUsers = $connection->query($queryUsers);
+    // Ajouter les moyens de transport manquants au tableau global
+    $missingTransport = array_merge($missingTransport, $missingForUser);
+}
 
-    // Récupération des moyens de transport
-    $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
+$connection->close();
 
-    // Affichage des données de transport pour chaque utilisateur (pour débogage)
-    echo '<h4>Transport souhaités :</h4>';
+// Supprimer les doublons des moyens de transport manquants
+$missingTransport = array_unique($missingTransport);
+
+// Afficher les moyens de transport manquants
+if (!empty($missingTransport)) {
+    echo '<h4>Moyens de transport manquants :</h4>';
     echo '<ul>';
-    while ($rowUser = $resultUsers->fetch_assoc()) {
-        $userId = $rowUser['added_by'];
-
-        $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
-        $resultTransport = $connection->query($queryTransport);
-
-        $transportChoices = [];
-
-        while ($rowTransport = $resultTransport->fetch_assoc()) {
-            $transportChoices = explode(', ', $rowTransport['transport']);
-        }
-
-        echo '<li>' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
+    foreach ($missingTransport as $missing) {
+        echo '<li>' . $missing . '</li>';
     }
     echo '</ul>';
+} else {
+    echo '<h4>Tous les moyens de transport sont sélectionnés.</h4>';
+}
+?>
 
-    // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-    function getUserName($userId) {
-        global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
-    
-        $query = "SELECT username FROM users WHERE id = $userId";
-        $result = $connection->query($query);
-    
-        if ($result && $result->num_rows > 0) {
-            $row = $result->fetch_assoc();
-            return $row['username'];
-        } else {
-            return "Utilisateur inconnu";
-        }
-    }
-
-    $connection->close();
-    ?>
 
     <!-- Diagramme camembert pays -->
     <script>
