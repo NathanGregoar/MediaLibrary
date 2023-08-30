@@ -106,17 +106,25 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
-// Requête SQL pour récupérer les dates communes
-$queryCommonDates = "SELECT date_commune FROM olympe_dates";
-$resultCommonDates = $connection->query($queryCommonDates);
+// Requête SQL pour récupérer les dates de disponibilité en commun
+$queryDates = "SELECT dispo FROM olympe";
+$resultDates = $connection->query($queryDates);
 
-$commonDates = []; // Tableau pour stocker les dates communes
+$allAvailabilityDates = [];
 
-if ($resultCommonDates) {
-    while ($rowCommonDate = $resultCommonDates->fetch_assoc()) {
-        $commonDates[] = $rowCommonDate['date_commune'];
+if ($resultDates) {
+    while ($rowDates = $resultDates->fetch_assoc()) {
+        $dates = explode(',', $rowDates['dispo']);
+        $allAvailabilityDates[] = $dates; // Stocker les dates de chaque utilisateur
     }
 }
+
+// Trouver les dates communes entre les utilisateurs
+$commonAvailabilityDates = call_user_func_array('array_intersect', $allAvailabilityDates);
+$commonAvailabilityDates = array_map(function($date) {
+    return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
+}, $commonAvailabilityDates);
+
 
 $connection->close();
 ?>
@@ -126,9 +134,9 @@ $connection->close();
 <head>
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.css' rel='stylesheet' />
-    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -387,55 +395,22 @@ $connection->close();
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-      // Tableau pour stocker les dates de disponibilité en commun
-      var commonAvailabilityDates = [];
+    var commonAvailabilityDates = <?php echo json_encode($commonAvailabilityDates); ?>;
 
-      // Données PHP
-      var commonDates = <?php
-        // Connexion à la base de données
-        $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
-        if ($connection->connect_error) {
-            die('Erreur de connexion : ' . $connection->connect_error);
-        }
-
-        // Requête SQL pour récupérer les dates de disponibilité en commun
-        $queryDates = "SELECT dispo FROM olympe";
-        $resultDates = $connection->query($queryDates);
-
-        $commonAvailabilityDates = [];
-
-        if ($resultDates) {
-            while ($rowDates = $resultDates->fetch_assoc()) {
-                $dates = explode(',', $rowDates['dispo']);
-                $commonAvailabilityDates = array_merge($commonAvailabilityDates, $dates);
-            }
-        }
-
-        $commonAvailabilityDates = array_intersect_assoc(...$commonAvailabilityDates); // Trouver les dates communes
-        $commonAvailabilityDates = array_map(function($date) {
-            return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
-        }, $commonAvailabilityDates);
-
-        $connection->close();
-
-        echo json_encode($commonAvailabilityDates);
-      ?>;
-
-      var calendarEl = document.getElementById('availabilityCalendar');
-      var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // Vue mensuelle
-        events: commonDates.map(function(date) {
-          return {
-            title: 'Disponible',
-            start: date,
-            allDay: true
-          };
+    var calendarEl = document.getElementById('availabilityCalendar');
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        events: commonAvailabilityDates.map(function(date) {
+            return {
+                title: 'Disponible',
+                start: date,
+                allDay: true
+            };
         })
-      });
-
-      calendar.render();
     });
+
+    calendar.render();
+});
   </script>
 
 
