@@ -160,6 +160,24 @@ $connection->close();
     // Récupération des moyens de transport
     $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
 
+
+
+
+    // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+    function getUserName($userId) {
+        global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+
+        $query = "SELECT username FROM users WHERE id = $userId";
+        $result = $connection->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['username'];
+        } else {
+            return "Utilisateur inconnu";
+        }
+    }
+
     // Création du tableau
     echo '<table>';
     echo '<thead><tr><th>Pseudos</th>';
