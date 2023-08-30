@@ -106,26 +106,6 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
-// Requête SQL pour récupérer les dates de disponibilité en commun
-$queryDates = "SELECT dispo FROM olympe";
-$resultDates = $connection->query($queryDates);
-
-$allAvailabilityDates = [];
-
-if ($resultDates) {
-    while ($rowDates = $resultDates->fetch_assoc()) {
-        $dates = explode(',', $rowDates['dispo']);
-        $allAvailabilityDates[] = $dates; // Stocker les dates de chaque utilisateur
-    }
-}
-
-// Trouver les dates communes entre les utilisateurs
-$commonAvailabilityDates = call_user_func_array('array_intersect', $allAvailabilityDates);
-$commonAvailabilityDates = array_map(function($date) {
-    return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
-}, $commonAvailabilityDates);
-
-
 $connection->close();
 ?>
 
@@ -134,9 +114,6 @@ $connection->close();
 <head>
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
-    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
 </head>
 <body>
     <div class="navbar">
@@ -159,8 +136,6 @@ $connection->close();
     <div style="max-width: 20%;">
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
-
-    <div id="availabilityCalendar"></div>
 
     <?php
     require_once '../../utils/auth.php';
@@ -392,29 +367,6 @@ $connection->close();
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
-
-<script>
-    console.log(commonAvailabilityDates);
-
-document.addEventListener('DOMContentLoaded', function() {
-    var commonAvailabilityDates = <?php echo $commonAvailabilityDates; ?>;
-
-    var calendarEl = document.getElementById('availabilityCalendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth', // Vue mensuelle par défaut
-        events: commonAvailabilityDates.map(function(date) {
-            return {
-                title: 'Disponible',
-                start: date,
-                color: '#00aaff', // Couleur de l'événement
-            };
-        }),
-    });
-
-    calendar.render();
-});
-</script>
-
 
 </body>
 </html>
