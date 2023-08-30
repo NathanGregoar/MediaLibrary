@@ -106,29 +106,6 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
-$userTransportData = []; // Tableau pour stocker les données des transports par utilisateur
-
-// Requête SQL pour récupérer les informations d'utilisateur et les transports enregistrés
-$queryUserData = "SELECT o.added_by AS userId, u.username AS userName, o.transport FROM olympe o JOIN users u ON o.added_by = u.id WHERE o.transport IS NOT NULL";
-$resultUserData = $connection->query($queryUserData);
-
-if ($resultUserData) {
-    while ($rowUserData = $resultUserData->fetch_assoc()) {
-        $userId = $rowUserData['userId'];
-        $userName = $rowUserData['userName'];
-        $userTransports = explode(',', $rowUserData['transport']);
-        foreach ($userTransports as $transport) {
-            $transport = trim(strtolower($transport)); // Supprimer les espaces et mettre en minuscules
-            if (!empty($transport) && array_key_exists($transport, $transportData)) {
-                if (!isset($userTransportData[$userId])) {
-                    $userTransportData[$userId] = [];
-                }
-                $userTransportData[$userId][$transport] = true;
-            }
-        }
-    }
-}
-
 $connection->close();
 ?>
 
@@ -165,39 +142,60 @@ $connection->close();
         <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
     </div>
 
-    <table border="1">
-        <thead>
-            <tr>
-                <th>Utilisateur</th>
-                <th>Train</th>
-                <th>Avion</th>
-                <th>Bus</th>
-                <th>Bateau</th>
-            </tr>
-        </thead>
-        <tbody>
-            <?php
-            // Boucle à travers les utilisateurs
-            foreach ($userTransportData as $userId => $userTransports) {
-                $userName = $userData[$userId]; // Récupérer le nom d'utilisateur correspondant
-                ?>
-                <tr>
-                    <td><?php echo $userName; ?></td>
-                    <?php
-                    // Boucle à travers les moyens de transport
-                    foreach ($transportData as $transport => $count) {
-                        $cellColor = isset($userTransports[$transport]) ? 'background-color: green;' : ''; // Définir la couleur de la cellule si le moyen de transport est présent
-                        ?>
-                        <td style="<?php echo $cellColor; ?>"><?php echo $userTransports[$transport] ?? 0; ?></td>
-                        <?php
-                    }
-                    ?>
-                </tr>
-                <?php
-            }
-            ?>
-        </tbody>
-    </table>
+    <?php
+    require_once '../../utils/auth.php';
+    require_once '../../utils/config.php';
+
+    // Connexion à la base de données
+    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+    if ($connection->connect_error) {
+        die('Erreur de connexion : ' . $connection->connect_error);
+    }
+
+    // Récupération des utilisateurs ayant des enregistrements dans la table olympe
+    $queryUsers = "SELECT DISTINCT added_by FROM olympe";
+    $resultUsers = $connection->query($queryUsers);
+
+    // Récupération des moyens de transport
+    $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
+
+    // Création du tableau
+    echo '<table>';
+    echo '<thead><tr><th>Pseudos</th>';
+    foreach ($transportOptions as $transport) {
+        echo '<th>' . $transport . '</th>';
+    }
+    echo '</tr></thead>';
+    
+    echo '<tbody>';
+    while ($rowUser = $resultUsers->fetch_assoc()) {
+        $userId = $rowUser['added_by'];
+
+        $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
+        $resultTransport = $connection->query($queryTransport);
+        $transportChoices = [];
+
+        while ($rowTransport = $resultTransport->fetch_assoc()) {
+            $transportChoices[] = $rowTransport['transport'];
+        }
+
+        echo '<tr>';
+        echo '<td>' . getUserName($userId) . '</td>';
+
+        foreach ($transportOptions as $transport) {
+            $cellColor = in_array($transport, $transportChoices) ? 'green' : 'white';
+            echo '<td style="background-color: ' . $cellColor . ';"></td>';
+        }
+
+        echo '</tr>';
+    }
+    echo '</tbody>';
+
+    echo '</table>';
+
+    $connection->close();
+    ?>
 
     <!-- Diagramme camembert pays -->
     <script>
@@ -328,71 +326,6 @@ $connection->close();
     };
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
-    </script>
-
-    <!-- Transport -->
-    <script>
-        var barChartTransport = document.getElementById('barChartTransport').getContext('2d');
-
-        var chartDataTransport = {
-            labels: ['Train', 'Avion', 'Bus', 'Bateau'],
-            datasets: [{
-                label: 'Train', // Mettez à jour ce texte par le nom de la colonne
-                data: [<?php echo $transportData["train"]; ?>, 0, 0, 0],
-                backgroundColor: 'rgba(255, 99, 132, 0.7)',
-                borderWidth: 1
-            }, {
-                label: 'Avion', // Mettez à jour ce texte par le nom de la colonne
-                data: [0, <?php echo $transportData["avion"]; ?>, 0, 0],
-                backgroundColor: 'rgba(54, 162, 235, 0.7)',
-                borderWidth: 1
-            }, {
-                label: 'Bus', // Mettez à jour ce texte par le nom de la colonne
-                data: [0, 0, <?php echo $transportData["bus"]; ?>, 0],
-                backgroundColor: 'rgba(255, 206, 86, 0.7)',
-                borderWidth: 1
-            }, {
-                label: 'Bateau', // Mettez à jour ce texte par le nom de la colonne
-                data: [0, 0, 0, <?php echo $transportData["bateau"]; ?>],
-                backgroundColor: 'rgba(75, 192, 192, 0.7)',
-                borderWidth: 1
-            }]
-        };
-
-        var barConfigTransport = {
-            type: 'bar',
-            data: chartDataTransport,
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    title: {
-                        display: true,
-                        text: "Diagramme des moyens de transport"
-                    }
-                },
-                scales: {
-                    x: {
-                        stacked: true
-                    },
-                    y: {
-                        beginAtZero: true
-                    }
-                },
-                plugins: {
-                    legend: {
-                        position: 'top',
-                        labels: {
-                            font: {
-                                size: 10
-                            }
-                        }
-                    }
-                }
-            }
-        };
-
-        var myBarChartTransport = new Chart(barChartTransport, barConfigTransport);
     </script>
 
 </body>
