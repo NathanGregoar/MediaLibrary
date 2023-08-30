@@ -151,15 +151,16 @@ if ($resultDates) {
 
 $connection->close();
 
-$commonDates = null;
-$firstUser = true;
+$commonDates = [];
+
+// Initialize common dates with the dates from the first user
+$firstUserDates = reset($datesDispoByUser);
+$commonDates = $firstUserDates;
+
+// Loop through each user's dates
 foreach ($datesDispoByUser as $datesDispoArray) {
-    if ($firstUser) {
-        $commonDates = $datesDispoArray;
-        $firstUser = false;
-    } else {
-        $commonDates = array_intersect($commonDates, $datesDispoArray);
-    }
+    // Find the common dates with the current user's dates
+    $commonDates = array_intersect($commonDates, $datesDispoArray);
 }
 
 foreach ($datesDispoByUser as $userId => $datesDispoArray) {
@@ -169,13 +170,15 @@ foreach ($datesDispoByUser as $userId => $datesDispoArray) {
 
 echo '<div>';
 echo '<h4>Dates communes à tous les utilisateurs :</h4>';
-if ($commonDates !== null && !empty($commonDates)) {
+if (!empty($commonDates)) {
     echo '<p>' . implode(', ', $commonDates) . '</p>';
 } else {
     echo '<p>Aucune date commune trouvée.</p>';
 }
 echo '</div>';
 ?>
+
+
 
 
 
