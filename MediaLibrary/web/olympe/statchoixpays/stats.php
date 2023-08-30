@@ -128,6 +128,36 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
+
+    <div>
+    <?php
+    // Requête SQL pour récupérer les dates de disponibilité des utilisateurs
+    $queryDates = "SELECT added_by, dates_dispo FROM olympe WHERE dates_dispo IS NOT NULL";
+    $resultDates = $connection->query($queryDates);
+
+    // Tableau pour stocker les dates de disponibilité par utilisateur
+    $datesDispoByUser = [];
+
+    if ($resultDates) {
+        while ($rowDates = $resultDates->fetch_assoc()) {
+            $userId = $rowDates['added_by'];
+            $datesDispo = $rowDates['dates_dispo'];
+
+            $datesDispoArray = explode(',', $datesDispo); // Séparer les dates par des virgules
+            $datesDispoByUser[$userId] = $datesDispoArray;
+        }
+    }
+
+    // Afficher les dates de disponibilité par utilisateur
+    foreach ($datesDispoByUser as $userId => $datesDispoArray) {
+        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+        echo '<p><strong>' . $userName . '</strong> : ' . implode(', ', $datesDispoArray) . '</p>';
+    }
+    ?>
+</div>
+
+
+
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
