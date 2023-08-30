@@ -189,8 +189,6 @@ while ($rowUser = $resultUsers->fetch_assoc()) {
     }
 }
 
-$connection->close();
-
 // Afficher les utilisateurs et leurs moyens de transport sélectionnés
 echo '<h4>Transport souhaités par utilisateur :</h4>';
 echo '<ul>';
@@ -230,6 +228,8 @@ function getUserName($userId) {
         return "Utilisateur inconnu";
     }
 }
+
+$connection->close();
 ?>
 
 
