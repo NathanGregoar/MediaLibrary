@@ -281,6 +281,7 @@ $connection->close();
         if ($connection->connect_error) {
             die('Erreur de connexion : ' . $connection->connect_error);
         }
+        global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
 
         $query = "SELECT username FROM users WHERE id = $userId";
         $result = $connection->query($query);
