@@ -404,9 +404,9 @@ document.addEventListener('DOMContentLoaded', function () {
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
-            left: 'prev,next today',
+            left: 'dayGridMonth',
             center: 'title',
-            right: 'dayGridMonth'
+            right: 'prev,next today'
         },
         events: [
             <?php foreach ($commonDispos as $date) : ?>
