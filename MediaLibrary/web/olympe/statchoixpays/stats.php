@@ -121,19 +121,21 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
-// Récupération des disponibilités de chaque utilisateur
-$queryDispos = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
-$resultDispos = $connection->query($queryDispos);
+// Récupération des disponibilités de tous les utilisateurs
+$queryAllDispos = "SELECT dispo FROM olympe WHERE dispo IS NOT NULL";
+$resultAllDispos = $connection->query($queryAllDispos);
 
-$disposByUser = []; // Tableau pour stocker les disponibilités par utilisateur
+$allDispos = []; // Tableau pour stocker les disponibilités de tous les utilisateurs
 
-if ($resultDispos) {
-    while ($rowDispos = $resultDispos->fetch_assoc()) {
-        $userId = $rowDispos['added_by'];
-        $dispoDates = explode(',', $rowDispos['dispo']); // Séparer les dates par des virgules
-        $disposByUser[$userId] = $dispoDates;
+if ($resultAllDispos) {
+    while ($rowAllDispos = $resultAllDispos->fetch_assoc()) {
+        $dispoDates = explode(',', $rowAllDispos['dispo']); // Séparer les dates par des virgules
+        $allDispos = array_merge($allDispos, $dispoDates);
     }
 }
+$allDispos = array_unique($allDispos); // Supprimer les doublons
+sort($allDispos); // Trier les dates par ordre croissant
+
 
 
 $connection->close();
@@ -145,6 +147,9 @@ $connection->close();
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
+
 </head>
 <body>
     <div class="navbar">
@@ -168,16 +173,10 @@ $connection->close();
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
 
-    <?php
-    echo '<h4>Disponibilités des utilisateurs :</h4>';
-    echo '<ul>';
-    foreach ($disposByUser as $userId => $dispoDates) {
-        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-        echo '<li>' . $userName . ': ' . implode(', ', $dispoDates) . '</li>';
-    }
-    echo '</ul>';
-    ?>
-
+    <div style="max-width: 50%;">
+        <h3>Calendrier des dates disponibles en commun :</h3>
+        <div id="calendar"></div>
+    </div>
 
     <?php
     require_once '../../utils/auth.php';
@@ -394,6 +393,31 @@ $connection->close();
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    var calendarEl = document.getElementById('calendar');
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+        initialView: 'dayGridMonth',
+        headerToolbar: {
+            left: 'prev,next today',
+            center: 'title',
+            right: 'dayGridMonth,timeGridWeek,timeGridDay'
+        },
+        events: [
+            <?php foreach ($allDispos as $date) : ?>
+            {
+                title: 'Disponible',
+                start: '<?php echo $date; ?>'
+            },
+            <?php endforeach; ?>
+        ]
+    });
+
+    calendar.render();
+});
+</script>
 
 </body>
 </html>
