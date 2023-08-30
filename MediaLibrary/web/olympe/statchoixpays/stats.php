@@ -386,7 +386,7 @@ document.addEventListener('DOMContentLoaded', function () {
       die('Erreur de connexion : ' . $connection->connect_error);
   }
 
-  // Requête SQL pour récupérer les dates de disponibilité en commun
+  // Requête SQL pour récupérer toutes les dates de disponibilité de chaque utilisateur
   $queryDates = "SELECT dispo FROM olympe";
   $resultDates = $connection->query($queryDates);
 
@@ -400,21 +400,22 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   // Trouver les dates en commun en utilisant l'intersection des tableaux
-  $commonAvailabilityDates = call_user_func_array('array_intersect', $usersAvailabilityDates);
+  $commonAvailabilityDates = $usersAvailabilityDates[0]; // Initialiser avec les dates du premier utilisateur
+
+  foreach ($usersAvailabilityDates as $userDates) {
+      $commonAvailabilityDates = array_intersect($commonAvailabilityDates, $userDates);
+  }
 
   $commonAvailabilityDates = array_unique($commonAvailabilityDates);
   $commonAvailabilityDates = array_map(function($date) {
       return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
   }, $commonAvailabilityDates);
 
-  // Trier les dates en ordre chronologique
-  sort($commonAvailabilityDates);
-
   $connection->close();
   ?>
 
-    var calendarEl = document.getElementById('availabilityCalendar');
-    var calendar = new FullCalendar.Calendar(calendarEl, {
+  var calendarEl = document.getElementById('availabilityCalendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth', // Vue mensuelle
     events: [
       <?php
@@ -432,6 +433,7 @@ document.addEventListener('DOMContentLoaded', function () {
   calendar.render();
 });
 </script>
+
 
 </body>
 </html>
