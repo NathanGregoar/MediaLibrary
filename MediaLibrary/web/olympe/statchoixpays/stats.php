@@ -394,24 +394,24 @@ $connection->close();
     </script>
 
 <script>
-    document.addEventListener('DOMContentLoaded', function () {
+document.addEventListener('DOMContentLoaded', function() {
     var commonAvailabilityDates = <?php echo json_encode($commonAvailabilityDates); ?>;
 
     var calendarEl = document.getElementById('availabilityCalendar');
     var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
+        initialView: 'dayGridMonth', // Vue mensuelle par défaut
         events: commonAvailabilityDates.map(function(date) {
             return {
                 title: 'Disponible',
                 start: date,
-                allDay: true
+                color: '#00aaff', // Couleur de l'événement
             };
-        })
+        }),
     });
 
     calendar.render();
 });
-  </script>
+</script>
 
 
 </body>
