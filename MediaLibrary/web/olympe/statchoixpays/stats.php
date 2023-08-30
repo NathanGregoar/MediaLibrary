@@ -162,7 +162,7 @@ $connection->close();
     $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
 
     // Affichage des données de transport pour chaque utilisateur (pour débogage)
-    echo '<h3>Données de transport pour chaque utilisateur :</h3>';
+    echo '<h6>Transport souhaités :</h6>';
     echo '<ul>';
     while ($rowUser = $resultUsers->fetch_assoc()) {
         $userId = $rowUser['added_by'];
