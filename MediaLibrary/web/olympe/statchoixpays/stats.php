@@ -176,7 +176,7 @@ $connection->close();
             $transportChoices = explode(', ', $rowTransport['transport']);
         }
 
-        echo '<li>Utilisateur ' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
+        echo '<li>' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
     }
     echo '</ul>';
 
