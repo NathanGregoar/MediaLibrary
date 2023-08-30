@@ -131,6 +131,11 @@ $connection->close();
 
     <div>
     <?php
+    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+    if ($connection->connect_error) {
+        die('Erreur de connexion : ' . $connection->connect_error);
+    }
+
     // Requête SQL pour récupérer les dates de disponibilité des utilisateurs
     $queryDates = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
     $resultDates = $connection->query($queryDates);
@@ -153,6 +158,7 @@ $connection->close();
         $userName = getUserName($userId); // Récupérer le nom d'utilisateur
         echo '<p><strong>' . $userName . '</strong> : ' . implode(', ', $datesDispoArray) . '</p>';
     }
+    $connection->close();
     ?>
 </div>
 
