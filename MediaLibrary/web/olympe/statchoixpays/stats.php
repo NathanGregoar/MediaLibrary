@@ -399,19 +399,23 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   }
 
-  // Trouver les dates en commun en utilisant l'intersection des tableaux
-  $commonAvailabilityDates = $usersAvailabilityDates[0]; // Initialiser avec les dates du premier utilisateur
+  // Fermer la connexion à la base de données
+  $connection->close();
 
-  foreach ($usersAvailabilityDates as $userDates) {
-      $commonAvailabilityDates = array_intersect($commonAvailabilityDates, $userDates);
+  // Trouver les dates en commun en utilisant une approche de comptage
+  $datesCount = array_count_values(call_user_func_array('array_merge', $usersAvailabilityDates));
+  $totalUsers = count($usersAvailabilityDates);
+
+  foreach ($datesCount as $date => $count) {
+      if ($count === $totalUsers) {
+          $commonAvailabilityDates[] = $date;
+      }
   }
 
   $commonAvailabilityDates = array_unique($commonAvailabilityDates);
   $commonAvailabilityDates = array_map(function($date) {
       return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
   }, $commonAvailabilityDates);
-
-  $connection->close();
   ?>
 
   var calendarEl = document.getElementById('availabilityCalendar');
@@ -433,6 +437,7 @@ document.addEventListener('DOMContentLoaded', function () {
   calendar.render();
 });
 </script>
+
 
 
 </body>
