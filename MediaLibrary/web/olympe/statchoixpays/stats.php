@@ -190,7 +190,7 @@ while ($rowUser = $resultUsers->fetch_assoc()) {
 }
 
 // Afficher les utilisateurs et leurs moyens de transport sélectionnés
-echo '<h4>Transport souhaités par utilisateur :</h4>';
+echo '<h4>Transport souhaités :</h4>';
 echo '<ul>';
 foreach ($transportByUser as $userId => $transportChoices) {
     $userName = getUserName($userId); // Récupérer le nom d'utilisateur
@@ -203,7 +203,7 @@ $missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
 
 // Afficher les moyens de transport manquants par utilisateur
 if (!empty($missingTransportByUser)) {
-    echo '<h4>Moyens de transport manquants par utilisateur :</h4>';
+    echo '<h4>Transport non-souhaités :</h4>';
     echo '<ul>';
     foreach ($missingTransportByUser as $userId => $missingForUser) {
         $userName = getUserName($userId); // Récupérer le nom d'utilisateur
