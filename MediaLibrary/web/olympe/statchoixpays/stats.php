@@ -201,7 +201,7 @@ echo '</ul>';
 // Supprimer les doublons des moyens de transport manquants
 $missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
 
-// Afficher les moyens de transport manquants par utilisateur
+// Afficher les moyens de transport manquants par utilisateur 
 if (!empty($missingTransportByUser)) {
     echo '<h4>Transport non-souhaités :</h4>';
     echo '<ul>';
