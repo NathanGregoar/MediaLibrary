@@ -143,78 +143,60 @@ $connection->close();
     </div>
 
     <?php
-require_once '../../utils/auth.php';
-require_once '../../utils/config.php';
+    require_once '../../utils/auth.php';
+    require_once '../../utils/config.php';
 
-// Connexion à la base de données
-$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+    // Connexion à la base de données
+    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
-if ($connection->connect_error) {
-    die('Erreur de connexion : ' . $connection->connect_error);
-}
-
-// Récupération des utilisateurs ayant des enregistrements dans la table olympe
-$queryUsers = "SELECT DISTINCT added_by FROM olympe";
-$resultUsers = $connection->query($queryUsers);
-
-// Récupération des moyens de transport
-$transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
-
-// Création du tableau
-echo '<table>';
-echo '<thead><tr><th>Pseudos</th>';
-foreach ($transportOptions as $transport) {
-    echo '<th>' . $transport . '</th>';
-}
-echo '</tr></thead>';
-
-echo '<tbody>';
-while ($rowUser = $resultUsers->fetch_assoc()) {
-    $userId = $rowUser['added_by'];
-
-    $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
-    $resultTransport = $connection->query($queryTransport);
-
-    // Créer un tableau pour stocker les moyens de transport choisis par l'utilisateur
-    $transportChoices = [];
-
-    while ($rowTransport = $resultTransport->fetch_assoc()) {
-        // Ajouter chaque moyen de transport à la liste
-        $transportChoices = explode(', ', $rowTransport['transport']);
+    if ($connection->connect_error) {
+        die('Erreur de connexion : ' . $connection->connect_error);
     }
 
-    echo '<tr>';
-    echo '<td>' . getUserName($userId) . '</td>';
+    
+    // Récupération des utilisateurs ayant des enregistrements dans la table olympe
+    $queryUsers = "SELECT DISTINCT added_by FROM olympe";
+    $resultUsers = $connection->query($queryUsers);
 
-    foreach ($transportOptions as $transport) {
-        // Vérifier si le moyen de transport est choisi par l'utilisateur
-        $cellColor = in_array($transport, $transportChoices) ? 'green' : 'white';
-        echo '<td style="background-color: ' . $cellColor . ';">' . (in_array($transport, $transportChoices) ? 'X' : '') . '</td>';
+    // Récupération des moyens de transport
+    $transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
+
+    // Affichage des données de transport pour chaque utilisateur (pour débogage)
+    echo '<h3>Données de transport pour chaque utilisateur :</h3>';
+    echo '<ul>';
+    while ($rowUser = $resultUsers->fetch_assoc()) {
+        $userId = $rowUser['added_by'];
+
+        $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
+        $resultTransport = $connection->query($queryTransport);
+
+        $transportChoices = [];
+
+        while ($rowTransport = $resultTransport->fetch_assoc()) {
+            $transportChoices = explode(', ', $rowTransport['transport']);
+        }
+
+        echo '<li>Utilisateur ' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
+    }
+    echo '</ul>';
+
+    // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+    function getUserName($userId) {
+        global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+    
+        $query = "SELECT username FROM users WHERE id = $userId";
+        $result = $connection->query($query);
+    
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['username'];
+        } else {
+            return "Utilisateur inconnu";
+        }
     }
 
-    echo '</tr>';
-}
-echo '</tbody>';
-
-echo '</table>';
-
-// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-function getUserName($userId) {
-    global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
-
-    $query = "SELECT username FROM users WHERE id = $userId";
-    $result = $connection->query($query);
-
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['username'];
-    } else {
-        return "Utilisateur inconnu";
-    }
-}
-
-$connection->close();
-?>
+    $connection->close();
+    ?>
 
     <!-- Diagramme camembert pays -->
     <script>
