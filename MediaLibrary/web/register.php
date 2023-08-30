@@ -26,10 +26,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if (mysqli_num_rows($result) > 0) {
         $errorMessage = "Ce pseudo ou cette adresse e-mail est déjà utilisé(e).";
     } else {
-        // Insérer l'utilisateur dans la base de données
+        // Insérer l'utilisateur dans la base de données avec le rôle "user" par défaut
         $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-
-        $insertQuery = "INSERT INTO users (username, password_hash, email) VALUES ('$username', '$hashedPassword', '$email')";
+    
+        $insertQuery = "INSERT INTO users (username, password_hash, email, role) VALUES ('$username', '$hashedPassword', '$email', 'user')";
         if (mysqli_query($conn, $insertQuery)) {
             // Connexion automatique après l'inscription
             session_start();
