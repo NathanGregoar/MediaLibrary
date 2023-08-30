@@ -399,6 +399,25 @@ document.addEventListener('DOMContentLoaded', function () {
       }
   }
 
+
+//   Debug
+  if ($resultUsers) {
+    while ($rowUser = $resultUsers->fetch_assoc()) {
+        $userId = $rowUser['id'];
+        $userName = $rowUser['nom'];
+        $userDates = explode(',', $rowUser['dispo']);
+        
+        // Afficher le nom de l'utilisateur
+        echo "Utilisateur : $userName<br>";
+        
+        // Afficher les dates de disponibilité de l'utilisateur
+        echo "Dates de disponibilité : " . implode(', ', $userDates) . "<br><br>";
+    }
+}
+//   Debug
+
+
+
   // Fermer la connexion à la base de données
   $connection->close();
 
