@@ -436,12 +436,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
   calendar.render();
 });
-
-// Afficher les dates récupérées
-echo "<pre>";
-print_r($usersAvailabilityDates);
-echo "</pre>";
-
 </script>
 
 
