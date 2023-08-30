@@ -25,7 +25,7 @@ $email = $_SESSION['email'];
 </head>
 <body>
     <header>
-        <h1 class="welcome-message">Bienvenue, <?php echo $username;?><?php echo $loggedInUser['role'];?> !</h1>
+    <h1 class="welcome-message">Bienvenue, <?php echo $username; echo " (" . $loggedInUser['role'] . ")"; ?> !</h1>
         <form method="post" action="" class="logout-form">
             <input type="submit" name="logout" value="Déconnexion">
         </form>
