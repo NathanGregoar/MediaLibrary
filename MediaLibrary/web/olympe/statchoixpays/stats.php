@@ -195,7 +195,8 @@ $connection->close();
 echo '<h4>Transport souhaités par utilisateur :</h4>';
 echo '<ul>';
 foreach ($transportByUser as $userId => $transportChoices) {
-    echo '<li>' . getUserName($userId) . ': ' . implode(', ', $transportChoices) . '</li>';
+    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+    echo '<li>' . $userName . ': ' . implode(', ', $transportChoices) . '</li>';
 }
 echo '</ul>';
 
@@ -207,7 +208,8 @@ if (!empty($missingTransportByUser)) {
     echo '<h4>Moyens de transport manquants par utilisateur :</h4>';
     echo '<ul>';
     foreach ($missingTransportByUser as $userId => $missingForUser) {
-        echo '<li>' . getUserName($userId) . ' : ' . implode(', ', $missingForUser) . '</li>';
+        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+        echo '<li>' . $userName . ' : ' . implode(', ', $missingForUser) . '</li>';
     }
     echo '</ul>';
 } else {
@@ -229,6 +231,7 @@ function getUserName($userId) {
     }
 }
 ?>
+
 
 
     <!-- Diagramme camembert pays -->
