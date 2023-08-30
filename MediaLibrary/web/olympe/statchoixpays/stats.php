@@ -129,57 +129,64 @@ $connection->close();
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
 
-    <div>
     <?php
-    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-    if ($connection->connect_error) {
-        die('Erreur de connexion : ' . $connection->connect_error);
+$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+if ($connection->connect_error) {
+    die('Erreur de connexion : ' . $connection->connect_error);
+}
+
+$queryDates = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
+$resultDates = $connection->query($queryDates);
+
+$datesDispoByUser = [];
+if ($resultDates) {
+    while ($rowDates = $resultDates->fetch_assoc()) {
+        $userId = $rowDates['added_by'];
+        $datesDispo = $rowDates['dispo'];
+
+        $datesDispoArray = explode(',', $datesDispo);
+        $datesDispoByUser[$userId] = $datesDispoArray;
     }
+}
 
-    // Requête SQL pour récupérer les dates de disponibilité des utilisateurs
-    $queryDates = "SELECT added_by, dispo FROM olympe WHERE dispo IS NOT NULL";
-    $resultDates = $connection->query($queryDates);
+$connection->close();
 
-    // Tableau pour stocker les dates de disponibilité par utilisateur
-    $datesDispoByUser = [];
-
-    if ($resultDates) {
-        while ($rowDates = $resultDates->fetch_assoc()) {
-            $userId = $rowDates['added_by'];
-            $datesDispo = $rowDates['dispo'];
-
-            $datesDispoArray = explode(',', $datesDispo); // Séparer les dates par des virgules
-            $datesDispoByUser[$userId] = $datesDispoArray;
-        }
+$commonDates = [];
+$firstUser = true;
+foreach ($datesDispoByUser as $datesDispoArray) {
+    if ($firstUser) {
+        $commonDates = $datesDispoArray;
+        $firstUser = false;
+    } else {
+        $commonDates = array_intersect($commonDates, $datesDispoArray);
     }
+}
 
-    // Trouver les dates communes à tous les utilisateurs
-    $commonDates = [];
-    $firstUser = true;
+foreach ($datesDispoByUser as $userId => $datesDispoArray) {
+    $userName = getUserName($userId);
+    echo '<p><strong>' . $userName . '</strong> : ' . implode(', ', $datesDispoArray) . '</p>';
+}
 
-    foreach ($datesDispoByUser as $datesDispoArray) {
-        if ($firstUser) {
-            $commonDates = $datesDispoArray;
-            $firstUser = false;
-        } else {
-            $commonDates = array_intersect($commonDates, $datesDispoArray);
-        }
+echo '<div>';
+echo '<h4>Dates communes à tous les utilisateurs :</h4>';
+echo '<p>' . implode(', ', $commonDates) . '</p>';
+echo '</div>';
+
+function getUserName($userId) {
+    global $connection;
+
+    $query = "SELECT username FROM users WHERE id = $userId";
+    $result = $connection->query($query);
+
+    if ($result && $result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        return $row['username'];
+    } else {
+        return "Utilisateur inconnu";
     }
+}
+?>
 
-    // Fermer la connexion à la base de données
-    $connection->close();
-
-    // Afficher les dates de disponibilité par utilisateur
-    foreach ($datesDispoByUser as $userId => $datesDispoArray) {
-        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-        echo '<p><strong>' . $userName . '</strong> : ' . implode(', ', $datesDispoArray) . '</p>';
-    }
-
-    // Afficher les dates communes à tous les utilisateurs
-    echo '<h4>Dates communes à tous les utilisateurs :</h4>';
-    echo '<p>' . implode(', ', $commonDates) . '</p>';
-    ?>
-</div>
 
 
 
