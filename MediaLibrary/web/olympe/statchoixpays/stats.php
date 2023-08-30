@@ -106,25 +106,24 @@ if ($resultBudgetMin && $resultBudgetMax) {
 
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
-// Requête SQL pour récupérer les moyens de transport enregistrés dans la colonne "transport"
-$queryTransport = "SELECT transport FROM olympe WHERE transport IS NOT NULL";
-$resultTransport = $connection->query($queryTransport);
+$userTransportData = []; // Tableau pour stocker les données des transports par utilisateur
 
-$transportData = [
-    "train" => 0,
-    "avion" => 0,
-    "bus" => 0,
-    "bateau" => 0
-];
+// Requête SQL pour récupérer les informations d'utilisateur et les transports enregistrés
+$queryUserData = "SELECT o.added_by AS userId, u.username AS userName, o.transport FROM olympe o JOIN users u ON o.added_by = u.id WHERE o.transport IS NOT NULL";
+$resultUserData = $connection->query($queryUserData);
 
-if ($resultTransport) {
-    while ($rowTransport = $resultTransport->fetch_assoc()) {
-        $transportList = explode(',', $rowTransport['transport']); // Séparer les moyens de transport par des virgules
-        foreach ($transportList as $transport) {
-            $transport = trim($transport); // Supprimer les espaces autour du nom du moyen de transport
-            $transport = strtolower($transport); // Convertir en minuscules
-            if (array_key_exists($transport, $transportData)) {
-                $transportData[$transport]++;
+if ($resultUserData) {
+    while ($rowUserData = $resultUserData->fetch_assoc()) {
+        $userId = $rowUserData['userId'];
+        $userName = $rowUserData['userName'];
+        $userTransports = explode(',', $rowUserData['transport']);
+        foreach ($userTransports as $transport) {
+            $transport = trim(strtolower($transport)); // Supprimer les espaces et mettre en minuscules
+            if (!empty($transport) && array_key_exists($transport, $transportData)) {
+                if (!isset($userTransportData[$userId])) {
+                    $userTransportData[$userId] = [];
+                }
+                $userTransportData[$userId][$transport] = true;
             }
         }
     }
