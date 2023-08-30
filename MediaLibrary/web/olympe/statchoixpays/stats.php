@@ -128,6 +128,34 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
+    <?php
+// Connexion à la base de données
+$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+if ($connection->connect_error) {
+    die('Erreur de connexion : ' . $connection->connect_error);
+}
+
+// Requête SQL pour récupérer les utilisateurs et leurs dates de disponibilité
+$queryUsers = "SELECT id, nom, dispo FROM olympe";
+$resultUsers = $connection->query($queryUsers);
+
+if ($resultUsers) {
+    while ($rowUser = $resultUsers->fetch_assoc()) {
+        $userName = $rowUser['nom'];
+        $userDates = explode(',', $rowUser['dispo']);
+        
+        // Afficher le nom de l'utilisateur comme titre
+        echo "<h1>Utilisateur : $userName</h1>";
+        
+        // Afficher les dates de disponibilité de l'utilisateur
+        echo "<p>Dates de disponibilité : " . implode(', ', $userDates) . "</p><br>";
+    }
+}
+
+$connection->close();
+?>
+
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
@@ -398,25 +426,6 @@ document.addEventListener('DOMContentLoaded', function () {
           $usersAvailabilityDates[] = $dates; // Ajouter les dates de chaque utilisateur dans un tableau
       }
   }
-
-
-//   Debug
-  if ($resultUsers) {
-    while ($rowUser = $resultUsers->fetch_assoc()) {
-        $userId = $rowUser['id'];
-        $userName = $rowUser['nom'];
-        $userDates = explode(',', $rowUser['dispo']);
-        
-        // Afficher le nom de l'utilisateur
-        echo "Utilisateur : $userName<br>";
-        
-        // Afficher les dates de disponibilité de l'utilisateur
-        echo "Dates de disponibilité : " . implode(', ', $userDates) . "<br><br>";
-    }
-}
-//   Debug
-
-
 
   // Fermer la connexion à la base de données
   $connection->close();
