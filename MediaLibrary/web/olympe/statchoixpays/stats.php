@@ -387,23 +387,55 @@ $connection->close();
 
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    var calendarEl = document.getElementById('availabilityCalendar');
-    
-    var commonDates = <?php echo json_encode($commonDates); ?>;
-    
-    var calendar = new FullCalendar.Calendar(calendarEl, {
-        initialView: 'dayGridMonth',
-        events: commonDates.map(function(date) {
-            return {
-                title: 'Disponible',
-                start: date,
-                allDay: true
-            };
-        }),
-        eventColor: '#16A085' // Couleur des événements sur le calendrier
-    });
+  // Tableau pour stocker les dates de disponibilité en commun
+  var commonAvailabilityDates = [];
 
-    calendar.render();
+  <?php
+  // Connexion à la base de données
+  $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+  if ($connection->connect_error) {
+      die('Erreur de connexion : ' . $connection->connect_error);
+  }
+
+  // Requête SQL pour récupérer les dates de disponibilité en commun
+  $queryDates = "SELECT dispo FROM olympe";
+$resultDates = $connection->query($queryDates);
+
+$commonAvailabilityDates = [];
+
+if ($resultDates) {
+    while ($rowDates = $resultDates->fetch_assoc()) {
+        $dates = explode(',', $rowDates['dispo']);
+        $commonAvailabilityDates = array_merge($commonAvailabilityDates, $dates);
+    }
+}
+
+$commonAvailabilityDates = array_unique($commonAvailabilityDates);
+$commonAvailabilityDates = array_map(function($date) {
+    return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
+}, $commonAvailabilityDates);
+
+  $connection->close();
+  ?>
+
+  var calendarEl = document.getElementById('availabilityCalendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth', // Vue mensuelle
+    events: [
+      <?php
+      foreach ($commonAvailabilityDates as $date) {
+          echo "{\n";
+          echo "  title: 'Disponible',\n";
+          echo "  start: '$date',\n";
+          echo "  allDay: true\n";
+          echo "},\n";
+      }
+      ?>
+    ]
+  });
+
+  calendar.render();
 });
 </script>
 
