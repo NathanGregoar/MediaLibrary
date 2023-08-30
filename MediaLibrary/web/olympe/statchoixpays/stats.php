@@ -391,14 +391,9 @@ document.addEventListener('DOMContentLoaded', function () {
     
     var commonDates = <?php echo json_encode($commonDates); ?>;
     
-    // Convertir les dates au format ISO 8601
-    var formattedCommonDates = commonDates.map(function(date) {
-        return new Date(date).toISOString().split('T')[0];
-    });
-    
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
-        events: formattedCommonDates.map(function(date) {
+        events: commonDates.map(function(date) {
             return {
                 title: 'Disponible',
                 start: date,
