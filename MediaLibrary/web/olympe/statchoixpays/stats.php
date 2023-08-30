@@ -377,7 +377,7 @@ $connection->close();
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
 
-<script>
+    <script>
 // Récupération du contexte du canvas pour le graphique des transports souhaités
 var barChartTransportSouhaite = document.getElementById('barChartTransportSouhaite').getContext('2d');
 
@@ -387,7 +387,7 @@ var chartDataTransportSouhaite = {
     datasets: [
         {
             label: 'Transports souhaités',
-            data: <?php echo json_encode(array_values($transportSouhaiteData)); ?>,
+            data: <?php echo json_encode($nombreUtilisateursParTransportSouhaite); ?>,
             backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour les transports souhaités
             borderWidth: 1
         }
@@ -451,7 +451,7 @@ var chartDataTransportNonSouhaite = {
     datasets: [
         {
             label: 'Transports non souhaités',
-            data: <?php echo json_encode(array_values($transportNonSouhaiteData)); ?>,
+            data: <?php echo json_encode($nombreUtilisateursParTransportNonSouhaite); ?>,
             backgroundColor: 'rgba(255, 99, 132, 0.7)', // Couleur pour les transports non souhaités
             borderWidth: 1
         }
