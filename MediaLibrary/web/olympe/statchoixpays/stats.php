@@ -166,6 +166,40 @@ $connection->close();
         <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
     </div>
 
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Utilisateur</th>
+                <th>Train</th>
+                <th>Avion</th>
+                <th>Bus</th>
+                <th>Bateau</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php
+            // Boucle à travers les utilisateurs
+            foreach ($userTransportData as $userId => $userTransports) {
+                $userName = $userData[$userId]; // Récupérer le nom d'utilisateur correspondant
+                ?>
+                <tr>
+                    <td><?php echo $userName; ?></td>
+                    <?php
+                    // Boucle à travers les moyens de transport
+                    foreach ($transportData as $transport => $count) {
+                        $cellColor = isset($userTransports[$transport]) ? 'background-color: green;' : ''; // Définir la couleur de la cellule si le moyen de transport est présent
+                        ?>
+                        <td style="<?php echo $cellColor; ?>"><?php echo $userTransports[$transport] ?? 0; ?></td>
+                        <?php
+                    }
+                    ?>
+                </tr>
+                <?php
+            }
+            ?>
+        </tbody>
+    </table>
+
     <!-- Diagramme camembert pays -->
     <script>
     // Récupération du contexte du canvas pour le diagramme des pays oui
