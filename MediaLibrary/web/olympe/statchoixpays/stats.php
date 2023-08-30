@@ -138,6 +138,14 @@ $connection->close();
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
 
+    <div style="max-width: 20%;">
+        <canvas id="barChartTransportSouhaite" aria-label="Diagramme des transports souhaités"></canvas>
+    </div>
+
+    <div style="max-width: 20%;">
+        <canvas id="barChartTransportNonSouhaite" aria-label="Diagramme des transports non souhaités"></canvas>
+    </div>
+
     <?php
 require_once '../../utils/auth.php';
 require_once '../../utils/config.php';
@@ -368,6 +376,139 @@ $connection->close();
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
+
+<script>
+// Récupération du contexte du canvas pour le graphique des transports souhaités
+var barChartTransportSouhaite = document.getElementById('barChartTransportSouhaite').getContext('2d');
+
+// Configuration des données pour le graphique des transports souhaités
+var chartDataTransportSouhaite = {
+    labels: <?php echo json_encode($transportOptions); ?>,
+    datasets: [
+        {
+            label: 'Transports souhaités',
+            data: <?php echo json_encode($nombreUtilisateursParTransportSouhaite); ?>,
+            backgroundColor: 'rgba(75, 192, 192, 0.7)', // Couleur pour les transports souhaités
+            borderWidth: 1
+        }
+    ]
+};
+
+var barConfigTransportSouhaite = {
+    type: 'bar',
+    data: chartDataTransportSouhaite,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Diagramme des transports souhaités",
+                font: {
+                    size: 14
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    font: {
+                        size: 10
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    title: function(context) {
+                        return context[0].label;
+                    },
+                    label: function(context) {
+                        return 'Utilisateurs : ' + context.parsed.y;
+                    }
+                }
+            }
+        }
+    }
+};
+
+var myBarChartTransportSouhaite = new Chart(barChartTransportSouhaite, barConfigTransportSouhaite);
+
+// Récupération du contexte du canvas pour le graphique des transports non souhaités
+var barChartTransportNonSouhaite = document.getElementById('barChartTransportNonSouhaite').getContext('2d');
+
+// Configuration des données pour le graphique des transports non souhaités
+var chartDataTransportNonSouhaite = {
+    labels: <?php echo json_encode($transportOptions); ?>,
+    datasets: [
+        {
+            label: 'Transports non souhaités',
+            data: <?php echo json_encode($nombreUtilisateursParTransportNonSouhaite); ?>,
+            backgroundColor: 'rgba(255, 99, 132, 0.7)', // Couleur pour les transports non souhaités
+            borderWidth: 1
+        }
+    ]
+};
+
+var barConfigTransportNonSouhaite = {
+    type: 'bar',
+    data: chartDataTransportNonSouhaite,
+    options: {
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: {
+            title: {
+                display: true,
+                text: "Diagramme des transports non souhaités",
+                font: {
+                    size: 14
+                }
+            }
+        },
+        scales: {
+            x: {
+                stacked: true
+            },
+            y: {
+                beginAtZero: true
+            }
+        },
+        plugins: {
+            legend: {
+                position: 'top',
+                labels: {
+                    font: {
+                        size: 10
+                    }
+                }
+            },
+            tooltip: {
+                callbacks: {
+                    title: function(context) {
+                        return context[0].label;
+                    },
+                    label: function(context) {
+                        var transport = context[0].label;
+                        var utilisateurs = context.parsed.y;
+                        var utilisateursList = <?php echo json_encode($utilisateursParTransportNonSouhaite); ?>;
+                        return 'Utilisateurs : ' + utilisateurs + ' (' + utilisateursList[transport].join(', ') + ')';
+                    }
+                }
+            }
+        }
+    }
+};
+
+var myBarChartTransportNonSouhaite = new Chart(barChartTransportNonSouhaite, barConfigTransportNonSouhaite);
+</script>
 
 </body>
 </html>
