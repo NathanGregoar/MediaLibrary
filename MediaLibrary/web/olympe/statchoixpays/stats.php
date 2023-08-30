@@ -9,9 +9,6 @@ $username = $_SESSION['username'] ?? '';
 $email = $_SESSION['email'] ?? '';
 $loggedInUser = getLoggedInUser();
 
-// Obtenez le rôle de l'utilisateur actuellement connecté
-$userRole = $loggedInUser['role'];
-
 // Vérification si l'utilisateur est autorisé à accéder à la page
 if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
     // Redirection vers la page d'accueil

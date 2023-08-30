@@ -43,6 +43,7 @@ function getLoggedInUser() {
             $loggedInUser = $row;
             $_SESSION['user'] = $loggedInUser; // Stocker les informations de l'utilisateur en session pour les prochaines requêtes
             $_SESSION['email'] = $row['email']; // Stocker l'e-mail de l'utilisateur en session pour les prochaines requêtes
+            $_SESSION['role'] = $row['role']; // Stocker le rôle de l'utilisateur en session
             $stmt->close();
             $connection->close();
             return $loggedInUser;
