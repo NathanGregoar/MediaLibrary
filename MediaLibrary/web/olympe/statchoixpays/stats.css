@@ -47,3 +47,7 @@ th, td {
     padding: 8px;
     text-align: center;
 }
+
+#availabilityCalendar {
+    width: 20%;
+}
