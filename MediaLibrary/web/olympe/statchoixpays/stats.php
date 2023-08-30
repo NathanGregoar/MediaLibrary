@@ -10,8 +10,9 @@ $email = $_SESSION['email'] ?? '';
 $loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
-if (!in_array($loggedInUser['role'], ["olympe", "admin"])) {
-    header("Location: ../../accueil/index.php");
+if ($loggedInUser['role'] !== "olympe") {
+    // Redirection vers la page d'accueil
+    header("Location: ../accueil/index.php");
     exit();
 }
 
