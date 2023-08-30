@@ -11,7 +11,7 @@ $loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
 if (!in_array($loggedInUser['role'], ["olympe", "admin"])) {
-    header("Location: ../accueil/index.php");
+    header("Location: ../../accueil/index.php");
     exit();
 }
 
