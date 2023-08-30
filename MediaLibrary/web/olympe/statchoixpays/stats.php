@@ -138,10 +138,6 @@ $connection->close();
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
 
-    <div style="max-width: 20%;">
-        <canvas id="barChartTransport" aria-label="Diagramme des moyens de transport"></canvas>
-    </div>
-
     <?php
     require_once '../../utils/auth.php';
     require_once '../../utils/config.php';
