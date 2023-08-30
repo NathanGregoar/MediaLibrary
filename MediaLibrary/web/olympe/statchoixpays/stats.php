@@ -153,6 +153,7 @@ $connection->close();
         die('Erreur de connexion : ' . $connection->connect_error);
     }
 
+    
     // Récupération des utilisateurs ayant des enregistrements dans la table olympe
     $queryUsers = "SELECT DISTINCT added_by FROM olympe";
     $resultUsers = $connection->query($queryUsers);
@@ -180,7 +181,7 @@ $connection->close();
 
         while ($rowTransport = $resultTransport->fetch_assoc()) {
             // Ajoute chaque moyen de transport à la liste
-            $transportChoices = explode(',', $rowTransport['transport']);
+            $transportChoices = explode(', ', $rowTransport['transport']);
         }
 
         echo '<tr>';
