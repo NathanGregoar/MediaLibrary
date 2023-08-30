@@ -209,20 +209,20 @@ if (!empty($missingTransportByUser)) {
     echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
 }
 
-// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-function getUserName($userId) {
-    global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+// // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+// function getUserName($userId) {
+//     global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
 
-    $query = "SELECT username FROM users WHERE id = $userId";
-    $result = $connection->query($query);
+//     $query = "SELECT username FROM users WHERE id = $userId";
+//     $result = $connection->query($query);
 
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['username'];
-    } else {
-        return "Utilisateur inconnu";
-    }
-}
+//     if ($result && $result->num_rows > 0) {
+//         $row = $result->fetch_assoc();
+//         return $row['username'];
+//     } else {
+//         return "Utilisateur inconnu";
+//     }
+// }
 
 $connection->close();
 ?>
