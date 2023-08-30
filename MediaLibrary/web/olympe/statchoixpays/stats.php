@@ -277,7 +277,10 @@ $connection->close();
 
     // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
     function getUserName($userId) {
-        global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+        $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+        if ($connection->connect_error) {
+            die('Erreur de connexion : ' . $connection->connect_error);
+        }
 
         $query = "SELECT username FROM users WHERE id = $userId";
         $result = $connection->query($query);
