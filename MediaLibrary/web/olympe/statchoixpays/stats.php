@@ -10,9 +10,9 @@ $email = $_SESSION['email'] ?? '';
 $loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page
-if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
-    // Redirection vers la page d'accueil
-    header("Location: ../accueil/index.php");
+$allowedRoles = ["admin", "olympe"]; // Rôles autorisés
+if (!in_array($loggedInUser['role'], $allowedRoles)) {
+    header("Location: ../../accueil/index.php");
     exit();
 }
 
@@ -127,7 +127,6 @@ $connection->close();
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
-    <h1><?php echo $username; ?> (<?php echo $_SESSION['role']; ?>)</h1>
 
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
