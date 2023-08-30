@@ -178,6 +178,7 @@ $connection->close();
     // Afficher les dates communes à tous les utilisateurs
     echo '<h4>Dates communes à tous les utilisateurs :</h4>';
     echo '<p>' . implode(', ', $commonDates) . '</p>';
+    $connection->close();
     ?>
 </div>
 
