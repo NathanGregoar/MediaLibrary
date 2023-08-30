@@ -128,34 +128,6 @@ $connection->close();
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
-    <?php
-// Connexion à la base de données
-$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
-if ($connection->connect_error) {
-    die('Erreur de connexion : ' . $connection->connect_error);
-}
-
-// Requête SQL pour récupérer les utilisateurs et leurs dates de disponibilité
-$queryUsers = "SELECT id, nom, dispo FROM olympe";
-$resultUsers = $connection->query($queryUsers);
-
-if ($resultUsers) {
-    while ($rowUser = $resultUsers->fetch_assoc()) {
-        $userName = $rowUser['nom'];
-        $userDates = explode(',', $rowUser['dispo']);
-        
-        // Afficher le nom de l'utilisateur comme titre
-        echo "<h1>Utilisateur : $userName</h1>";
-        
-        // Afficher les dates de disponibilité de l'utilisateur
-        echo "<p>Dates de disponibilité : " . implode(', ', $userDates) . "</p><br>";
-    }
-}
-
-$connection->close();
-?>
-
     <div style="max-width: 20%;">
         <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
     </div>
@@ -171,98 +143,98 @@ $connection->close();
     <div id="availabilityCalendar"></div>
 
     <?php
-require_once '../../utils/auth.php';
-require_once '../../utils/config.php';
+    require_once '../../utils/auth.php';
+    require_once '../../utils/config.php';
 
-// Connexion à la base de données
-$connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+    // Connexion à la base de données
+    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
 
-if ($connection->connect_error) {
-    die('Erreur de connexion : ' . $connection->connect_error);
-}
-
-// Récupération des utilisateurs ayant des enregistrements dans la table olympe
-$queryUsers = "SELECT DISTINCT added_by FROM olympe";
-$resultUsers = $connection->query($queryUsers);
-
-// Récupération des moyens de transport
-$transportOptions = ['avion', 'train', 'bus', 'bateau']; // Noms en minuscule et sans espace
-
-// Tableau pour stocker les moyens de transport manquants par utilisateur
-$missingTransportByUser = [];
-
-// Tableau pour stocker les moyens de transport par utilisateur
-$transportByUser = [];
-
-// Parcourir chaque utilisateur
-while ($rowUser = $resultUsers->fetch_assoc()) {
-    $userId = $rowUser['added_by'];
-
-    $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
-    $resultTransport = $connection->query($queryTransport);
-
-    $transportChoices = [];
-
-    while ($rowTransport = $resultTransport->fetch_assoc()) {
-        $transportChoices = explode(',', $rowTransport['transport']); // Utilisation de la virgule comme séparateur
-        $transportChoices = array_map('trim', $transportChoices); // Supprimer les espaces autour des noms
-        $transportChoices = array_map('strtolower', $transportChoices); // Convertir en minuscules
+    if ($connection->connect_error) {
+        die('Erreur de connexion : ' . $connection->connect_error);
     }
 
-    // Vérifier les moyens de transport manquants pour cet utilisateur
-    $missingForUser = array_diff($transportOptions, $transportChoices);
+    // Récupération des utilisateurs ayant des enregistrements dans la table olympe
+    $queryUsers = "SELECT DISTINCT added_by FROM olympe";
+    $resultUsers = $connection->query($queryUsers);
 
-    // Stocker les moyens de transport pour cet utilisateur
-    $transportByUser[$userId] = $transportChoices;
+    // Récupération des moyens de transport
+    $transportOptions = ['avion', 'train', 'bus', 'bateau']; // Noms en minuscule et sans espace
 
-    // Stocker les moyens de transport manquants par utilisateur
-    if (!empty($missingForUser)) {
-        $missingTransportByUser[$userId] = $missingForUser;
+    // Tableau pour stocker les moyens de transport manquants par utilisateur
+    $missingTransportByUser = [];
+
+    // Tableau pour stocker les moyens de transport par utilisateur
+    $transportByUser = [];
+
+    // Parcourir chaque utilisateur
+    while ($rowUser = $resultUsers->fetch_assoc()) {
+        $userId = $rowUser['added_by'];
+
+        $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
+        $resultTransport = $connection->query($queryTransport);
+
+        $transportChoices = [];
+
+        while ($rowTransport = $resultTransport->fetch_assoc()) {
+            $transportChoices = explode(',', $rowTransport['transport']); // Utilisation de la virgule comme séparateur
+            $transportChoices = array_map('trim', $transportChoices); // Supprimer les espaces autour des noms
+            $transportChoices = array_map('strtolower', $transportChoices); // Convertir en minuscules
+        }
+
+        // Vérifier les moyens de transport manquants pour cet utilisateur
+        $missingForUser = array_diff($transportOptions, $transportChoices);
+
+        // Stocker les moyens de transport pour cet utilisateur
+        $transportByUser[$userId] = $transportChoices;
+
+        // Stocker les moyens de transport manquants par utilisateur
+        if (!empty($missingForUser)) {
+            $missingTransportByUser[$userId] = $missingForUser;
+        }
     }
-}
 
-// Afficher les utilisateurs et leurs moyens de transport sélectionnés
-echo '<h4>Transport souhaités :</h4>';
-echo '<ul>';
-foreach ($transportByUser as $userId => $transportChoices) {
-    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-    echo '<li>' . $userName . ': ' . implode(', ', $transportChoices) . '</li>';
-}
-echo '</ul>';
-
-// Supprimer les doublons des moyens de transport manquants
-$missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
-
-// Afficher les moyens de transport manquants par utilisateur 
-if (!empty($missingTransportByUser)) {
-    echo '<h4>Transport non-souhaités :</h4>';
+    // Afficher les utilisateurs et leurs moyens de transport sélectionnés
+    echo '<h4>Transport souhaités :</h4>';
     echo '<ul>';
-    foreach ($missingTransportByUser as $userId => $missingForUser) {
+    foreach ($transportByUser as $userId => $transportChoices) {
         $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-        echo '<li>' . $userName . ' : ' . implode(', ', $missingForUser) . '</li>';
+        echo '<li>' . $userName . ': ' . implode(', ', $transportChoices) . '</li>';
     }
     echo '</ul>';
-} else {
-    echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
-}
 
-// Fonction pour récupérer le nom d'utilisateur à partir de l'ID
-function getUserName($userId) {
-    global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+    // Supprimer les doublons des moyens de transport manquants
+    $missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
 
-    $query = "SELECT username FROM users WHERE id = $userId";
-    $result = $connection->query($query);
-
-    if ($result && $result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        return $row['username'];
+    // Afficher les moyens de transport manquants par utilisateur 
+    if (!empty($missingTransportByUser)) {
+        echo '<h4>Transport non-souhaités :</h4>';
+        echo '<ul>';
+        foreach ($missingTransportByUser as $userId => $missingForUser) {
+            $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+            echo '<li>' . $userName . ' : ' . implode(', ', $missingForUser) . '</li>';
+        }
+        echo '</ul>';
     } else {
-        return "Utilisateur inconnu";
+        echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
     }
-}
 
-$connection->close();
-?>
+    // Fonction pour récupérer le nom d'utilisateur à partir de l'ID
+    function getUserName($userId) {
+        global $connection; // Assurez-vous que la connexion à la base de données est accessible ici
+
+        $query = "SELECT username FROM users WHERE id = $userId";
+        $result = $connection->query($query);
+
+        if ($result && $result->num_rows > 0) {
+            $row = $result->fetch_assoc();
+            return $row['username'];
+        } else {
+            return "Utilisateur inconnu";
+        }
+    }
+
+    $connection->close();
+    ?>
 
 
 
@@ -400,73 +372,6 @@ $connection->close();
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-  // Tableau pour stocker les dates de disponibilité en commun
-  var commonAvailabilityDates = [];
-
-  <?php
-  // Connexion à la base de données
-  $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
-  if ($connection->connect_error) {
-      die('Erreur de connexion : ' . $connection->connect_error);
-  }
-
-  // Requête SQL pour récupérer toutes les dates de disponibilité de chaque utilisateur
-  $queryDates = "SELECT dispo FROM olympe";
-  $resultDates = $connection->query($queryDates);
-
-  $usersAvailabilityDates = []; // Tableau pour stocker les dates de tous les utilisateurs
-
-  if ($resultDates) {
-      while ($rowDates = $resultDates->fetch_assoc()) {
-          $dates = explode(',', $rowDates['dispo']);
-          $usersAvailabilityDates[] = $dates; // Ajouter les dates de chaque utilisateur dans un tableau
-      }
-  }
-
-  // Fermer la connexion à la base de données
-  $connection->close();
-
-  // Trouver les dates en commun en utilisant une approche de comptage
-  $datesCount = array_count_values(call_user_func_array('array_merge', $usersAvailabilityDates));
-  $totalUsers = count($usersAvailabilityDates);
-
-  foreach ($datesCount as $date => $count) {
-      if ($count === $totalUsers) {
-          $commonAvailabilityDates[] = $date;
-      }
-  }
-
-  $commonAvailabilityDates = array_unique($commonAvailabilityDates);
-  $commonAvailabilityDates = array_map(function($date) {
-      return date('Y-m-d', strtotime($date)); // Convertir les dates au format Y-m-d
-  }, $commonAvailabilityDates);
-  ?>
-
-  var calendarEl = document.getElementById('availabilityCalendar');
-  var calendar = new FullCalendar.Calendar(calendarEl, {
-    initialView: 'dayGridMonth', // Vue mensuelle
-    events: [
-      <?php
-      foreach ($commonAvailabilityDates as $date) {
-          echo "{\n";
-          echo "  title: 'Disponible',\n";
-          echo "  start: '$date',\n";
-          echo "  allDay: true\n";
-          echo "},\n";
-      }
-      ?>
-    ]
-  });
-
-  calendar.render();
-});
-</script>
-
-
 
 </body>
 </html>
