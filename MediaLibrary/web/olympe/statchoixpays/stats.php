@@ -174,9 +174,12 @@ $connection->close();
 
         $queryTransport = "SELECT transport FROM olympe WHERE added_by = $userId";
         $resultTransport = $connection->query($queryTransport);
+
+        // Crée un tableau pour stocker les moyens de transport choisis par l'utilisateur
         $transportChoices = [];
 
         while ($rowTransport = $resultTransport->fetch_assoc()) {
+            // Ajoute chaque moyen de transport à la liste
             $transportChoices = explode(',', $rowTransport['transport']);
         }
 
@@ -184,6 +187,7 @@ $connection->close();
         echo '<td>' . getUserName($userId) . '</td>';
 
         foreach ($transportOptions as $transport) {
+            // Vérifie si le moyen de transport est choisi par l'utilisateur
             $cellColor = in_array($transport, $transportChoices) ? 'green' : 'white';
             echo '<td style="background-color: ' . $cellColor . ';"></td>';
         }
