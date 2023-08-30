@@ -54,18 +54,23 @@ $email = $_SESSION['email'];
             <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
 
             <?php
-            // Vérification si l'utilisateur a accès a la page
-            $allowedRoles = ["admin"]; // Rôles autorisés
-            if (!in_array($loggedInUser['role'], $allowedRoles)) {
-                header("Location: ../accueil/index.php");
-                exit();
+            // Vérification si l'utilisateur est "Nathan" et son adresse e-mail est "nathan.gregoar@yahoo.fr"
+            if ($loggedInUser['role'] == "admin") {
+                echo '<a href="../admin/admin.php" class="section-link admin-link">';
+                echo '<span class="section-link-text">Section Admin</span>';
+                echo '</a>';
             }
             ?>
 
+<!-- $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
+if (!in_array($loggedInUser['role'], $allowedRoles)) {
+    header("Location: ../accueil/index.php");
+    exit();
+} -->
+
             <?php
             // Vérification si l'utilisateur est "Nathan" et son adresse e-mail est "nathan.gregoar@yahoo.fr"
-            $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
-            if (!in_array($loggedInUser['role'], $allowedRoles)) {
+            if ($username === "Nathan" && $email === "nathan.gregoar@yahoo.fr") {
                 echo '<a href="../olympe/olympe.php" class="olympe">';
                 echo '<img src="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png" alt="olympe">';
                 echo '</a>';
