@@ -1,8 +1,10 @@
 <?php
 require_once '../utils/auth.php';
+require_once '../utils/config.php';
 
 $username = $_SESSION['username'];
 $email = $_SESSION['email'];
+$loggedInUser = getLoggedInUser();
 
 // Vérification si l'utilisateur est autorisé à accéder à la page Ecollyday
 $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
@@ -12,7 +14,6 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
 }
 
 // Récupération de l'utilisateur connecté
-$loggedInUser = getLoggedInUser();
 $user_id = $loggedInUser['id'];
 
 // Vérification si une cellule a été sélectionnée ou dé-sélectionnée
