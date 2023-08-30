@@ -115,6 +115,8 @@ $connection->close();
     <title>L'Olympe - Stats choix de destination</title>
     <link rel="stylesheet" type="text/css" href="./stats.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.1/main.min.css" rel="stylesheet" />
 </head>
 <body>
     <div class="navbar">
@@ -137,6 +139,8 @@ $connection->close();
     <div style="max-width: 20%;">
         <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
     </div>
+
+    <div id="availabilityCalendar"></div>
 
     <?php
 require_once '../../utils/auth.php';
@@ -368,6 +372,56 @@ $connection->close();
 
     var myBarChartBudget = new Chart(barChartBudget, barConfigBudget);
     </script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  // Tableau pour stocker les dates de disponibilité en commun
+  var commonAvailabilityDates = [];
+
+  <?php
+  // Connexion à la base de données
+  $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+  if ($connection->connect_error) {
+      die('Erreur de connexion : ' . $connection->connect_error);
+  }
+
+  // Requête SQL pour récupérer les dates de disponibilité en commun
+  $queryDates = "SELECT dispo FROM olympe";
+  $resultDates = $connection->query($queryDates);
+
+  if ($resultDates) {
+      while ($rowDates = $resultDates->fetch_assoc()) {
+          $dates = explode(',', $rowDates['dispo']);
+          $commonAvailabilityDates = array_intersect($commonAvailabilityDates, $dates);
+          if (empty($commonAvailabilityDates)) {
+              $commonAvailabilityDates = $dates;
+          }
+      }
+  }
+
+  $connection->close();
+  ?>
+
+  var calendarEl = document.getElementById('availabilityCalendar');
+  var calendar = new FullCalendar.Calendar(calendarEl, {
+    initialView: 'dayGridMonth', // Vue mensuelle
+    events: [
+      <?php
+      foreach ($commonAvailabilityDates as $date) {
+          echo "{\n";
+          echo "  title: 'Disponible',\n";
+          echo "  start: '$date',\n";
+          echo "  allDay: true\n";
+          echo "},\n";
+      }
+      ?>
+    ]
+  });
+
+  calendar.render();
+});
+</script>
 
 </body>
 </html>
