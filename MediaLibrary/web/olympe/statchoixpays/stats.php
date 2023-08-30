@@ -154,7 +154,7 @@ $queryUsers = "SELECT DISTINCT added_by FROM olympe";
 $resultUsers = $connection->query($queryUsers);
 
 // Récupération des moyens de transport
-$transportOptions = ['Avion', 'Train', 'Bus', 'Bateau'];
+$transportOptions = ['avion', 'train', 'bus', 'bateau']; // Noms en minuscule et sans espace
 
 // Tableau pour stocker les moyens de transport manquants
 $missingTransport = [];
@@ -169,12 +169,14 @@ while ($rowUser = $resultUsers->fetch_assoc()) {
     $transportChoices = [];
 
     while ($rowTransport = $resultTransport->fetch_assoc()) {
-        $transportChoices = explode(', ', $rowTransport['transport']);
+        $transportChoices = explode(',', $rowTransport['transport']); // Utilisation de la virgule comme séparateur
+        $transportChoices = array_map('trim', $transportChoices); // Supprimer les espaces autour des noms
+        $transportChoices = array_map('strtolower', $transportChoices); // Convertir en minuscules
     }
 
     // Vérifier les moyens de transport manquants pour cet utilisateur
     $missingForUser = array_diff($transportOptions, $transportChoices);
-    
+
     // Ajouter les moyens de transport manquants au tableau global
     $missingTransport = array_merge($missingTransport, $missingForUser);
 }
@@ -189,7 +191,7 @@ if (!empty($missingTransport)) {
     echo '<h4>Moyens de transport manquants :</h4>';
     echo '<ul>';
     foreach ($missingTransport as $missing) {
-        echo '<li>' . $missing . '</li>';
+        echo '<li>' . ucfirst($missing) . '</li>'; // Afficher avec la première lettre en majuscule
     }
     echo '</ul>';
 } else {
