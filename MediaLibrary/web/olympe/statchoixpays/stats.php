@@ -161,20 +161,20 @@ $connection->close();
         <a href="../../olympe/statchoixpays/stats.php" style="color: #D7EBF3;">Stats</a>
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Stats choix de la destination Summer 2024</h1>
+    <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1>
     <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
 
     <main class="split-layout">
         <div class="left-column">
-            <div>
+            <div class="budgets">
                 <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
             </div>
 
-            <div>
+            <div class="paysYes">
                 <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
             </div>
 
-            <div>
+            <div class="paysNo">
                 <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
             </div>
 
@@ -230,6 +230,7 @@ $connection->close();
                 }
 
                 // Afficher les utilisateurs et leurs moyens de transport sélectionnés
+                echo '<div class="transport">';
                 echo '<h4>Transport souhaités :</h4>';
                 echo '<ul>';
                 foreach ($transportByUser as $userId => $transportChoices) {
@@ -253,6 +254,7 @@ $connection->close();
                 } else {
                     echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
                 }
+                echo '</div>';
 
                 $connection->close();
                 ?>
