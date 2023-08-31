@@ -58,3 +58,11 @@ th, td {
     padding: 10px;
     border-radius: 5px;
 }
+
+.row_cell {
+    grid-row: span 2;
+}
+
+.column_cell {
+    grid-column: span 2;
+}
