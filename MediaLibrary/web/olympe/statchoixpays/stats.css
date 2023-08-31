@@ -50,18 +50,18 @@ th, td {
 
 .split-layout {
     display: flex;
-    /* flex-direction: row; */
+    flex-direction: row;
 }
 
 .left-column {
     /* flex: 1; */
-    width: 59%;
+    width: 50%;
     margin: auto;
 }
 
 .right-column {
     /* flex: 1; */
-    /* width: 39%; */
+    width: 50%;
     margin: auto;
 }
 
