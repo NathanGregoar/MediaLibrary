@@ -55,4 +55,6 @@ th, td {
     gap: 10px;
     background-color: #d1dbe6;
     margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
 }
