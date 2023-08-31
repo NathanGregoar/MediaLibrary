@@ -51,3 +51,16 @@ th, td {
 #availabilityCalendar {
     width: 50%;
 }
+
+.split-layout {
+    display: flex;
+    flex-direction: row;
+}
+
+.left-column {
+    flex: 1;
+}
+
+.right-column {
+    flex: 1;
+}
