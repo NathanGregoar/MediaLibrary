@@ -161,8 +161,7 @@ $connection->close();
         <a href="../../olympe/statchoixpays/stats.php" style="color: #D7EBF3;">Stats</a>
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1>
-    <h2><?php echo $totalGods . " " . $text; ?> au formulaire !</h2>
+    <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
 
     <main class="split-layout">
         <div class="left-column">
