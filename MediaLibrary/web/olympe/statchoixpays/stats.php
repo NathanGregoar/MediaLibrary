@@ -165,7 +165,7 @@ $connection->close();
 
     <main class="split-layout">
         <div class="left-column">
-
+        <div class="grid_left">
         <?php
             require_once '../../utils/auth.php';
             require_once '../../utils/config.php';
@@ -258,7 +258,7 @@ $connection->close();
             <div class="budgets">
                 <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
             </div>
-
+        </div>
         </div>
 
         <div class="right-column">

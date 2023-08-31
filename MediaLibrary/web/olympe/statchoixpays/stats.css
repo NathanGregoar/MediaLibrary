@@ -68,8 +68,8 @@ th, td {
 .left-column {
     width: 55%;
     margin: auto;
-    display: flex;
-    flex-direction: column;
+    display: flex; /* Utiliser flex pour ajuster la largeur automatiquement */
+    flex-direction: column; /* Aligner les éléments en colonne */
     gap: 20px;
     padding: 20px;
     background-color: #f2f2f2;
@@ -77,8 +77,17 @@ th, td {
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
+.grid_left {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); /* Crée 3 colonnes de largeur égale */
+    gap: 20px; /* Espacement entre les éléments de la grille */
+    background-color: #f2f2f2;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
 
-.budget,
+.budgets,
 .transport,
 .paysYes,
 .paysNo {
@@ -86,10 +95,6 @@ th, td {
     padding: 10px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    flex: 1; /* Utiliser flex pour que les éléments s'adaptent en hauteur */
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Utiliser une grille pour les éléments internes */
-    gap: 10px;
 }
 
 .budget {
