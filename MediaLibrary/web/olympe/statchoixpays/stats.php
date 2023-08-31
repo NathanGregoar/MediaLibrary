@@ -180,7 +180,7 @@ $connection->close();
         </div>
 
         <div class="right-column">
-            <div>
+            <div class="calendar">
                 <h3>Calendrier des dates disponibles en commun :</h3>
                 <div id="calendar"></div>
             </div>

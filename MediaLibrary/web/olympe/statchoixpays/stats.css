@@ -64,3 +64,8 @@ th, td {
 .right-column {
     flex: 1;
 }
+
+.calendar{
+    width: 90%;
+    margin: auto;
+}
