@@ -54,5 +54,5 @@ th, td {
     grid-template-rows: repeat(5, auto);
     gap: 10px;
     background-color: #d1dbe6;
-    padding: 10px;
+    margin: 10px;
 }
