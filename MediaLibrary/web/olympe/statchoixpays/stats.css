@@ -68,3 +68,6 @@ th, td {
     grid-row: span 2;
 }
 
+.calendar {
+    grid-row: span 2;
+}
