@@ -54,7 +54,8 @@ th, td {
 }
 
 .right-column {
-    flex: 1;
+    /* flex: 1; */
+    width: 45%;
 }
 
 .calendar{
@@ -65,6 +66,7 @@ th, td {
 /* Ajoutez ces styles dans votre fichier "stats.css" */
 
 .left-column {
+    width: 55%;
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 20px;
