@@ -71,3 +71,7 @@ th, td {
 .calendar {
     grid-column: span 2;
 }
+
+.budgets {
+    grid-row: span 2;
+}
