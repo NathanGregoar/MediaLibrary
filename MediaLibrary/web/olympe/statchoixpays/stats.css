@@ -59,10 +59,12 @@ th, td {
     border-radius: 5px;
 }
 
-.row_cell {
+.transport, .budgets, .paysYes, .paysNo, .calendar {
+    background-color: #c5ced7;
+    border-radius: 5px;
+}
+
+.transport {
     grid-row: span 2;
 }
 
-.column_cell {
-    grid-column: span 2;
-}
