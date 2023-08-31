@@ -52,7 +52,6 @@ th, td {
     display: flex;
     flex-direction: row;
     width: 55%;
-    margin: auto;
 }
 
 .right-column {
