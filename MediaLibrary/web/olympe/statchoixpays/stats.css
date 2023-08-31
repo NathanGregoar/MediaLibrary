@@ -48,17 +48,13 @@ th, td {
     text-align: center;
 }
 
-#availabilityCalendar {
-    width: 50%;
-}
-
 .split-layout {
     display: flex;
     flex-direction: row;
 }
 
 .left-column {
-    flex: 2;
+    flex: 1;
 }
 
 .right-column {
