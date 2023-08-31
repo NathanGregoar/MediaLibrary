@@ -165,9 +165,6 @@ $connection->close();
 
     <main class="split-layout">
         <div class="left-column">
-            <div class="budgets">
-                <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
-            </div>
 
             <div class="paysYes">
                 <canvas id="pieChartPaysOui" aria-label="Diagramme des pays où l'Olympe veut partir"></canvas>
@@ -175,6 +172,10 @@ $connection->close();
 
             <div class="paysNo">
                 <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
+            </div>
+
+            <div class="budgets">
+                <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
             </div>
 
             <?php
