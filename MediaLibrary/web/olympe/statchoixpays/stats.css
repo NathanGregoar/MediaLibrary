@@ -65,56 +65,6 @@ th, td {
 }
 
 .transport {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    padding: 15px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     grid-row: span 2;
 }
-
-.transport h4 {
-    font-size: 18px;
-    margin-bottom: 10px;
-}
-
-.transport ul {
-    list-style-type: none;
-    margin: 0;
-    padding: 0;
-}
-
-.transport li {
-    margin-bottom: 8px;
-    font-size: 14px;
-}
-
-.transport li:last-child {
-    margin-bottom: 0;
-}
-
-.transport li::before {
-    content: "➜"; /* Ajoute une petite flèche devant chaque élément */
-    margin-right: 5px;
-}
-
-.transport h4 + ul {
-    margin-top: 10px;
-    padding-left: 20px; /* Indentation pour la liste */
-}
-
-.transport h4 + ul li {
-    font-weight: bold;
-}
-
-.transport h4 + ul li::before {
-    content: ""; /* Enlever la flèche devant les éléments en gras */
-    margin-right: 0;
-}
-
-.transport h4 + ul li + li {
-    margin-top: 5px; /* Espacement entre les éléments en gras */
-}
-
 
