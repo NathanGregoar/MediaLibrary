@@ -53,9 +53,9 @@ th, td {
     flex-direction: row;
 }
 
-.left-column {
+/* .left-column {
     flex: 1;
-}
+} */
 
 .right-column {
     flex: 1;
@@ -64,4 +64,31 @@ th, td {
 .calendar{
     width: 90%;
     margin: auto;
+}
+
+/* Ajoutez ces styles dans votre fichier "stats.css" */
+
+.left-column {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 20px;
+    padding: 20px;
+    background-color: #f2f2f2;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.budgets,
+.transport,
+.paysYes,
+.paysNo {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.transport {
+    grid-column: span 3; /* Span across 3 columns */
 }
