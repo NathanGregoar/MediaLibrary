@@ -53,10 +53,6 @@ th, td {
     flex-direction: row;
 }
 
-/* .left-column {
-    flex: 1;
-} */
-
 .right-column {
     flex: 1;
 }
