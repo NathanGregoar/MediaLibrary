@@ -53,6 +53,6 @@ th, td {
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, auto);
     gap: 10px;
-    background-color: #c4c6c8;
+    background-color: #d1dbe6;
     padding: 10px;
 }
