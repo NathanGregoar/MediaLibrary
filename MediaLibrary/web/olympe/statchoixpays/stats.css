@@ -48,10 +48,10 @@ th, td {
     text-align: center;
 }
 
-.split-layout {
+/* .split-layout {
     display: flex;
     flex-direction: row;
-}
+} */
 
 .left-column {
     /* flex: 1; */
