@@ -51,7 +51,6 @@ th, td {
 .split-layout {
     display: flex;
     flex-direction: row;
-    width: 55%;
 }
 
 .right-column {
