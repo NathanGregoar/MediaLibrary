@@ -48,10 +48,10 @@ th, td {
     text-align: center;
 }
 
-.split-layout {
+/* .split-layout {
     display: flex;
     flex-direction: row;
-}
+} */
 
 .right-column {
     /* flex: 1; */
@@ -88,6 +88,6 @@ th, td {
     border-radius: 5px;
 }
 
-.transport {
+.budget {
     grid-column: span 3; /* Span across 3 columns */
 }
