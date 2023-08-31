@@ -54,15 +54,11 @@ th, td {
 }
 
 .left-column {
-    /* flex: 1; */
-    width: 50%;
-    margin: auto;
+    flex: 1;
 }
 
 .right-column {
-    /* flex: 1; */
-    width: 50%;
-    margin: auto;
+    flex: 1;
 }
 
 .calendar{
