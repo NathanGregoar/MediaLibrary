@@ -216,7 +216,7 @@ $connection->close();
             }
 
             // Afficher les utilisateurs et leurs moyens de transport sélectionnés
-            echo '<div class="transport">';
+            echo '<div class="transport row_cell">';
             echo '<h4>Transport souhaités :</h4>';
             echo '<ul>';
             foreach ($transportByUser as $userId => $transportChoices) {
