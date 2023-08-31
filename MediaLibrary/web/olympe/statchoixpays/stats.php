@@ -253,13 +253,13 @@ $connection->close();
                 <canvas id="pieChartPaysNon" aria-label="Diagramme des pays où l'Olympe ne veut pas partir"></canvas>
             </div>
 
-            <div class="budgets">
-                <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
-            </div>
-
             <div class="calendar">
                 <h3>Calendrier des dates disponibles en commun :</h3>
                 <div id="calendar"></div>
+            </div>
+
+            <div class="budgets">
+                <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
             </div>
         </div>
 
