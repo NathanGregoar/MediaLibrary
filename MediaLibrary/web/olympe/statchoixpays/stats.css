@@ -68,15 +68,15 @@ th, td {
 .left-column {
     width: 55%;
     margin: auto;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    display: flex; /* Utiliser flex pour ajuster la largeur automatiquement */
+    flex-direction: column; /* Aligner les éléments en colonne */
     gap: 20px;
-    margin-bottom: 20px;
     padding: 20px;
     background-color: #f2f2f2;
     border-radius: 5px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
+
 
 .budgets,
 .transport,
