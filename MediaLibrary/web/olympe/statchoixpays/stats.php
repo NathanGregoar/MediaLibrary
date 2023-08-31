@@ -163,9 +163,7 @@ $connection->close();
     </div>
     <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
 
-    <main class="split-layout">
-        <div class="left-column">
-        <div class="grid_left">
+        <div class="grid">
         <?php
             require_once '../../utils/auth.php';
             require_once '../../utils/config.php';
@@ -258,16 +256,12 @@ $connection->close();
             <div class="budgets">
                 <canvas id="barChartBudget" aria-label="Diagramme des budgets min, moyenne et max"></canvas>
             </div>
-        </div>
-        </div>
 
-        <div class="right-column">
             <div class="calendar">
                 <h3>Calendrier des dates disponibles en commun :</h3>
                 <div id="calendar"></div>
             </div>
         </div>
-    </main>
 
     <!-- Diagramme camembert pays -->
     <script>
