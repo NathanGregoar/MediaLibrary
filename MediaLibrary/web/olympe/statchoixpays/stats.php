@@ -218,76 +218,58 @@ $connection->close();
 
             // Afficher les utilisateurs et leurs moyens de transport sélectionnés
             echo '<div class="transport">';
-            echo '<h4>Transport souhaités :</h4>';
-            echo '<ul>';
-            foreach ($transportByUser as $userId => $transportChoices) {
-                $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-                echo '<li>' . $userName . ': ';
-                foreach ($transportChoices as $choice) {
-                    // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
-                    $icon = '';
-                    switch ($choice) {
-                        case 'train':
-                            $icon = '🚆'; // Exemple d'icône Unicode pour le train
-                            break;
-                        case 'avion':
-                            $icon = '✈️'; // Exemple d'icône Unicode pour l'avion
-                            break;
-                        case 'bateau':
-                            $icon = '⛵'; // Exemple d'icône Unicode pour le bateau
-                            break;
-                        case 'bus':
-                            $icon = '🚌'; // Exemple d'icône Unicode pour le bus
-                            break;
-                        default:
-                            $icon = ''; // Icône par défaut ou aucune icône
-                            break;
-                    }
-                    echo $icon . ' '; // Affiche l'icône suivie d'un espace
-                }
-                echo '</li>';
-            }
-            echo '</ul>';
+echo '<h4>Transport souhaités :</h4>';
+echo '<ul>';
 
-            // Supprimer les doublons des moyens de transport manquants
-            $missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
+// Tableau d'icônes dans l'ordre souhaité
+$iconsOrder = [
+    'train' => '🚆', // Icône pour le train
+    'avion' => '✈️', // Icône pour l'avion
+    'bus' => '🚌', // Icône pour le bus
+    'bateau' => '⛵', // Icône pour le bateau
+];
 
-            // Afficher les moyens de transport manquants par utilisateur
-            if (!empty($missingTransportByUser)) {
-                echo '<h4>Transport non-souhaités :</h4>';
-                echo '<ul>';
-                foreach ($missingTransportByUser as $userId => $missingForUser) {
-                    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-                    echo '<li>' . $userName . ': ';
-                    foreach ($missingForUser as $choice) {
-                        // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
-                        $icon = '';
-                        switch ($choice) {
-                            case 'train':
-                                $icon = '🚆'; // Exemple d'icône Unicode pour le train
-                                break;
-                            case 'avion':
-                                $icon = '✈️'; // Exemple d'icône Unicode pour l'avion
-                                break;
-                            case 'bateau':
-                                $icon = '⛵'; // Exemple d'icône Unicode pour le bateau
-                                break;
-                            case 'bus':
-                                $icon = '🚌'; // Exemple d'icône Unicode pour le bus
-                                break;
-                            default:
-                                $icon = ''; // Icône par défaut ou aucune icône
-                                break;
-                        }
-                        echo $icon . ' '; // Affiche l'icône suivie d'un espace
-                    }
-                    echo '</li>';
-                }
-                echo '</ul>';
-            } else {
-                echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
+foreach ($transportByUser as $userId => $transportChoices) {
+    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+    echo '<li>' . $userName . ': ';
+
+    // Afficher les icônes dans l'ordre souhaité
+    foreach ($iconsOrder as $choice => $icon) {
+        if (in_array($choice, $transportChoices)) {
+            echo $icon . ' '; // Affiche l'icône suivie d'un espace s'il est choisi par l'utilisateur
+        }
+    }
+
+    echo '</li>';
+}
+echo '</ul>';
+
+// Supprimer les doublons des moyens de transport manquants
+$missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
+
+// Afficher les moyens de transport manquants par utilisateur
+if (!empty($missingTransportByUser)) {
+    echo '<h4>Transport non-souhaités :</h4>';
+    echo '<ul>';
+    foreach ($missingTransportByUser as $userId => $missingForUser) {
+        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+        echo '<li>' . $userName . ': ';
+
+        // Afficher les icônes dans l'ordre souhaité
+        foreach ($iconsOrder as $choice => $icon) {
+            if (in_array($choice, $missingForUser)) {
+                echo $icon . ' '; // Affiche l'icône suivie d'un espace s'il est manquant pour l'utilisateur
             }
-            echo '</div>';
+        }
+
+        echo '</li>';
+    }
+    echo '</ul>';
+} else {
+    echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
+}
+echo '</div>';
+
 
 
             $connection->close();
