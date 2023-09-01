@@ -447,63 +447,73 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         });
     </script>
 
-<script>
-    // Récupérer les éléments nécessaires pour les modales
-    const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
-    const prefCountriesModal = document.getElementById('prefCountriesModal');
-    const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
-    const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
-    const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
-    const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
+    <script>
+        // Récupérer les éléments nécessaires pour les modales
+const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
+const prefCountriesModal = document.getElementById('prefCountriesModal');
+const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
+const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
+const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
+const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
 
-    // Fonction pour désactiver les cases non préférées dans l'autre modal
-    function updateNonPreferredCountries() {
-        const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
-        const nonPrefCountryCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
-        
-        nonPrefCountryCheckboxes.forEach(checkbox => {
-            if (selectedPrefCountries.includes(checkbox.value)) {
-                checkbox.disabled = true;
-            } else {
-                checkbox.disabled = false;
-            }
-        });
-    }
-
-    // Fonction pour désactiver les cases préférées dans l'autre modal
-    function updatePreferredCountries() {
-        const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
-        const prefCountryCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
-        
-        prefCountryCheckboxes.forEach(checkbox => {
-            if (selectedNonPrefCountries.includes(checkbox.value)) {
-                checkbox.disabled = true;
-            } else {
-                checkbox.disabled = false;
-            }
-        });
-    }
-
-    // Pays pref
-    choosePrefCountriesBtn.addEventListener('click', function() {
-        prefCountriesModal.style.display = 'block';
+// Fonction pour désactiver toutes les cases cochées dans une modal
+function disableAllCheckedCheckboxes(modalId) {
+    const checkboxes = document.querySelectorAll(`#${modalId} [name="pref_countries[]"]:checked, #${modalId} [name="non_pref_countries[]"]:checked`);
+    checkboxes.forEach(checkbox => {
+        checkbox.disabled = true;
     });
+}
 
-    closePrefCountriesModal.addEventListener('click', function() {
-        updateNonPreferredCountries();
-        prefCountriesModal.style.display = 'none';
+// Fonction pour désactiver les cases non préférées dans l'autre modal
+function updateNonPreferredCountries() {
+    const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+    const nonPrefCountryCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
+    
+    nonPrefCountryCheckboxes.forEach(checkbox => {
+        if (selectedPrefCountries.includes(checkbox.value)) {
+            checkbox.disabled = true;
+        } else {
+            checkbox.disabled = false;
+        }
     });
+}
 
-    // Pays non pref
-    chooseNonPrefCountriesBtn.addEventListener('click', () => {
-        nonPrefCountriesModal.style.display = 'flex';
+// Fonction pour désactiver les cases préférées dans l'autre modal
+function updatePreferredCountries() {
+    const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+    const prefCountryCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
+    
+    prefCountryCheckboxes.forEach(checkbox => {
+        if (selectedNonPrefCountries.includes(checkbox.value)) {
+            checkbox.disabled = true;
+        } else {
+            checkbox.disabled = false;
+        }
     });
+}
 
-    closeNonPrefCountriesModal.addEventListener('click', () => {
-        updatePreferredCountries();
-        nonPrefCountriesModal.style.display = 'none';
-    });
-</script>
+// Pays pref
+choosePrefCountriesBtn.addEventListener('click', function() {
+    prefCountriesModal.style.display = 'block';
+    disableAllCheckedCheckboxes('nonPrefCountriesModal'); // Désactive toutes les cases cochées dans l'autre modal
+});
 
+closePrefCountriesModal.addEventListener('click', function() {
+    updateNonPreferredCountries();
+    prefCountriesModal.style.display = 'none';
+});
+
+// Pays non pref
+chooseNonPrefCountriesBtn.addEventListener('click', () => {
+    nonPrefCountriesModal.style.display = 'flex';
+    disableAllCheckedCheckboxes('prefCountriesModal'); // Désactive toutes les cases cochées dans l'autre modal
+});
+
+closeNonPrefCountriesModal.addEventListener('click', () => {
+    updatePreferredCountries();
+    nonPrefCountriesModal.style.display = 'none';
+});
+
+    </script>
 </body>
 </html>
