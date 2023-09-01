@@ -56,9 +56,35 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
             width: 75px;
             height: 75px;
         }
+        .navbar {
+            display: flex;
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            width: 100%;
+        }
+
+        .navbar a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 18px;
+            transition: color 0.3s ease;
+            margin: 10px;
+        }
+
+        .navbar a:hover {
+            color: #86c1ff;
+        }
     </style>
 </head>
 <body>
+    <div class="navbar">
+        <a href="../../accueil/index.php">Accueil</a>
+        <a href="../../olympe/olympe.php">L'Olympe</a>
+        <a href="../../ecollyday/ecollyday.php">Ecollyday</a>   
+    </div>
+
     <div class="container">
         <img src="https://cdn-icons-png.flaticon.com/512/4793/4793084.png" alt="Hermes AirLine" class="airline-logo">
         <h1>Cher Dieu de l'Olympe,</h1>
