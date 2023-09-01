@@ -34,7 +34,7 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
         }
         .container {
             text-align: center;
-            background-color: #ffffff;
+            background-color: #E1E9EC;
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
