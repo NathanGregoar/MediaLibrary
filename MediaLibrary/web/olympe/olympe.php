@@ -162,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="centered">
             <div class="button-group">
-            <button type="submit" class="submit-button" onclick="redirectToStatsPage()">Enregistrer</button>
+                <button type="submit" class="submit-button">Enregistrer</button>
             </div>
         </div>
     </form>
@@ -525,11 +525,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <!-- Inclure ce script JavaScript dans la section <head> de votre HTML -->
     <script>
-        function redirectToStatsPage() {
-            setTimeout(function () {
-                window.location.href = "../olympe/statchoixpays/stats.php";
-            }, 3000); // Redirection après 3 secondes (3000 millisecondes)
-        }
+        // Attendez que le document soit chargé
+document.addEventListener("DOMContentLoaded", function() {
+    const form = document.querySelector(".form-container");
+
+    form.addEventListener("submit", function(event) {
+        // Empêchez l'envoi du formulaire par défaut
+        event.preventDefault();
+
+        // Effectuez la redirection après 3 secondes
+        redirectToStatsPage();
+    });
+});
+
+// Fonction pour la redirection
+function redirectToStatsPage() {
+    setTimeout(function() {
+        window.location.href = "../olympe/statchoixpays/stats.php";
+    }, 3000); // Redirection après 3 secondes (3000 millisecondes)
+}
     </script>
 </body>
 </html>
