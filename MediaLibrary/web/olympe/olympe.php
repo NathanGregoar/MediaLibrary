@@ -528,6 +528,35 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
+
+        // Fonction pour désactiver les cases à cocher correspondantes
+function disableMatchingCheckboxes(inputValue, modalId) {
+    const checkboxes = document.querySelectorAll(`#${modalId} [name="pref_countries[]"], #${modalId} [name="non_pref_countries[]"]`);
+    checkboxes.forEach(checkbox => {
+        if (inputValue.includes(checkbox.value)) {
+            checkbox.disabled = true;
+        } else {
+            checkbox.disabled = false;
+        }
+    });
+}
+
+// Surveillez les changements dans prefCountriesSelectedInput
+const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
+prefCountriesSelectedInput.addEventListener('input', function() {
+    const inputValue = this.value.split(', ').filter(Boolean); // Séparez la valeur en tableau
+    // Désactivez les cases à cocher correspondantes dans la modale nonPrefCountriesModal
+    disableMatchingCheckboxes(inputValue, 'nonPrefCountriesModal');
+});
+
+// Surveillez les changements dans nonPrefCountriesSelectedInput
+const nonPrefCountriesSelectedInput = document.getElementById('non_pref_countries_selected');
+nonPrefCountriesSelectedInput.addEventListener('input', function() {
+    const inputValue = this.value.split(', ').filter(Boolean); // Séparez la valeur en tableau
+    // Désactivez les cases à cocher correspondantes dans la modale prefCountriesModal
+    disableMatchingCheckboxes(inputValue, 'prefCountriesModal');
+});
+
     </script>
 </body>
 </html>
