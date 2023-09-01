@@ -33,8 +33,6 @@ body {
 h1 {
     font-size: 20px;
     text-align: right;
-    display: flex;
-    align-items: center;
 }
 
 h2 {
