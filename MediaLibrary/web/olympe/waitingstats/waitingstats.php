@@ -50,7 +50,7 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
             margin-top: 20px;
         }
         .envelope-emoji {
-            font-size: 36px;
+            font-size: 20px;
         }
     </style>
 </head>
