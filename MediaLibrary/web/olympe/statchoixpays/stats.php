@@ -137,8 +137,11 @@ if ($resultAllDispos) {
     }
 }
 
-// Vérifiez s'il y a des disponibilités communes à afficher
-if (!empty($userDispos)) {
+// Vérifiez combien d'utilisateurs ont des disponibilités
+$numUsersWithDispos = count($userDispos);
+
+if ($numUsersWithDispos >= 2) {
+    // Au moins 2 utilisateurs ont des disponibilités communes
     $commonDispos = $userDispos[0]; // Initialisez avec les disponibilités du premier utilisateur
 
     for ($i = 1; $i < count($userDispos); $i++) {
@@ -148,6 +151,9 @@ if (!empty($userDispos)) {
 
     $commonDispos = array_unique($commonDispos);
     sort($commonDispos);
+} elseif ($numUsersWithDispos === 1) {
+    // Un seul utilisateur a des disponibilités, affichez ses disponibilités
+    $commonDispos = $userDispos[0];
 }
 
 // Trouver les dates communes
