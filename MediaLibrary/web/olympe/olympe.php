@@ -456,62 +456,61 @@ const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountrie
 const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
 const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
 
-// Fonction pour désactiver toutes les cases cochées dans une modal
-function disableAllCheckedCheckboxes(modalId) {
-    const checkboxes = document.querySelectorAll(`#${modalId} [name="pref_countries[]"]:checked, #${modalId} [name="non_pref_countries[]"]:checked`);
-    checkboxes.forEach(checkbox => {
-        checkbox.disabled = true;
-    });
-}
-
-// Fonction pour désactiver les cases non préférées dans l'autre modal
-function updateNonPreferredCountries() {
-    const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
-    const nonPrefCountryCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
+// Fonction pour désactiver les cases excédant la limite
+function limitCheckboxes(checkboxes, max) {
+    const checkedCheckboxes = [...checkboxes].filter(checkbox => checkbox.checked);
     
-    nonPrefCountryCheckboxes.forEach(checkbox => {
-        if (selectedPrefCountries.includes(checkbox.value)) {
-            checkbox.disabled = true;
-        } else {
+    if (checkedCheckboxes.length >= max) {
+        checkboxes.forEach(checkbox => {
+            if (!checkbox.checked) {
+                checkbox.disabled = true;
+            }
+        });
+    } else {
+        checkboxes.forEach(checkbox => {
             checkbox.disabled = false;
-        }
-    });
+        });
+    }
 }
 
-// Fonction pour désactiver les cases préférées dans l'autre modal
-function updatePreferredCountries() {
-    const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
-    const prefCountryCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
-    
-    prefCountryCheckboxes.forEach(checkbox => {
-        if (selectedNonPrefCountries.includes(checkbox.value)) {
-            checkbox.disabled = true;
-        } else {
-            checkbox.disabled = false;
-        }
-    });
-}
-
-// Pays pref
-choosePrefCountriesBtn.addEventListener('click', function() {
+// Fonction pour gérer la modal "Pays où je veux aller"
+function handlePrefCountriesModal() {
     prefCountriesModal.style.display = 'block';
-    disableAllCheckedCheckboxes('nonPrefCountriesModal'); // Désactive toutes les cases cochées dans l'autre modal
-});
 
-closePrefCountriesModal.addEventListener('click', function() {
-    updateNonPreferredCountries();
-    prefCountriesModal.style.display = 'none';
-});
+    closePrefCountriesModal.addEventListener('click', function() {
+        prefCountriesModal.style.display = 'none';
+    });
+}
 
-// Pays non pref
-chooseNonPrefCountriesBtn.addEventListener('click', () => {
+// Fonction pour gérer la modal "Pays où je ne veux pas aller"
+function handleNonPrefCountriesModal() {
     nonPrefCountriesModal.style.display = 'flex';
-    disableAllCheckedCheckboxes('prefCountriesModal'); // Désactive toutes les cases cochées dans l'autre modal
+
+    closeNonPrefCountriesModal.addEventListener('click', function() {
+        nonPrefCountriesModal.style.display = 'none';
+    });
+}
+
+// Attacher des événements aux boutons de sélection
+choosePrefCountriesBtn.addEventListener('click', handlePrefCountriesModal);
+chooseNonPrefCountriesBtn.addEventListener('click', handleNonPrefCountriesModal);
+
+// Attacher des événements aux cases à cocher pour limiter la sélection
+const prefCountryCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
+const nonPrefCountryCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
+const maxPrefCountries = 5;
+const maxNonPrefCountries = 3;
+
+prefCountryCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        limitCheckboxes(prefCountryCheckboxes, maxPrefCountries);
+    });
 });
 
-closeNonPrefCountriesModal.addEventListener('click', () => {
-    updatePreferredCountries();
-    nonPrefCountriesModal.style.display = 'none';
+nonPrefCountryCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', function() {
+        limitCheckboxes(nonPrefCountryCheckboxes, maxNonPrefCountries);
+    });
 });
 
     </script>
