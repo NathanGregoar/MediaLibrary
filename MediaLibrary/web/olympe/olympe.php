@@ -354,158 +354,86 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </script>
 
     <script>
-        const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
-        const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
-        const topPaysPreferes = document.getElementById('topPreferredCountries');
-        const topPaysNonPreferes = document.getElementById('topNonPreferredCountries');
+        // Récupérer les éléments nécessaires pour les modales
+        const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
+        const prefCountriesModal = document.getElementById('prefCountriesModal');
+        const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
+        const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
+        const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
+        const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
 
-        const LIMITE_PAYS_PREFERES = 5;
-        const LIMITE_PAYS_NON_PREFERES = 3;
-        const DISABLED_TEXT_COLOR = 'red'; // Couleur du texte pour les pays désactivés
-
-        const mettreAJourTopPays = () => {
-            let paysPreferesSelectionnes = [];
-            let paysNonPreferesSelectionnes = [];
-
-            casesPaysPreferes.forEach(casePays => {
-                if (casePays.checked) {
-                    paysPreferesSelectionnes.push(casePays.value);
-                }
-            });
-
-            casesPaysNonPreferes.forEach(casePays => {
-                if (casePays.checked) {
-                    paysNonPreferesSelectionnes.push(casePays.value);
-                }
-            });
-
-            desactiverCasesNonSelectionnees(paysPreferesSelectionnes, casesPaysPreferes, LIMITE_PAYS_PREFERES);
-            desactiverCasesNonSelectionnees(paysNonPreferesSelectionnes, casesPaysNonPreferes, LIMITE_PAYS_NON_PREFERES);
-
-            mettreAJourListesTopPays(paysPreferesSelectionnes, paysNonPreferesSelectionnes);
-        };
-
-        const desactiverCasesNonSelectionnees = (paysSelectionnes, casesPays, limite) => {
-            casesPays.forEach(casePays => {
-                casePays.disabled = !casePays.checked && paysSelectionnes.length >= limite;
-                if (casePays.disabled) {
-                    casePays.parentNode.style.color = DISABLED_TEXT_COLOR;
-                } else {
-                    casePays.parentNode.style.color = ''; // Réinitialiser la couleur si activé
-                }
-            });
-        };
-
-        const mettreAJourListesTopPays = (paysPreferesSelectionnes, paysNonPreferesSelectionnes) => {
-            topPaysPreferes.innerHTML = paysPreferesSelectionnes
-                .slice(0, LIMITE_PAYS_PREFERES)
-                .map(pays => `<li>${pays}</li>`)
-                .join('');
-
-            topPaysNonPreferes.innerHTML = paysNonPreferesSelectionnes
-                .slice(0, LIMITE_PAYS_NON_PREFERES)
-                .map(pays => `<li>${pays}</li>`)
-                .join('');
-        };
-
-        casesPaysPreferes.forEach(casePays => {
-            casePays.addEventListener('change', mettreAJourTopPays);
+        // Pays pref
+        choosePrefCountriesBtn.addEventListener('click', function() {
+            prefCountriesModal.style.display = 'block';
         });
 
-        casesPaysNonPreferes.forEach(casePays => {
-            casePays.addEventListener('change', mettreAJourTopPays);
+        closePrefCountriesModal.addEventListener('click', function() {
+            const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+            const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
+            
+            // Mettez à jour la valeur du champ de saisie avec les pays sélectionnés
+            prefCountriesSelectedInput.value = selectedPrefCountries.join(', ');
+            
+            // Fermez la modal
+            prefCountriesModal.style.display = 'none';
         });
-    </script>
 
-    <!-- Inclure le script pour le calendrier -->
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
-    <script>
-        flatpickr(".flatpickr", {
-            mode: "multiple",
-            dateFormat: "Y-m-d",
-            inline: true,
-            onChange: function(selectedDates, dateStr, instance) {
-                const calendarContainer = instance._container;
-                if (calendarContainer.classList.contains("flatpickr-calendar")) {
-                    const dispoDates = document.querySelectorAll(".green-date");
-                    const notDispoDates = document.querySelectorAll(".red-date");
-                    dispoDates.forEach(date => {
-                        date.classList.remove("green-date");
-                    });
-                    notDispoDates.forEach(date => {
-                        date.classList.remove("red-date");
-                    });
-                    selectedDates.forEach(date => {
-                        if (instance._input.id === "dispo_date") {
-                            date.classList.add("green-date");
-                        } else if (instance._input.id === "not_dispo_date") {
-                            date.classList.add("red-date");
-                        }
-                    });
-                }
+        // Ajoutez ceci pour également mettre à jour le champ de saisie si l'utilisateur clique en dehors de la modal
+        window.addEventListener('click', (event) => {
+            if (event.target === prefCountriesModal) {
+                const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+                const prefCountriesSelectedInput = document.getElementById('pref_countries_selected');
+                
+                // Mettez à jour la valeur du champ de saisie avec les pays sélectionnés
+                prefCountriesSelectedInput.value = selectedPrefCountries.join(', ');
+                
+                // Fermez la modal
+                prefCountriesModal.style.display = 'none';
             }
         });
-    </script>
 
-    <script>
-        // Récupérer les éléments nécessaires pour les modales
-const choosePrefCountriesBtn = document.getElementById('choosePrefCountriesBtn');
-const prefCountriesModal = document.getElementById('prefCountriesModal');
-const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
-const chooseNonPrefCountriesBtn = document.getElementById('chooseNonPrefCountriesBtn');
-const nonPrefCountriesModal = document.getElementById('nonPrefCountriesModal');
-const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
+        // Pays non pref
+        chooseNonPrefCountriesBtn.addEventListener('click', () => {
+            nonPrefCountriesModal.style.display = 'flex';
+        });
 
-// Fonction pour désactiver les cases non préférées dans l'autre modal
-function updateNonPreferredCountries() {
-    const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
-    const nonPrefCountryCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
-    const maxNonPrefCountries = 3; // Limite à 3 cases cochées
-    
-    nonPrefCountryCheckboxes.forEach(checkbox => {
-        if (selectedPrefCountries.includes(checkbox.value) || document.querySelectorAll('[name="non_pref_countries[]"]:checked').length >= maxNonPrefCountries) {
-            checkbox.disabled = true;
-        } else {
-            checkbox.disabled = false;
-        }
-    });
-}
+        closeNonPrefCountriesModal.addEventListener('click', () => {
+            const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+            const nonPrefCountriesSelectedInput = document.getElementById('non_pref_countries_selected');
+            
+            // Mettez à jour la valeur du champ de saisie avec les pays non préférés
+            nonPrefCountriesSelectedInput.value = selectedNonPrefCountries.join(',');
+            
+            // Fermez la modal
+            nonPrefCountriesModal.style.display = 'none';
+        });
 
-// Fonction pour désactiver les cases préférées dans l'autre modal
-function updatePreferredCountries() {
-    const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
-    const prefCountryCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
-    const maxPrefCountries = 5; // Limite à 5 cases cochées
-    
-    prefCountryCheckboxes.forEach(checkbox => {
-        if (selectedNonPrefCountries.includes(checkbox.value) || document.querySelectorAll('[name="pref_countries[]"]:checked').length >= maxPrefCountries) {
-            checkbox.disabled = true;
-        } else {
-            checkbox.disabled = false;
-        }
-    });
-}
+        // Ajoutez ceci pour également mettre à jour le champ de saisie si l'utilisateur clique en dehors de la modal
+        window.addEventListener('click', (event) => {
+            if (event.target === nonPrefCountriesModal) {
+                const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+                const nonPrefCountriesSelectedInput = document.getElementById('non_pref_countries_selected');
+                
+                // Mettez à jour la valeur du champ de saisie avec les pays non préférés
+                nonPrefCountriesSelectedInput.value = selectedNonPrefCountries.join(',');
+                
+                // Fermez la modal
+                nonPrefCountriesModal.style.display = 'none';
+            }
+        });
 
-// Pays pref
-choosePrefCountriesBtn.addEventListener('click', function() {
-    prefCountriesModal.style.display = 'block';
-});
-
-closePrefCountriesModal.addEventListener('click', function() {
-    updateNonPreferredCountries();
-    prefCountriesModal.style.display = 'none';
-});
-
-// Pays non pref
-chooseNonPrefCountriesBtn.addEventListener('click', () => {
-    nonPrefCountriesModal.style.display = 'flex';
-});
-
-closeNonPrefCountriesModal.addEventListener('click', () => {
-    updatePreferredCountries();
-    nonPrefCountriesModal.style.display = 'none';
-});
-
+        // Fermer la modal si l'utilisateur clique en dehors de la modal
+        window.addEventListener('click', (event) => {
+            if (event.target === prefCountriesModal) {
+                const selectedPrefCountries = [...document.querySelectorAll('[name="pref_countries[]"]:checked')].map(input => input.value);
+                document.querySelector('#prefCountries').innerHTML = selectedPrefCountries.join(', ');
+                prefCountriesModal.style.display = 'none';
+            } else if (event.target === nonPrefCountriesModal) {
+                const selectedNonPrefCountries = [...document.querySelectorAll('[name="non_pref_countries[]"]:checked')].map(input => input.value);
+                document.querySelector('#nonPrefCountries').innerHTML = selectedNonPrefCountries.join(', ');
+                nonPrefCountriesModal.style.display = 'none';
+            }
+        });
     </script>
 </body>
 </html>
