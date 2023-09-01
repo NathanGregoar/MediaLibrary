@@ -95,6 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" type="text/css" href="./olympe.css">
     <!-- Inclure le CSS pour le calendrier -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <!-- Ajoutez cette balise meta dans le head -->
+    <meta http-equiv="refresh" content="3;url=../olympe/statchoixpays/stats.php">
 </head>
 <body>
     <div class="navbar">
