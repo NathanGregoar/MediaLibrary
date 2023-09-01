@@ -130,8 +130,17 @@ $userDispos = []; // Tableau pour stocker les disponibilités par utilisateur
 if ($resultAllDispos) {
     while ($rowAllDispos = $resultAllDispos->fetch_assoc()) {
         $dispoDates = explode(',', $rowAllDispos['dispo']); // Séparer les dates par des virgules
+        $dispoDates = array_map('trim', $dispoDates); // Supprimer les espaces autour des noms
+        $dispoDates = array_filter($dispoDates); // Supprimer les éléments vides
         $userDispos[] = $dispoDates;
     }
+}
+
+// Vérifiez s'il y a des disponibilités communes à afficher
+if (!empty($userDispos)) {
+    $commonDispos = call_user_func_array('array_intersect', $userDispos);
+    $commonDispos = array_unique($commonDispos);
+    sort($commonDispos);
 }
 
 // Trouver les dates communes
