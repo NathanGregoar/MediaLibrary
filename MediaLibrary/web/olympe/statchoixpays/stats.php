@@ -54,6 +54,12 @@ if ($result) {
     $totalGods = 0; // En cas d'erreur dans la requête
 }
 
+// Vérifiez si le nombre d'utilisateurs est inférieur à 2, alors redirigez
+if ($totalGods < 2) {
+    header("Location: ../waitingstats/waitingstats.php");
+    exit();
+}
+
 // Détermine si le texte doit être au singulier ou au pluriel
 $text = ($totalGods == 1) ? "Dieu de l'Olympe a répondu" : "Dieux de l'Olympe ont répondu";
 
@@ -429,27 +435,6 @@ $connection->close();
 document.addEventListener('DOMContentLoaded', function () {
     var calendarEl = document.getElementById('calendar');
 
-    <?php if (count($userDispos) === 1) : ?>
-    // S'il y a un seul utilisateur, affichez ses disponibilités
-    var userDispos = <?php echo json_encode($userDispos[0]); ?>;
-    var events = userDispos.map(function (date) {
-        return {
-            title: 'Disponible',
-            start: date
-        };
-    });
-    <?php else : ?>
-    // Sinon, affichez les disponibilités communes de tous les utilisateurs
-    var events = [
-        <?php foreach ($commonDispos as $date) : ?>
-        {
-            title: 'Disponible',
-            start: '<?php echo $date; ?>'
-        },
-        <?php endforeach; ?>
-    ];
-    <?php endif; ?>
-
     var calendar = new FullCalendar.Calendar(calendarEl, {
         initialView: 'dayGridMonth',
         headerToolbar: {
@@ -457,13 +442,19 @@ document.addEventListener('DOMContentLoaded', function () {
             center: 'title',
             right: 'prev,next today'
         },
-        events: events // Utilisez le tableau d'événements défini ci-dessus
+        events: [
+            <?php foreach ($commonDispos as $date) : ?>
+            {
+                title: 'Disponible',
+                start: '<?php echo $date; ?>'
+            },
+            <?php endforeach; ?>
+        ]
     });
 
     calendar.render();
 });
 </script>
-
 
 </body>
 </html>
