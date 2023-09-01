@@ -221,7 +221,7 @@ echo '<h4>Transport souhaités :</h4>';
 echo '<ul>';
 foreach ($transportByUser as $userId => $transportChoices) {
     $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-    echo '<li>' . $userName . ': <br>';
+    echo '<li>' . $userName . ': ';
     foreach ($transportChoices as $choice) {
         // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
         $icon = '';
@@ -257,7 +257,7 @@ if (!empty($missingTransportByUser)) {
     echo '<ul>';
     foreach ($missingTransportByUser as $userId => $missingForUser) {
         $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-        echo '<li>' . $userName . ' : <br>';
+        echo '<li>' . $userName . ': ';
         foreach ($missingForUser as $choice) {
             // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
             $icon = '';
