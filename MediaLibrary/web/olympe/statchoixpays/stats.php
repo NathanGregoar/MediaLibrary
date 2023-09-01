@@ -54,8 +54,8 @@ if ($result) {
     $totalGods = 0; // En cas d'erreur dans la requête
 }
 
-// Vérifiez si le nombre d'utilisateurs est inférieur à 2, alors redirigez
-if ($totalGods < 2) {
+// Vérifiez si le nombre d'utilisateurs est inférieur à 7, alors redirigez
+if ($totalGods < 7) {
     header("Location: ../waitingstats/waitingstats.php");
     exit();
 }
