@@ -528,60 +528,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
-
-
-
-
-        // Ajoutez ces scripts à la fin de votre fichier HTML, après les scripts existants
-
-// Sélectionnez toutes les cases à cocher des deux modales
-const prefCountriesCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
-const nonPrefCountriesCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
-
-// Événement de modification pour les cases à cocher dans la modale "Pays où je veux aller"
-prefCountriesCheckboxes.forEach(prefCheckbox => {
-    prefCheckbox.addEventListener('change', function () {
-        // Vérifiez si la case à cocher est cochée
-        if (this.checked) {
-            // Désactivez la case correspondante dans la modale "Pays où je ne veux pas aller"
-            const nonPrefCheckbox = document.querySelector(`[name="non_pref_countries[]"][value="${this.value}"]`);
-            if (nonPrefCheckbox) {
-                nonPrefCheckbox.disabled = true;
-                nonPrefCheckbox.parentNode.style.color = 'red';
-            }
-        } else {
-            // Si la case à cocher est désactivée, réactivez-la dans l'autre modale
-            const nonPrefCheckbox = document.querySelector(`[name="non_pref_countries[]"][value="${this.value}"]`);
-            if (nonPrefCheckbox) {
-                nonPrefCheckbox.disabled = false;
-                nonPrefCheckbox.parentNode.style.color = ''; // Réinitialiser la couleur
-            }
-        }
-    });
-});
-
-// Événement de modification pour les cases à cocher dans la modale "Pays où je ne veux pas aller"
-nonPrefCountriesCheckboxes.forEach(nonPrefCheckbox => {
-    nonPrefCheckbox.addEventListener('change', function () {
-        // Vérifiez si la case à cocher est cochée
-        if (this.checked) {
-            // Désactivez la case correspondante dans la modale "Pays où je veux aller"
-            const prefCheckbox = document.querySelector(`[name="pref_countries[]"][value="${this.value}"]`);
-            if (prefCheckbox) {
-                prefCheckbox.disabled = true;
-                prefCheckbox.parentNode.style.color = 'red';
-            }
-        } else {
-            // Si la case à cocher est désactivée, réactivez-la dans l'autre modale
-            const prefCheckbox = document.querySelector(`[name="pref_countries[]"][value="${this.value}"]`);
-            if (prefCheckbox) {
-                prefCheckbox.disabled = false;
-                prefCheckbox.parentNode.style.color = ''; // Réinitialiser la couleur
-            }
-        }
-    });
-});
-
     </script>
 </body>
 </html>
