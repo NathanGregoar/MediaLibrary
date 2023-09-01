@@ -32,7 +32,9 @@ body {
 
 h1 {
     font-size: 20px;
-    text-align: center;
+    text-align: right;
+    display: flex;
+    align-items: center;
 }
 
 h2 {

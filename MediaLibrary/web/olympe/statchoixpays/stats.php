@@ -159,9 +159,10 @@ $connection->close();
         <a href="../../accueil/index.php">Accueil</a>
         <a href="../../olympe/olympe.php">L'Olympe</a>
         <a href="../../olympe/statchoixpays/stats.php" style="color: #D7EBF3;">Stats</a>
-        <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
+        <a href="../../ecollyday/ecollyday.php">Ecollyday</a>   
+        
+        <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
     </div>
-    <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
 
         <div class="grid">
         <?php
@@ -217,76 +218,76 @@ $connection->close();
 
             // Afficher les utilisateurs et leurs moyens de transport sélectionnés
             echo '<div class="transport">';
-echo '<h4>Transport souhaités :</h4>';
-echo '<ul>';
-foreach ($transportByUser as $userId => $transportChoices) {
-    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-    echo '<li>' . $userName . ': ';
-    foreach ($transportChoices as $choice) {
-        // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
-        $icon = '';
-        switch ($choice) {
-            case 'train':
-                $icon = '🚆'; // Exemple d'icône Unicode pour le train
-                break;
-            case 'avion':
-                $icon = '✈️'; // Exemple d'icône Unicode pour l'avion
-                break;
-            case 'bateau':
-                $icon = '⛵'; // Exemple d'icône Unicode pour le bateau
-                break;
-            case 'bus':
-                $icon = '🚌'; // Exemple d'icône Unicode pour le bus
-                break;
-            default:
-                $icon = ''; // Icône par défaut ou aucune icône
-                break;
-        }
-        echo $icon . ' '; // Affiche l'icône suivie d'un espace
-    }
-    echo '</li>';
-}
-echo '</ul>';
-
-// Supprimer les doublons des moyens de transport manquants
-$missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
-
-// Afficher les moyens de transport manquants par utilisateur
-if (!empty($missingTransportByUser)) {
-    echo '<h4>Transport non-souhaités :</h4>';
-    echo '<ul>';
-    foreach ($missingTransportByUser as $userId => $missingForUser) {
-        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-        echo '<li>' . $userName . ': ';
-        foreach ($missingForUser as $choice) {
-            // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
-            $icon = '';
-            switch ($choice) {
-                case 'train':
-                    $icon = '🚆'; // Exemple d'icône Unicode pour le train
-                    break;
-                case 'avion':
-                    $icon = '✈️'; // Exemple d'icône Unicode pour l'avion
-                    break;
-                case 'bateau':
-                    $icon = '⛵'; // Exemple d'icône Unicode pour le bateau
-                    break;
-                case 'bus':
-                    $icon = '🚌'; // Exemple d'icône Unicode pour le bus
-                    break;
-                default:
-                    $icon = ''; // Icône par défaut ou aucune icône
-                    break;
+            echo '<h4>Transport souhaités :</h4>';
+            echo '<ul>';
+            foreach ($transportByUser as $userId => $transportChoices) {
+                $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+                echo '<li>' . $userName . ': ';
+                foreach ($transportChoices as $choice) {
+                    // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
+                    $icon = '';
+                    switch ($choice) {
+                        case 'train':
+                            $icon = '🚆'; // Exemple d'icône Unicode pour le train
+                            break;
+                        case 'avion':
+                            $icon = '✈️'; // Exemple d'icône Unicode pour l'avion
+                            break;
+                        case 'bateau':
+                            $icon = '⛵'; // Exemple d'icône Unicode pour le bateau
+                            break;
+                        case 'bus':
+                            $icon = '🚌'; // Exemple d'icône Unicode pour le bus
+                            break;
+                        default:
+                            $icon = ''; // Icône par défaut ou aucune icône
+                            break;
+                    }
+                    echo $icon . ' '; // Affiche l'icône suivie d'un espace
+                }
+                echo '</li>';
             }
-            echo $icon . ' '; // Affiche l'icône suivie d'un espace
-        }
-        echo '</li>';
-    }
-    echo '</ul>';
-} else {
-    echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
-}
-echo '</div>';
+            echo '</ul>';
+
+            // Supprimer les doublons des moyens de transport manquants
+            $missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
+
+            // Afficher les moyens de transport manquants par utilisateur
+            if (!empty($missingTransportByUser)) {
+                echo '<h4>Transport non-souhaités :</h4>';
+                echo '<ul>';
+                foreach ($missingTransportByUser as $userId => $missingForUser) {
+                    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+                    echo '<li>' . $userName . ': ';
+                    foreach ($missingForUser as $choice) {
+                        // Remplacez les valeurs par des icônes Unicode ou d'autres icônes appropriées
+                        $icon = '';
+                        switch ($choice) {
+                            case 'train':
+                                $icon = '🚆'; // Exemple d'icône Unicode pour le train
+                                break;
+                            case 'avion':
+                                $icon = '✈️'; // Exemple d'icône Unicode pour l'avion
+                                break;
+                            case 'bateau':
+                                $icon = '⛵'; // Exemple d'icône Unicode pour le bateau
+                                break;
+                            case 'bus':
+                                $icon = '🚌'; // Exemple d'icône Unicode pour le bus
+                                break;
+                            default:
+                                $icon = ''; // Icône par défaut ou aucune icône
+                                break;
+                        }
+                        echo $icon . ' '; // Affiche l'icône suivie d'un espace
+                    }
+                    echo '</li>';
+                }
+                echo '</ul>';
+            } else {
+                echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
+            }
+            echo '</div>';
 
 
             $connection->close();
