@@ -353,48 +353,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </script>
 
-<script>
-    const prefCountriesCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
-    const nonPrefCountriesCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
-
-    // Fonction pour désactiver les cases non préférées
-    function disableNonPreferredCountries() {
-        prefCountriesCheckboxes.forEach(prefCountryCheckbox => {
-            const countryValue = prefCountryCheckbox.value;
-            const correspondingNonPrefCountryCheckbox = document.querySelector(`[name="non_pref_countries[]"][value="${countryValue}"]`);
-            if (prefCountryCheckbox.checked) {
-                correspondingNonPrefCountryCheckbox.disabled = true;
-            } else {
-                correspondingNonPrefCountryCheckbox.disabled = false;
-            }
-        });
-    }
-
-    // Écouter les changements dans les cases à cocher de la modal "Pays où je veux aller"
-    prefCountriesCheckboxes.forEach(prefCountryCheckbox => {
-        prefCountryCheckbox.addEventListener('change', disableNonPreferredCountries);
-    });
-
-    // Fonction pour désactiver les cases préférées
-    function disablePreferredCountries() {
-        nonPrefCountriesCheckboxes.forEach(nonPrefCountryCheckbox => {
-            const countryValue = nonPrefCountryCheckbox.value;
-            const correspondingPrefCountryCheckbox = document.querySelector(`[name="pref_countries[]"][value="${countryValue}"]`);
-            if (nonPrefCountryCheckbox.checked) {
-                correspondingPrefCountryCheckbox.disabled = true;
-            } else {
-                correspondingPrefCountryCheckbox.disabled = false;
-            }
-        });
-    }
-
-    // Écouter les changements dans les cases à cocher de la modal "Pays où je ne veux pas aller"
-    nonPrefCountriesCheckboxes.forEach(nonPrefCountryCheckbox => {
-        nonPrefCountryCheckbox.addEventListener('change', disablePreferredCountries);
-    });
-</script>
-
-
     <script>
         const casesPaysPreferes = document.querySelectorAll('[name="pref_countries[]"]');
         const casesPaysNonPreferes = document.querySelectorAll('[name="non_pref_countries[]"]');
@@ -571,5 +529,49 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         });
     </script>
+
+<script>
+    const prefCountriesCheckboxes = document.querySelectorAll('[name="pref_countries[]"]');
+    const nonPrefCountriesCheckboxes = document.querySelectorAll('[name="non_pref_countries[]"]');
+
+    // Fonction pour désactiver les cases non préférées
+    function disableNonPreferredCountries() {
+        prefCountriesCheckboxes.forEach(prefCountryCheckbox => {
+            const countryValue = prefCountryCheckbox.value;
+            const correspondingNonPrefCountryCheckbox = document.querySelector(`[name="non_pref_countries[]"][value="${countryValue}"]`);
+            if (prefCountryCheckbox.checked) {
+                correspondingNonPrefCountryCheckbox.disabled = true;
+            } else {
+                correspondingNonPrefCountryCheckbox.disabled = false;
+            }
+        });
+    }
+
+    // Fonction pour désactiver les cases préférées
+    function disablePreferredCountries() {
+        nonPrefCountriesCheckboxes.forEach(nonPrefCountryCheckbox => {
+            const countryValue = nonPrefCountryCheckbox.value;
+            const correspondingPrefCountryCheckbox = document.querySelector(`[name="pref_countries[]"][value="${countryValue}"]`);
+            if (nonPrefCountryCheckbox.checked) {
+                correspondingPrefCountryCheckbox.disabled = true;
+            } else {
+                correspondingPrefCountryCheckbox.disabled = false;
+            }
+        });
+    }
+
+    // Écouter le clic sur le bouton "Fermer & sauvegarder" dans la modal "Pays où je veux aller"
+    const closePrefCountriesModal = document.getElementById('closePrefCountriesModal');
+    closePrefCountriesModal.addEventListener('click', function() {
+        disableNonPreferredCountries();
+    });
+
+    // Écouter le clic sur le bouton "Fermer & sauvegarder" dans la modal "Pays où je ne veux pas aller"
+    const closeNonPrefCountriesModal = document.getElementById('closeNonPrefCountriesModal');
+    closeNonPrefCountriesModal.addEventListener('click', function() {
+        disablePreferredCountries();
+    });
+</script>
+
 </body>
 </html>
