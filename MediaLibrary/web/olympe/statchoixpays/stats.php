@@ -161,9 +161,9 @@ $connection->close();
         <a href="../../olympe/statchoixpays/stats.php" style="color: #D7EBF3;">Stats</a>
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
+    <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
 
         <div class="grid">
-        <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
         <?php
             require_once '../../utils/auth.php';
             require_once '../../utils/config.php';
