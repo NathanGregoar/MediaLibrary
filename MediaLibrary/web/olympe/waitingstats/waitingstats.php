@@ -57,7 +57,8 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
             height: 75px;
         }
         .navbar {
-            display: block;
+            display: flex;
+            position: absolute;
             top: 0;
             left: 0;
             background-color: #333;
