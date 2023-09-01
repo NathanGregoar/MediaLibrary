@@ -254,7 +254,7 @@ $connection->close();
             </div>
 
             <div class="calendar">
-                <h3>Calendrier des dates disponibles en commun :</h3>
+                <h4>Calendrier des dates disponibles en commun :</h4>
                 <div id="calendar"></div>
             </div>
 
