@@ -140,6 +140,8 @@ if ($resultAllDispos) {
 // Vérifiez combien d'utilisateurs ont des disponibilités
 $numUsersWithDispos = count($userDispos);
 
+$commonDispos = []; // Tableau pour stocker les disponibilités communes
+
 if ($numUsersWithDispos >= 2) {
     // Au moins 2 utilisateurs ont des disponibilités communes
     $commonDispos = $userDispos[0]; // Initialisez avec les disponibilités du premier utilisateur
