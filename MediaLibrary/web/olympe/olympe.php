@@ -522,28 +522,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         });
     </script>
-
-    <!-- Inclure ce script JavaScript dans la section <head> de votre HTML -->
-    <script>
-        // Attendez que le document soit chargé
-document.addEventListener("DOMContentLoaded", function() {
-    const form = document.querySelector(".form-container");
-
-    form.addEventListener("submit", function(event) {
-        // Empêchez l'envoi du formulaire par défaut
-        event.preventDefault();
-
-        // Effectuez la redirection après 3 secondes
-        redirectToStatsPage();
-    });
-});
-
-// Fonction pour la redirection
-function redirectToStatsPage() {
-    setTimeout(function() {
-        window.location.href = "../olympe/statchoixpays/stats.php";
-    }, 3000); // Redirection après 3 secondes (3000 millisecondes)
-}
-    </script>
 </body>
 </html>
