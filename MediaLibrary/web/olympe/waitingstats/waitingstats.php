@@ -49,6 +49,9 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
             max-width: 100px;
             margin-top: 20px;
         }
+        .envelope-emoji {
+            font-size: 36px;
+        }
     </style>
 </head>
 <body>
@@ -59,7 +62,7 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
         <p>Nous attendons que d'autres Dieux de l'Olympe se manifestent pour que nous puissions créer des statistiques intéressantes et divertissantes.</p>
         <p>Revenez bientôt, les étoiles célestes brillent de l'espoir que vous ne serez pas seul très longtemps.</p>
         <p>Bien à vous,</p>
-        <p>L'équipe de L'Olympe</p>
+        <p>Votre Dieu préféré, Hermes <span class="envelope-emoji">✉️</span></p>
     </div>
 </body>
 </html>
