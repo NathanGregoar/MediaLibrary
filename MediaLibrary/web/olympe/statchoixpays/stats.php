@@ -125,6 +125,7 @@ $averageBudget = ($minBudget + $maxBudget) / 2;
 $queryAllDispos = "SELECT dispo FROM olympe WHERE dispo IS NOT NULL";
 $resultAllDispos = $connection->query($queryAllDispos);
 
+
 $userDispos = []; // Tableau pour stocker les disponibilités par utilisateur
 
 if ($resultAllDispos) {
@@ -138,7 +139,13 @@ if ($resultAllDispos) {
 
 // Vérifiez s'il y a des disponibilités communes à afficher
 if (!empty($userDispos)) {
-    $commonDispos = call_user_func_array('array_intersect', $userDispos);
+    $commonDispos = $userDispos[0]; // Initialisez avec les disponibilités du premier utilisateur
+
+    for ($i = 1; $i < count($userDispos); $i++) {
+        // Utilisez array_intersect pour trouver les dates communes avec les autres utilisateurs
+        $commonDispos = array_intersect($commonDispos, $userDispos[$i]);
+    }
+
     $commonDispos = array_unique($commonDispos);
     sort($commonDispos);
 }
