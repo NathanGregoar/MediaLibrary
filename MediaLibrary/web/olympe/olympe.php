@@ -95,8 +95,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" type="text/css" href="./olympe.css">
     <!-- Inclure le CSS pour le calendrier -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <!-- Ajoutez cette balise meta dans le head -->
-    <meta http-equiv="refresh" content="3;url=../olympe/statchoixpays/stats.php">
 </head>
 <body>
     <div class="navbar">
@@ -164,7 +162,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         <div class="centered">
             <div class="button-group">
-                <button type="submit" class="submit-button">Enregistrer</button>
+            <button type="submit" class="submit-button" onclick="redirectToStatsPage()">Enregistrer</button>
             </div>
         </div>
     </form>
@@ -523,6 +521,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
+    </script>
+
+    <!-- Inclure ce script JavaScript dans la section <head> de votre HTML -->
+    <script>
+        function redirectToStatsPage() {
+            setTimeout(function () {
+                window.location.href = "../olympe/statchoixpays/stats.php";
+            }, 3000); // Redirection après 3 secondes (3000 millisecondes)
+        }
     </script>
 </body>
 </html>
