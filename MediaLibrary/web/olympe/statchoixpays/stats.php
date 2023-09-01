@@ -221,7 +221,7 @@ $connection->close();
             echo '<ul>';
             foreach ($transportByUser as $userId => $transportChoices) {
                 $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-                echo '<li>' . $userName . ': ' . implode(', ', $transportChoices) . '</li>';
+                echo '<li>' . $userName . ': <br>' . implode(', ', $transportChoices) . '</li>';
             }
             echo '</ul>';
 
@@ -234,7 +234,7 @@ $connection->close();
                 echo '<ul>';
                 foreach ($missingTransportByUser as $userId => $missingForUser) {
                     $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-                    echo '<li>' . $userName . ' : ' . implode(', ', $missingForUser) . '</li>';
+                    echo '<li>' . $userName . ' : <br>' . implode(', ', $missingForUser) . '</li>';
                 }
                 echo '</ul>';
             } else {
