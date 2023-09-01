@@ -522,5 +522,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         });
     </script>
+
+<script>
+    // Fonction pour rediriger l'utilisateur vers ../olympe/statchoixpays/stats.php après 3 secondes
+    function redirectAfterDelay() {
+        setTimeout(function () {
+            window.location.href = "../olympe/statchoixpays/stats.php";
+        }, 3000); // 3000 millisecondes (3 secondes)
+    }
+
+    // Exécutez la fonction de redirection lorsque le formulaire est soumis avec succès
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector(".form-container");
+
+        form.addEventListener("submit", function (event) {
+            const isValid = validateForm();
+
+            if (!isValid) {
+                event.preventDefault(); // Empêche l'envoi du formulaire s'il n'est pas valide
+                messageContainer.innerHTML =
+                    '<div class="alert alert-error">Complétez le formulaire correctement !</div>';
+                messageContainer.style.display = "block";
+            } else {
+                // Si le formulaire est valide, démarrez la redirection après l'enregistrement
+                redirectAfterDelay();
+            }
+        });
+    });
+</script>
+
 </body>
 </html>
