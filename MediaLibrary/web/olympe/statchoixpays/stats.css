@@ -31,8 +31,13 @@ body {
 }
 
 h1 {
-    font-size: 20px;
+    font-size: 24px; /* Réduire la taille de la police pour les écrans plus petits */
+    position: fixed;
+    top: 15px;
+    right: 20px;
     text-align: right;
+    margin: 0;
+    color: white;
 }
 
 h2 {
