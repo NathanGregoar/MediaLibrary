@@ -52,11 +52,15 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
         .envelope-emoji {
             font-size: 20px;
         }
+        .airline-logo {
+            width: 50px;
+            height: 50px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <img src="your-god-image.png" alt="Image de l'Olympe" class="god-image">
+        <img src="https://cdn-icons-png.flaticon.com/512/4793/4793084.png" alt="Hermes AirLine" class="airline-logo">
         <h1>Cher Dieu de l'Olympe,</h1>
         <p>Merci de votre visite sur la page de statistiques, mais pour l'instant, il semble que vous soyez le seul divin à avoir partagé vos préférences.</p>
         <p>Nous attendons que d'autres Dieux de l'Olympe se manifestent pour que nous puissions créer des statistiques intéressantes et divertissantes.</p>
