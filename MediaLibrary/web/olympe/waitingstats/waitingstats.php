@@ -53,8 +53,8 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
             font-size: 20px;
         }
         .airline-logo {
-            width: 50px;
-            height: 50px;
+            width: 75px;
+            height: 75px;
         }
     </style>
 </head>
