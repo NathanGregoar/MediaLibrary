@@ -218,59 +218,57 @@ $connection->close();
 
             // Afficher les utilisateurs et leurs moyens de transport sélectionnés
             echo '<div class="transport">';
-echo '<h4>Transport souhaités :</h4>';
-echo '<ul>';
+            echo '<h4>Transport souhaités :</h4>';
+            echo '<ul>';
 
-// Tableau d'icônes dans l'ordre souhaité
-$iconsOrder = [
-    'train' => '🚆', // Icône pour le train
-    'avion' => '✈️', // Icône pour l'avion
-    'bus' => '🚌', // Icône pour le bus
-    'bateau' => '⛵', // Icône pour le bateau
-];
+            // Tableau d'icônes dans l'ordre souhaité
+            $iconsOrder = [
+                'train' => '🚆', // Icône pour le train
+                'avion' => '✈️', // Icône pour l'avion
+                'bus' => '🚌', // Icône pour le bus
+                'bateau' => '⛵', // Icône pour le bateau
+            ];
 
-foreach ($transportByUser as $userId => $transportChoices) {
-    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-    echo '<li>' . $userName . ': ';
+            foreach ($transportByUser as $userId => $transportChoices) {
+                $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+                echo '<li>' . $userName . ': ';
 
-    // Afficher les icônes dans l'ordre souhaité
-    foreach ($iconsOrder as $choice => $icon) {
-        if (in_array($choice, $transportChoices)) {
-            echo $icon . ' '; // Affiche l'icône suivie d'un espace s'il est choisi par l'utilisateur
-        }
-    }
+                // Afficher les icônes dans l'ordre souhaité
+                foreach ($iconsOrder as $choice => $icon) {
+                    if (in_array($choice, $transportChoices)) {
+                        echo $icon . ' '; // Affiche l'icône suivie d'un espace s'il est choisi par l'utilisateur
+                    }
+                }
 
-    echo '</li>';
-}
-echo '</ul>';
-
-// Supprimer les doublons des moyens de transport manquants
-$missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
-
-// Afficher les moyens de transport manquants par utilisateur
-if (!empty($missingTransportByUser)) {
-    echo '<h4>Transport non-souhaités :</h4>';
-    echo '<ul>';
-    foreach ($missingTransportByUser as $userId => $missingForUser) {
-        $userName = getUserName($userId); // Récupérer le nom d'utilisateur
-        echo '<li>' . $userName . ': ';
-
-        // Afficher les icônes dans l'ordre souhaité
-        foreach ($iconsOrder as $choice => $icon) {
-            if (in_array($choice, $missingForUser)) {
-                echo $icon . ' '; // Affiche l'icône suivie d'un espace s'il est manquant pour l'utilisateur
+                echo '</li>';
             }
-        }
+            echo '</ul>';
 
-        echo '</li>';
-    }
-    echo '</ul>';
-} else {
-    echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
-}
-echo '</div>';
+            // Supprimer les doublons des moyens de transport manquants
+            $missingTransportByUser = array_unique($missingTransportByUser, SORT_REGULAR);
 
+            // Afficher les moyens de transport manquants par utilisateur
+            if (!empty($missingTransportByUser)) {
+                echo '<h4>Transport non-souhaités :</h4>';
+                echo '<ul>';
+                foreach ($missingTransportByUser as $userId => $missingForUser) {
+                    $userName = getUserName($userId); // Récupérer le nom d'utilisateur
+                    echo '<li>' . $userName . ': ';
 
+                    // Afficher les icônes dans l'ordre souhaité
+                    foreach ($iconsOrder as $choice => $icon) {
+                        if (in_array($choice, $missingForUser)) {
+                            echo $icon . ' '; // Affiche l'icône suivie d'un espace s'il est manquant pour l'utilisateur
+                        }
+                    }
+
+                    echo '</li>';
+                }
+                echo '</ul>';
+            } else {
+                echo '<h4>Tous les utilisateurs ont sélectionné tous les moyens de transport.</h4>';
+            }
+            echo '</div>';
 
             $connection->close();
             ?>
