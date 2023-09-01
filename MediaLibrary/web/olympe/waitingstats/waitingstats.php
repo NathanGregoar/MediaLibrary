@@ -61,6 +61,7 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
 <body>
     <div class="container">
         <img src="https://cdn-icons-png.flaticon.com/512/4793/4793084.png" alt="Hermes AirLine" class="airline-logo">
+        <p class="airline-name">Hermes AirLine</p>
         <h1>Cher Dieu de l'Olympe,</h1>
         <p>Merci de votre visite sur la page de statistiques, mais pour l'instant, il semble que vous soyez le seul divin à avoir partagé vos préférences.</p>
         <p>Nous attendons que d'autres Dieux de l'Olympe se manifestent pour que nous puissions créer des statistiques intéressantes et divertissantes.</p>
