@@ -57,41 +57,51 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pref_countries = isset($_POST['pref_countries_selected']) ? $_POST['pref_countries_selected'] : '';
     $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? $_POST['non_pref_countries_selected'] : '';
 
-    // Connexion à la base de données (à adapter avec vos informations d'accès)
-    $host = 'db';
-    $dbuser = 'nathan';
-    $dbpassword = '444719';
-    $dbname = 'media_library';
+    // Vérification si des dates identiques existent dans les champs "dispo_date" et "not_dispo_date"
+    $dispo_dates_array = explode(",", $dispo_dates);
+    $not_dispo_dates_array = explode(",", $not_dispo_dates);
 
-    $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+    $commonDates = array_intersect($dispo_dates_array, $not_dispo_dates_array);
 
-    if ($connection->connect_error) {
-        die('Erreur de connexion : ' . $connection->connect_error);
-    }
-
-    // Préparation de la requête d'insertion
-    $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
- 
-    $stmt = $connection->prepare($insert_query);
-    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
-
-    if ($stmt->execute()) {
-        $successMessage = "Enregistrement réussi !";
-
-        // Rediriger après 3 secondes
-        echo '<script>
-            setTimeout(function() {
-                window.location.href = "../olympe/statchoixpays/stats.php";
-            }, 3000); // 3000 millisecondes (3 secondes)
-        </script>';
+    if (!empty($commonDates)) {
+        $errorMessage = "Des dates identiques ont été sélectionnées dans les calendriers dispo et indispo. Veuillez corriger votre sélection.";
     } else {
-        $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-    }    
+        // Connexion à la base de données (à adapter avec vos informations d'accès)
+        $host = 'db';
+        $dbuser = 'nathan';
+        $dbpassword = '444719';
+        $dbname = 'media_library';
 
-    // Fermeture de la connexion
-    $stmt->close();
-    $connection->close();
+        $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
+
+        if ($connection->connect_error) {
+            die('Erreur de connexion : ' . $connection->connect_error);
+        }
+
+        // Préparation de la requête d'insertion
+        $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+
+        $stmt = $connection->prepare($insert_query);
+        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
+
+        if ($stmt->execute()) {
+            $successMessage = "Enregistrement réussi !";
+
+            // Rediriger après 3 secondes
+            echo '<script>
+                setTimeout(function() {
+                    window.location.href = "../olympe/statchoixpays/stats.php";
+                }, 3000); // 3000 millisecondes (3 secondes)
+            </script>';
+        } else {
+            $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
+        }
+
+        // Fermeture de la connexion
+        $stmt->close();
+        $connection->close();
+    }
 }
 ?>
 
@@ -102,7 +112,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" type="text/css" href="./olympe.css">
     <!-- Inclure le CSS pour le calendrier -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <div class="navbar">
@@ -529,48 +538,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
-    </script>
-
-    <script>
-    const dispoDateInput = document.getElementById('dispo_date');
-    const notDispoDateInput = document.getElementById('not_dispo_date');
-
-    const dispoCalendar = flatpickr(dispoDateInput, {
-        mode: "multiple",
-        dateFormat: "Y-m-d",
-        inline: true,
-        onChange: function(selectedDates, dateStr, instance) {
-            updateNonDispoCalendar(selectedDates);
-        }
-    });
-
-    const notDispoCalendar = flatpickr(notDispoDateInput, {
-        mode: "multiple",
-        dateFormat: "Y-m-d",
-        inline: true
-    });
-
-    function updateNonDispoCalendar(selectedDates) {
-        const notDispoDates = notDispoCalendar.selectedDates;
-
-        // Parcourez toutes les dates du calendrier "non dispo"
-        notDispoDates.forEach(date => {
-            const dateStr = date.toISOString().split('T')[0];
-
-            // Vérifiez si la date est également présente dans les dates sélectionnées du calendrier "dispo"
-            const isDateAvailable = selectedDates.includes(dateStr);
-
-            // Trouvez l'élément du calendrier "non dispo" correspondant à cette date
-            const dateElem = notDispoCalendar.days.querySelector(`[aria-label="${dateStr}"]`);
-
-            // Mettez à jour la classe CSS pour marquer la date comme non disponible si nécessaire
-            if (!isDateAvailable) {
-                dateElem.classList.add("unavailable-date");
-            } else {
-                dateElem.classList.remove("unavailable-date");
-            }
-        });
-    }
     </script>
 </body>
 </html>
