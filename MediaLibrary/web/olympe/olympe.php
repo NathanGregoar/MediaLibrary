@@ -536,36 +536,36 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     const notDispoDateInput = document.getElementById('not_dispo_date');
 
     const dispoCalendar = flatpickr(dispoDateInput, {
-        mode: "multiple",
-        dateFormat: "Y-m-d",
-        inline: true,
-        onChange: function(selectedDates, dateStr, instance) {
-            updateNonDispoCalendar(selectedDates);
+    mode: "multiple",
+    dateFormat: "Y-m-d",
+    inline: true,
+    onChange: function(selectedDates, dateStr, instance) {
+        updateNonDispoCalendar(selectedDates);
+    }
+});
+
+const notDispoCalendar = flatpickr(notDispoDateInput, {
+    mode: "multiple",
+    dateFormat: "Y-m-d",
+    inline: true
+});
+
+function updateNonDispoCalendar(selectedDates) {
+    const notDispoDates = notDispoCalendar.selectedDates;
+
+    // Parcourez toutes les dates du calendrier "non dispo"
+    notDispoDates.forEach(date => {
+        // Vérifiez si la date est également présente dans les dates sélectionnées du calendrier "dispo"
+        const isDateAvailable = selectedDates.includes(date.toISOString().split('T')[0]);
+
+        // Mettez à jour la classe CSS pour marquer la date comme non disponible si nécessaire
+        if (!isDateAvailable) {
+            date.classList.add("red-date");
+        } else {
+            date.classList.remove("red-date");
         }
     });
-
-    const notDispoCalendar = flatpickr(notDispoDateInput, {
-        mode: "multiple",
-        dateFormat: "Y-m-d",
-        inline: true
-    });
-
-    function updateNonDispoCalendar(selectedDates) {
-        const notDispoDates = notDispoCalendar.selectedDates;
-
-        // Parcourez toutes les dates du calendrier "non dispo"
-        notDispoDates.forEach(date => {
-            // Vérifiez si la date est également présente dans les dates sélectionnées du calendrier "dispo"
-            const isDateAvailable = selectedDates.includes(date.toISOString().split('T')[0]);
-
-            // Mettez à jour la classe CSS pour marquer la date comme non disponible si nécessaire
-            if (!isDateAvailable) {
-                date.classList.add("red-date");
-            } else {
-                date.classList.remove("red-date");
-            }
-        });
-    }
+}
 </script>
 </body>
 </html>
