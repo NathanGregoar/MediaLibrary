@@ -102,6 +102,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <link rel="stylesheet" type="text/css" href="./olympe.css">
     <!-- Inclure le CSS pour le calendrier -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
 </head>
 <body>
     <div class="navbar">
@@ -528,6 +529,43 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 nonPrefCountriesModal.style.display = 'none';
             }
         });
+    </script>
+
+    <script>
+        const dispoDateInput = document.getElementById('dispo_date');
+        const notDispoDateInput = document.getElementById('not_dispo_date');
+
+        const dispoCalendar = flatpickr(dispoDateInput, {
+            mode: "multiple",
+            dateFormat: "Y-m-d",
+            inline: true,
+            onChange: function(selectedDates, dateStr, instance) {
+                updateNonDispoCalendar(selectedDates);
+            }
+        });
+
+        const notDispoCalendar = flatpickr(notDispoDateInput, {
+            mode: "multiple",
+            dateFormat: "Y-m-d",
+            inline: true
+        });
+
+        function updateNonDispoCalendar(selectedDates) {
+            const notDispoDates = notDispoCalendar.selectedDates;
+
+            // Parcourez toutes les dates du calendrier "non dispo"
+            notDispoDates.forEach(date => {
+                // Vérifiez si la date est également présente dans les dates sélectionnées du calendrier "dispo"
+                const isDateAvailable = selectedDates.includes(date.toISOString().split('T')[0]);
+
+                // Mettez à jour la classe CSS pour marquer la date comme non disponible si nécessaire
+                if (!isDateAvailable) {
+                    date.classList.add("red-date");
+                } else {
+                    date.classList.remove("red-date");
+                }
+            });
+        }
     </script>
 </body>
 </html>
