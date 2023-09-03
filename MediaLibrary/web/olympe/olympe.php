@@ -69,30 +69,41 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         die('Erreur de connexion : ' . $connection->connect_error);
     }
 
-    // Préparation de la requête d'insertion
-    $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                    VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
- 
-    $stmt = $connection->prepare($insert_query);
-    $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
+    // Vérifier s'il y a des pays communs entre les deux listes
+    $selectedPrefCountries = isset($_POST['pref_countries_selected']) ? explode(', ', $_POST['pref_countries_selected']) : [];
+    $selectedNonPrefCountries = isset($_POST['non_pref_countries_selected']) ? explode(', ', $_POST['non_pref_countries_selected']) : [];
 
-    if ($stmt->execute()) {
-        $successMessage = "Enregistrement réussi !";
+    $commonCountries = array_intersect($selectedPrefCountries, $selectedNonPrefCountries);
 
-        // Rediriger après 3 secondes
-        echo '<script>
-            setTimeout(function() {
-                window.location.href = "../olympe/statchoixpays/stats.php";
-            }, 3000); // 3000 millisecondes (3 secondes)
-        </script>';
+    if (!empty($commonCountries)) {
+        $errorMessage = "Vous avez sélectionné les mêmes pays à la fois dans 'Pays où je veux aller' et 'Pays où je ne veux pas aller': " . implode(', ', $commonCountries);
     } else {
-        $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-    }    
+        // Préparation de la requête d'insertion
+        $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
+                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+    
+        $stmt = $connection->prepare($insert_query);
+        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
-    // Fermeture de la connexion
-    $stmt->close();
-    $connection->close();
+        if ($stmt->execute()) {
+            $successMessage = "Enregistrement réussi !";
+
+            // Rediriger après 3 secondes
+            echo '<script>
+                setTimeout(function() {
+                    window.location.href = "../olympe/statchoixpays/stats.php";
+                }, 3000); // 3000 millisecondes (3 secondes)
+            </script>';
+        } else {
+            $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
+        }    
+
+        // Fermeture de la connexion
+        $stmt->close();
+        $connection->close();
+    }
 }
+
 ?>
 
 <!DOCTYPE html>
