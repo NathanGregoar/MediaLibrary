@@ -284,3 +284,9 @@ input[type="checkbox"] {
 .modal button:hover {
     background-color: #2580b3;
 }
+
+.unavailable-date {
+    background-color: #FF0000; /* Fond rouge pour les dates non disponibles */
+    color: #FFFFFF; /* Texte blanc pour une meilleure lisibilité */
+    pointer-events: none; /* Désactiver les événements de clic sur ces dates */
+}
