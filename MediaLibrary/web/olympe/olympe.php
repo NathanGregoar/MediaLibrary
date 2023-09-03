@@ -551,26 +551,26 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     });
 
     function updateNonDispoCalendar(selectedDates) {
-    const notDispoDates = notDispoCalendar.selectedDates;
+        const notDispoDates = notDispoCalendar.selectedDates;
 
-    // Parcourez toutes les dates du calendrier "non dispo"
-    notDispoDates.forEach(date => {
-        const dateStr = date.toISOString().split('T')[0];
+        // Parcourez toutes les dates du calendrier "non dispo"
+        notDispoDates.forEach(date => {
+            const dateStr = date.toISOString().split('T')[0];
 
-        // Vérifiez si la date est également présente dans les dates sélectionnées du calendrier "dispo"
-        const isDateAvailable = selectedDates.includes(dateStr);
+            // Vérifiez si la date est également présente dans les dates sélectionnées du calendrier "dispo"
+            const isDateAvailable = selectedDates.includes(dateStr);
 
-        // Trouvez l'élément du calendrier "non dispo" correspondant à cette date
-        const dateElem = notDispoCalendar.days.querySelector(`[aria-label="${dateStr}"]`);
+            // Trouvez l'élément du calendrier "non dispo" correspondant à cette date
+            const dateElem = notDispoCalendar.days.querySelector(`[aria-label="${dateStr}"]`);
 
-        // Mettez à jour la classe CSS pour marquer la date comme non disponible si nécessaire
-        if (!isDateAvailable) {
-            dateElem.classList.add("unavailable-date");
-        } else {
-            dateElem.classList.remove("unavailable-date");
-        }
-    });
-}
+            // Mettez à jour la classe CSS pour marquer la date comme non disponible si nécessaire
+            if (!isDateAvailable) {
+                dateElem.classList.add("unavailable-date");
+            } else {
+                dateElem.classList.remove("unavailable-date");
+            }
+        });
+    }
     </script>
 </body>
 </html>
