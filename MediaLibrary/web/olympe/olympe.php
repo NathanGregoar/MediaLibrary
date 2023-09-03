@@ -65,9 +65,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     if (!empty($commonDates)) {
         $errorMessage = "Des dates identiques ont été sélectionnées dans les calendriers dispo et indispo. Veuillez corriger votre sélection.";
-        
-        // Stocker les données du formulaire en session pour les réafficher
-        $_SESSION['form_data'] = $_POST;
     } else {
         // Connexion à la base de données (à adapter avec vos informations d'accès)
         $host = 'db';
@@ -99,18 +96,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </script>';
         } else {
             $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-            
-            // Stocker les données du formulaire en session pour les réafficher
-            $_SESSION['form_data'] = $_POST;
         }
 
         // Fermeture de la connexion
         $stmt->close();
         $connection->close();
     }
-} else {
-    // Si ce n'est pas une soumission de formulaire, effacer les données du formulaire précédemment stockées en session
-    unset($_SESSION['form_data']);
 }
 ?>
 
