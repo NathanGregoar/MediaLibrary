@@ -92,13 +92,15 @@ $connection->close();
 // Vérifier si l'utilisateur a déjà visité la page
 $visitedPage = isset($_SESSION['visited_ecollyday']) ? $_SESSION['visited_ecollyday'] : false;
 
-// Si l'utilisateur n'a pas encore visité la page, afficher le message
-if (!$visitedPage) {
-    $_SESSION['visited_ecollyday'] = true; // Marquer la page comme visitée
+// // Si l'utilisateur n'a pas encore visité la page, afficher le message
+// if (!$visitedPage) {
+//     $_SESSION['visited_ecollyday'] = true; // Marquer la page comme visitée
 
-    // Afficher le message au centre de la page avec le bouton "Compris !"
-    echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">Bienvenue sur Ecollyday !<br><button id="close-button">Compris !</button></div>';
-}
+//     // Afficher le message au centre de la page avec le bouton "Compris !"
+//     echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">Bienvenue sur Ecollyday !<br><button id="close-button">Compris !</button></div>';
+// }
+
+echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">Bienvenue sur Ecollyday !<br><button id="close-button">Compris !</button></div>';
 ?>
 <!DOCTYPE html><head>
     <title>Ecollyday</title>
