@@ -6,6 +6,16 @@ $username = $_SESSION['username'];
 $email = $_SESSION['email'];
 $loggedInUser = getLoggedInUser();
 
+$visited = isset($_COOKIE['visited']);
+
+if (!$visited) {
+    // Afficher le message de bienvenue au centre de la page
+    echo '<div style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px;">Bonjour !</div>';
+
+    // Définir le cookie pour indiquer que l'utilisateur a déjà visité la page
+    setcookie('visited', '1', time() + 365 * 24 * 3600); // Cookie valide pendant 1 an
+}
+
 // Vérification si l'utilisateur est autorisé à accéder à la page Ecollyday
 $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
 if (!in_array($loggedInUser['role'], $allowedRoles)) {
