@@ -21,6 +21,8 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
 <html>
 <head>
     <title>L'Olympe - Waiting Stats</title>
+    <!-- Inclure l'icône de page -->
+    <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
     <style>
         body {
             font-family: Arial, sans-serif;

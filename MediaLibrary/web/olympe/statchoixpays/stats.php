@@ -154,6 +154,8 @@ $connection->close();
 <html>
 <head>
     <title>L'Olympe - Stats choix de destination</title>
+    <!-- Inclure l'icône de page -->
+    <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
     <link rel="stylesheet" type="text/css" href="./stats.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet">
