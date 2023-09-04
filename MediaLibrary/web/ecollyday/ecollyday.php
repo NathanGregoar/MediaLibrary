@@ -96,8 +96,8 @@ $visitedPage = isset($_SESSION['visited_ecollyday']) ? $_SESSION['visited_ecolly
 if (!$visitedPage) {
     $_SESSION['visited_ecollyday'] = true; // Marquer la page comme visitée
 
-    // Afficher le message au centre de la page
-    echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">Bienvenue sur Ecollyday !</div>';
+    // Afficher le message au centre de la page avec le bouton "Compris !"
+    echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">Bienvenue sur Ecollyday !<br><button id="close-button">Compris !</button></div>';
 }
 ?>
 <!DOCTYPE html><head>
@@ -183,6 +183,18 @@ if (!$visitedPage) {
                     }
                 });
             });
+        });
+    </script>
+
+    <script>
+        // Fonction pour cacher le message de bienvenue
+        function hideWelcomeMessage() {
+            document.getElementById('welcome-message').style.display = 'none';
+        }
+
+        // Ajouter un gestionnaire d'événement au bouton "Compris !"
+        document.getElementById('close-button').addEventListener('click', function() {
+            hideWelcomeMessage();
         });
     </script>
 </body>
