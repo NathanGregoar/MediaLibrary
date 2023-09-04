@@ -13,6 +13,18 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
     exit();
 }
 
+// Vérification si l'utilisateur a déjà visité la page
+$visited = isset($_COOKIE['visited']);
+
+// Si l'utilisateur n'a pas encore visité la page, afficher un message de bienvenue
+if (!$visited) {
+    // Afficher le message de bienvenue au centre de la page
+    echo '<div style="text-align: center; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #fff; padding: 20px;">Bonjour !</div>';
+
+    // Définir le cookie pour indiquer que l'utilisateur a déjà visité la page
+    setcookie('visited', '1', time() + 365 * 24 * 3600); // Cookie valide pendant 1 an
+}
+
 // Récupération de l'utilisateur connecté
 $user_id = $loggedInUser['id'];
 
