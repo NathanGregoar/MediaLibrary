@@ -54,8 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dispo_dates = $_POST['dispo_date'];
     $not_dispo_dates = $_POST['not_dispo_date'];
     $transport = isset($_POST['transport']) ? implode(', ', $_POST['transport']) : '';
-    $pref_countries = isset($_POST['pref_countries_selected']) ? $_POST['pref_countries_selected'] : '';
-    $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? $_POST['non_pref_countries_selected'] : '';
+    $pref_countries = isset($_POST['pref_countries_selected']) ? explode(',', $_POST['pref_countries_selected']) : [];
+    $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? explode(',', $_POST['non_pref_countries_selected']) : [];
 
     // Vérification si des dates identiques existent dans les champs "dispo_date" et "not_dispo_date"
     $dispo_dates_array = explode(",", $dispo_dates);
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
+        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, implode(', ', $pref_countries), implode(', ', $non_pref_countries));
 
         if ($stmt->execute()) {
             $successMessage = "Enregistrement réussi !";
