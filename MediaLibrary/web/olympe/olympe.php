@@ -96,6 +96,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </script>';
         } else {
             $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
+            
+            // Réafficher les données du formulaire en utilisant les valeurs précédemment soumises
+            $dispo_dates = $_POST['dispo_date'];
+            $not_dispo_dates = $_POST['not_dispo_date'];
+            $transport = isset($_POST['transport']) ? $_POST['transport'] : array();
+            $pref_countries = isset($_POST['pref_countries_selected']) ? $_POST['pref_countries_selected'] : array();
+            $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? $_POST['non_pref_countries_selected'] : array();
         }
 
         // Fermeture de la connexion
@@ -103,6 +110,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $connection->close();
     }
 }
+
 ?>
 
 <!DOCTYPE html>
