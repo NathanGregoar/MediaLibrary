@@ -63,8 +63,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $commonDates = array_intersect($dispo_dates_array, $not_dispo_dates_array);
 
+    // Vérification si des pays identiques existent dans les champs "pref_countries_selected" et "non_pref_countries_selected"
+    $commonCountries = array_intersect($pref_countries, $non_pref_countries);
+
     if (!empty($commonDates)) {
         $errorMessage = "Des dates identiques ont été sélectionnées dans les calendriers dispo et indispo. Veuillez corriger votre sélection.";
+    } elseif (!empty($commonCountries)) {
+        $errorMessage = "Des pays identiques ont été sélectionnés à la fois dans 'Pays où je veux aller' et 'Pays où je ne veux pas aller'. Veuillez corriger votre sélection.";
     } else {
         // Connexion à la base de données (à adapter avec vos informations d'accès)
         $host = 'db';
@@ -96,13 +101,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </script>';
         } else {
             $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
-            
-            // Réafficher les données du formulaire en utilisant les valeurs précédemment soumises
-            $dispo_dates = $_POST['dispo_date'];
-            $not_dispo_dates = $_POST['not_dispo_date'];
-            $transport = isset($_POST['transport']) ? $_POST['transport'] : array();
-            $pref_countries = isset($_POST['pref_countries_selected']) ? $_POST['pref_countries_selected'] : array();
-            $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? $_POST['non_pref_countries_selected'] : array();
         }
 
         // Fermeture de la connexion
