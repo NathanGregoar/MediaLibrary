@@ -102,18 +102,18 @@ if (!$visitedPage) {
         <p>Bienvenue sur Ecollyday, un lieu où les dieux et déesses du ciel se réunissent pour une quête d\'économie extraordinaire.</p>
         <p>Cette page vous permet d\'économiser des richesses, une somme à la fois, ou bien en une seule offrande somptueuse. Chaque case numérotée de 1 à 100 représente une part de trésor que vous pouvez accumuler.</p>
         <p>Choisissez judicieusement, que ce soit une somme ou plusieurs, et marquez-les d\'un clic, comme un dieu antique inscrivant la destinée dans les étoiles. À chaque clic, vous économisez la valeur correspondante, et ainsi, vous vous rapprochez de l\'opulence.</p>
-        <p>Revenez souvent, car les étoiles célestes brillent d\'espoir que votre richesse grandisse, digne d\'une divinité.</p>
+        <p>Revenez souvent, car les étoiles célestes brillent d\'espoir que votre richesse grandisse.</p>
         <button id="close-button" style="background-color: #007BFF; color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Compris !</button>
     </div>';}
 
-echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">
-    <h2>Cher Dieu de l\'Olympe,</h2>
-    <p>Bienvenue sur Ecollyday, un lieu où les dieux et déesses du ciel se réunissent pour une quête d\'économie extraordinaire.</p>
-    <p>Cette page vous permet d\'économiser des richesses, une somme à la fois, ou bien en une seule offrande somptueuse. Chaque case numérotée de 1 à 100 représente une part de trésor que vous pouvez accumuler.</p>
-    <p>Choisissez judicieusement, que ce soit une somme ou plusieurs, et marquez-les d\'un clic, comme un dieu antique inscrivant la destinée dans les étoiles. À chaque clic, vous économisez la valeur correspondante, et ainsi, vous vous rapprochez de l\'opulence.</p>
-    <p>Revenez souvent, car les étoiles célestes brillent d\'espoir que votre richesse grandisse, digne d\'une divinité.</p>
-    <button id="close-button" style="background-color: #007BFF; color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Compris !</button>
-</div>';
+// echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">
+//     <h2>Cher Dieu de l\'Olympe,</h2>
+//     <p>Bienvenue sur Ecollyday, un lieu où les dieux et déesses du ciel se réunissent pour une quête d\'économie extraordinaire.</p>
+//     <p>Cette page vous permet d\'économiser des richesses, une somme à la fois, ou bien en une seule offrande somptueuse. Chaque case numérotée de 1 à 100 représente une part de trésor que vous pouvez accumuler.</p>
+//     <p>Choisissez judicieusement, que ce soit une somme ou plusieurs, et marquez-les d\'un clic, comme un dieu antique inscrivant la destinée dans les étoiles. À chaque clic, vous économisez la valeur correspondante, et ainsi, vous vous rapprochez de l\'opulence.</p>
+//     <p>Revenez souvent, car les étoiles célestes brillent d\'espoir que votre richesse grandisse.</p>
+//     <button id="close-button" style="background-color: #007BFF; color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Compris !</button>
+// </div>';
 ?>
 <!DOCTYPE html><head>
     <title>Ecollyday</title>
