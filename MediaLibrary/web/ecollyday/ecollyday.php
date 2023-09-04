@@ -105,8 +105,8 @@ echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; tra
     <p>Sur les sommets de l\'Olympe, là où les dieux eux-mêmes se réunissent pour leurs festins divins, tu as trouvé ta voie vers l\'économie suprême !</p>
     <p>Le principe est simple, cher disciple d\'Économie, tu as devant toi une table de richesses numérotées de 1 à 100. Chacun de ces chiffres représente une somme d\'argent que tu peux économiser.</p>
     <p>Choisis judicieusement, que ce soit une somme ou plusieurs, et marque-les d\'un clic, comme un dieu antique inscrivant la destinée dans les étoiles. À chaque clic, tu économises la valeur correspondante, et ainsi, tu te rapproches de l\'opulence.</p>
-    <p>Quand l'auréole de 5050 euros, symbole de ta prospérité, encercle ton front, tu seras béni par Pluton lui-même. La richesse, fruit de ta persévérance, t'appartiendra, ô digne mortel !</p>
-    <p>N'attends plus, commence ton périple vers l'opulence dès maintenant !</p>
+    <p>Quand l\'auréole de 5050 euros, symbole de ta prospérité, encercle ton front, tu seras béni par Pluton lui-même. La richesse, fruit de ta persévérance, t\'appartiendra, ô digne mortel !</p>
+    <p>N\'attends plus, commence ton périple vers l\'opulence dès maintenant !</p>
     <button id="close-button">Compris !</button>
 </div>';
 ?>
