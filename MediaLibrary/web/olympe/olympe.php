@@ -54,8 +54,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $dispo_dates = $_POST['dispo_date'];
     $not_dispo_dates = $_POST['not_dispo_date'];
     $transport = isset($_POST['transport']) ? implode(', ', $_POST['transport']) : '';
-    $pref_countries = isset($_POST['pref_countries_selected']) ? explode(',', $_POST['pref_countries_selected']) : [];
-    $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? explode(',', $_POST['non_pref_countries_selected']) : [];
+    $pref_countries = isset($_POST['pref_countries_selected']) ? $_POST['pref_countries_selected'] : '';
+    $non_pref_countries = isset($_POST['non_pref_countries_selected']) ? $_POST['non_pref_countries_selected'] : '';
 
     // Vérification si des dates identiques existent dans les champs "dispo_date" et "not_dispo_date"
     $dispo_dates_array = explode(",", $dispo_dates);
@@ -63,13 +63,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     $commonDates = array_intersect($dispo_dates_array, $not_dispo_dates_array);
 
-    // Vérification si des pays identiques existent dans les champs "pref_countries_selected" et "non_pref_countries_selected"
-    $commonCountries = array_intersect($pref_countries, $non_pref_countries);
-
     if (!empty($commonDates)) {
         $errorMessage = "Des dates identiques ont été sélectionnées dans les calendriers dispo et indispo. Veuillez corriger votre sélection.";
-    } elseif (!empty($commonCountries)) {
-        $errorMessage = "Des pays identiques ont été sélectionnés à la fois dans 'Pays où je veux aller' et 'Pays où je ne veux pas aller'. Veuillez corriger votre sélection.";
     } else {
         // Connexion à la base de données (à adapter avec vos informations d'accès)
         $host = 'db';
@@ -88,7 +83,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 
         $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, implode(', ', $pref_countries), implode(', ', $non_pref_countries));
+        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
 
         if ($stmt->execute()) {
             $successMessage = "Enregistrement réussi !";
@@ -108,7 +103,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $connection->close();
     }
 }
-
 ?>
 
 <!DOCTYPE html>
