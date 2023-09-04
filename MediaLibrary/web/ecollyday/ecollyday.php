@@ -23,6 +23,9 @@ if (!$visited) {
 
     // Définir le cookie pour indiquer que l'utilisateur a déjà visité la page
     setcookie('visited', '1', time() + 365 * 24 * 3600); // Cookie valide pendant 1 an
+
+    // Terminer le script ici pour éviter toute sortie supplémentaire
+    exit();
 }
 
 // Récupération de l'utilisateur connecté
