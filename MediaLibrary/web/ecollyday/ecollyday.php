@@ -101,12 +101,13 @@ $visitedPage = isset($_SESSION['visited_ecollyday']) ? $_SESSION['visited_ecolly
 // }
 
 echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">
-    <h2>Bienvenue sur Ecollyday, ô voyageur des cieux !</h2>
-    <p>Sur les sommets de l\'Olympe, là où les dieux eux-mêmes se réunissent pour leurs festins divins, tu as trouvé ta voie vers l\'économie suprême !</p>
-    <p>Le principe est simple, cher disciple d\'Économie, tu as devant toi une table de richesses numérotées de 1 à 100. Chacun de ces chiffres représente une somme d\'argent que tu peux économiser.</p>
-    <p>Choisis judicieusement, que ce soit une somme ou plusieurs, et marque-les d\'un clic, comme un dieu antique inscrivant la destinée dans les étoiles. À chaque clic, tu économises la valeur correspondante, et ainsi, tu te rapproches de l\'opulence.</p>
-    <p>Quand l\'auréole de 5050 euros, symbole de ta prospérité, encercle ton front, tu seras béni par Pluton lui-même. La richesse, fruit de ta persévérance, t\'appartiendra, ô digne mortel !</p>
-    <p>N\'attends plus, commence ton périple vers l\'opulence dès maintenant !</p>
+    <h2>Cher Dieu de l\'Olympe,</h2>
+    <p>Merci de votre visite sur la page Ecollyday, un lieu où les dieux et déesses du ciel se réunissent pour une quête d\'économie extraordinaire.</p>
+    <p>Cette page est conçue pour vous permettre d\'économiser des richesses, une somme à la fois, ou bien en une seule offrande somptueuse. Chaque case numérotée de 1 à 100 représente une part de trésor que vous pouvez accumuler.</p>
+    <p>Cependant, avant de pouvoir plonger dans l\'abondance, nous attendons que les autres dieux et déesses de l\'Olympe se joignent à vous. C\'est ensemble que nous atteindrons la somptueuse somme de 5050 euros, digne d\'une divinité.</p>
+    <p>Revenez bientôt, car les étoiles célestes brillent d\'espoir que d\'autres divinités se joindront à cette quête d\'économie extraordinaire.</p>
+    <p>Bien à vous,</p>
+    <p>Votre Dieu préféré, Hermes ✉️</p>
     <button id="close-button">Compris !</button>
 </div>';
 ?>
