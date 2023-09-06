@@ -43,7 +43,7 @@ if (!empty($table_selected)) {
 }
 
 // Suppression d'une ligne de données
-if (isset($_POST['delete'])) {
+if (isset($_POST['confirm_delete'])) {
     $row_id = $_POST['row_id'];
     $sql_delete = "DELETE FROM $table_selected WHERE id = $row_id";
     if (mysqli_query($conn, $sql_delete)) {
@@ -176,7 +176,7 @@ ob_end_flush(); // Activer à nouveau le buffer de sortie
                                     <input type="hidden" name="table_selected" value="<?php echo $table_selected; ?>">
                                     <input type="hidden" name="row_id" value="<?php echo $row['id']; ?>">
                                     <button type="submit" name="edit" class="btn-edit">Modifier</button>
-                                    <button type="submit" name="delete" class="btn-delete">Supprimer</button>
+                                    <button type="button" class="btn-delete" data-row-id="<?php echo $row['id']; ?>">Supprimer</button>
                                 </form>
                             </td>
                         </tr>
@@ -200,5 +200,47 @@ ob_end_flush(); // Activer à nouveau le buffer de sortie
 <?php if (isset($update_message)) { ?>
     <div class="alert success"><?php echo $update_message; ?></div>
 <?php } ?>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const deleteButtons = document.querySelectorAll('.btn-delete');
+
+    deleteButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            const rowId = this.getAttribute('data-row-id');
+            const confirmDelete = window.confirm("Êtes-vous sûr de vouloir supprimer cette donnée ?");
+
+            if (confirmDelete) {
+                // L'utilisateur a confirmé la suppression, envoi de la demande de suppression au serveur
+                const form = document.createElement('form');
+                form.method = 'post';
+                form.action = ''; // Votre URL de suppression ici
+                form.style.display = 'none';
+
+                const inputTable = document.createElement('input');
+                inputTable.type = 'hidden';
+                inputTable.name = 'table_selected';
+                inputTable.value = '<?php echo $table_selected; ?>';
+
+                const inputRowId = document.createElement('input');
+                inputRowId.type = 'hidden';
+                inputRowId.name = 'row_id';
+                inputRowId.value = rowId;
+
+                const inputConfirmDelete = document.createElement('input');
+                inputConfirmDelete.type = 'hidden';
+                inputConfirmDelete.name = 'confirm_delete';
+                inputConfirmDelete.value = '1';
+
+                form.appendChild(inputTable);
+                form.appendChild(inputRowId);
+                form.appendChild(inputConfirmDelete);
+                document.body.appendChild(form);
+                form.submit();
+            }
+        });
+    });
+});
+</script>
 </body>
 </html>
