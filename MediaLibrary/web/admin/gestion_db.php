@@ -145,6 +145,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <option value="INT(6)">INT(6)</option>
                 <option value="VARCHAR(255)" selected>VARCHAR(255)</option>
                 <option value="DATE">DATE</option>
+                <option value="TEXT">TEXT</option> <!-- Ajout de l'option TEXT -->
                 <!-- Ajoutez d'autres options de type de colonne si nécessaire -->
             </select>
             <input type="submit" value="Ajouter">
@@ -176,6 +177,7 @@ if ($username !== "Nathan" || $email !== "nathan.gregoar@yahoo.fr") {
                 <option value="INT(6)">INT(6)</option>
                 <option value="VARCHAR(255)" selected>VARCHAR(255)</option>
                 <option value="DATE">DATE</option>
+                <option value="TEXT">TEXT</option> <!-- Ajout de l'option TEXT -->
                 <!-- Ajoutez d'autres options de type de colonne si nécessaire -->
             </select>
             <input type="submit" value="Modifier">
