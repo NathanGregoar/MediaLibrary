@@ -162,6 +162,18 @@ if (!$visitedPage) {
                 return selectedCells;
             }
 
+            // Fonction pour mettre à jour l'affichage en fonction des cellules sélectionnées
+            function updateDisplay(selectedCells) {
+                // Calculer la somme des nombres sélectionnés
+                let sum = 0;
+                selectedCells.forEach(function(cell) {
+                    sum += cell;
+                });
+
+                // Mise à jour du titre h1 avec la somme
+                $('h1').text(`Plus que ${5050 - sum} ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
+            }
+
             // Ajouter un gestionnaire d'événement click sur les cellules
             $('#table td').on('click', function() {
                 const cellNumber = $(this).data('cell');
@@ -173,19 +185,13 @@ if (!$visitedPage) {
                 // Enregistrer les cellules sélectionnées dans le stockage local
                 const selectedCells = getSelectedCellsFromDB();
 
-                // Calculer la somme des nombres sélectionnés
-                let sum = 0;
-                selectedCells.forEach(function(cell) {
-                    sum += cell;
-                });
-
-                // Mise à jour du titre h1 avec la somme
-                $('h1').text(`Plus que ${5050 - sum} ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
+                // Mettre à jour l'affichage
+                updateDisplay(selectedCells);
 
                 // Envoyer une requête AJAX pour mettre à jour la base de données
                 $.ajax({
                     method: 'POST',
-                    url: 'ecollyday.php',
+                    url: 'update.php', // Assurez-vous de créer un fichier update.php pour gérer les mises à jour de la base de données.
                     data: {
                         selected_cell: cellNumber,
                         action: isSelected ? 'deselect' : 'select'
@@ -246,7 +252,7 @@ if (!$visitedPage) {
                             // Envoyer une requête AJAX pour mettre à jour la base de données
                             $.ajax({
                                 method: 'POST',
-                                url: 'ecollyday.php',
+                                url: 'update.php', // Assurez-vous de créer un fichier update.php pour gérer les mises à jour de la base de données.
                                 data: {
                                     selected_cell: cellule,
                                     action: 'select'
@@ -262,9 +268,9 @@ if (!$visitedPage) {
                         }
                     });
 
-                    // Mise à jour du titre h1 avec la nouvelle somme
+                    // Mise à jour de l'affichage
                     const nouvelleSomme = 5050 - sommeArgent;
-                    $('h1').text(`Plus que ${sommeArgent} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`);
+                    updateDisplay(getSelectedCellsFromDB());
                 }
             });
         });
