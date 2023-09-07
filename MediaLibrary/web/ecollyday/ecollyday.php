@@ -204,24 +204,12 @@ if (!$visitedPage) {
     </script>
 
     <script>
-        // Fonction pour cacher le message de bienvenue
-        function hideWelcomeMessage() {
-            document.getElementById('welcome-message').style.display = 'none';
-        }
-
-        // Ajouter un gestionnaire d'événement au bouton "Compris !"
-        document.getElementById('close-button').addEventListener('click', function() {
-            hideWelcomeMessage();
-        });
-    </script>
-
-    <script>
-// Gestionnaire d'événement pour le bouton "Valider"
+        // Gestionnaire d'événement pour le bouton "Valider"
 document.getElementById('valider-somme').addEventListener('click', function() {
     // Récupérer la somme d'argent entrée par l'utilisateur
     const sommeArgent = parseInt(document.getElementById('somme-argent').value);
 
-    // Si la somme n'est pas un nombre valide, afficher une erreur
+    // Si la somme n'est pas un nombre valide ou est inférieure ou égale à zéro, afficher une erreur
     if (isNaN(sommeArgent) || sommeArgent <= 0) {
         alert("Veuillez entrer une somme d'argent valide.");
         return;
@@ -230,33 +218,69 @@ document.getElementById('valider-somme').addEventListener('click', function() {
     // Obtenez la liste de toutes les cellules disponibles (non sélectionnées)
     const toutesLesCellules = [...Array(100).keys()].map(i => i + 1);
 
-    // Triez les cellules disponibles par ordre croissant de différence par rapport à la somme
-    const cellulesDisponiblesTriees = toutesLesCellules.slice().sort((a, b) => Math.abs(sommeArgent - a) - Math.abs(sommeArgent - b));
+    // Récupérer les cellules déjà sélectionnées en base de données
+    const cellulesDejaSelectionnees = <?php echo json_encode($selected_cells); ?>;
 
-    // Sélectionnez automatiquement la cellule la plus proche de la somme d'argent
-    const celluleLaPlusProche = cellulesDisponiblesTriees[0];
+    // Si la somme correspond à une cellule déjà sélectionnée, répartissez-la sur les cellules non encore sélectionnées
+    if (cellulesDejaSelectionnees.includes(sommeArgent)) {
+        const cellulesDisponibles = toutesLesCellules.filter(cellule => !cellulesDejaSelectionnees.includes(cellule));
+        const cellulesASelectionner = [];
 
-    // Ajoutez la cellule sélectionnée en DB
-    $.ajax({
-        method: 'POST',
-        url: 'ecollyday.php',
-        data: {
-            selected_cell: celluleLaPlusProche,
-            action: 'select'
-        },
-        dataType: 'json',
-        success: function(data) {
-            console.log('Cellule sélectionnée en DB avec succès.');
-            // Mettez à jour le titre h1 avec la nouvelle somme
-            const nouvelleSomme = sommeArgent + celluleLaPlusProche;
-            document.querySelector('h1').textContent = `Plus que ${5050 - nouvelleSomme} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`;
-            // Actualisez la page pour refléter les modifications
-            location.reload();
-        },
-        error: function(error) {
-            console.error('Erreur lors de la sélection de la cellule en DB : ', error);
+        // Tant qu'il reste de l'argent à répartir et des cellules disponibles
+        while (sommeArgent > 0 && cellulesDisponibles.length > 0) {
+            // Sélectionnez la plus grande cellule disponible
+            const celluleLaPlusGrande = Math.max(...cellulesDisponibles);
+
+            // Si la somme restante est supérieure à la valeur de la cellule la plus grande, sélectionnez-la
+            if (sommeArgent >= celluleLaPlusGrande) {
+                cellulesASelectionner.push(celluleLaPlusGrande);
+                sommeArgent -= celluleLaPlusGrande;
+            } else {
+                // Sinon, sélectionnez autant d'autres cellules que nécessaire pour atteindre la somme
+                while (sommeArgent > 0) {
+                    // Trouvez la plus petite cellule disponible
+                    const celluleLaPlusPetite = Math.min(...cellulesDisponibles);
+
+                    // Si la somme restante est supérieure à la valeur de la cellule la plus petite, sélectionnez-la
+                    if (sommeArgent >= celluleLaPlusPetite) {
+                        cellulesASelectionner.push(celluleLaPlusPetite);
+                        sommeArgent -= celluleLaPlusPetite;
+                    } else {
+                        break;
+                    }
+                }
+            }
+
+            // Retirez la cellule sélectionnée de la liste des cellules disponibles
+            cellulesDisponibles.splice(cellulesDisponibles.indexOf(celluleLaPlusGrande), 1);
         }
-    });
+
+        // Ajoutez les cellules sélectionnées en base de données
+        cellulesASelectionner.forEach(cellule => {
+            $.ajax({
+                method: 'POST',
+                url: 'ecollyday.php',
+                data: {
+                    selected_cell: cellule,
+                    action: 'select'
+                },
+                dataType: 'json',
+                success: function(data) {
+                    console.log('Cellule sélectionnée en DB avec succès.');
+                },
+                error: function(error) {
+                    console.error('Erreur lors de la sélection de la cellule en DB : ', error);
+                }
+            });
+        });
+
+        // Mettez à jour le titre h1 avec la nouvelle somme
+        const nouvelleSomme = <?php echo $sum; ?> + cellulesASelectionner.reduce((a, b) => a + b, 0);
+        document.querySelector('h1').textContent = `Plus que ${5050 - nouvelleSomme} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`;
+
+        // Actualisez la page pour refléter les modifications
+        location.reload();
+    }
 });
 
     </script>
