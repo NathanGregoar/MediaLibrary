@@ -217,68 +217,71 @@ if (!$visitedPage) {
 
     <script>
         // Gestionnaire d'événement pour le bouton "Valider"
-        document.getElementById('valider-somme').addEventListener('click', function() {
-            // Récupérer la somme d'argent entrée par l'utilisateur
-            const sommeArgent = parseInt(document.getElementById('somme-argent').value);
+document.getElementById('valider-somme').addEventListener('click', function() {
+    // Récupérer la somme d'argent entrée par l'utilisateur
+    const sommeArgent = parseInt(document.getElementById('somme-argent').value);
 
-            // Si la somme n'est pas un nombre valide, afficher une erreur
-            if (isNaN(sommeArgent) || sommeArgent <= 0) {
-                alert("Veuillez entrer une somme d'argent valide.");
-                return;
-            }
+    // Si la somme n'est pas un nombre valide, afficher une erreur
+    if (isNaN(sommeArgent) || sommeArgent <= 0) {
+        alert("Veuillez entrer une somme d'argent valide.");
+        return;
+    }
 
-            // Triez les cellules sélectionnées par ordre décroissant
-            const cellulesSelectionnees = Array.from(document.querySelectorAll('.selected'))
-                .map(cell => parseInt(cell.getAttribute('data-cell')))
-                .sort((a, b) => b - a);
+    // Triez les cellules sélectionnées par ordre décroissant
+    const cellulesSelectionnees = Array.from(document.querySelectorAll('.selected'))
+        .map(cell => parseInt(cell.getAttribute('data-cell')))
+        .sort((a, b) => b - a);
 
-            // Calculez les cellules nécessaires pour atteindre la somme
-            const cellulesNecessaires = [];
-            let sommeActuelle = 0;
+    // Obtenez la liste de toutes les cellules disponibles (non sélectionnées)
+    const toutesLesCellules = [...Array(100).keys()].map(i => i + 1);
 
-            for (const cell of cellulesSelectionnees) {
-                sommeActuelle += cell;
-                if (sommeActuelle >= sommeArgent) {
-                    break;
-                }
-                cellulesNecessaires.push(cell);
-            }
+    // Obtenez la liste des cellules disponibles (non sélectionnées)
+    const cellulesDisponibles = toutesLesCellules.filter(cell => !cellulesSelectionnees.includes(cell));
 
-            // Calculez la somme des cellules nécessaires
-            const sommeNecessaire = cellulesNecessaires.reduce((acc, cell) => acc + cell, 0);
+    // Calculez la somme des cellules nécessaires en commençant par les plus grandes
+    let sommeNecessaire = 0;
+    const cellulesNecessaires = [];
 
-            // Si la somme des cellules nécessaires est égale à la somme d'argent, tout va bien
-            if (sommeNecessaire === sommeArgent) {
-                // Sélectionnez automatiquement les cellules nécessaires
-                for (const cell of cellulesNecessaires) {
-                    document.querySelector(`[data-cell="${cell}"]`).classList.add('selected');
-                }
+    for (const cell of cellulesDisponibles) {
+        if (sommeNecessaire + cell <= sommeArgent) {
+            sommeNecessaire += cell;
+            cellulesNecessaires.push(cell);
+        }
+    }
 
-                // Mettez à jour le titre h1 avec la nouvelle somme
-                const nouvelleSomme = sommeArgent + sommeActuelle - sommeNecessaire;
-                document.querySelector('h1').textContent = `Plus que ${5050 - nouvelleSomme} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`;
+    // Si la somme des cellules nécessaires est égale à la somme d'argent, tout va bien
+    if (sommeNecessaire === sommeArgent) {
+        // Sélectionnez automatiquement les cellules nécessaires
+        for (const cell of cellulesNecessaires) {
+            document.querySelector(`[data-cell="${cell}"]`).classList.add('selected');
+        }
 
-                // Envoyez une requête AJAX pour mettre à jour la base de données avec les nouvelles sélections
-                const cellulesAJAX = cellulesNecessaires.join(',');
-                $.ajax({
-                    method: 'POST',
-                    url: 'ecollyday.php',
-                    data: {
-                        selected_cells: cellulesAJAX,
-                        action: 'select'
-                    },
-                    dataType: 'json',
-                    success: function(data) {
-                        console.log('Cellules sélectionnées en DB avec succès.');
-                    },
-                    error: function(error) {
-                        console.error('Erreur lors de la sélection des cellules en DB : ', error);
-                    }
-                });
-            } else {
-                alert("Impossible d'atteindre la somme avec les cellules sélectionnées actuelles.");
+        // Mettez à jour le titre h1 avec la nouvelle somme
+        const nouvelleSomme = sommeArgent + sommeNecessaire;
+        document.querySelector('h1').textContent = `Plus que ${5050 - nouvelleSomme} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`;
+
+        // Envoyez une requête AJAX pour mettre à jour la base de données avec les nouvelles sélections
+        const cellulesAJAX = cellulesNecessaires.join(',');
+        $.ajax({
+            method: 'POST',
+            url: 'ecollyday.php',
+            data: {
+                selected_cells: cellulesAJAX,
+                action: 'select'
+            },
+            dataType: 'json',
+            success: function(data) {
+                console.log('Cellules sélectionnées en DB avec succès.');
+            },
+            error: function(error) {
+                console.error('Erreur lors de la sélection des cellules en DB : ', error);
             }
         });
+    } else {
+        alert("Impossible d'atteindre la somme avec les cellules disponibles actuelles.");
+    }
+});
+
     </script>
 </body>
 </html>
