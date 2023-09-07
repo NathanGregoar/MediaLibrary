@@ -93,7 +93,7 @@ $connection->close();
 $visitedPage = isset($_SESSION['visited_ecollyday']) ? $_SESSION['visited_ecollyday'] : false;
 
 // Si l'utilisateur n'a pas encore visité la page, afficher le message
-if (!$visitedPage) {
+if (!$visitedPage) { 
     $_SESSION['visited_ecollyday'] = true; // Marquer la page comme visitée
 
     // Afficher le message au centre de la page avec le bouton "Compris !"
