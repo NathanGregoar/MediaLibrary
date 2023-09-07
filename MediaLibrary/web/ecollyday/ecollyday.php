@@ -274,6 +274,7 @@ $('#validate-button').on('click', function() {
         $('h1').text(`Plus que ${sommeArgent} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`);
     }
 });
+
 });
     </script>
 </body>
