@@ -137,9 +137,10 @@ if (!$visitedPage) {
         <a href="../accueil/index.php">Accueil</a>
         <a href="../olympe/olympe.php">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php" style="color: #D7EBF3;">Ecollyday</a>
+
+        <input type="text" id="somme-argent" placeholder="Entrer la somme d'argent">
+        <button id="valider-somme">Valider</button>
     </div>
-    <input type="text" id="somme-argent" placeholder="Entrer la somme d'argent">
-    <button id="valider-somme">Valider</button>
     <h1>Plus que <?php echo 5050-$sum ?> ! - <?php echo $username; ?>, tu as économisé : <?php echo $sum; ?></h1>
 
     <table id="table">
