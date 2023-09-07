@@ -1,39 +1,30 @@
-@@ -1,217 +1,217 @@
 <?php
 require_once '../utils/auth.php';
 require_once '../utils/config.php';
-
 $username = $_SESSION['username'];
 $email = $_SESSION['email'];
 $loggedInUser = getLoggedInUser();
-
 // Vérification si l'utilisateur est autorisé à accéder à la page Ecollyday
 $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
 if (!in_array($loggedInUser['role'], $allowedRoles)) {
     header("Location: ../accueil/index.php");
     exit();
 }
-
 // Récupération de l'utilisateur connecté
 $user_id = $loggedInUser['id'];
-
 // Vérification si une cellule a été sélectionnée ou dé-sélectionnée
 if (isset($_POST['selected_cell'])) {
     $cell_number = $_POST['selected_cell'];
     $action = $_POST['action']; // Action = "select" si la cellule est sélectionnée, "deselect" si elle est dé-sélectionnée
-
     // Connexion à la base de données (à adapter avec vos informations d'accès)
     $host = 'db';
     $dbuser = 'nathan';
     $dbpassword = '444719';
     $dbname = 'media_library';
-
     $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
     if ($connection->connect_error) {
         die('Erreur de connexion : ' . $connection->connect_error);
     }
-
     if ($action === "select") {
         // Requête d'insertion de la case sélectionnée dans la table ecollyday
         $query = "INSERT INTO ecollyday (cell_number, user_id) VALUES (?, ?)";
@@ -49,53 +40,42 @@ if (isset($_POST['selected_cell'])) {
         $stmt->execute();
         $stmt->close();
     }
-
     // Fermer la connexion à la base de données
     $connection->close();
-
     // Envoi d'une réponse JSON indiquant le succès de l'opération
     header('Content-Type: application/json');
     echo json_encode(array('success' => true));
     exit();
 }
-
 // Si aucune cellule n'a été sélectionnée ou dé-sélectionnée, calculer la somme des cellules sélectionnées
 // à partir de la base de données lors du chargement initial de la page
 $sum = 0;
 $selected_cells = array();
-
 // Connexion à la base de données (à adapter avec vos informations d'accès)
 $host = 'db';
 $dbuser = 'nathan';
 $dbpassword = '444719';
 $dbname = 'media_library';
-
 $connection = new mysqli($host, $dbuser, $dbpassword, $dbname);
-
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
-
 $query = "SELECT cell_number FROM ecollyday WHERE user_id = ?";
 $stmt = $connection->prepare($query);
 $stmt->bind_param("i", $user_id);
 $stmt->execute();
 $result = $stmt->get_result();
-
 while ($row = $result->fetch_assoc()) {
     $sum += intval($row['cell_number']);
     $selected_cells[] = intval($row['cell_number']);
 }
-
 $stmt->close();
 $connection->close();
-
 // Vérifier si l'utilisateur a déjà visité la page
 $visitedPage = isset($_SESSION['visited_ecollyday']) ? $_SESSION['visited_ecollyday'] : false;
 
 // Si l'utilisateur n'a pas encore visité la page, afficher le message
 if (!$visitedPage) {
-if (!$visitedPage) { 
     $_SESSION['visited_ecollyday'] = true; // Marquer la page comme visitée
 
     // Afficher le message au centre de la page avec le bouton "Compris !"
@@ -107,7 +87,6 @@ if (!$visitedPage) {
         <p>Revenez souvent, car les étoiles célestes brillent d\'espoir que votre richesse grandisse.</p>
         <button id="close-button" style="background-color: #007BFF; color: #fff; border: none; padding: 10px 20px; cursor: pointer; font-size: 16px; border-radius: 5px;">Compris !</button>
     </div>';}
-
 // echo '<div id="welcome-message" style="position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); background-color: #ffffff; padding: 20px; text-align: center; z-index: 9999;">
 //     <h2>Cher Dieu de l\'Olympe,</h2>
 //     <p>Bienvenue sur Ecollyday, un lieu où les dieux et déesses du ciel se réunissent pour une quête d\'économie extraordinaire.</p>
@@ -140,9 +119,7 @@ if (!$visitedPage) {
         <a href="../olympe/olympe.php">L'Olympe</a>
         <a href="../ecollyday/ecollyday.php" style="color: #D7EBF3;">Ecollyday</a>
     </div>
-
     <h1>Plus que <?php echo 5050-$sum ?> ! - <?php echo $username; ?>, tu as économisé : <?php echo $sum; ?></h1>
-
     <table id="table">
         <tr>
             <?php
@@ -156,7 +133,6 @@ if (!$visitedPage) {
             ?>
         </tr>
     </table>
-
     <script>
         // Lorsque le document est prêt
         $(document).ready(function() {
@@ -164,25 +140,20 @@ if (!$visitedPage) {
             $('#table td').on('click', function() {
                 const cellNumber = $(this).data('cell');
                 const isSelected = $(this).hasClass('selected');
-
                 // Inverser l'état de sélection de la cellule
                 $(this).toggleClass('selected');
-
                 // Enregistrer les cellules sélectionnées dans le stockage local
                 const selectedCells = [];
                 $('.selected').each(function() {
                     selectedCells.push($(this).data('cell'));
                 });
-
                 // Calculer la somme des nombres sélectionnés
                 let sum = 0;
                 $('.selected').each(function() {
                     sum += parseInt($(this).text());
                 });
-
                 // Mise à jour du titre h1 avec la somme
                 $('h1').text(`Plus que ${5050-sum} ! - <?php echo $username; ?>, tu as économisé : ${sum}`);
-
                 // Envoyer une requête AJAX pour mettre à jour la base de données
                 $.ajax({
                     method: 'POST',
@@ -202,13 +173,11 @@ if (!$visitedPage) {
             });
         });
     </script>
-
     <script>
         // Fonction pour cacher le message de bienvenue
         function hideWelcomeMessage() {
             document.getElementById('welcome-message').style.display = 'none';
         }
-
         // Ajouter un gestionnaire d'événement au bouton "Compris !"
         document.getElementById('close-button').addEventListener('click', function() {
             hideWelcomeMessage();
