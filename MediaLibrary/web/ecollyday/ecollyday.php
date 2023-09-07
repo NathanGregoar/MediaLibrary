@@ -216,7 +216,7 @@ if (!$visitedPage) {
     </script>
 
     <script>
-        // Gestionnaire d'événement pour le bouton "Valider"
+// Gestionnaire d'événement pour le bouton "Valider"
 document.getElementById('valider-somme').addEventListener('click', function() {
     // Récupérer la somme d'argent entrée par l'utilisateur
     const sommeArgent = parseInt(document.getElementById('somme-argent').value);
@@ -227,59 +227,36 @@ document.getElementById('valider-somme').addEventListener('click', function() {
         return;
     }
 
-    // Triez les cellules sélectionnées par ordre décroissant
-    const cellulesSelectionnees = Array.from(document.querySelectorAll('.selected'))
-        .map(cell => parseInt(cell.getAttribute('data-cell')))
-        .sort((a, b) => b - a);
-
     // Obtenez la liste de toutes les cellules disponibles (non sélectionnées)
     const toutesLesCellules = [...Array(100).keys()].map(i => i + 1);
 
-    // Obtenez la liste des cellules disponibles (non sélectionnées)
-    const cellulesDisponibles = toutesLesCellules.filter(cell => !cellulesSelectionnees.includes(cell));
+    // Triez les cellules disponibles par ordre croissant de différence par rapport à la somme
+    const cellulesDisponiblesTriees = toutesLesCellules.slice().sort((a, b) => Math.abs(sommeArgent - a) - Math.abs(sommeArgent - b));
 
-    // Calculez la somme des cellules nécessaires en commençant par les plus grandes
-    let sommeNecessaire = 0;
-    const cellulesNecessaires = [];
+    // Sélectionnez automatiquement la cellule la plus proche de la somme d'argent
+    const celluleLaPlusProche = cellulesDisponiblesTriees[0];
 
-    for (const cell of cellulesDisponibles) {
-        if (sommeNecessaire + cell <= sommeArgent) {
-            sommeNecessaire += cell;
-            cellulesNecessaires.push(cell);
+    // Ajoutez la cellule sélectionnée en DB
+    $.ajax({
+        method: 'POST',
+        url: 'ecollyday.php',
+        data: {
+            selected_cell: celluleLaPlusProche,
+            action: 'select'
+        },
+        dataType: 'json',
+        success: function(data) {
+            console.log('Cellule sélectionnée en DB avec succès.');
+            // Mettez à jour le titre h1 avec la nouvelle somme
+            const nouvelleSomme = sommeArgent + celluleLaPlusProche;
+            document.querySelector('h1').textContent = `Plus que ${5050 - nouvelleSomme} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`;
+            // Actualisez la page pour refléter les modifications
+            location.reload();
+        },
+        error: function(error) {
+            console.error('Erreur lors de la sélection de la cellule en DB : ', error);
         }
-    }
-
-    // Si la somme des cellules nécessaires est égale à la somme d'argent, tout va bien
-    if (sommeNecessaire === sommeArgent) {
-        // Sélectionnez automatiquement les cellules nécessaires
-        for (const cell of cellulesNecessaires) {
-            document.querySelector(`[data-cell="${cell}"]`).classList.add('selected');
-        }
-
-        // Mettez à jour le titre h1 avec la nouvelle somme
-        const nouvelleSomme = sommeArgent + sommeNecessaire;
-        document.querySelector('h1').textContent = `Plus que ${5050 - nouvelleSomme} ! - <?php echo $username; ?>, tu as économisé : ${nouvelleSomme}`;
-
-        // Envoyez une requête AJAX pour mettre à jour la base de données avec les nouvelles sélections
-        const cellulesAJAX = cellulesNecessaires.join(',');
-        $.ajax({
-            method: 'POST',
-            url: 'ecollyday.php',
-            data: {
-                selected_cells: cellulesAJAX,
-                action: 'select'
-            },
-            dataType: 'json',
-            success: function(data) {
-                console.log('Cellules sélectionnées en DB avec succès.');
-            },
-            error: function(error) {
-                console.error('Erreur lors de la sélection des cellules en DB : ', error);
-            }
-        });
-    } else {
-        alert("Impossible d'atteindre la somme avec les cellules disponibles actuelles.");
-    }
+    });
 });
 
     </script>
