@@ -87,6 +87,7 @@ if (!in_array($loggedInUser['role'], $allowedRoles)) {
     <div class="navbar">
         <a href="../../accueil/index.php">Accueil</a>
         <a href="../../olympe/olympe.php">L'Olympe</a>
+        <a href="../../olympe/modifdispo/modifdispo.php">Modifier mes dispo</a>  
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>   
     </div>
 
