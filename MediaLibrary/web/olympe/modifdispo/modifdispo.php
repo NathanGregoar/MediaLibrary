@@ -141,33 +141,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label for="budget_min">Budget min :</label>
                     <small>(Transport & Location compris)</small>
                     <input type="number" id="budget_min" name="budget_min" min="1"><br>
-
-                    <label for="choosePrefCountriesBtn">Pays où j'ai envie de partir :</label>
-                    <small>(5 Pays Max)</small>
-                    <button type="button" id="choosePrefCountriesBtn">Choisir</button>
-                    <input type="hidden" name="pref_countries_selected" id="pref_countries_selected"><br>
                 </div>
-
-                <label>Transport allé-retour :</label><br>
-                <small>(Coché : Accepté / Pas coché : C'est mort)</small><br>
-                <input type="checkbox" id="train" name="transport[]" value="train" class="transport-checkbox">
-                <label for="train" class="transport-label">Train</label>
-                <input type="checkbox" id="avion" name="transport[]" value="avion" class="transport-checkbox">
-                <label for="avion" class="transport-label">Avion</label><br>
-                <input type="checkbox" id="bus" name="transport[]" value="bus" class="transport-checkbox">
-                <label for="bus" class="transport-label">Bus</label>
-                <input type="checkbox" id="bateau" name="transport[]" value="bateau" class="transport-checkbox">
-                <label for="bateau" class="transport-label">Bateau</label>
             </div>
             <div class="input-group flex">
                 <label for="budget_max">Budget max :</label>
                 <small>(Transport & Location compris)</small>
                 <input type="number" id="budget_max" name="budget_max" min="1"><br>
-
-                <label for="chooseNonPrefCountriesBtn">Pays où je ne veux pas partir :</label>
-                <small>(3 Pays Max)</small>
-                <button type="button" id="chooseNonPrefCountriesBtn">Choisir</button>
-                <input type="hidden" name="non_pref_countries_selected" id="non_pref_countries_selected">
             </div>
             <div class="input-group">
                 <label for="dispo_date">Mes disponibilités :</label>
@@ -191,94 +170,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     </div>
     <div id="errorMessage" class="alert alert-error" style="display: none;">
         Erreur lors de l'enregistrement : [message d'erreur]
-    </div>
-
-    <div id="prefCountriesModal" class="modal modal-content">
-        <div class="modal-content">
-            <h2>Pays ou j'ai envie de partir</h2>
-            <div class="country-list">
-                <label><input type="checkbox" name="pref_countries[]" value="allemagne">Allemagne</label>
-                <label><input type="checkbox" name="pref_countries[]" value="autriche">Autriche</label>
-                <label><input type="checkbox" name="pref_countries[]" value="belgique">Belgique</label>
-                <label><input type="checkbox" name="pref_countries[]" value="bulgarie">Bulgarie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="chypre">Chypre</label>
-                <label><input type="checkbox" name="pref_countries[]" value="croatie">Croatie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="danemark">Danemark</label>
-                <label><input type="checkbox" name="pref_countries[]" value="espagne">Espagne</label>
-                <label><input type="checkbox" name="pref_countries[]" value="estonie">Estonie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="finlande">Finlande</label>
-                <label><input type="checkbox" name="pref_countries[]" value="france">France</label>
-                <label><input type="checkbox" name="pref_countries[]" value="grece">Grèce</label>
-                <label><input type="checkbox" name="pref_countries[]" value="hongrie">Hongrie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="irlande">Irlande</label>
-                <label><input type="checkbox" name="pref_countries[]" value="italie">Italie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="lettonie">Lettonie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="lituanie">Lituanie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="luxembourg">Luxembourg</label>
-                <label><input type="checkbox" name="pref_countries[]" value="malte">Malte</label>
-                <label><input type="checkbox" name="pref_countries[]" value="pays-bas">Pays-Bas</label>
-                <label><input type="checkbox" name="pref_countries[]" value="pologne">Pologne</label>
-                <label><input type="checkbox" name="pref_countries[]" value="portugal">Portugal</label>
-                <label><input type="checkbox" name="pref_countries[]" value="republique-tcheque">République tchèque</label>
-                <label><input type="checkbox" name="pref_countries[]" value="roumanie">Roumanie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="slovaquie">Slovaquie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="slovenie">Slovénie</label>
-                <label><input type="checkbox" name="pref_countries[]" value="suede">Suède</label>
-            </div>
-            <button id="closePrefCountriesModal">Fermer & sauvegarder</button>
-
-            <div class="top-countries">
-                <div class="top-countries-list">
-                    <h3>Mes 5 pays sélectionnés :</h3>
-                    <ol id="topPreferredCountries"></ol>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div id="nonPrefCountriesModal" class="modal modal-content">
-        <div class="modal-content">
-            <h2>Pays ou je ne veux pas partir</h2>
-            <div class="country-list">
-                <label><input type="checkbox" name="non_pref_countries[]" value="allemagne">Allemagne</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="autriche">Autriche</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="belgique">Belgique</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="bulgarie">Bulgarie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="chypre">Chypre</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="croatie">Croatie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="danemark">Danemark</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="espagne">Espagne</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="estonie">Estonie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="finlande">Finlande</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="france">France</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="grece">Grèce</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="hongrie">Hongrie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="irlande">Irlande</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="italie">Italie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="lettonie">Lettonie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="lituanie">Lituanie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="luxembourg">Luxembourg</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="malte">Malte</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="pays-bas">Pays-Bas</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="pologne">Pologne</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="portugal">Portugal</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="republique-tcheque">République tchèque</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="roumanie">Roumanie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="slovaquie">Slovaquie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="slovenie">Slovénie</label>
-                <label><input type="checkbox" name="non_pref_countries[]" value="suede">Suède</label>
-            </div>
-            <button id="closeNonPrefCountriesModal">Fermer & sauvegarder</button>
-
-            <div class="top-countries">
-                <div class="top-countries-list">
-                    <h3>Mes 3 pays sélectionnés :</h3>
-                    <ol id="topNonPreferredCountries"></ol>
-                </div>
-            </div>
-
-        </div>
     </div>
 
     <!-- Inclure le script pour la vérification en temps réel -->
