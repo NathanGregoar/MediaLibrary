@@ -120,11 +120,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
             <div class="input-group">
                 <label for="dispo_date">Mes disponibilités :</label>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required>
+                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required data-dispo-dates="<?= $dispoDatesDefaultValue; ?>">
             </div>
             <div class="input-group">
                 <label for="not_dispo_date">Mes indisponibilités :</label>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required>
+                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required data-non-dispo-dates="<?= $notDispoDatesDefaultValue; ?>">
             </div>
         </div>
 
@@ -213,30 +213,34 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-        flatpickr(".flatpickr", {
-            mode: "multiple",
-            dateFormat: "Y-m-d",
-            inline: true,
-            onChange: function(selectedDates, dateStr, instance) {
-                const calendarContainer = instance._container;
-                if (calendarContainer.classList.contains("flatpickr-calendar")) {
-                    const dispoDates = document.querySelectorAll(".green-date");
-                    const notDispoDates = document.querySelectorAll(".red-date");
-                    dispoDates.forEach(date => {
-                        date.classList.remove("green-date");
-                    });
-                    notDispoDates.forEach(date => {
-                        date.classList.remove("red-date");
-                    });
-                    selectedDates.forEach(date => {
-                        if (instance._input.id === "dispo_date") {
-                            date.classList.add("green-date");
-                        } else if (instance._input.id === "not_dispo_date") {
-                            date.classList.add("red-date");
-                        }
-                    });
+        document.addEventListener("DOMContentLoaded", function () {
+            const dispoDateInput = document.getElementById('dispo_date');
+            const nonDispoDateInput = document.getElementById('not_dispo_date');
+
+            const dispoDates = dispoDateInput.getAttribute('data-dispo-dates').split(',').map(date => new Date(date));
+            const nonDispoDates = nonDispoDateInput.getAttribute('data-non-dispo-dates').split(',').map(date => new Date(date));
+
+            flatpickr("#dispo_date", {
+                mode: "multiple",
+                dateFormat: "Y-m-d",
+                inline: true,
+                defaultDate: dispoDates,
+                onChange: function (selectedDates) {
+                    // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
+                    dispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
                 }
-            }
+            });
+
+            flatpickr("#not_dispo_date", {
+                mode: "multiple",
+                dateFormat: "Y-m-d",
+                inline: true,
+                defaultDate: nonDispoDates,
+                onChange: function (selectedDates) {
+                    // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
+                    nonDispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
+                }
+            });
         });
     </script>
 </body>
