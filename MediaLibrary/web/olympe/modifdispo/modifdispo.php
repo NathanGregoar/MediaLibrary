@@ -226,7 +226,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const dispoDatesDefaultValue = '<?= $dispoDatesDefaultValue ?>'; // Récupérez la valeur par défaut des dates de disponibilité depuis PHP
             const notDispoDatesDefaultValue = '<?= $notDispoDatesDefaultValue ?>'; // Récupérez la valeur par défaut des dates de non-disponibilité depuis PHP
 
-            flatpickr("#dispo_date", {
+            const dispoDatepicker = flatpickr("#dispo_date", {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
@@ -237,7 +237,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 }
             });
 
-            flatpickr("#not_dispo_date", {
+            const notDispoDatepicker = flatpickr("#not_dispo_date", {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
