@@ -81,7 +81,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
 
         if ($stmt->execute()) {
-            // Charger les données mises à jour depuis la base de données
+            // Chargement des nouvelles données depuis la base de données après la mise à jour
             $get_updated_data_query = "SELECT budget_min, budget_max, dispo, indispo FROM olympe WHERE added_by = ?";
             $stmt_get_updated_data = $connection->prepare($get_updated_data_query);
             $stmt_get_updated_data->bind_param("i", $loggedInUser['id']);
@@ -90,6 +90,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $stmt_get_updated_data->fetch();
             $stmt_get_updated_data->close();
 
+            // Mise à jour des valeurs par défaut des calendriers avec les données mises à jour
             $budgetMinDefaultValue = $updatedBudgetMin;
             $budgetMaxDefaultValue = $updatedBudgetMax;
             $dispoDatesDefaultValue = $updatedDispoDates;
