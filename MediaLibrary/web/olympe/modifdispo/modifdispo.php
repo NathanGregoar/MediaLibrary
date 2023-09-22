@@ -69,40 +69,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $pref_countries = $_POST['pref_countries_selected'] ?? '';
     $non_pref_countries = $_POST['non_pref_countries_selected'] ?? '';
 
-    $dispo_dates_array = explode(",", $dispo_dates);
-    $not_dispo_dates_array = explode(",", $not_dispo_dates);
+    // Effectuez une mise à jour des données existantes dans la base de données
+    $update_query = "UPDATE olympe SET budget_min = ?, budget_max = ?, dispo = ?, indispo = ?, transport = ?, pays_oui = ?, pays_non = ? WHERE added_by = ?";
+    $stmt = $connection->prepare($update_query);
+    $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
 
-    if (!empty(array_intersect($dispo_dates_array, $not_dispo_dates_array))) {
-        $errorMessage = "Des dates identiques ont été sélectionnées dans les calendriers dispo et indispo. Veuillez corriger votre sélection.";
+    if ($stmt->execute()) {
+        // Mise à jour réussie, pas besoin de charger les nouvelles données ici
+        $successMessage = "Mise à jour réussie !";
     } else {
-        // Effectuez une mise à jour des données existantes dans la base de données
-        $update_query = "UPDATE olympe SET budget_min = ?, budget_max = ?, dispo = ?, indispo = ?, transport = ?, pays_oui = ?, pays_non = ? WHERE added_by = ?";
-        $stmt = $connection->prepare($update_query);
-        $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
-
-        if ($stmt->execute()) {
-            // Chargement des nouvelles données depuis la base de données après la mise à jour
-            $get_updated_data_query = "SELECT budget_min, budget_max, dispo, indispo FROM olympe WHERE added_by = ?";
-            $stmt_get_updated_data = $connection->prepare($get_updated_data_query);
-            $stmt_get_updated_data->bind_param("i", $loggedInUser['id']);
-            $stmt_get_updated_data->execute();
-            $stmt_get_updated_data->bind_result($updatedBudgetMin, $updatedBudgetMax, $updatedDispoDates, $updatedNotDispoDates);
-            $stmt_get_updated_data->fetch();
-            $stmt_get_updated_data->close();
-
-            // Mise à jour des valeurs par défaut des calendriers avec les données mises à jour
-            $budgetMinDefaultValue = $updatedBudgetMin;
-            $budgetMaxDefaultValue = $updatedBudgetMax;
-            $dispoDatesDefaultValue = $updatedDispoDates;
-            $notDispoDatesDefaultValue = $updatedNotDispoDates;
-
-            $successMessage = "Mise à jour réussie !";
-        } else {
-            $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
-        }
-
-        $stmt->close();
+        $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
     }
+
+    $stmt->close();
 }
 ?>
 
