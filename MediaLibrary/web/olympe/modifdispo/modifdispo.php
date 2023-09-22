@@ -84,7 +84,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $successMessage = "Mise à jour réussie !";
             echo '<script>
                 setTimeout(function() {
-                    window.location.href = "../olympe/statchoixpays/stats.php";
+                    window.location.href = "../../olympe/statchoixpays/stats.php";
                 }, 3000);
             </script>';
         } else {
