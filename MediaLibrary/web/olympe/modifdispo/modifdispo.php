@@ -223,14 +223,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const dispoDateInput = document.getElementById('dispo_date');
             const nonDispoDateInput = document.getElementById('not_dispo_date');
 
-            const dispoDatesDefaultValue = '<?= $dispoDatesDefaultValue ?>'; // Récupérez la valeur par défaut des dates de disponibilité depuis PHP
-            const notDispoDatesDefaultValue = '<?= $notDispoDatesDefaultValue ?>'; // Récupérez la valeur par défaut des dates de non-disponibilité depuis PHP
-
             const dispoDatepicker = flatpickr("#dispo_date", {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
-                defaultDate: dispoDatesDefaultValue.split(',').map(date => new Date(date)),
+                defaultDate: <?= json_encode(explode(', ', $dispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     dispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
@@ -241,7 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
-                defaultDate: notDispoDatesDefaultValue.split(',').map(date => new Date(date)),
+                defaultDate: <?= json_encode(explode(', ', $notDispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     nonDispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
