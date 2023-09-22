@@ -75,20 +75,20 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     if (!empty(array_intersect($dispo_dates_array, $not_dispo_dates_array))) {
         $errorMessage = "Des dates identiques ont été sélectionnées dans les calendriers dispo et indispo. Veuillez corriger votre sélection.";
     } else {
-        $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("iiisssss", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
+        // Effectuez une mise à jour des données existantes dans la base de données
+        $update_query = "UPDATE olympe SET budget_min = ?, budget_max = ?, dispo = ?, indispo = ?, transport = ?, pays_oui = ?, pays_non = ? WHERE added_by = ?";
+        $stmt = $connection->prepare($update_query);
+        $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
 
         if ($stmt->execute()) {
-            $successMessage = "Enregistrement réussi !";
+            $successMessage = "Mise à jour réussie !";
             echo '<script>
                 setTimeout(function() {
                     window.location.href = "../olympe/statchoixpays/stats.php";
                 }, 3000);
             </script>';
         } else {
-            $errorMessage = "Erreur lors de l'enregistrement : " . $stmt->error;
+            $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
         }
 
         $stmt->close();
