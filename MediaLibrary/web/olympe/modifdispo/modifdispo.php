@@ -43,6 +43,23 @@ if ($existingRecords > 0) {
     $budgetMaxDefaultValue = $budgetMax;
 }
 
+$dispoDatesDefaultValue = ''; // Valeur par défaut pour les dates de disponibilité
+$notDispoDatesDefaultValue = ''; // Valeur par défaut pour les dates de non-disponibilité
+
+// Récupérez les dates de disponibilité et de non-disponibilité depuis la base de données
+if ($existingRecords > 0) {
+    $get_dates_query = "SELECT dispo, indispo FROM olympe WHERE added_by = ?";
+    $stmt_get_dates = $connection->prepare($get_dates_query);
+    $stmt_get_dates->bind_param("i", $loggedInUser['id']);
+    $stmt_get_dates->execute();
+    $stmt_get_dates->bind_result($dispoDates, $notDispoDates);
+    $stmt_get_dates->fetch();
+    $stmt_get_dates->close();
+
+    $dispoDatesDefaultValue = $dispoDates;
+    $notDispoDatesDefaultValue = $notDispoDates;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $budget_min = $_POST['budget_min'];
     $budget_max = $_POST['budget_max'];
@@ -217,14 +234,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             const dispoDateInput = document.getElementById('dispo_date');
             const nonDispoDateInput = document.getElementById('not_dispo_date');
 
-            const dispoDates = dispoDateInput.getAttribute('data-dispo-dates').split(',').map(date => new Date(date));
-            const nonDispoDates = nonDispoDateInput.getAttribute('data-non-dispo-dates').split(',').map(date => new Date(date));
+            const dispoDatesDefaultValue = '<?= $dispoDatesDefaultValue ?>'; // Récupérez la valeur par défaut des dates de disponibilité depuis PHP
+            const notDispoDatesDefaultValue = '<?= $notDispoDatesDefaultValue ?>'; // Récupérez la valeur par défaut des dates de non-disponibilité depuis PHP
 
             flatpickr("#dispo_date", {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
-                defaultDate: dispoDates,
+                defaultDate: dispoDatesDefaultValue.split(',').map(date => new Date(date)),
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     dispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
@@ -235,7 +252,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
-                defaultDate: nonDispoDates,
+                defaultDate: notDispoDatesDefaultValue.split(',').map(date => new Date(date)),
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     nonDispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
