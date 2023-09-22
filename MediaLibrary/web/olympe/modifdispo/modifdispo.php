@@ -118,7 +118,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <body>
     <div class="navbar">
         <a href="../../accueil/index.php">Accueil</a>
-        <a href="../../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
+        <a href="../../olympe/olympe.php">L'Olympe</a>
+        <a href="../../olympe/modifdispo/modifdispo.php" style="color: #D7EBF3;">Modifier mes dispo</a>  
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
     <h1>Bienvenue dans l'Olympe <?php echo $username;?> - Modifications des disponibilités</h1>
