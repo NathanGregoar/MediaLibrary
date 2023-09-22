@@ -81,12 +81,21 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
 
         if ($stmt->execute()) {
+            // Charger les données mises à jour depuis la base de données
+            $get_updated_data_query = "SELECT budget_min, budget_max, dispo, indispo FROM olympe WHERE added_by = ?";
+            $stmt_get_updated_data = $connection->prepare($get_updated_data_query);
+            $stmt_get_updated_data->bind_param("i", $loggedInUser['id']);
+            $stmt_get_updated_data->execute();
+            $stmt_get_updated_data->bind_result($updatedBudgetMin, $updatedBudgetMax, $updatedDispoDates, $updatedNotDispoDates);
+            $stmt_get_updated_data->fetch();
+            $stmt_get_updated_data->close();
+
+            $budgetMinDefaultValue = $updatedBudgetMin;
+            $budgetMaxDefaultValue = $updatedBudgetMax;
+            $dispoDatesDefaultValue = $updatedDispoDates;
+            $notDispoDatesDefaultValue = $updatedNotDispoDates;
+
             $successMessage = "Mise à jour réussie !";
-            echo '<script>
-                setTimeout(function() {
-                    window.location.href = "../../olympe/statchoixpays/stats.php";
-                }, 3000);
-            </script>';
         } else {
             $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
         }
