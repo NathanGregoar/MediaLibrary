@@ -141,12 +141,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     <label for="budget_min">Budget min :</label>
                     <small>(Transport & Location compris)</small>
                     <input type="number" id="budget_min" name="budget_min" min="1"><br>
+
+                    <label for="budget_max">Budget max :</label>
+                    <small>(Transport & Location compris)</small>
+                    <input type="number" id="budget_max" name="budget_max" min="1"><br>
                 </div>
-            </div>
-            <div class="input-group flex">
-                <label for="budget_max">Budget max :</label>
-                <small>(Transport & Location compris)</small>
-                <input type="number" id="budget_max" name="budget_max" min="1"><br>
             </div>
             <div class="input-group">
                 <label for="dispo_date">Mes disponibilités :</label>
