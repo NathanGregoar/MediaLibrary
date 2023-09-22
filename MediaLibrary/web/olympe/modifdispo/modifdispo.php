@@ -70,18 +70,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $non_pref_countries = $_POST['non_pref_countries_selected'] ?? '';
 
     // Effectuez une mise à jour des données existantes dans la base de données
-    if ($existingRecords > 0) {
-        $update_query = "UPDATE olympe SET budget_min = ?, budget_max = ?, dispo = ?, indispo = ?, transport = ?, pays_oui = ?, pays_non = ? WHERE added_by = ?";
-        $stmt = $connection->prepare($update_query);
-        $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
-    } else {
-        // Si aucune donnée n'existe pour l'utilisateur, insérez une nouvelle ligne
-        $insert_query = "INSERT INTO olympe (added_by, budget_min, budget_max, dispo, indispo, transport, pays_oui, pays_non) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
-        $stmt = $connection->prepare($insert_query);
-        $stmt->bind_param("iiissssi", $loggedInUser['id'], $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries);
-    }
+    $update_query = "UPDATE olympe SET budget_min = ?, budget_max = ?, dispo = ?, indispo = ?, transport = ?, pays_oui = ?, pays_non = ? WHERE added_by = ?";
+    $stmt = $connection->prepare($update_query);
+    $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
 
     if ($stmt->execute()) {
+        // Mise à jour réussie, pas besoin de charger les nouvelles données ici
         $successMessage = "Mise à jour réussie !";
     } else {
         $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
@@ -171,6 +165,58 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </script>
 
+    <script>
+        const form = document.querySelector('.form-container');
+        const messageContainer = document.getElementById('messageContainer');
+
+        form.addEventListener('submit', function (event) {
+            const isValid = validateForm();
+            
+            if (!isValid) {
+                event.preventDefault();
+                messageContainer.innerHTML = '<div class="alert alert-error">Complétez le formulaire correctement !</div>';
+                messageContainer.style.display = 'block';
+            }
+        });
+
+        function validateForm() {
+            const budgetMinInput = document.getElementById('budget_min');
+            const budgetMaxInput = document.getElementById('budget_max');
+            const dispoDateInput = document.getElementById('dispo_date');
+            const notDispoDateInput = document.getElementById('not_dispo_date');
+
+            const isValidBudget = validateBudget(budgetMinInput.value, budgetMaxInput.value);
+            const isValidDispoDate = dispoDateInput.value.trim() !== '';
+            const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
+
+            return isValidBudget && isValidDispoDate && isValidNotDispoDate;
+        }
+
+        function validateBudget(budgetMin, budgetMax) {
+            const parsedBudgetMin = parseFloat(budgetMin);
+            const parsedBudgetMax = parseFloat(budgetMax);
+
+            if (isNaN(parsedBudgetMin) || isNaN(parsedBudgetMax)) {
+                return false;
+            }
+
+            if (parsedBudgetMax <= parsedBudgetMin) {
+                const budgetMaxInput = document.getElementById('budget_max');
+                const budgetMinInput = document.getElementById('budget_min');
+                budgetMaxInput.classList.remove('valid');
+                budgetMaxInput.classList.add('invalid');
+                budgetMinInput.classList.remove('valid');
+                budgetMinInput.classList.add('invalid');
+
+                messageContainer.innerHTML = '<div class="alert alert-error">La valeur budget max doit être plus grande que budget min.</div>';
+                messageContainer.style.display = 'block';
+                return false;
+            }
+
+            return true;
+        }
+    </script>
+
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
@@ -181,6 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
+                defaultDate: <?= json_encode(explode(', ', $dispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     dispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
@@ -191,6 +238,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
+                defaultDate: <?= json_encode(explode(', ', $notDispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     nonDispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
