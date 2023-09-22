@@ -43,6 +43,9 @@ if ($existingRecords > 0) {
     $budgetMaxDefaultValue = $budgetMax;
 }
 
+$dispoDatesJSON = json_encode(explode(', ', $dispoDatesDefaultValue));
+$notDispoDatesJSON = json_encode(explode(', ', $notDispoDatesDefaultValue));
+
 $dispoDatesDefaultValue = ''; // Valeur par défaut pour les dates de disponibilité
 $notDispoDatesDefaultValue = ''; // Valeur par défaut pour les dates de non-disponibilité
 
@@ -227,23 +230,23 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
-                defaultDate: <?= json_encode(explode(', ', $dispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     dispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
                 }
             });
+            dispoDatepicker.setDate(<?= $dispoDatesJSON; ?>); // Définir les dates depuis la base de données
 
             const notDispoDatepicker = flatpickr("#not_dispo_date", {
                 mode: "multiple",
                 dateFormat: "Y-m-d",
                 inline: true,
-                defaultDate: <?= json_encode(explode(', ', $notDispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
                     nonDispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
                 }
             });
+            notDispoDatepicker.setDate(<?= $notDispoDatesJSON; ?>); // Définir les dates depuis la base de données
         });
     </script>
 </body>
