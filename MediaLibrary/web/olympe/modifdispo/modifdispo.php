@@ -26,6 +26,23 @@ $stmt_check->bind_result($existingRecords);
 $stmt_check->fetch();
 $stmt_check->close();
 
+$budgetMinDefaultValue = ''; // Valeur par défaut pour le budget min
+$budgetMaxDefaultValue = ''; // Valeur par défaut pour le budget max
+
+// Récupérer les valeurs de budget min et max depuis la base de données
+if ($existingRecords > 0) {
+    $get_budget_query = "SELECT budget_min, budget_max FROM olympe WHERE added_by = ?";
+    $stmt_get_budget = $connection->prepare($get_budget_query);
+    $stmt_get_budget->bind_param("i", $loggedInUser['id']);
+    $stmt_get_budget->execute();
+    $stmt_get_budget->bind_result($budgetMin, $budgetMax);
+    $stmt_get_budget->fetch();
+    $stmt_get_budget->close();
+
+    $budgetMinDefaultValue = $budgetMin;
+    $budgetMaxDefaultValue = $budgetMax;
+}
+
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $budget_min = $_POST['budget_min'];
     $budget_max = $_POST['budget_max'];
@@ -94,11 +111,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <div class="flex"> 
                     <label for="budget_min">Budget min :</label>
                     <small>(Transport & Location compris)</small>
-                    <input type="number" id="budget_min" name="budget_min" min="1"><br>
+                    <input type="number" id="budget_min" name="budget_min" min="1" value="<?= $budgetMinDefaultValue; ?>"><br>
 
                     <label for="budget_max">Budget max :</label>
                     <small>(Transport & Location compris)</small>
-                    <input type="number" id="budget_max" name="budget_max" min="1"><br>
+                    <input type="number" id="budget_max" name="budget_max" min="1" value="<?= $budgetMaxDefaultValue; ?>"><br>
                 </div>
             </div>
             <div class="input-group">
