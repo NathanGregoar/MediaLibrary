@@ -171,58 +171,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     </script>
 
-<script>
-        const form = document.querySelector('.form-container');
-        const messageContainer = document.getElementById('messageContainer');
-
-        form.addEventListener('submit', function (event) {
-            const isValid = validateForm();
-            
-            if (!isValid) {
-                event.preventDefault();
-                messageContainer.innerHTML = '<div class="alert alert-error">Complétez le formulaire correctement !</div>';
-                messageContainer.style.display = 'block';
-            }
-        });
-
-        function validateForm() {
-            const budgetMinInput = document.getElementById('budget_min');
-            const budgetMaxInput = document.getElementById('budget_max');
-            const dispoDateInput = document.getElementById('dispo_date');
-            const notDispoDateInput = document.getElementById('not_dispo_date');
-
-            const isValidBudget = validateBudget(budgetMinInput.value, budgetMaxInput.value);
-            const isValidDispoDate = dispoDateInput.value.trim() !== '';
-            const isValidNotDispoDate = notDispoDateInput.value.trim() !== '';
-
-            return isValidBudget && isValidDispoDate && isValidNotDispoDate;
-        }
-
-        function validateBudget(budgetMin, budgetMax) {
-            const parsedBudgetMin = parseFloat(budgetMin);
-            const parsedBudgetMax = parseFloat(budgetMax);
-
-            if (isNaN(parsedBudgetMin) || isNaN(parsedBudgetMax)) {
-                return false;
-            }
-
-            if (parsedBudgetMax <= parsedBudgetMin) {
-                const budgetMaxInput = document.getElementById('budget_max');
-                const budgetMinInput = document.getElementById('budget_min');
-                budgetMaxInput.classList.remove('valid');
-                budgetMaxInput.classList.add('invalid');
-                budgetMinInput.classList.remove('valid');
-                budgetMinInput.classList.add('invalid');
-
-                messageContainer.innerHTML = '<div class="alert alert-error">La valeur budget max doit être plus grande que budget min.</div>';
-                messageContainer.style.display = 'block';
-                return false;
-            }
-
-            return true;
-        }
-    </script>
-
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
