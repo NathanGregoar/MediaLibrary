@@ -26,6 +26,13 @@ $stmt_check->bind_result($existingRecords);
 $stmt_check->fetch();
 $stmt_check->close();
 
+// Vérifier si des enregistrements existent pour l'utilisateur actuel
+if ($existingRecords === 0) {
+    // Rediriger l'utilisateur vers une page d'erreur ou une autre page appropriée
+    header("Location: chemin_vers_page_d_erreur.php");
+    exit();
+}
+
 $budgetMinDefaultValue = ''; // Valeur par défaut pour le budget min
 $budgetMaxDefaultValue = ''; // Valeur par défaut pour le budget max
 
