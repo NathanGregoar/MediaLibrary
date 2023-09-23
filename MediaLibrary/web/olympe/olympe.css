@@ -294,6 +294,9 @@ input[type="checkbox"] {
 
 /* Styles pour les appareils mobiles */
 @media only screen and (max-width: 767px) {
+    body{
+        background-color: red;
+    }
     .navbar {
         padding: 5px 0;
     }
