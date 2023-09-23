@@ -86,3 +86,20 @@ th, td {
 .budgets {
     grid-column: span 2;
 }
+
+
+
+/* Ajoutez ces styles pour un affichage mobile */
+@media screen and (max-width: 768px) {
+    h1 {
+        font-size: 18px;
+        position: static;
+        text-align: center;
+    }
+
+    .grid {
+        display: block; 
+        margin: 0; 
+        padding: 0; 
+    }
+}
