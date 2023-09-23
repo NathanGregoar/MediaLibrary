@@ -229,10 +229,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 inline: true,
                 defaultDate: <?= json_encode(explode(', ', $dispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
-                    // Convertir les dates au format ISO 8601 sans décalage horaire
-                    const isoDates = selectedDates.map(date => date.toISOString().split('T')[0]);
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
-                    dispoDateInput.value = isoDates.join(', ');
+                    dispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
                 }
             });
 
@@ -242,10 +240,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 inline: true,
                 defaultDate: <?= json_encode(explode(', ', $notDispoDatesDefaultValue)) ?>,
                 onChange: function (selectedDates) {
-                    // Convertir les dates au format ISO 8601 sans décalage horaire
-                    const isoDates = selectedDates.map(date => date.toISOString().split('T')[0]);
                     // Mettre à jour la valeur du champ de texte avec les dates sélectionnées
-                    nonDispoDateInput.value = isoDates.join(', ');
+                    nonDispoDateInput.value = selectedDates.map(date => date.toISOString().slice(0, 10)).join(', ');
                 }
             });
         });
