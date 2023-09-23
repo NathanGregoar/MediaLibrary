@@ -223,10 +223,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             mode: "multiple",
             dateFormat: "Y-m-d",
             inline: true,
-            defaultDate: [
-                <?= json_encode(explode(', ', $dispoDates)); ?>, // Les dates de disponibilité
-                <?= json_encode(explode(', ', $notDispoDates)); ?> // Les dates de non-disponibilité
-            ],
             onChange: function(selectedDates, dateStr, instance) {
                 const calendarContainer = instance._container;
                 if (calendarContainer.classList.contains("flatpickr-calendar")) {
