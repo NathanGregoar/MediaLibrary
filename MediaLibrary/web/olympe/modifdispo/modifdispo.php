@@ -29,7 +29,7 @@ $stmt_check->close();
 // Vérifier si des enregistrements existent pour l'utilisateur actuel
 if ($existingRecords === 0) {
     // Rediriger l'utilisateur vers une page d'erreur ou une autre page appropriée
-    header("Location: chemin_vers_page_d_erreur.php");
+    header("Location: ../../olympe/olympe.php");
     exit();
 }
 
