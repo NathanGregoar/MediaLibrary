@@ -75,7 +75,19 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
 
     if ($stmt->execute()) {
-        // Mise à jour réussie, pas besoin de charger les nouvelles données ici
+        // Mise à jour réussie, récupérez les nouvelles données depuis la base de données
+        $get_updated_dates_query = "SELECT dispo, indispo FROM olympe WHERE added_by = ?";
+        $stmt_get_updated_dates = $connection->prepare($get_updated_dates_query);
+        $stmt_get_updated_dates->bind_param("i", $loggedInUser['id']);
+        $stmt_get_updated_dates->execute();
+        $stmt_get_updated_dates->bind_result($dispoDates, $notDispoDates);
+        $stmt_get_updated_dates->fetch();
+        $stmt_get_updated_dates->close();
+
+        // Mettez à jour les valeurs par défaut pour les dates de disponibilité et d'indisponibilité
+        $dispoDatesDefaultValue = $dispoDates;
+        $notDispoDatesDefaultValue = $notDispoDates;
+
         $successMessage = "Mise à jour réussie !";
     } else {
         $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
