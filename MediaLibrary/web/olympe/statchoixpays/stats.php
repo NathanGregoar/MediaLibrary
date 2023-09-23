@@ -150,7 +150,7 @@ if ($resultAvgBudgetMax) {
 }
 
 // Calcule la moyenne globale des budgets
-$averageBudget = ($minBudget + $maxBudget) / 2;
+$averageBudget = ($averageBudgetMin + $averageBudgetMax) / 2;
 
 // Récupération des disponibilités de tous les utilisateurs
 $queryAllDispos = "SELECT dispo FROM olympe WHERE dispo IS NOT NULL";
