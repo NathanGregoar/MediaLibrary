@@ -91,15 +91,22 @@ th, td {
 
 /* Ajoutez ces styles pour un affichage mobile */
 @media screen and (max-width: 768px) {
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .navbar a {
+        font-size: 16px;
+        margin: 5px;
+    }
+
     h1 {
-        font-size: 18px;
-        position: static;
-        text-align: center;
+        font-size: 20px;
     }
 
     .grid {
         display: block; 
-        margin: 0; 
-        padding: 0; 
+        margin: 10px; 
+        padding: 5px; 
     }
 }
