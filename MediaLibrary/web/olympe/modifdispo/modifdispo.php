@@ -224,8 +224,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             dateFormat: "Y-m-d",
             inline: true,
             defaultDate: [
-                <?= $dispoDatesDefaultValue; ?>, // Les dates de disponibilité
-                <?= $notDispoDatesDefaultValue; ?> // Les dates de non-disponibilité
+                <?= json_encode(explode(', ', $dispoDates)); ?>, // Les dates de disponibilité
+                <?= json_encode(explode(', ', $notDispoDates)); ?> // Les dates de non-disponibilité
             ],
             onChange: function(selectedDates, dateStr, instance) {
                 const calendarContainer = instance._container;
