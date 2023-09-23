@@ -127,6 +127,29 @@ if ($resultBudgetMin && $resultBudgetMax) {
     $maxBudget = $rowMax['maxBudget'];
 }
 
+// Calcule la moyenne des budgets minimums
+$queryAvgBudgetMin = "SELECT AVG(budget_min) AS avgBudgetMin FROM olympe";
+$resultAvgBudgetMin = $connection->query($queryAvgBudgetMin);
+
+$avgBudgetMin = 0;
+
+if ($resultAvgBudgetMin) {
+    $rowAvgMin = $resultAvgBudgetMin->fetch_assoc();
+    $avgBudgetMin = $rowAvgMin['avgBudgetMin'];
+}
+
+// Calcule la moyenne des budgets maximums
+$queryAvgBudgetMax = "SELECT AVG(budget_max) AS avgBudgetMax FROM olympe";
+$resultAvgBudgetMax = $connection->query($queryAvgBudgetMax);
+
+$avgBudgetMax = 0;
+
+if ($resultAvgBudgetMax) {
+    $rowAvgMax = $resultAvgBudgetMax->fetch_assoc();
+    $avgBudgetMax = $rowAvgMax['avgBudgetMax'];
+}
+
+// Calcule la moyenne globale des budgets
 $averageBudget = ($minBudget + $maxBudget) / 2;
 
 // Récupération des disponibilités de tous les utilisateurs
@@ -380,7 +403,7 @@ $connection->close();
         labels: ['Budget Min', 'Moyenne', 'Budget Max'],
         datasets: [{
             label: 'Budget Min',
-            data: [<?php echo $minBudget; ?>, 0, 0], // Notez l'utilisation de 0 pour les autres valeurs
+            data: [<?php echo $avgBudgetMin; ?>, 0, 0], // Notez l'utilisation de 0 pour les autres valeurs
             backgroundColor: 'rgba(255, 99, 132, 0.7)', // Couleur pour le budget min
             borderWidth: 1
         }, {
@@ -390,7 +413,7 @@ $connection->close();
             borderWidth: 1
         }, {
             label: 'Budget Max',
-            data: [0, 0, <?php echo $maxBudget; ?>], // Notez l'utilisation de 0 pour les autres valeurs
+            data: [0, 0, <?php echo $avgBudgetMax; ?>], // Notez l'utilisation de 0 pour les autres valeurs
             backgroundColor: 'rgba(255, 206, 86, 0.7)', // Couleur pour le budget max
             borderWidth: 1
         }]
