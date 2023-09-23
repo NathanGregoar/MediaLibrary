@@ -290,3 +290,61 @@ input[type="checkbox"] {
     color: #FFFFFF; /* Texte blanc pour une meilleure lisibilité */
     pointer-events: none; /* Désactiver les événements de clic sur ces dates */
 }
+
+
+/* Styles pour les appareils mobiles */
+@media (max-width: 768px) {
+    .navbar {
+        padding: 5px 0;
+    }
+
+    .navbar a {
+        font-size: 16px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .form-container {
+        width: 100%;
+        padding: 10px;
+    }
+
+    .form-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .input-group,
+    .transport-group {
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    .input-group label,
+    .transport-group label {
+        font-size: 16px;
+    }
+
+    input[type="number"],
+    input[type="text"],
+    input[type="checkbox"] {
+        font-size: 14px;
+        padding: 5px;
+    }
+
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    button {
+        padding: 8px 10px;
+        font-size: 16px;
+    }
+
+    .modal {
+        width: 80%;
+        height: 80%;
+    }
+}
