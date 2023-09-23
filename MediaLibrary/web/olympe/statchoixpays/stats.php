@@ -195,7 +195,7 @@ $connection->close();
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>   
     </div>
 
-    <h1><?php echo $username;?>, <br><?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
+    <h1><?php echo $username;?>, <?php echo $totalGods . " " . $text; ?> au formulaire !</h1> 
 
         <div class="grid">
         <?php
