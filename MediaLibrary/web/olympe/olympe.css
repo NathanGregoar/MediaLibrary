@@ -354,9 +354,5 @@ input[type="checkbox"] {
         width: 90%;
         height: 90%;
     }
-
-    #dispo_date, #not_dispo_date {
-        width: 100%;
-    }
 }
 
