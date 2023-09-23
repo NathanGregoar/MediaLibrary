@@ -219,19 +219,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
-
         document.addEventListener("DOMContentLoaded", function() {
-        const dispoDateInput = document.getElementById('dispo_date');
-        const notDispoDateInput = document.getElementById('not_dispo_date');
+            const dispoDateInput = document.getElementById('dispo_date');
+            const notDispoDateInput = document.getElementById('not_dispo_date');
 
-        dispoDateInput.value = '<?= $dispoDatesDefaultValue; ?>';
-        notDispoDateInput.value = '<?= $notDispoDatesDefaultValue; ?>';
+            dispoDateInput.value = '<?= $dispoDatesDefaultValue; ?>';
+            notDispoDateInput.value = '<?= $notDispoDatesDefaultValue; ?>';
 
-        flatpickr(".flatpickr", {
-            mode: "multiple",
-            dateFormat: "Y-m-d",
-            inline: true,
-            onChange: function(selectedDates, dateStr, instance) {
+            flatpickr(".flatpickr", {
+                mode: "multiple",
+                dateFormat: "Y-m-d",
+                inline: true,
+                onChange: function(selectedDates, dateStr, instance) {
                 const calendarContainer = instance._container;
                 if (calendarContainer.classList.contains("flatpickr-calendar")) {
                     const dispoDates = document.querySelectorAll(".green-date");
@@ -251,6 +250,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                     });
                 }
             }
+            });
         });
     </script>
 </body>
