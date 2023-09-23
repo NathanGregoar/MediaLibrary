@@ -219,6 +219,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script>
+
+        document.addEventListener("DOMContentLoaded", function() {
+        const dispoDateInput = document.getElementById('dispo_date');
+        const notDispoDateInput = document.getElementById('not_dispo_date');
+
+        dispoDateInput.value = '<?= $dispoDatesDefaultValue; ?>';
+        notDispoDateInput.value = '<?= $notDispoDatesDefaultValue; ?>';
+
         flatpickr(".flatpickr", {
             mode: "multiple",
             dateFormat: "Y-m-d",
