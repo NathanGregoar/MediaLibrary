@@ -90,13 +90,13 @@ h2 {
     color: white;
 }
 
-#dispo_date {
+/* #dispo_date {
     display: none;
 }
 
 #not_dispo_date {
     display: none;
-}
+} */
 
 .country-list {
     display: flex;
