@@ -57,7 +57,7 @@ if ($result) {
 // Vérifiez si le nombre d'utilisateurs est inférieur à 7, alors redirigez
 $isAdmin = in_array($loggedInUser['role'], ["admin"]);
 
-if ($totalGods < 7 && !$isAdmin) {
+if ($totalGods < 7 /*&& !$isAdmin*/) {
     header("Location: ../waitingstats/waitingstats.php");
     exit();
 }
