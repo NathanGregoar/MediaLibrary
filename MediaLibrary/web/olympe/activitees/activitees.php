@@ -68,7 +68,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <head>
     <title>L'Olympe - Activitées souhaitées</title>
     <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
-    <link rel="stylesheet" type="text/css" href="./modifdispo.css">
+    <link rel="stylesheet" type="text/css" href="./activitees.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
@@ -79,7 +79,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../../olympe/activitees/activitees.php" style="color: #D7EBF3;">Activitées souhaitées</a>  
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?= $username; ?> - Modifications des disponibilités</h1>
+    <h1>Bienvenue dans l'Olympe <?= $username; ?> - Activitées souhaitées</h1>
 
     <div id="messageContainer">
         <?php if (!empty($successMessage)) : ?>
