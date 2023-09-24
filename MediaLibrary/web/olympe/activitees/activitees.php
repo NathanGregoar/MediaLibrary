@@ -19,23 +19,23 @@ if ($connection->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $selectedButtons = [];
+    $selectedCheckboxes = [];
 
-    // Parcourez les boutons pour collecter les valeurs sélectionnées
+    // Parcourez les cases cochées pour collecter les noms
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'activite_') === 0 && $value === 'on') {
-            // Ajoutez la valeur du bouton sélectionné à la liste
-            $selectedButtons[] = substr($key, 8);
+            // Ajoutez le nom de la case cochée à la liste
+            $selectedCheckboxes[] = substr($key, 8);
         }
     }
 
-    // Convertir les boutons sélectionnés en une chaîne CSV
-    $selectedButtonsCSV = implode(', ', $selectedButtons);
+    // Convertir les noms des cases cochées en une chaîne CSV
+    $selectedCheckboxesCSV = implode(', ', $selectedCheckboxes);
 
     // Effectuer une mise à jour des données dans la base de données
     $update_query = "INSERT INTO olympe_activitees (added_by, activitees) VALUES (?, ?) ON DUPLICATE KEY UPDATE activitees = ?";
     $stmt = $connection->prepare($update_query);
-    $stmt->bind_param("iss", $loggedInUser['id'], $selectedButtonsCSV, $selectedButtonsCSV);
+    $stmt->bind_param("iss", $loggedInUser['id'], $selectedCheckboxesCSV, $selectedCheckboxesCSV);
 
     if ($stmt->execute()) {
         $successMessage = "Mise à jour réussie !";
@@ -77,19 +77,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <div class="toggle-button" data-toggle="activite_1">
-                    <input type="checkbox" name="activite_1" <?= in_array('activite_1', $selectedButtons) ? 'checked' : '' ?>>
-                    Activité 1
+                <div>
+                    <input type="checkbox" name="activite_1"> Activité 1
                 </div>
-                <div class="toggle-button" data-toggle="activite_2">
-                    <input type="checkbox" name="activite_2" <?= in_array('activite_2', $selectedButtons) ? 'checked' : '' ?>>
-                    Activité 2
+                <div>
+                    <input type="checkbox" name="activite_2"> Activité 2
                 </div>
-                <div class="toggle-button" data-toggle="activite_3">
-                    <input type="checkbox" name="activite_3" <?= in_array('activite_3', $selectedButtons) ? 'checked' : '' ?>>
-                    Activité 3
+                <div>
+                    <input type="checkbox" name="activite_3"> Activité 3
                 </div>
-                <!-- Ajoutez d'autres boutons d'activité ici -->
+                <!-- Ajoutez d'autres cases à cocher d'activité ici -->
             </div>
         </div>
 
@@ -99,17 +96,5 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </form>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const toggleButtons = document.querySelectorAll(".toggle-button");
-
-            toggleButtons.forEach((button) => {
-                button.addEventListener("click", () => {
-                    button.classList.toggle("selected");
-                });
-            });
-        });
-    </script>
 </body>
 </html>
