@@ -105,3 +105,21 @@ h2 {
     padding: 10px;
     color: #a94442;
 }
+
+/* styles.css */
+.toggle-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ccc;
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .toggle-button.selected {
+    background-color: #86c1ff;
+    transform: scale(1.1);
+  }
+  

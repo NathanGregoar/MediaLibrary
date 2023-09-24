@@ -93,23 +93,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <form method="post" class="form-container">
         <div class="form-grid">
             <div class="input-group">
-                <div class="flex"> 
-                    <label for="budget_min">Budget min :</label>
-                    <small>(Transport & Location compris)</small>
-                    <input type="number" id="budget_min" name="budget_min" min="1" value="<?= $budgetMinDefaultValue; ?>"><br>
-
-                    <label for="budget_max">Budget max :</label>
-                    <small>(Transport & Location compris)</small>
-                    <input type="number" id="budget_max" name="budget_max" min="1" value="<?= $budgetMaxDefaultValue; ?>"><br>
-                </div>
-            </div>
-            <div class="input-group">
-                <label for="dispo_date">Mes disponibilités :</label>
-                <input type="text" id="dispo_date" name="dispo_date" class="flatpickr inline" required data-dispo-dates="<?= $dispoDatesDefaultValue; ?>">
-            </div>
-            <div class="input-group">
-                <label for="not_dispo_date">Mes indisponibilités :</label>
-                <input type="text" id="not_dispo_date" name="not_dispo_date" class="flatpickr inline" required data-non-dispo-dates="<?= $notDispoDatesDefaultValue; ?>">
+                <label>Budget :</label>
+                <div class="toggle-button" data-toggle="budget_min">Budget Min</div>
+                <div class="toggle-button" data-toggle="budget_max">Budget Max</div>
             </div>
         </div>
 
@@ -119,5 +105,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             </div>
         </div>
     </form>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            const toggleButtons = document.querySelectorAll(".toggle-button");
+
+            toggleButtons.forEach((button) => {
+                button.addEventListener("click", () => {
+                    button.classList.toggle("selected");
+                });
+            });
+        });
+    </script>
 </body>
 </html>
