@@ -8,7 +8,7 @@ $loggedInUser = getLoggedInUser();
 
 $allowedRoles = ["admin"]; // Rôles autorisés
 if (!in_array($loggedInUser['role'], $allowedRoles)) {
-    header("Location: ../../accueil/index.php");
+    header("Location: ../../olympe/olympe.php");
     exit();
 }
 
@@ -18,42 +18,18 @@ if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-$check_query = "SELECT COUNT(*) FROM olympe WHERE added_by = ?";
-$stmt_check = $connection->prepare($check_query);
-$stmt_check->bind_param("i", $loggedInUser['id']);
-$stmt_check->execute();
-$stmt_check->bind_result($existingRecords);
-$stmt_check->fetch();
-$stmt_check->close();
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $budget_min = $_POST['budget_min'];
-    $budget_max = $_POST['budget_max'];
-    $dispo_dates = $_POST['dispo_date'];
-    $not_dispo_dates = $_POST['not_dispo_date'];
-    $transport = isset($_POST['transport']) ? implode(', ', $_POST['transport']) : '';
-    $pref_countries = $_POST['pref_countries_selected'] ?? '';
-    $non_pref_countries = $_POST['non_pref_countries_selected'] ?? '';
+    $selectedButtons = $_POST['selected_buttons'] ?? [];
 
-    // Effectuez une mise à jour des données existantes dans la base de données
-    $update_query = "UPDATE olympe SET budget_min = ?, budget_max = ?, dispo = ?, indispo = ?, transport = ?, pays_oui = ?, pays_non = ? WHERE added_by = ?";
+    // Convertir les boutons sélectionnés en une chaîne CSV
+    $selectedButtonsCSV = implode(', ', $selectedButtons);
+
+    // Effectuer une mise à jour des données dans la base de données
+    $update_query = "UPDATE olympe SET activitees = ? WHERE added_by = ?";
     $stmt = $connection->prepare($update_query);
-    $stmt->bind_param("iisssssi", $budget_min, $budget_max, $dispo_dates, $not_dispo_dates, $transport, $pref_countries, $non_pref_countries, $loggedInUser['id']);
+    $stmt->bind_param("si", $selectedButtonsCSV, $loggedInUser['id']);
 
     if ($stmt->execute()) {
-        // Mise à jour réussie, récupérez les nouvelles données depuis la base de données
-        $get_updated_dates_query = "SELECT dispo, indispo FROM olympe WHERE added_by = ?";
-        $stmt_get_updated_dates = $connection->prepare($get_updated_dates_query);
-        $stmt_get_updated_dates->bind_param("i", $loggedInUser['id']);
-        $stmt_get_updated_dates->execute();
-        $stmt_get_updated_dates->bind_result($dispoDates, $notDispoDates);
-        $stmt_get_updated_dates->fetch();
-        $stmt_get_updated_dates->close();
-
-        // Mettez à jour les valeurs par défaut pour les dates de disponibilité et d'indisponibilité
-        $dispoDatesDefaultValue = $dispoDates;
-        $notDispoDatesDefaultValue = $notDispoDates;
-
         $successMessage = "Mise à jour réussie !";
     } else {
         $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
@@ -69,7 +45,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <title>L'Olympe - Activitées souhaitées</title>
     <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
     <link rel="stylesheet" type="text/css" href="./activitees.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
 </head>
 <body>
     <div class="navbar">
@@ -93,9 +68,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <form method="post" class="form-container">
         <div class="form-grid">
             <div class="input-group">
-                <label>Budget :</label>
-                <div class="toggle-button" data-toggle="budget_min">Budget Min</div>
-                <div class="toggle-button" data-toggle="budget_max">Budget Max</div>
+                <label>Activités souhaitées :</label>
+                <div class="toggle-button" data-toggle="activite_1">Activité 1</div>
+                <div class="toggle-button" data-toggle="activite_2">Activité 2</div>
+                <div class="toggle-button" data-toggle="activite_3">Activité 3</div>
+                <!-- Ajoutez d'autres boutons d'activité ici -->
             </div>
         </div>
 
