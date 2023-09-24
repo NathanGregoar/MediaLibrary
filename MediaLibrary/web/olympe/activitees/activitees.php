@@ -21,15 +21,15 @@ if ($connection->connect_error) {
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selectedCheckboxes = [];
 
-    // Parcourez les cases cochées pour collecter les noms
+    // Parcourez les cases cochées pour collecter les valeurs
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'activite_') === 0 && $value === 'on') {
-            // Ajoutez le nom de la case cochée à la liste
-            $selectedCheckboxes[] = substr($key, 8);
+            // Ajoutez la valeur de la case cochée à la liste
+            $selectedCheckboxes[] = $_POST[$key];
         }
     }
 
-    // Convertir les noms des cases cochées en une chaîne CSV
+    // Convertir les valeurs des cases cochées en une chaîne CSV
     $selectedCheckboxesCSV = implode(', ', $selectedCheckboxes);
 
     // Effectuer une mise à jour des données dans la base de données
