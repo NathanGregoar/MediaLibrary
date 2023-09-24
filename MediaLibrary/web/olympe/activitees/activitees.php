@@ -78,15 +78,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             <div class="input-group">
                 <label>Activités souhaitées :</label>
                 <div>
-                    <input type="checkbox" id="activite_1" name="activite_1" value="Activité 1" <?= in_array('Activité 1', $selectedCheckboxes) ? 'checked' : '' ?>>
+                    <input type="checkbox" id="activite_1" name="activite_1" value="Activité 1">
                     <label for="activite_1">Activité 1</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="activite_2" name="activite_2" value="Activité 2" <?= in_array('Activité 2', $selectedCheckboxes) ? 'checked' : '' ?>>
+                    <input type="checkbox" id="activite_2" name="activite_2" value="Activité 2">
                     <label for="activite_2">Activité 2</label>
                 </div>
                 <div>
-                    <input type="checkbox" id="activite_3" name="activite_3" value="Activité 3" <?= in_array('Activité 3', $selectedCheckboxes) ? 'checked' : '' ?>>
+                    <input type="checkbox" id="activite_3" name="activite_3" value="Activité 3">
                     <label for="activite_3">Activité 3</label>
                 </div>
                 <!-- Ajoutez d'autres cases à cocher pour les activités ici -->
