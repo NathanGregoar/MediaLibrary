@@ -6,7 +6,7 @@ session_start();
 $username = $_SESSION['username'] ?? '';
 $loggedInUser = getLoggedInUser();
 
-$allowedRoles = ["admin", "olympe"]; // Rôles autorisés
+$allowedRoles = ["admin"]; // Rôles autorisés
 if (!in_array($loggedInUser['role'], $allowedRoles)) {
     header("Location: ../../accueil/index.php");
     exit();
