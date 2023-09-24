@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selectedButtonsCSV = implode(', ', $selectedButtons);
 
     // Effectuer une mise à jour des données dans la base de données
-    $update_query = "UPDATE olympe SET activitees = ? WHERE added_by = ?";
+    $update_query = "UPDATE olympe_activitees SET activitees = ? WHERE added_by = ?";
     $stmt = $connection->prepare($update_query);
     $stmt->bind_param("si", $selectedButtonsCSV, $loggedInUser['id']);
 
