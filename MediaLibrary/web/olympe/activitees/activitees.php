@@ -19,15 +19,23 @@ if ($connection->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $selectedButtons = $_POST['selected_buttons'] ?? [];
+    $selectedButtons = [];
+
+    // Parcourez les boutons pour collecter les valeurs sélectionnées
+    foreach ($_POST as $key => $value) {
+        if (strpos($key, 'activite_') === 0 && $value === 'on') {
+            // Ajoutez la valeur du bouton sélectionné à la liste
+            $selectedButtons[] = substr($key, 8);
+        }
+    }
 
     // Convertir les boutons sélectionnés en une chaîne CSV
     $selectedButtonsCSV = implode(', ', $selectedButtons);
 
     // Effectuer une mise à jour des données dans la base de données
-    $update_query = "UPDATE olympe_activitees SET activitees = ? WHERE added_by = ?";
+    $update_query = "INSERT INTO olympe_activitees (added_by, activitees) VALUES (?, ?) ON DUPLICATE KEY UPDATE activitees = ?";
     $stmt = $connection->prepare($update_query);
-    $stmt->bind_param("si", $selectedButtonsCSV, $loggedInUser['id']);
+    $stmt->bind_param("iss", $loggedInUser['id'], $selectedButtonsCSV, $selectedButtonsCSV);
 
     if ($stmt->execute()) {
         $successMessage = "Mise à jour réussie !";
@@ -42,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 <!DOCTYPE html>
 <html>
 <head>
-    <title>L'Olympe - Activitées souhaitées</title>
+    <title>L'Olympe - Activités souhaitées</title>
     <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png">
     <link rel="stylesheet" type="text/css" href="./activitees.css">
 </head>
@@ -51,10 +59,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../../accueil/index.php">Accueil</a>
         <a href="../../olympe/olympe.php">L'Olympe</a>
         <a href="../../olympe/modifdispo/modifdispo.php">Modifier mes dispo</a> 
-        <a href="../../olympe/activitees/activitees.php" style="color: #D7EBF3;">Activitées souhaitées</a>  
+        <a href="../../olympe/activitees/activitees.php" style="color: #D7EBF3;">Activités souhaitées</a>  
         <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
-    <h1>Bienvenue dans l'Olympe <?= $username; ?> - Activitées souhaitées</h1>
+    <h1>Bienvenue dans l'Olympe <?= $username; ?> - Activités souhaitées</h1>
 
     <div id="messageContainer">
         <?php if (!empty($successMessage)) : ?>
@@ -69,9 +77,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <div class="toggle-button" data-toggle="activite_1">Activité 1</div>
-                <div class="toggle-button" data-toggle="activite_2">Activité 2</div>
-                <div class="toggle-button" data-toggle="activite_3">Activité 3</div>
+                <div class="toggle-button" data-toggle="activite_1">
+                    <input type="checkbox" name="activite_1" <?= in_array('activite_1', $selectedButtons) ? 'checked' : '' ?>>
+                    Activité 1
+                </div>
+                <div class="toggle-button" data-toggle="activite_2">
+                    <input type="checkbox" name="activite_2" <?= in_array('activite_2', $selectedButtons) ? 'checked' : '' ?>>
+                    Activité 2
+                </div>
+                <div class="toggle-button" data-toggle="activite_3">
+                    <input type="checkbox" name="activite_3" <?= in_array('activite_3', $selectedButtons) ? 'checked' : '' ?>>
+                    Activité 3
+                </div>
                 <!-- Ajoutez d'autres boutons d'activité ici -->
             </div>
         </div>
