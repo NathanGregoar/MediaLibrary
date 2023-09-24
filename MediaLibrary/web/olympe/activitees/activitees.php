@@ -19,7 +19,15 @@ if ($connection->connect_error) {
 }
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $selectedButtons = $_POST['selected_buttons'] ?? [];
+    $selectedButtons = [];
+
+    // Parcourez les boutons pour collecter les valeurs sélectionnées
+    foreach ($_POST as $key => $value) {
+        if (strpos($key, 'activite_') === 0 && $value === 'on') {
+            // Ajoutez la valeur du bouton sélectionné à la liste
+            $selectedButtons[] = substr($key, 8);
+        }
+    }
 
     // Convertir les boutons sélectionnés en une chaîne CSV
     $selectedButtonsCSV = implode(', ', $selectedButtons);
@@ -69,9 +77,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <div class="toggle-button" data-toggle="activite_1">Activité 1</div>
-                <div class="toggle-button" data-toggle="activite_2">Activité 2</div>
-                <div class="toggle-button" data-toggle="activite_3">Activité 3</div>
+                <div class="toggle-button" data-toggle="activite_1">
+                    <input type="checkbox" name="activite_1" <?= in_array('activite_1', $selectedButtons) ? 'checked' : '' ?>>
+                    Activité 1
+                </div>
+                <div class="toggle-button" data-toggle="activite_2">
+                    <input type="checkbox" name="activite_2" <?= in_array('activite_2', $selectedButtons) ? 'checked' : '' ?>>
+                    Activité 2
+                </div>
+                <div class="toggle-button" data-toggle="activite_3">
+                    <input type="checkbox" name="activite_3" <?= in_array('activite_3', $selectedButtons) ? 'checked' : '' ?>>
+                    Activité 3
+                </div>
                 <!-- Ajoutez d'autres boutons d'activité ici -->
             </div>
         </div>
