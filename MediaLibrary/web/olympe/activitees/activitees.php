@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <?php foreach (['Visite', 'Plage', 'Randonnée', 'Kayak', 'Vélo'] as $activityName) : ?>
+                <?php foreach (['Visite (Musée, etc)', 'Visite (Ville)', 'Plage', 'Randonnée', 'Kayak', 'Vélo', 'Parc (Attraction/Aquatique)', 'Spa'] as $activityName) : ?>
                     <div>
                         <input type="checkbox" id="activite_<?= strtolower($activityName); ?>" name="activite_<?= strtolower($activityName); ?>" <?= isChecked('activite_' . strtolower($activityName)); ?>>
                         <label for="activite_<?= strtolower($activityName); ?>"><?= $activityName; ?></label>
