@@ -18,21 +18,15 @@ if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-// Tableau associatif pour faire correspondre les numéros aux noms des activités
-$activites = [
-    'visite' => 'Visite',
-    'plage' => 'Plage',
-    // Ajoutez d'autres activités ici
-];
-
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selectedActivities = [];
 
     // Parcourez les cases cochées pour collecter les noms des activités
     foreach ($_POST as $key => $value) {
-        if (array_key_exists($key, $activites) && $value === 'on') {
-            // Ajoutez le nom de l'activité à la liste
-            $selectedActivities[] = $activites[$key];
+        if (strpos($key, 'activite_') === 0 && $value === 'on') {
+            // Récupérez le nom de l'activité en supprimant le préfixe "activite_"
+            $activityName = substr($key, strlen('activite_'));
+            $selectedActivities[] = $connection->real_escape_string($activityName);
         }
     }
 
@@ -84,13 +78,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <?php foreach ($activites as $key => $activityName) : ?>
-                    <div>
-                        <input type="checkbox" id="<?= $key; ?>" name="<?= $key; ?>" <?= isChecked($key); ?>>
-                        <label for="<?= $key; ?>"><?= $activityName; ?></label>
-                    </div>
-                <?php endforeach; ?>
-                <!-- Ajoutez d'autres activités ici -->
+                <div>
+                    <input type="checkbox" id="activite_visite" name="activite_visite" <?= isChecked('activite_visite'); ?>>
+                    <label for="activite_visite">Visite</label>
+                </div>
+                <div>
+                    <input type="checkbox" id="activite_plage" name="activite_plage" <?= isChecked('activite_plage'); ?>>
+                    <label for="activite_plage">Plage</label>
+                </div>
+                <!-- Ajoutez d'autres cases à cocher pour les activités ici -->
             </div>
         </div>
 
