@@ -26,16 +26,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if (strpos($key, 'activite_') === 0 && $value === 'on') {
             // Récupérez le nom de l'activité en supprimant le préfixe "activite_"
             $activityName = substr($key, strlen('activite_'));
-            $selectedActivities[] = $connection->real_escape_string($activityName);
+            $selectedActivities[] = $connection->real_escape_string(strtolower($activityName));
         }
     }
 
-    // Récupérez les activités saisies dans le textarea, les séparez par des virgules et nettoyez-les
+    // Récupérez les activités saisies dans le textarea, les séparez par des virgules, nettoyez-les et convertissez-les en minuscules
     if (!empty($_POST['autres_activites'])) {
         $otherActivities = $_POST['autres_activites'];
         $otherActivities = preg_replace('/\s*,\s*/', ',', $otherActivities); // Supprime les espaces avant et après les virgules
         $otherActivities = explode(',', $otherActivities);
         $otherActivities = array_map('trim', $otherActivities); // Supprime les espaces autour des activités
+        $otherActivities = array_map('strtolower', $otherActivities); // Convertit en minuscules
         $selectedActivities = array_merge($selectedActivities, $otherActivities);
     }
 
