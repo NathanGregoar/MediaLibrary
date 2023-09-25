@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     foreach ($_POST as $key => $value) {
         if (strpos($key, 'activite_') === 0 && $value === 'on') {
             // Ajoutez la valeur de la case cochée à la liste
-            $selectedCheckboxes[] = $_POST[$key];
+            $selectedCheckboxes[] = $connection->real_escape_string($_POST[$key]);
         }
     }
 
