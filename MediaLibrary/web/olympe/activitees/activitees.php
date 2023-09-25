@@ -18,24 +18,32 @@ if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-if ($_SERVER["REQUEST_METHOD"] === "POST") {
-    $selectedCheckboxes = [];
+// Tableau associatif pour faire correspondre les numéros aux noms des activités
+$activites = [
+    'activite_1' => 'Activité 1',
+    'activite_2' => 'Activité 2',
+    'activite_3' => 'Activité 3',
+    // Ajoutez d'autres activités ici
+];
 
-    // Parcourez les cases cochées pour collecter les valeurs
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $selectedActivities = [];
+
+    // Parcourez les cases cochées pour collecter les noms des activités
     foreach ($_POST as $key => $value) {
-        if (strpos($key, 'activite_') === 0 && $value === 'on') {
-            // Ajoutez la valeur de la case cochée à la liste
-            $selectedCheckboxes[] = $connection->real_escape_string(substr($key, strlen('activite_')));
+        if (array_key_exists($key, $activites) && $value === 'on') {
+            // Ajoutez le nom de l'activité à la liste
+            $selectedActivities[] = $activites[$key];
         }
     }
 
-    // Convertir les valeurs des cases cochées en une chaîne séparée par des virgules
-    $selectedCheckboxesCSV = implode(', ', $selectedCheckboxes);
+    // Convertir les noms des activités en une chaîne séparée par des virgules
+    $selectedActivitiesCSV = implode(', ', $selectedActivities);
 
     // Effectuer une mise à jour des données dans la base de données
     $update_query = "INSERT INTO olympe_activitees (added_by, activitees) VALUES (?, ?) ON DUPLICATE KEY UPDATE activitees = ?";
     $stmt = $connection->prepare($update_query);
-    $stmt->bind_param("iss", $loggedInUser['id'], $selectedCheckboxesCSV, $selectedCheckboxesCSV);
+    $stmt->bind_param("iss", $loggedInUser['id'], $selectedActivitiesCSV, $selectedActivitiesCSV);
 
     if ($stmt->execute()) {
         $successMessage = "Mise à jour réussie !";
@@ -77,19 +85,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <div>
-                    <input type="checkbox" id="activite_1" name="activite_1" <?= isChecked("activite_1"); ?>>
-                    <label for="activite_1">Activité 1</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="activite_2" name="activite_2" <?= isChecked("activite_2"); ?>>
-                    <label for="activite_2">Activité 2</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="activite_3" name="activite_3" <?= isChecked("activite_3"); ?>>
-                    <label for="activite_3">Activité 3</label>
-                </div>
-                <!-- Ajoutez d'autres cases à cocher pour les activités ici -->
+                <?php foreach ($activites as $key => $activityName) : ?>
+                    <div>
+                        <input type="checkbox" id="<?= $key; ?>" name="<?= $key; ?>" <?= isChecked($key); ?>>
+                        <label for="<?= $key; ?>"><?= $activityName; ?></label>
+                    </div>
+                <?php endforeach; ?>
+                <!-- Ajoutez d'autres activités ici -->
             </div>
         </div>
 
