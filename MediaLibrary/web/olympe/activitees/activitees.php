@@ -29,16 +29,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
-    // Convertir les valeurs des cases cochées en une chaîne CSV
+    // Convertir les valeurs des cases cochées en une chaîne séparée par des virgules
     $selectedCheckboxesCSV = implode(', ', $selectedCheckboxes);
-
-    // Encodez le tableau des activités sélectionnées au format JSON
-    $selectedCheckboxesJSON = json_encode($selectedCheckboxes);
 
     // Effectuer une mise à jour des données dans la base de données
     $update_query = "INSERT INTO olympe_activitees (added_by, activitees) VALUES (?, ?) ON DUPLICATE KEY UPDATE activitees = ?";
     $stmt = $connection->prepare($update_query);
-    $stmt->bind_param("iss", $loggedInUser['id'], $selectedCheckboxesJSON, $selectedCheckboxesJSON);
+    $stmt->bind_param("iss", $loggedInUser['id'], $selectedCheckboxesCSV, $selectedCheckboxesCSV);
 
     if ($stmt->execute()) {
         $successMessage = "Mise à jour réussie !";
