@@ -91,7 +91,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 <?php foreach (['Visite', 'Plage'] as $activityName) : ?>
                     <div>
                         <input type="checkbox" id="activite_<?= strtolower($activityName); ?>" name="activite_<?= strtolower($activityName); ?>" <?= isChecked('activite_' . strtolower($activityName)); ?>>
-                        <label for="activite_<?= strtolower($activityName); ?>"><?= $activityName; ?> <small>(Toutes les activités séparées par des virgules)</small></label>
+                        <label for="activite_<?= strtolower($activityName); ?>"><?= $activityName; ?></label>
                     </div>
                 <?php endforeach; ?>
                 <!-- Ajoutez d'autres cases à cocher pour les activités ici -->
@@ -99,6 +99,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             <div class="input-group">
                 <label for="autres_activites">Autres activités :</label>
+                <small>(Toutes les activités séparées par des virgules)</small>
                 <textarea id="autres_activites" name="autres_activites" rows="4" cols="50"><?= isset($_POST['autres_activites']) ? htmlspecialchars($_POST['autres_activites']) : ''; ?></textarea>
             </div>
         </div>
