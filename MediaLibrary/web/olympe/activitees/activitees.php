@@ -20,9 +20,8 @@ if ($connection->connect_error) {
 
 // Tableau associatif pour faire correspondre les numéros aux noms des activités
 $activites = [
-    'activite_1' => 'Activité 1',
-    'activite_2' => 'Activité 2',
-    'activite_3' => 'Activité 3',
+    'visite' => 'Visite',
+    'plage' => 'Plage',
     // Ajoutez d'autres activités ici
 ];
 
