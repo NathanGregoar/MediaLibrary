@@ -30,6 +30,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
     }
 
+    // Récupérez les activités saisies dans le textarea, les séparez par des virgules et nettoyez-les
+    if (!empty($_POST['autres_activites'])) {
+        $otherActivities = $_POST['autres_activites'];
+        $otherActivities = preg_replace('/\s*,\s*/', ',', $otherActivities); // Supprime les espaces avant et après les virgules
+        $otherActivities = explode(',', $otherActivities);
+        $otherActivities = array_map('trim', $otherActivities); // Supprime les espaces autour des activités
+        $selectedActivities = array_merge($selectedActivities, $otherActivities);
+    }
+
     // Convertir les noms des activités en une chaîne séparée par des virgules
     $selectedActivitiesCSV = implode(', ', $selectedActivities);
 
@@ -78,15 +87,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <div class="form-grid">
             <div class="input-group">
                 <label>Activités souhaitées :</label>
-                <div>
-                    <input type="checkbox" id="activite_visite" name="activite_visite" <?= isChecked('activite_visite'); ?>>
-                    <label for="activite_visite">Visite</label>
-                </div>
-                <div>
-                    <input type="checkbox" id="activite_plage" name="activite_plage" <?= isChecked('activite_plage'); ?>>
-                    <label for="activite_plage">Plage</label>
-                </div>
+                <?php foreach (['Visite', 'Plage'] as $activityName) : ?>
+                    <div>
+                        <input type="checkbox" id="activite_<?= strtolower($activityName); ?>" name="activite_<?= strtolower($activityName); ?>" <?= isChecked('activite_' . strtolower($activityName)); ?>>
+                        <label for="activite_<?= strtolower($activityName); ?>"><?= $activityName; ?> <small>(Toutes les activités séparées par des virgules)</small></label>
+                    </div>
+                <?php endforeach; ?>
                 <!-- Ajoutez d'autres cases à cocher pour les activités ici -->
+            </div>
+
+            <div class="input-group">
+                <label for="autres_activites">Autres activités :</label>
+                <textarea id="autres_activites" name="autres_activites" rows="4" cols="50"><?= isset($_POST['autres_activites']) ? htmlspecialchars($_POST['autres_activites']) : ''; ?></textarea>
             </div>
         </div>
 
