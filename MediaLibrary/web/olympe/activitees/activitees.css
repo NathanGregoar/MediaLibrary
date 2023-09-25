@@ -126,9 +126,9 @@ h2 {
   /* Formulaire container */
 .form-container {
     display: grid;
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: 1fr;
     gap: 20px;
-    max-width: 800px;
+    max-width: 90%; /* Changer la largeur du formulaire à 90% de la largeur de l'écran */
     margin: 0 auto;
     padding: 20px;
     background-color: #fff;
@@ -136,31 +136,15 @@ h2 {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Groupes d'éléments du formulaire */
-.input-group {
-    display: flex;
-    flex-direction: column;
-}
-
-/* Étiquettes du formulaire */
-label {
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-/* Cases à cocher */
-.input-group input[type="checkbox"] {
-    margin-right: 5px;
-}
-
-/* Textarea */
+/* Textarea prend toute la largeur */
 .input-group textarea {
+    width: 100%; /* La textarea occupe toute la largeur du formulaire */
     resize: vertical;
 }
 
-/* Bouton Enregistrer */
+/* Bouton Enregistrer centré horizontalement */
 .submit-button {
-    grid-column: span 2;
+    margin: 0 auto; /* Centre le bouton horizontalement */
     background-color: #007bff;
     color: #fff;
     border: none;
@@ -188,4 +172,3 @@ label {
     border: 1px solid #a94442;
     color: #a94442;
 }
-  
