@@ -33,9 +33,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $selectedCheckboxesCSV = implode(', ', $selectedCheckboxes);
 
     // Effectuer une mise à jour des données dans la base de données
-    $update_query = "INSERT INTO olympe_activitees (added_by, activitees) VALUES (?, ?) ON DUPLICATE KEY UPDATE activitees = ?";
+    $update_query = "INSERT INTO olympe_activitees (user_id, activitees) VALUES (?, ?) ON DUPLICATE KEY UPDATE activitees = VALUES(activitees)";
     $stmt = $connection->prepare($update_query);
-    $stmt->bind_param("iss", $loggedInUser['id'], $selectedCheckboxesCSV, $selectedCheckboxesCSV);
+    $stmt->bind_param("is", $loggedInUser['id'], $selectedCheckboxesCSV);
 
     if ($stmt->execute()) {
         $successMessage = "Mise à jour réussie !";
