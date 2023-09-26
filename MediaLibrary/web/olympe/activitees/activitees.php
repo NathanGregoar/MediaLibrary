@@ -49,9 +49,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     $stmt->bind_param("iss", $loggedInUser['id'], $selectedActivitiesCSV, $selectedActivitiesCSV);
 
     if ($stmt->execute()) {
-        $successMessage = "Mise à jour réussie !";
+        $successMessage = "Ajouts des activités réussie !";
     } else {
-        $errorMessage = "Erreur lors de la mise à jour : " . $stmt->error;
+        $errorMessage = "Erreur lors de l'ajouts des activités : " . $stmt->error;
     }
 
     $stmt->close();
