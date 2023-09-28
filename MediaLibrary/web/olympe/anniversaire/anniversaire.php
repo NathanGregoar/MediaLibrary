@@ -61,13 +61,13 @@ if ($connection->connect_error) {
                         </div>
                     </div>
 
-                    <div class="grid-item">
+                    <div class="grid-items">
                         <label for="description_cadeau">Nom de l'objet :</label>
                         <small>Nom ou sujet souhaité</small>
                         <input type="text" id="description_cadeau" name="description_cadeau">
                     </div>
                     
-                    <div class="grid-item">
+                    <div class="grid-items">
                         <label for="categorie_cadeau">Catégorie/Thème :</label>
                         <select id="categorie_cadeau" name="categorie_cadeau">
                             <option value="Mode">Mode</option>
@@ -85,7 +85,7 @@ if ($connection->connect_error) {
                         </select>
                     </div>
 
-                    <div class="grid-item">
+                    <div class="grid-items">
                         <input type="submit" value="Enregistrer">
                     </div>
                 </div>

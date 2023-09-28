@@ -25,8 +25,12 @@ body {
 
 .grid-container {
     display: grid;
-    grid-template-rows: repeat(2, 1fr);
+    grid-template-columns: repeat(2, 1fr);
     gap: 10px;
+}
+
+.grid-items {
+    grid-row: 2;
 }
 
 .navbar a {
