@@ -23,7 +23,7 @@ if ($connection->connect_error) {
 <html>
 <head>
     <title>L'Olympe - Anniversaires</title>
-    <link rel="icon" type="image/png" href="https://static.vecteezy.com/system/resources/previews/001/201/736/non_2x/birthday-cake-png.png">
+    <link rel="icon" type="image/png" href="https://i.goopics.net/oqioit.png">
     <link rel="stylesheet" type="text/css" href="./anniversaire.css">
 </head>
 <body>
