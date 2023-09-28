@@ -13,7 +13,6 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     width: 90%;
     border-radius: 50px;
-    color: #D7EBF3;
     padding: 10px;
     margin: auto;
     margin-top: 10px;
@@ -24,4 +23,5 @@ body {
     text-decoration: none;
     color: #D7EBF3;
     margin: 10px;
+    font-size: 2vw;
 }
