@@ -15,7 +15,7 @@ body {
     border-radius: 10%;
     color: #D7EBF3;
     padding: 10px;
-    margin: auto 10px;
+    margin: auto, 10px;
     text-align: center;
 }
 
