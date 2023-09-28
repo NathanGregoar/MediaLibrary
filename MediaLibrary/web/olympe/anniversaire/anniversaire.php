@@ -53,7 +53,7 @@ if ($connection->connect_error) {
         <label for="categorie_cadeau">Catégorie/Thème :</label>
         <select id="categorie_cadeau" name="categorie_cadeau">
             <option value="Mode">Mode</option>
-            <option value="Technologie">Technologie</option>
+            <option selected value="Technologie">Technologie</option>
             <option value="Livres">Livres</option>
             <option value="Cuisine">Cuisine</option>
             <option value="Beauté">Beauté</option>
