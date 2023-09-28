@@ -30,7 +30,7 @@ if ($connection->connect_error) {
     <div class="navbar">
         <a href="../../accueil/index.php">Accueil</a>
         <a href="../../olympe/olympe.php">L'Olympe</a> 
-        <a href="../../olympe/anniversaire/anniversaire.php" style="color: #D7EBF3;">Anniversaire</a> 
+        <a href="../../olympe/anniversaire/anniversaire.php" class="select">Anniversaire</a> 
     </div>
 </body>
 </html>
