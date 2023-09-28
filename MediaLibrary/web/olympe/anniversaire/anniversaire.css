@@ -27,12 +27,13 @@ body {
 }
 
 .navbar a:hover{
-    text-decoration: underline;
+    text-decoration: none;
     color: #9ec9ea;
 }
 
 .select {
     color: #c9e0f4;
+    text-decoration: underline;
 }
 
 @media (max-width: 768px) {
