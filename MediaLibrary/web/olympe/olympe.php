@@ -119,6 +119,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
     <div class="navbar">
         <a href="../accueil/index.php">Accueil</a>
         <a href="../olympe/olympe.php" style="color: #D7EBF3;">L'Olympe</a>
+        <a href="../olympe/anniversaire/anniversaire.php">Anniversaires</a>
         <a href="../olympe/activitees/activitees.php">Activitées souhaitées</a>  
         <a href="../ecollyday/ecollyday.php">Ecollyday</a>        
     </div>
