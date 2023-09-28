@@ -48,35 +48,47 @@ if ($connection->connect_error) {
         <section class="form_gift">
             <h2>Enregistrer un Cadeau Souhaité</h2>
             <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
-                <label for="photo_cadeau">Photo de l'objet :</label>
-                <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
-
-                <!-- Ajout d'une div pour la prévisualisation de l'image -->
-                <div id="imagePreview" style="display: none;">
-                    <img id="preview" src="" alt="Image Preview" width="200">
+                <div class="grid-item">
+                    <label for="photo_cadeau">Photo de l'objet :</label>
+                    <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
                 </div>
 
-                <label for="description_cadeau">Nom de l'objet :</label>
-                <small>Nom ou sujet souhaité</small>
-                <input type="text" id="description_cadeau" name="description_cadeau">
-                
-                <label for="categorie_cadeau">Catégorie/Thème :</label>
-                <select id="categorie_cadeau" name="categorie_cadeau">
-                    <option value="Mode">Mode</option>
-                    <option selected value="Technologie">Technologie</option>
-                    <option value="Livres">Livres</option>
-                    <option value="Cuisine">Cuisine</option>
-                    <option value="Beauté">Beauté</option>
-                    <option value="Sports">Sports</option>
-                    <option value="Art">Créativité</option>
-                    <option value="Musique">Musique</option>
-                    <option value="Voyages">Voyages</option>
-                    <option value="Déco">Déco</option>
-                    <option value="Personnalisation">Personnalisation</option>
-                    <option value="Autres">Autres</option>
-                </select>
-                
-                <input type="submit" value="Enregistrer">
+                <!-- Ajout d'une div pour la prévisualisation de l'image -->
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <div id="imagePreview" style="display: none;">
+                            <img id="preview" src="" alt="Image Preview" width="200">
+                        </div>
+                    </div>
+
+                    <div class="grid-item">
+                        <label for="description_cadeau">Nom de l'objet :</label>
+                        <small>Nom ou sujet souhaité</small>
+                        <input type="text" id="description_cadeau" name="description_cadeau">
+                    </div>
+                    
+                    <div class="grid-item">
+                        <label for="categorie_cadeau">Catégorie/Thème :</label>
+                        <select id="categorie_cadeau" name="categorie_cadeau">
+                            <option value="Mode">Mode</option>
+                            <option selected value="Technologie">Technologie</option>
+                            <option value="Livres">Livres</option>
+                            <option value="Cuisine">Cuisine</option>
+                            <option value="Beauté">Beauté</option>
+                            <option value="Sports">Sports</option>
+                            <option value="Art">Créativité</option>
+                            <option value="Musique">Musique</option>
+                            <option value="Voyages">Voyages</option>
+                            <option value="Déco">Déco</option>
+                            <option value="Personnalisation">Personnalisation</option>
+                            <option value="Autres">Autres</option>
+                        </select>
+                    </div>
+
+                    <div class="grid-item">
+                        <input type="submit" value="Enregistrer">
+                    </div>
+                </div>
             </form>
         </section>
     </section>

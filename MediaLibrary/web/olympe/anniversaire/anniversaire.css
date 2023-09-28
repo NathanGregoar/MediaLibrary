@@ -23,6 +23,12 @@ body {
     text-decoration: underline;
 }
 
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+}
+
 .navbar a {
     text-decoration: none;
     color: #c9e0f4;
