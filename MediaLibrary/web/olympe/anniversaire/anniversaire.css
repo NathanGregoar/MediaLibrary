@@ -36,6 +36,14 @@ body {
     color: #e1edf8;
 }
 
+.form_anniv {
+    display: none;
+}
+
+/* .form_gift {
+    display: none;
+} */
+
 /* Styles pour la section de formulaire */
 .form {
     max-width: 400px;
