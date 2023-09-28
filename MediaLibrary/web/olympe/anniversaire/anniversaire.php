@@ -29,10 +29,7 @@ if ($connection->connect_error) {
 <body>
     <div class="navbar">
         <a href="../../accueil/index.php">Accueil</a>
-        <a href="../../olympe/olympe.php">L'Olympe</a>
-        <a href="../../olympe/modifdispo/modifdispo.php">Modifier mes dispo</a> 
-        <a href="../../olympe/activitees/activitees.php" style="color: #D7EBF3;">Activités souhaitées</a>  
-        <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
+        <a href="../../olympe/olympe.php">L'Olympe</a> 
     </div>
 </body>
 </html>
