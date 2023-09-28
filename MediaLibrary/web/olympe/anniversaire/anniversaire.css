@@ -73,6 +73,7 @@ body {
 .form input[type="date"],
 .form select {
     width: 100%;
+    max-width: 500px;
     padding: 10px;
     margin-bottom: 15px;
     border: 1px solid #ccc;
