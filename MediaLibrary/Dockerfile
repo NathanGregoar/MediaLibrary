@@ -16,3 +16,4 @@ COPY ./web/conf/secu/ssl/certificate.crt /etc/ssl/
 COPY ./web/conf/virtualhost/virtualhost.conf /etc/apache2/sites-available/
 
 EXPOSE 80
+EXPOSE 443
