@@ -15,9 +15,8 @@ body {
     border-radius: 10%;
     color: #D7EBF3;
     padding: 10px;
-    margin: auto 10;
+    margin: auto;
     text-align: center;
-    position: absolute;
 }
 
 .navbar a {
