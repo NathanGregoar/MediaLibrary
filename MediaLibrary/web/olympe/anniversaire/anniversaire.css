@@ -25,3 +25,9 @@ body {
     margin: 10px;
     font-size: 3vh;
 }
+
+@media (max-width: 768px) {
+    .navbar a {
+        font-size: 3vw;
+    }
+}
