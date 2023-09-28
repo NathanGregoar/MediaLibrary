@@ -30,7 +30,7 @@ body {
 }
 
 .grid-items {
-    grid-row: 2;
+    grid-column: span 2;
 }
 
 .navbar a {
