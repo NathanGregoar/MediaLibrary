@@ -44,14 +44,27 @@ if ($connection->connect_error) {
     <!-- Formulaire pour Enregistrer un Cadeau Souhaité -->
     <h2>Enregistrer un Cadeau Souhaité</h2>
     <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
+        <label for="photo_cadeau">Photo de l'objet :</label>
+        <input type="file" id="photo_cadeau" name="photo_cadeau">
+
         <label for="description_cadeau">Description de l'objet :</label>
         <input type="text" id="description_cadeau" name="description_cadeau">
         
-        <label for="photo_cadeau">Photo de l'objet :</label>
-        <input type="file" id="photo_cadeau" name="photo_cadeau">
-        
         <label for="categorie_cadeau">Catégorie/Thème :</label>
-        <input type="text" id="categorie_cadeau" name="categorie_cadeau">
+        <select id="categorie_cadeau" name="categorie_cadeau">
+            <option value="Mode / Accessoires">Mode / Accessoires</option>
+            <option value="Technologie">Technologie</option>
+            <option value="Livres">Livres</option>
+            <option value="Cuisine">Cuisine</option>
+            <option value="Beauté">Beauté</option>
+            <option value="Sports">Sports</option>
+            <option value="Art">Créativité</option>
+            <option value="Musique">Musique</option>
+            <option value="Voyages">Voyages</option>
+            <option value="Déco">Déco</option>
+            <option value="Cadeaux personnalisés">Cadeaux personnalisés</option>
+            <option value="Autres">Autres</option>
+        </select>
         
         <input type="submit" value="Enregistrer">
     </form>
