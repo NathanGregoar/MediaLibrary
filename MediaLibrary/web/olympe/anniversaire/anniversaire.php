@@ -56,7 +56,6 @@ if ($connection->connect_error) {
                     <img id="preview" src="" alt="Image Preview" width="200">
                 </div>
 
-                <br>
                 <label for="description_cadeau">Nom de l'objet :</label>
                 <small>Nom ou sujet souhaité</small>
                 <input type="text" id="description_cadeau" name="description_cadeau">
