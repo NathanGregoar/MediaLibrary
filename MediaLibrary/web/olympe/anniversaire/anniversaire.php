@@ -48,13 +48,13 @@ if ($connection->connect_error) {
         <section class="form_gift">
             <h2>Enregistrer un Cadeau Souhaité</h2>
             <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
-                <div class="grid-item">
-                    <label for="photo_cadeau">Photo de l'objet :</label>
-                    <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
-                </div>
+                <div class="grid-container">
+                    <div class="grid-item">
+                        <label for="photo_cadeau">Photo de l'objet :</label>
+                        <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
+                    </div>
 
                 <!-- Ajout d'une div pour la prévisualisation de l'image -->
-                <div class="grid-container">
                     <div class="grid-item">
                         <div id="imagePreview" style="display: none;">
                             <img id="preview" src="" alt="Image Preview" width="200">
