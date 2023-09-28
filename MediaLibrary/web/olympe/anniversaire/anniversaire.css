@@ -57,6 +57,11 @@ body {
     transform: translateY(-50%); /* Déplacer le formulaire vers le haut de moitié de sa propre hauteur */
 }
 
+.form h2 {
+    text-align: center;
+    text-decoration: underline;
+}
+
 /* Styles pour chaque libellé et champ de formulaire */
 .form label {
     display: block;
