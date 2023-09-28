@@ -20,20 +20,20 @@ body {
 }
 
 .navbar .select {
-    color: #c9e0f4;
+    color: #7ab2e0;
     text-decoration: underline;
 }
 
 .navbar a {
     text-decoration: none;
-    color: #5a95d7;
+    color: #f2f7fc;
     margin: 10px;
     font-size: 3vh;
 }
 
 .navbar a:hover{
     text-decoration: none;
-    color: #9ec9ea;
+    color: #c9e0f4;
 }
 
 @media (max-width: 768px) {
