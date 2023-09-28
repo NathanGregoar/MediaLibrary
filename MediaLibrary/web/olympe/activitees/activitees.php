@@ -94,12 +94,11 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                         <label for="activite_<?= strtolower($activityName); ?>"><?= $activityName; ?></label>
                     </div>
                 <?php endforeach; ?>
-                <!-- Ajoutez d'autres cases à cocher pour les activités ici -->
             </div>
 
             <div class="input-group">
                 <label for="autres_activites">Autres activités :</label>
-                <small>(Toutes les activités séparées par des virgules)</small>
+                <small>(Veuillez séparer les activités par des virgules)</small>
                 <textarea id="autres_activites" name="autres_activites" rows="4" cols="50"><?= isset($_POST['autres_activites']) ? htmlspecialchars($_POST['autres_activites']) : ''; ?></textarea>
             </div>
         </div>
