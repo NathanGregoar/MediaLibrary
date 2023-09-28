@@ -1,19 +1,19 @@
 FROM php:7.4-apache
 
 COPY ./web /var/www/html
-
 COPY ./web/.htaccess /var/www/html/.htaccess
 
-RUN docker-php-ext-install mysqli && \
-    apt-get update && \
-    apt-get install -y default-mysql-client && \
-    a2enmod rewrite
+# Activation du module SSL
+RUN a2enmod ssl
 
-COPY ./web/conf/secu/private/private.key /etc/ssl/private/
+# Copie des certificats SSL dans le conteneur
+COPY ./web/conf/secu/ssl/private.key /etc/ssl/private/
 COPY ./web/conf/secu/ssl/ca_bundle.crt /etc/ssl/
 COPY ./web/conf/secu/ssl/certificate.crt /etc/ssl/
 
+# Configuration du site virtuel pour HTTPS
 COPY ./web/conf/virtualhost/virtualhost.conf /etc/apache2/sites-available/
+RUN a2ensite virtualhost
 
 EXPOSE 80
 EXPOSE 443
