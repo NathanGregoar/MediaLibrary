@@ -45,7 +45,12 @@ if ($connection->connect_error) {
     <h2>Enregistrer un Cadeau Souhaité</h2>
     <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
         <label for="photo_cadeau">Photo de l'objet :</label>
-        <input type="file" id="photo_cadeau" name="photo_cadeau">
+        <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
+
+        <!-- Ajout d'une div pour la prévisualisation de l'image -->
+        <div id="imagePreview" style="display: none;">
+            <img id="preview" src="" alt="Image Preview" width="200">
+        </div>
 
         <label for="description_cadeau">Description de l'objet :</label>
         <input type="text" id="description_cadeau" name="description_cadeau">
@@ -68,5 +73,28 @@ if ($connection->connect_error) {
         
         <input type="submit" value="Enregistrer">
     </form>
+
+    <script>
+        // Fonction pour afficher la prévisualisation de l'image
+        function previewImage() {
+            const fileInput = document.getElementById('photo_cadeau');
+            const preview = document.getElementById('preview');
+            const imagePreview = document.getElementById('imagePreview');
+
+            if (fileInput.files && fileInput.files[0]) {
+                const reader = new FileReader();
+
+                reader.onload = function (e) {
+                    preview.src = e.target.result;
+                    imagePreview.style.display = 'block'; // Affiche la prévisualisation
+                };
+
+                reader.readAsDataURL(fileInput.files[0]);
+            } else {
+                preview.src = '';
+                imagePreview.style.display = 'none'; // Masque la prévisualisation
+            }
+        }
+    </script>
 </body>
 </html>
