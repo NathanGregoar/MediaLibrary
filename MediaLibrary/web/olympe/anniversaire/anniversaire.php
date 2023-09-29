@@ -63,7 +63,6 @@ if ($connection->connect_error) {
 
                     <div class="grid-items">
                         <label for="description_cadeau">Nom de l'objet :</label>
-                        <small>Nom ou sujet souhaité</small>
                         <input type="text" id="description_cadeau" name="description_cadeau">
                     </div>
                     
@@ -73,6 +72,7 @@ if ($connection->connect_error) {
                             <option value="Mode">Mode</option>
                             <option selected value="Technologie">Technologie</option>
                             <option value="Jeux">Jeux</option>
+                            <option value="Cosmetiques">Cosmetiques</option>
                             <option value="Livres">Livres</option>
                             <option value="Cuisine">Cuisine</option>
                             <option value="Beauté">Beauté</option>
