@@ -17,31 +17,6 @@ $connection = new mysqli('db', 'nathan', '444719', 'media_library');
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
-
-// Utilisation d'une requête préparée pour éviter les problèmes de sécurité
-$query = "SELECT date_anniversaire FROM anniversaire WHERE added_by = ?";
-$stmt = $connection->prepare($query);
-
-if (!$stmt) {
-    die('Erreur lors de la préparation de la requête : ' . $connection->error);
-}
-
-$stmt->bind_param("s", $username); // Assurez-vous que le type de champ est correct, s'il s'agit d'un entier, utilisez "i" à la place de "s"
-
-if ($stmt->execute()) {
-    $result = $stmt->get_result();
-    
-    // Vérifiez si des données sont renvoyées
-    if ($result->num_rows > 0) {
-        $row = $result->fetch_assoc();
-        $dateAnniversaire = $row['date_anniversaire'];
-    } else {
-        // Aucune date d'anniversaire trouvée en base de données, vous pouvez afficher le formulaire form_anniv ici
-        $dateAnniversaire = null;
-    }
-} else {
-    die('Erreur lors de l\'exécution de la requête : ' . $stmt->error);
-}
 ?>
 
 <!DOCTYPE html>
@@ -59,39 +34,39 @@ if ($stmt->execute()) {
     </div>
 
     <section class="form">
-        <?php if (empty($dateAnniversaire)) : ?>
-            <!-- Afficher le formulaire de date d'anniversaire si aucune date n'est enregistrée -->
-            <section class="form_anniv">
-                <h2>Date d'Anniversaire</h2>
-                <form action="traitement_date_anniversaire.php" method="post">
-                    <label for="date_anniversaire">Date d'anniversaire :</label>
-                    <input type="date" id="date_anniversaire" name="date_anniversaire">
-                    <input type="submit" value="Enregistrer">
-                </form>
-            </section>
-        <?php else : ?>
-            <!-- Afficher le formulaire d'enregistrement de cadeau souhaité si une date est enregistrée -->
-            <section class="form_gift">
-                <h2>Enregistrer un Cadeau Souhaité</h2>
-                <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
-                    <!-- Ajout d'une div pour la prévisualisation de l'image -->
+        <!-- Formulaire de Date d'Anniversaire -->
+        <section class="form_anniv">
+            <h2>Date d'Anniversaire</h2>
+            <form action="traitement_date_anniversaire.php" method="post">
+                <label for="date_anniversaire">Date d'anniversaire :</label>
+                <input type="date" id="date_anniversaire" name="date_anniversaire">
+                <input type="submit" value="Enregistrer">
+            </form>
+        </section>
+
+        <!-- Formulaire pour Enregistrer un Cadeau Souhaité -->
+        <section class="form_gift">
+            <h2>Enregistrer un Cadeau Souhaité</h2>
+            <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
+                <div class="grid-container">
                     <div class="grid-item">
                         <label for="photo_cadeau">Photo de l'objet :</label>
                         <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
                     </div>
 
+                <!-- Ajout d'une div pour la prévisualisation de l'image -->
                     <div class="grid-item">
                         <div id="imagePreview" style="display: none;">
                             <img id="preview" src="" alt="Image Preview" width="200">
                         </div>
                     </div>
 
-                    <div class="grid-item">
+                    <div class="grid-items">
                         <label for="description_cadeau">Nom de l'objet :</label>
                         <input type="text" id="description_cadeau" name="description_cadeau">
                     </div>
                     
-                    <div class="grid-item">
+                    <div class="grid-items">
                         <label for="categorie_cadeau">Catégorie/Thème :</label>
                         <select id="categorie_cadeau" name="categorie_cadeau">
                             <option value="Mode">Mode</option>
@@ -111,12 +86,12 @@ if ($stmt->execute()) {
                         </select>
                     </div>
 
-                    <div class="grid-item">
+                    <div class="grid-items">
                         <input type="submit" value="Enregistrer">
                     </div>
-                </form>
-            </section>
-        <?php endif; ?>
+                </div>
+            </form>
+        </section>
     </section>
 
     <script>
