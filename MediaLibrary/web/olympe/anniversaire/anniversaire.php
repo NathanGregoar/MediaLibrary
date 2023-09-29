@@ -19,16 +19,26 @@ if ($connection->connect_error) {
 }
 
 // Utilisation d'une requête préparée pour éviter les problèmes de sécurité
-$query = "SELECT date_anniversaire FROM anniversaire WHERE username = ?";
+$query = "SELECT date_anniversaire FROM anniversaire WHERE added_by = ?";
 $stmt = $connection->prepare($query);
-$stmt->bind_param("s", $username);
+
+if (!$stmt) {
+    die('Erreur lors de la préparation de la requête : ' . $connection->error);
+}
+
+$stmt->bind_param("s", $username); // Assurez-vous que le type de champ est correct, s'il s'agit d'un entier, utilisez "i" à la place de "s"
 
 if ($stmt->execute()) {
     $result = $stmt->get_result();
-    $row = $result->fetch_assoc();
-
-    // Vérifie si une date d'anniversaire existe dans la base de données pour l'utilisateur actuel
-    $dateAnniversaire = $row['date_anniversaire'];
+    
+    // Vérifiez si des données sont renvoyées
+    if ($result->num_rows > 0) {
+        $row = $result->fetch_assoc();
+        $dateAnniversaire = $row['date_anniversaire'];
+    } else {
+        // Aucune date d'anniversaire trouvée en base de données, vous pouvez afficher le formulaire form_anniv ici
+        $dateAnniversaire = null;
+    }
 } else {
     die('Erreur lors de l\'exécution de la requête : ' . $stmt->error);
 }
