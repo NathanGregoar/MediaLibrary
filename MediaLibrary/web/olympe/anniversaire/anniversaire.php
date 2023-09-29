@@ -17,6 +17,15 @@ $connection = new mysqli('db', 'nathan', '444719', 'media_library');
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
+
+// Vérifier si l'utilisateur a déjà enregistré une date d'anniversaire
+$query = "SELECT date_anniversaire FROM anniversaire WHERE added_by = ? LIMIT 1";
+$stmt = $connection->prepare($query);
+$stmt->bind_param("i", $loggedInUser['id']);
+$stmt->execute();
+$stmt->store_result();
+$stmt->bind_result($birthdayDate);
+$stmt->fetch();
 ?>
 
 <!DOCTYPE html>
@@ -35,6 +44,7 @@ if ($connection->connect_error) {
 
     <section class="form">
         <!-- Formulaire de Date d'Anniversaire -->
+        <?php if (empty($birthdayDate)) { ?>
         <section class="form_anniv">
             <h2>Date d'Anniversaire</h2>
             <form action="traitement_date_anniversaire.php" method="post">
@@ -43,8 +53,10 @@ if ($connection->connect_error) {
                 <input type="submit" value="Enregistrer">
             </form>
         </section>
+        <?php } ?>
 
         <!-- Formulaire pour Enregistrer un Cadeau Souhaité -->
+        <?php if (!empty($birthdayDate)) { ?>
         <section class="form_gift">
             <h2>Enregistrer un Cadeau Souhaité</h2>
             <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
@@ -54,7 +66,7 @@ if ($connection->connect_error) {
                         <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
                     </div>
 
-                <!-- Ajout d'une div pour la prévisualisation de l'image -->
+                    <!-- Ajout d'une div pour la prévisualisation de l'image -->
                     <div class="grid-item">
                         <div id="imagePreview" style="display: none;">
                             <img id="preview" src="" alt="Image Preview" width="200">
@@ -65,7 +77,7 @@ if ($connection->connect_error) {
                         <label for="description_cadeau">Nom de l'objet :</label>
                         <input type="text" id="description_cadeau" name="description_cadeau">
                     </div>
-                    
+
                     <div class="grid-items">
                         <label for="categorie_cadeau">Catégorie/Thème :</label>
                         <select id="categorie_cadeau" name="categorie_cadeau">
@@ -92,6 +104,7 @@ if ($connection->connect_error) {
                 </div>
             </form>
         </section>
+        <?php } ?>
     </section>
 
     <script>
