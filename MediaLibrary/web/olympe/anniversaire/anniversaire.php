@@ -3,29 +3,20 @@ require_once '../../utils/auth.php';
 require_once '../../utils/config.php';
 session_start();
 
+$username = $_SESSION['username'] ?? '';
 $loggedInUser = getLoggedInUser();
+
+$allowedRoles = ["admin"]; // Rôles autorisés
+if (!in_array($loggedInUser['role'], $allowedRoles)) {
+    header("Location: ../../olympe/olympe.php");
+    exit();
+}
 
 $connection = new mysqli('db', 'nathan', '444719', 'media_library');
 
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
-
-$username = $loggedInUser['username'];
-
-// Effectuer une requête SQL pour vérifier si une date d'anniversaire est enregistrée
-$query = "SELECT COUNT(*) as count FROM anniversaire WHERE username = '$username'";
-$result = $connection->query($query);
-
-if ($result) {
-    $row = $result->fetch_assoc();
-    $hasBirthday = ($row['count'] > 0);
-    echo json_encode(['hasBirthday' => $hasBirthday]);
-} else {
-    echo json_encode(['hasBirthday' => false]);
-}
-
-$connection->close();
 ?>
 
 <!DOCTYPE html>
@@ -124,33 +115,6 @@ $connection->close();
                 imagePreview.style.display = 'none'; // Masque la prévisualisation
             }
         }
-    </script>
-
-    <script>
-        // Fonction pour vérifier si une date d'anniversaire est enregistrée en DB
-        function checkBirthday() {
-            const xhr = new XMLHttpRequest();
-            xhr.onreadystatechange = function() {
-                if (xhr.readyState === 4 && xhr.status === 200) {
-                    const response = JSON.parse(xhr.responseText);
-                    if (response.hasBirthday) {
-                        // Affiche le formulaire de cadeau et masque le formulaire d'anniversaire
-                        document.querySelector('.form_gift').style.display = 'block';
-                        document.querySelector('.form_anniv').style.display = 'none';
-                    } else {
-                        // Affiche le formulaire d'anniversaire et masque le formulaire de cadeau
-                        document.querySelector('.form_anniv').style.display = 'block';
-                        document.querySelector('.form_gift').style.display = 'none';
-                    }
-                }
-            };
-
-            xhr.open('GET', 'check_birthday.php', true);
-            xhr.send();
-        }
-
-        // Appel de la fonction pour vérifier l'état de la date d'anniversaire lors du chargement de la page
-        window.onload = checkBirthday;
     </script>
 </body>
 </html>
