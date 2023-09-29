@@ -17,30 +17,6 @@ $connection = new mysqli('db', 'nathan', '444719', 'media_library');
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
-
-// Requête pour vérifier la présence de la date d'anniversaire enregistrée
-$query = "SELECT date_anniversaire FROM anniversaire WHERE added_by = ?";
-$stmt = $connection->prepare($query);
-
-if (!$stmt) {
-    die('Erreur lors de la préparation de la requête : ' . $connection->error);
-}
-
-$stmt->bind_param("s", $username); // Assurez-vous que le type de champ est correct, s'il s'agit d'un entier, utilisez "i" à la place de "s"
-
-if ($stmt->execute()) {
-    $result = $stmt->get_result();
-    
-    // Vérifiez si des données sont renvoyées
-    if ($result->num_rows > 0) {
-        $dateAnniversaire = $result->fetch_assoc()['date_anniversaire'];
-    } else {
-        // Aucune date d'anniversaire trouvée en base de données
-        $dateAnniversaire = null;
-    }
-} else {
-    die('Erreur lors de l\'exécution de la requête : ' . $stmt->error);
-}
 ?>
 
 <!DOCTYPE html>
@@ -59,7 +35,7 @@ if ($stmt->execute()) {
 
     <section class="form">
         <!-- Formulaire de Date d'Anniversaire -->
-        <section class="form_anniv <?php if ($dateAnniversaire) echo 'hidden'; ?>">
+        <section class="form_anniv">
             <h2>Date d'Anniversaire</h2>
             <form action="traitement_date_anniversaire.php" method="post">
                 <label for="date_anniversaire">Date d'anniversaire :</label>
@@ -69,7 +45,7 @@ if ($stmt->execute()) {
         </section>
 
         <!-- Formulaire pour Enregistrer un Cadeau Souhaité -->
-        <section class="form_gift <?php if (!$dateAnniversaire) echo 'hidden'; ?>">
+        <section class="form_gift">
             <h2>Enregistrer un Cadeau Souhaité</h2>
             <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
                 <div class="grid-container">
@@ -78,7 +54,7 @@ if ($stmt->execute()) {
                         <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
                     </div>
 
-                    <!-- Ajout d'une div pour la prévisualisation de l'image -->
+                <!-- Ajout d'une div pour la prévisualisation de l'image -->
                     <div class="grid-item">
                         <div id="imagePreview" style="display: none;">
                             <img id="preview" src="" alt="Image Preview" width="200">
