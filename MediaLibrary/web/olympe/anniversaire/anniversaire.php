@@ -17,6 +17,11 @@ $connection = new mysqli('db', 'nathan', '444719', 'media_library');
 if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
+
+// Vérifie si une date d'anniversaire existe dans la base de données pour l'utilisateur actuel
+$query = "SELECT date_anniversaire FROM anniversaire WHERE username = '$username'";
+$result = $connection->query($query);
+$dateAnniversaire = $result->fetch_assoc()['date_anniversaire'];
 ?>
 
 <!DOCTYPE html>
@@ -34,39 +39,39 @@ if ($connection->connect_error) {
     </div>
 
     <section class="form">
-        <!-- Formulaire de Date d'Anniversaire -->
-        <section class="form_anniv">
-            <h2>Date d'Anniversaire</h2>
-            <form action="traitement_date_anniversaire.php" method="post">
-                <label for="date_anniversaire">Date d'anniversaire :</label>
-                <input type="date" id="date_anniversaire" name="date_anniversaire">
-                <input type="submit" value="Enregistrer">
-            </form>
-        </section>
-
-        <!-- Formulaire pour Enregistrer un Cadeau Souhaité -->
-        <section class="form_gift">
-            <h2>Enregistrer un Cadeau Souhaité</h2>
-            <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
-                <div class="grid-container">
+        <?php if (empty($dateAnniversaire)) : ?>
+            <!-- Afficher le formulaire de date d'anniversaire si aucune date n'est enregistrée -->
+            <section class="form_anniv">
+                <h2>Date d'Anniversaire</h2>
+                <form action="traitement_date_anniversaire.php" method="post">
+                    <label for="date_anniversaire">Date d'anniversaire :</label>
+                    <input type="date" id="date_anniversaire" name="date_anniversaire">
+                    <input type="submit" value="Enregistrer">
+                </form>
+            </section>
+        <?php else : ?>
+            <!-- Afficher le formulaire d'enregistrement de cadeau souhaité si une date est enregistrée -->
+            <section class="form_gift">
+                <h2>Enregistrer un Cadeau Souhaité</h2>
+                <form action="traitement_cadeau.php" method="post" enctype="multipart/form-data">
+                    <!-- Ajout d'une div pour la prévisualisation de l'image -->
                     <div class="grid-item">
                         <label for="photo_cadeau">Photo de l'objet :</label>
                         <input type="file" id="photo_cadeau" name="photo_cadeau" onchange="previewImage()">
                     </div>
 
-                <!-- Ajout d'une div pour la prévisualisation de l'image -->
                     <div class="grid-item">
                         <div id="imagePreview" style="display: none;">
                             <img id="preview" src="" alt="Image Preview" width="200">
                         </div>
                     </div>
 
-                    <div class="grid-items">
+                    <div class="grid-item">
                         <label for="description_cadeau">Nom de l'objet :</label>
                         <input type="text" id="description_cadeau" name="description_cadeau">
                     </div>
                     
-                    <div class="grid-items">
+                    <div class="grid-item">
                         <label for="categorie_cadeau">Catégorie/Thème :</label>
                         <select id="categorie_cadeau" name="categorie_cadeau">
                             <option value="Mode">Mode</option>
@@ -86,12 +91,12 @@ if ($connection->connect_error) {
                         </select>
                     </div>
 
-                    <div class="grid-items">
+                    <div class="grid-item">
                         <input type="submit" value="Enregistrer">
                     </div>
-                </div>
-            </form>
-        </section>
+                </form>
+            </section>
+        <?php endif; ?>
     </section>
 
     <script>
