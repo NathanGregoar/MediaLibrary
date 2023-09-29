@@ -18,10 +18,20 @@ if ($connection->connect_error) {
     die('Erreur de connexion : ' . $connection->connect_error);
 }
 
-// Vérifie si une date d'anniversaire existe dans la base de données pour l'utilisateur actuel
-$query = "SELECT date_anniversaire FROM anniversaire WHERE username = '$username'";
-$result = $connection->query($query);
-$dateAnniversaire = $result->fetch_assoc()['date_anniversaire'];
+// Utilisation d'une requête préparée pour éviter les problèmes de sécurité
+$query = "SELECT date_anniversaire FROM anniversaire WHERE username = ?";
+$stmt = $connection->prepare($query);
+$stmt->bind_param("s", $username);
+
+if ($stmt->execute()) {
+    $result = $stmt->get_result();
+    $row = $result->fetch_assoc();
+
+    // Vérifie si une date d'anniversaire existe dans la base de données pour l'utilisateur actuel
+    $dateAnniversaire = $row['date_anniversaire'];
+} else {
+    die('Erreur lors de l\'exécution de la requête : ' . $stmt->error);
+}
 ?>
 
 <!DOCTYPE html>
