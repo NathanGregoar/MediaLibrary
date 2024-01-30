@@ -1,0 +1,98 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ecf2f9;
+    overflow: hidden; /* Empêche le défilement de la page */
+}
+
+.navbar {
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    margin: 10px;
+}
+
+.navbar a:hover {
+    color: #86c1ff;
+}
+
+h1 {
+    font-size: 24px; /* Réduire la taille de la police pour les écrans plus petits */
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    text-align: right;
+    margin: 0;
+    color: white;
+}
+
+table {
+    border-collapse: separate;
+    border-spacing: 2px;
+    margin: auto;
+    margin-top: 60px; /* Ajuster la hauteur en fonction de la hauteur de la navbar */
+    width: 100%; /* Prend toute la largeur de l'écran */
+    height: calc(100vh - 60px); /* Prend toute la hauteur restante de l'écran après la navbar */
+    background-image: url('https://www.refbax.com/wp-content/uploads/2022/07/champ_lexical_vacances.jpg');
+    background-size: cover; /* Ajuste l'image pour qu'elle s'adapte sans être coupée et sans répétition */
+    background-position: bottom center; /* L'image est centrée horizontalement */
+    position: absolute; /* Position absolue pour empêcher le débordement */
+    top: 0px; /* Position juste en dessous du bas de la navbar */
+    left: 0;
+    bottom: 0;
+    right: 0;
+}
+
+td {
+    width: 75px; /* Ajuster la taille des cases selon vos préférences pour les PC */
+    height: auto;
+    text-align: center;
+    border: 1px solid black;
+    background-color: #86c1ff;
+    cursor: pointer;
+}
+
+td.hoverable:hover {
+    cursor: pointer;
+}
+
+.selected {
+    background-color: #86c0ff00;
+}
+
+
+@media only screen and (max-width: 767px) {
+    body {
+        overflow-y: visible;
+    }
+    h1 {
+        font-size: 18px;
+    }
+    td {
+        width: 50px;
+        height: auto;
+        font-size: 30px;
+    }
+    table {
+        width: 100%; /* Largeur du tableau égale à la largeur de l'écran des appareils mobiles */
+        height: calc(100vh - 170px); /* Hauteur du tableau pour prendre tout l'espace disponible restant sur l'écran */
+        background-image: url('https://static.actu.fr/uploads/2022/08/adobestock-296357187-editorial-use-only-960x640.jpeg');
+        background-size: cover;
+        background-position: center center;
+    }
+}

@@ -1,0 +1,4 @@
+RewriteEngine On
+RewriteRule ^$ /accueil/index.php [L]
+
+ErrorDocument 404 /error/error_404.php

@@ -1,0 +1,100 @@
+/* Styles pour la barre de navigation */
+body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+  }
+
+.navbar {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+  }
+  
+  .navbar a {
+    color: #fff;
+    text-decoration: none;
+    margin-right: 10px;
+  }
+  
+  /* Styles pour la mise en page en deux colonnes */
+  .container {
+    display: flex;
+    flex-direction: row;
+  }
+  
+  .left-section, .right-section {
+    width: 50%;
+    padding: 20px;
+    box-sizing: border-box;
+  }
+  
+  /* Styles supplémentaires pour la section de gauche avec les formulaires */
+  .left-section {
+    background-color: #f0f0f0;
+  }
+  
+  .left-section h2 {
+    margin-top: 0;
+  }
+  
+  .left-section form {
+    margin-bottom: 20px;
+  }
+  
+  .left-section label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .left-section input[type="text"],
+  .left-section select {
+    width: 100%;
+    padding: 5px;
+    margin-bottom: 10px;
+  }
+  
+  .left-section input[type="submit"] {
+    background-color: #333;
+    color: #fff;
+    padding: 8px 12px;
+    border: none;
+    cursor: pointer;
+  }
+  
+  /* Styles supplémentaires pour la section de droite avec l'affichage de la structure de la base de données */
+  .right-section {
+    background-color: #fff;
+  }
+  
+  .right-section h2 {
+    margin-top: 0;
+  }
+  
+  .right-section ul {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
+  .right-section li {
+    margin-bottom: 5px;
+  }
+  
+  /* Ajoutez d'autres styles CSS personnalisés selon vos besoins */
+  
+  /* Styles pour les alertes */
+.alert {
+    padding: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .alert.success {
+    background-color: #dff0d8;
+    color: #3c763d;
+  }
+  
+  .alert.error {
+    background-color: #f2dede;
+    color: #a94442;
+  }
+  

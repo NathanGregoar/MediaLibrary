@@ -1,0 +1,112 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ecf2f9;
+}
+
+.navbar {
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    margin: 10px;
+}
+
+.navbar a:hover {
+    color: #86c1ff;
+}
+
+h1 {
+    font-size: 24px; /* Réduire la taille de la police pour les écrans plus petits */
+    position: fixed;
+    top: 15px;
+    right: 20px;
+    text-align: right;
+    margin: 0;
+    color: white;
+}
+
+h2 {
+    text-align: center;
+}
+
+h4 {
+    text-align: center;
+    text-decoration: underline;
+}
+
+table {
+    border-collapse: collapse;
+}
+th, td {
+    border: 1px solid black;
+    padding: 8px;
+    text-align: center;
+}
+
+.grid {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    grid-template-rows: repeat(5, auto);
+    gap: 10px;
+    background-color: #d1dbe6;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.transport, .budgets, .paysYes, .paysNo, .calendar {
+    background-color: #c5ced7;
+    border-radius: 5px;
+}
+
+.transport {
+    grid-row: span 2;
+}
+
+.calendar {
+    grid-column: span 2;
+    grid-row: span 2;
+}
+
+.budgets {
+    grid-column: span 2;
+}
+
+
+
+/* Ajoutez ces styles pour un affichage mobile */
+@media screen and (max-width: 768px) {
+    .navbar {
+        padding: 10px 0;
+    }
+
+    .navbar a {
+        font-size: 16px;
+        margin: 5px;
+    }
+
+    h1 {
+        font-size: 20px;
+    }
+
+    .grid {
+        display: block; 
+        margin: 10px; 
+        padding: 5px; 
+    }
+}

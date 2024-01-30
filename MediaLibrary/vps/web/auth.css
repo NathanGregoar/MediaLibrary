@@ -1,0 +1,83 @@
+/* Styles pour les formulaires de connexion et d'inscription */
+form {
+    width: 300px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  label {
+    margin-bottom: 10px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  input[type="text"],
+  input[type="password"],
+  input[type="email"] {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  
+  input[type="submit"] {
+    padding: 10px 20px;
+    background-color: #4caf50;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+  }
+  
+  p {
+    text-align: center;
+    font-size: 16px;
+  }
+  
+  a {
+    color: #4caf50;
+    text-decoration: none;
+  }
+  
+  /* Styles pour les messages d'erreur */
+  .error-message {
+    color: #ff0000;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles pour les messages de succès */
+  .success-message {
+    color: #008000;
+    font-size: 14px;
+    margin-bottom: 10px;
+  }
+  
+  /* Styles spécifiques à la page de connexion */
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Styles spécifiques à la page d'inscription */
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  /* Styles spécifiques à la page d'accueil */
+  h1 {
+    text-align: center;
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  

@@ -1,0 +1,174 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #ecf2f9;
+}
+
+.navbar {
+    display: flex;
+    background-color: #333;
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.navbar a {
+    color: #fff;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 18px;
+    transition: color 0.3s ease;
+    margin: 10px;
+}
+
+.navbar a:hover {
+    color: #86c1ff;
+}
+
+h1 {
+    font-size: 24px;
+    text-align: center;
+}
+
+h2 {
+    text-align: center;
+}
+
+.green-date {
+    background-color: green !important;
+    color: white;
+}
+
+.red-date {
+    background-color: red !important;
+    color: white;
+}
+
+.submit-button {
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+    padding: 12px 20px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    transition: background-color 0.3s ease;
+    margin-top: 10px;
+    align-self: center;
+}
+
+.submit-button:hover {
+    background-color: #555;
+}
+
+.submit-button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+#messageContainer {
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 14px;
+    border-radius: 4px;
+    margin: auto;
+    width: 20%;
+}
+
+.alert-success {
+    background-color: #dff0d8;
+    border-style: solid;
+    border-color: green;
+    border-radius: 5px;
+    padding: 10px;
+    color: #3c763d;
+}
+
+.alert-error {
+    background-color: #f2dede;
+    border-style: solid;
+    border-color: red;
+    border-radius: 5px;
+    padding: 10px;
+    color: #a94442;
+}
+
+/* styles.css */
+.toggle-button {
+    display: inline-block;
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #ccc;
+    border: 2px solid #333;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .toggle-button.selected {
+    background-color: #86c1ff;
+    transform: scale(1.1);
+  }
+
+  /* Formulaire container */
+.form-container {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    max-width: 90%; /* Changer la largeur du formulaire à 90% de la largeur de l'écran */
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Textarea prend toute la largeur */
+.input-group textarea {
+    width: 100%; /* La textarea occupe toute la largeur du formulaire */
+    resize: vertical;
+}
+
+/* Bouton Enregistrer centré horizontalement */
+.submit-button {
+    margin: 0 auto; /* Centre le bouton horizontalement */
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    padding: 12px 0;
+    font-size: 18px;
+    transition: background-color 0.3s ease;
+}
+
+.submit-button:hover {
+    background-color: #0056b3;
+}
+
+/* Message de succès */
+.alert-success {
+    background-color: #dff0d8;
+    border: 1px solid #3c763d;
+    color: #3c763d;
+}
+
+/* Message d'erreur */
+.alert-error {
+    background-color: #f2dede;
+    border: 1px solid #a94442;
+    color: #a94442;
+}
