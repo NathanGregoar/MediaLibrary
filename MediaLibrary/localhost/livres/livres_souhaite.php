@@ -97,6 +97,7 @@ require_once '../utils/config.php';
         <div style="position: relative;">
             <button id="scanButton">Scanner le code-barres</button>
             <button id="closeButton">Fermer</button>
+            <select id="cameraSelect"></select>
             <div id="video-container"></div>
         </div>
 
@@ -106,15 +107,18 @@ require_once '../utils/config.php';
 
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
         <script>
-            $(document).ready(function () {
-                $('#titre').blur(function () {
+            $(document).ready(function() {
+                $('#titre').blur(function() {
                     var titre = $(this).val();
                     if (titre !== '') {
                         $.ajax({
                             url: 'https://www.googleapis.com/books/v1/volumes',
-                            data: { q: 'intitle:' + titre, maxResults: 1 },
+                            data: {
+                                q: 'intitle:' + titre,
+                                maxResults: 1
+                            },
                             dataType: 'json',
-                            success: function (data) {
+                            success: function(data) {
                                 if (data.totalItems > 0) {
                                     var book = data.items[0];
                                     $('#auteur').val(book.volumeInfo.authors ? book.volumeInfo.authors[0] : '');
@@ -125,15 +129,18 @@ require_once '../utils/config.php';
                     }
                 });
 
-                $('#auteur').blur(function () {
+                $('#auteur').blur(function() {
                     var titre = $('#titre').val();
                     var auteur = $(this).val();
                     if (titre !== '' && auteur !== '') {
                         $.ajax({
                             url: 'https://www.googleapis.com/books/v1/volumes',
-                            data: { q: 'intitle:' + titre + '+inauthor:' + auteur, maxResults: 1 },
+                            data: {
+                                q: 'intitle:' + titre + '+inauthor:' + auteur,
+                                maxResults: 1
+                            },
                             dataType: 'json',
-                            success: function (data) {
+                            success: function(data) {
                                 if (data.totalItems > 0) {
                                     var book = data.items[0];
                                     $('#maison_edition').val(book.volumeInfo.publisher ? book.volumeInfo.publisher : '');
@@ -152,65 +159,92 @@ require_once '../utils/config.php';
         <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
         <script>
-            // Variable pour stocker le dernier code-barres scanné
             var lastScannedBarcode = null;
-
-            // Variable pour stocker le flux vidéo
             var videoStream;
+            var cameras;
 
-            document.getElementById('scanButton').addEventListener('click', function () {
-                // Vérifier si le navigateur prend en charge WebRTC
+            // Récupérer la liste des périphériques multimédias
+            navigator.mediaDevices.enumerateDevices()
+                .then(function(devices) {
+                    var cameraSelect = document.getElementById('cameraSelect');
+
+                    // Filtrer les périphériques pour obtenir uniquement les caméras
+                    cameras = devices.filter(function(device) {
+                        return device.kind === 'videoinput';
+                    });
+
+                    // Remplir le menu déroulant avec les options des caméras disponibles
+                    cameras.forEach(function(camera, index) {
+                        var option = document.createElement('option');
+                        option.value = index;
+                        option.text = camera.label || 'Caméra ' + (index + 1);
+                        cameraSelect.appendChild(option);
+                    });
+                })
+                .catch(function(error) {
+                    console.error('Erreur lors de la récupération des périphériques multimédias :', error);
+                });
+
+            document.getElementById('scanButton').addEventListener('click', function() {
+                var cameraSelect = document.getElementById('cameraSelect');
+                var selectedCameraIndex = cameraSelect.value;
+
                 if (navigator.mediaDevices && navigator.mediaDevices.getUserMedia) {
-                    // Ouvrir la caméra
-                    navigator.mediaDevices.getUserMedia({ video: true })
-                        .then(function (stream) {
-                            // Stocker le flux vidéo
+                    // Définir les contraintes de la caméra en utilisant la caméra sélectionnée
+                    var constraints = {
+                        video: {
+                            facingMode: 'environment',
+                            deviceId: {
+                                exact: cameras[selectedCameraIndex].deviceId
+                            },
+                            focusMode: 'continuous'
+                        }
+                    };
+
+                    navigator.mediaDevices.getUserMedia(constraints)
+                        .then(function(stream) {
                             videoStream = stream;
 
-                            // Afficher le flux vidéo dans un élément vidéo
                             var video = document.createElement('video');
                             video.setAttribute('id', 'barcode-video');
                             document.getElementById('video-container').appendChild(video);
                             video.srcObject = stream;
                             video.play();
 
-                            // Configurer QuaggaJS
                             Quagga.init({
                                 inputStream: {
-                                    name: "Live",
-                                    type: "LiveStream",
-                                    target: document.getElementById('barcode-video')
+                                    name: 'Live',
+                                    type: 'LiveStream',
+                                    target: document.getElementById('barcode-video'),
                                 },
                                 decoder: {
-                                    readers: ["ean_reader"] // Type de code-barres à scanner (EAN dans ce cas)
-                                }
-                            }, function (err) {
+                                    readers: ['code_128_reader', 'ean_reader', 'upc_reader', 'code_39_reader', 'code_39_vin_reader', 'codabar_reader', 'i2of5_reader', '2of5_reader', 'code_93_reader'],
+                                },
+                            }, function(err) {
                                 if (err) {
                                     console.error('Erreur lors de l\'initialisation de QuaggaJS :', err);
                                     return;
                                 }
 
-                                // Écouter l'événement de détection de code-barres
-                                Quagga.onDetected(function (result) {
-                                    // Obtenir le code-barres détecté
+                                Quagga.onDetected(function(result) {
                                     var barcode = result.codeResult.code;
 
-                                    // Vérifier si c'est un nouveau code-barres
                                     if (barcode !== lastScannedBarcode) {
-                                        // Stocker le dernier code-barres scanné
                                         lastScannedBarcode = barcode;
 
-                                        // Appeler l'API Google Books pour obtenir les informations du livre
+                                        // Afficher le numéro de code-barres en bas de la page
+                                        var resultDisplay = document.getElementById('resultDisplay');
+                                        resultDisplay.textContent = 'Code-barres scanné : ' + barcode;
+
                                         $.ajax({
                                             url: 'https://www.googleapis.com/books/v1/volumes?q=isbn:' + barcode,
                                             dataType: 'json',
-                                            success: function (data) {
+                                            success: function(data) {
                                                 if (data.totalItems > 0) {
                                                     var bookInfo = data.items[0].volumeInfo;
 
                                                     console.log(bookInfo);
 
-                                                    // Pré-remplir les champs du formulaire
                                                     $('#titre').val(bookInfo.title || '');
                                                     $('#auteur').val(bookInfo.authors ? bookInfo.authors[0] : '');
                                                     $('#maison_edition').val(bookInfo.publisher || '');
@@ -218,23 +252,19 @@ require_once '../utils/config.php';
                                                     $('#prix').val(bookInfo.saleInfo && bookInfo.saleInfo.listPrice ? bookInfo.saleInfo.listPrice.amount : 0);
                                                 } else {
                                                     console.log('Aucunes infos');
-
-                                                    // Effectuer une recherche alternative
-                                                    searchAlternative(barcode);
                                                 }
                                             },
-                                            error: function () {
+                                            error: function() {
                                                 console.error('Erreur lors de la requête à l\'API Google Books.');
                                             }
                                         });
                                     }
                                 });
 
-                                // Démarrer QuaggaJS
                                 Quagga.start();
                             });
                         })
-                        .catch(function (error) {
+                        .catch(function(error) {
                             console.error('Erreur lors de l\'accès à la caméra :', error);
                         });
                 } else {
@@ -242,49 +272,30 @@ require_once '../utils/config.php';
                 }
             });
 
-            document.getElementById('closeButton').addEventListener('click', function () {
-                // Arrêter le flux vidéo
+            document.getElementById('closeButton').addEventListener('click', function() {
                 if (videoStream) {
                     var tracks = videoStream.getTracks();
                     tracks.forEach(track => track.stop());
                     videoStream = null;
                 }
 
-                // Arrêter QuaggaJS
                 Quagga.stop();
 
-                // Supprimer l'élément vidéo
                 var videoElement = document.getElementById('barcode-video');
                 if (videoElement) {
                     videoElement.parentNode.removeChild(videoElement);
                 }
             });
-
-            // Fonction pour effectuer une recherche alternative
-            function searchAlternative(barcode) {
-                // Recherche alternative (utilisez votre propre logique ici)
-                console.log('Recherche alternative en cours pour le code-barres :', barcode);
-
-                // Exemple de recherche alternative avec l'API Open Library
-                $.ajax({
-                    url: 'https://openlibrary.org/api/books?bibkeys=ISBN:' + barcode + '&format=json',
-                    dataType: 'json',
-                    success: function (data) {
-                        if (Object.keys(data).length > 0) {
-                            var bookInfo = data['ISBN:' + barcode];
-                            // Afficher toutes les informations dans la console
-                            console.log('Informations du livre (Open Library) :', bookInfo);
-                        } else {
-                            console.log('Aucune information trouvée avec la recherche alternative.');
-                        }
-                    },
-                    error: function () {
-                        console.error('Erreur lors de la recherche alternative.');
-                    }
-                });
-            }
         </script>
 
+
+
+
+
+
     </div>
+
+    <div id="resultDisplay"></div>
 </body>
+
 </html>
