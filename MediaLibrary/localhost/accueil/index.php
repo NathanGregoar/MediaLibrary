@@ -1,5 +1,6 @@
 <?php
 require_once '../utils/auth.php';
+include '../utils/bootstrap.php';
 
 // Vérification si le bouton de déconnexion a été cliqué
 if (isset($_POST['logout'])) {
@@ -39,7 +40,7 @@ $email = $_SESSION['email'];
             <a href="../series/series.php" class="section-link">
                 <span class="section-link-text">Section Séries / Drama</span>
             </a>
-            <a href="../livres/livres_souhaite.php" class="section-link">
+            <a href="../livres/ajouter_livres.php" class="section-link">
                 <span class="section-link-text">Section Livres</span>
             </a>
             <a href="concert/concert.php" class="section-link">
