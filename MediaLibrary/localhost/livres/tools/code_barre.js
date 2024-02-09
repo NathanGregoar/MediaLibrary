@@ -37,11 +37,53 @@ document.addEventListener('DOMContentLoaded', function () {
                         return;
                     }
 
+                    if (/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+                        // Variable pour stocker l'état actuel du flash
+                        var flashOn = false;
+
+                        // Fonction pour activer/désactiver le flash
+                        function toggleFlash() {
+                            if (!cameraContainer.querySelector('video')) return; // Ne pas activer le flash si la caméra est fermée
+
+                            flashOn = !flashOn; // Inverser l'état actuel
+
+                            // Récupérer l'élément vidéo
+                            var videoElement = document.querySelector('#result video');
+                            if (videoElement) {
+                                // Activer/désactiver le flash en fonction de l'état
+                                videoElement.setAttribute('playsinline', ''); // Ajouter l'attribut pour la lecture en ligne sur iOS
+                                videoElement.srcObject.getVideoTracks().forEach(function (track) {
+                                    if (track.kind === 'video') {
+                                        track.applyConstraints({
+                                            advanced: [{ torch: flashOn }]
+                                        });
+                                    }
+                                });
+                            }
+                        }
+
+
+                        // Créer le bouton pour activer/désactiver le flash
+                        flashButton = document.createElement('button');
+                        flashButton.innerHTML = '<i class="bi bi-lightning-fill"></i>'; // Icone du bouton
+                        flashButton.classList.add('flash-button', 'text-warning'); // Ajouter des classes Bootstrap
+                        flashButton.addEventListener('click', toggleFlash); // Ajouter un gestionnaire d'événement
+
+                        // Ajouter le bouton en haut à droite de la page
+                        document.body.appendChild(flashButton);
+                    }
+
                     // Ajouter le bouton de fermeture
                     var closeButton = document.createElement('button');
-                    closeButton.innerHTML = '&times;'; // Ajouter le symbole "X"
-                    closeButton.classList.add('close-button');
-                    closeButton.addEventListener('click', closeCamera);
+                    closeButton.innerHTML = '<i class="bi bi-x-lg"></i>'; // Ajouter le symbole "X"
+                    closeButton.classList.add('close-button', 'text-danger'); // Ajouter des classes Bootstrap
+                    closeButton.addEventListener('click', function () {
+                        Quagga.stop();
+                        cameraContainer.innerHTML = ''; // Supprimer le contenu de la caméra
+                        if (flashButton) {
+                            flashButton.remove(); // Supprimer le bouton flash lorsque la caméra est fermée
+                        }
+                    });
 
                     cameraContainer.appendChild(closeButton);
 
@@ -86,9 +128,4 @@ document.addEventListener('DOMContentLoaded', function () {
                 console.error(err);
             });
     });
-
-    function closeCamera() {
-        Quagga.stop();
-        document.querySelector('#result').innerHTML = ''; // Supprimer le contenu de la caméra
-    }
 });

@@ -17,19 +17,19 @@ if (strpos($previousPage, 'mes_envies.php') !== false) {
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $id = $_POST['id'];
-    $title = $_POST['title'];
-    $author = $_POST['auteur'];
-    $volumeNumber = $_POST['volume_number'];
-    $totalVolumes = $_POST['nombre_total_tomes'];
-    $price = $_POST['prix'];
-    $format = $_POST['format'];
-    $publisher = $_POST['maison_edition'];
-    $summary = $_POST['resume'];
+    
+    // Nouveaux champs à insérer dans la table livres_possedes
+    $theme = isset($_POST['theme']) ? $_POST['theme'] : null;
+    $notation_etoile = isset($_POST['notation_etoile']) ? $_POST['notation_etoile'] : null;
+    $commentaire = isset($_POST['commentaire']) ? $_POST['commentaire'] : null;
+    $favori = isset($_POST['favori']) ? 1 : 0;
+    $notation_piments = isset($_POST['notation_piments']) ? $_POST['notation_piments'] : null;
+    $ecole = isset($_POST['ecole']) ? 1 : 0;
 
     // Requête SQL pour mettre à jour ou insérer les données
-    $sql = "UPDATE $tableName SET titre = ?, auteur = ?, numero_tome = ?, nombre_total_tomes = ?, prix = ?, format = ?, maison_edition = ?, resume_livre = ? WHERE id = ?";
+    $sql = "UPDATE $tableName SET theme = IFNULL(?, theme), notation_etoile = IFNULL(?, notation_etoile), commentaire = IFNULL(?, commentaire), favori = ?, notation_piments = IFNULL(?, notation_piments), ecole = ? WHERE id = ?";
     $stmt = $connect->prepare($sql);
-    $stmt->bind_param("ssiiisssi", $title, $author, $volumeNumber, $totalVolumes, $price, $format, $publisher, $summary, $id);
+    $stmt->bind_param("sssiisi", $theme, $notation_etoile, $commentaire, $favori, $notation_piments, $ecole, $id);
 
     if ($stmt->execute()) {
         header("Location: ../$redirectPage?success=1");

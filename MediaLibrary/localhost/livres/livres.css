@@ -6,7 +6,7 @@ video {
   border-radius: 5px 35px 5px 35px;
   max-width: 60%;
   position: absolute;
-  z-index: 9999;
+  z-index: 9000;
 }
 
 .close-button {
@@ -18,11 +18,32 @@ video {
   border: none;
   font-size: 24px;
   cursor: pointer;
+  z-index: 9999;
+}
+
+.flash-button{
+  position: absolute;
+  top: 24vh;
+  right: 28vw;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
 }
 
 @media screen and (max-width: 600px) {
   .close-button {
       top: 16vh;
-      right: 18vw;
+      right: 17vw;
+      font-size: 2vh;
   }
+
+  .flash-button {
+    top: 16vh;
+    right: 23vw;
+    font-size: 2vh;
 }
+}
+

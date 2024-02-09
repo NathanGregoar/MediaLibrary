@@ -9,11 +9,17 @@ $bookCover = getBookCover($title, $author);
 $price = $row['prix'];
 $format = $row['format'];
 $summary = $row['resume_livre'];
+// Récupérer les valeurs supplémentaires depuis la base de données
+$theme = isset($row['theme']) ? $row['theme'] : '';
+$notation_etoile = isset($row['notation_etoile']) ? $row['notation_etoile'] : '';
+$commentaire = isset($row['commentaire']) ? $row['commentaire'] : '';
+$favori = isset($row['favori']) && $row['favori'] == 1 ? 'checked' : '';
+$notation_piments = isset($row['notation_piments']) ? $row['notation_piments'] : '';
+$ecole = isset($row['ecole']) && $row['ecole'] == 1 ? 'checked' : '';
 ?>
 
-
 <div class="col">
-    <div class="card h-100 d-flex flex-column">
+    <div class="card h-100 d-flex flex-column" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $id; ?>">
         <img src="<?php echo $bookCover ? $bookCover : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; ?>" class="card-img-top lazyload" alt="Couverture du livre" style="object-fit: cover; width: 100%; height: 300px;" loading="lazy">
         <div class="card-body d-flex flex-column">
             <h5 class="card-title text-center flex-grow-1 border-bottom"><?php echo $title; ?></h5>
@@ -49,6 +55,7 @@ $summary = $row['resume_livre'];
 
 
 <?php include 'modifier_modale.php'; ?>
+<?php include 'view_modale.php'; ?>
 
 <script>
     function confirmDelete(title) {

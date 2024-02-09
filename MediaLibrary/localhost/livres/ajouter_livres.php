@@ -23,16 +23,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $resume = isset($_POST['resume']) ? $_POST['resume'] : '/';
 
 
-    // Vérification si un livre avec le même titre et auteur existe déjà
+    // Vérification si un livre avec le même titre et auteur existe déjà dans livres_souhaites
     $query = "SELECT COUNT(*) AS total FROM livres_souhaites WHERE titre = ? AND auteur = ?";
     $stmt = $connect->prepare($query);
     $stmt->bind_param("ss", $titre, $auteur);
     $stmt->execute();
     $result = $stmt->get_result();
-    $existingBooksCount = $result->fetch_assoc()['total'];
+    $existingWishlistBooksCount = $result->fetch_assoc()['total'];
 
-    if ($existingBooksCount > 0) {
-        $message = '<div class="alert alert-danger">Vous possédez déjà ce livre dans "Mes envies" !</div>';
+    // Vérification si un livre avec le même titre et auteur existe déjà dans livres_possedes
+    $query = "SELECT COUNT(*) AS total FROM livres_possedes WHERE titre = ? AND auteur = ?";
+    $stmt = $connect->prepare($query);
+    $stmt->bind_param("ss", $titre, $auteur);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $existingOwnedBooksCount = $result->fetch_assoc()['total'];
+
+    if ($existingWishlistBooksCount > 0 || $existingOwnedBooksCount > 0) {
+        $message = '<div class="alert alert-danger">Vous possédez déjà ce livre !</div>';
     } else {
         // Insertion des données dans la base de données
         $loggedInUser = getLoggedInUser();
