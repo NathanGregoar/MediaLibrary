@@ -1,7 +1,7 @@
 <?php
-require_once '../utils/auth.php';
-require_once '../utils/config.php';
-include '../utils/bootstrap.php';
+require_once '../../utils/auth.php';
+require_once '../../utils/config.php';
+include '../../utils/bootstrap.php';
 
 $previousPage = isset($_SERVER['HTTP_REFERER']) ? $_SERVER['HTTP_REFERER'] : '';
 echo "URL de la page précédente : " . $previousPage . "<br>"; // Affiche l'URL de la page précédente
@@ -44,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST" && isset($_POST['delete'])) {
     $connect->close();
 } else {
     // Redirection vers la page d'accueil si le formulaire n'a pas été soumis correctement
-    header("Location: ../accueil/index.php");
+    header("Location: ../../accueil/index.php");
     exit();
 }
 ?>

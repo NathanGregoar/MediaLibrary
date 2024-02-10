@@ -39,8 +39,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $result = $stmt->get_result();
     $existingOwnedBooksCount = $result->fetch_assoc()['total'];
 
-    if ($existingWishlistBooksCount > 0 || $existingOwnedBooksCount > 0) {
-        $message = '<div class="alert alert-danger">Vous possédez déjà ce livre !</div>';
+    if ($existingWishlistBooksCount > 0) {
+        $message = '<div class="alert alert-danger">Ce livre est déja dans "Mes envies" !</div>';
+    } elseif($existingOwnedBooksCount > 0){
+        $message = '<div class="alert alert-danger">Ce livre est déja dans "Ma bibliothèque" !</div>';
     } else {
         // Insertion des données dans la base de données
         $loggedInUser = getLoggedInUser();

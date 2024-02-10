@@ -19,14 +19,14 @@ $ecole = isset($row['ecole']) && $row['ecole'] == 1 ? 'checked' : '';
 ?>
 
 <div class="col">
-    <div class="card h-100 d-flex flex-column" data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $id; ?>">
-        <img src="<?php echo $bookCover ? $bookCover : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; ?>" class="card-img-top lazyload" alt="Couverture du livre" style="object-fit: cover; width: 100%; height: 300px;" loading="lazy">
-        <div class="card-body d-flex flex-column">
+    <div class="card h-100 d-flex flex-column">
+        <img data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $id; ?>" src="<?php echo $bookCover ? $bookCover : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; ?>" class="card-img-top lazyload" alt="Couverture du livre" style="object-fit: cover; width: 100%; height: 300px;" loading="lazy">
+        <div data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $id; ?>" class="card-body d-flex flex-column">
             <h5 class="card-title text-center flex-grow-1 border-bottom"><?php echo $title; ?></h5>
-            <p class="card-text"><strong>Auteur :<br></strong> <?php echo $author != '/' ? $author : ''; ?></p>
-            <p class="card-text"><strong>N° de tome :<br></strong> <?php echo $volumeNumber != '' ? $volumeNumber : 'Non spécifié'; ?></p>
-            <p class="card-text"><strong>Nombre total de tomes :<br></strong> <?php echo $totalVolumes != '' ? $totalVolumes : 'Non spécifié'; ?></p>
-            <p class="card-text"><strong>Maison d'édition :<br></strong> <?php echo $publisher !== null ? $publisher : ''; ?></p>
+            <p class="card-text"><strong>Auteur :</strong><br> <?php echo $author != '/' ? $author : ''; ?></p>
+            <p class="card-text"><strong>N° de tome :</strong><br> <?php echo $volumeNumber != '' ? $volumeNumber : 'Non spécifié'; ?></p>
+            <p class="card-text"><strong>Nombre total de tomes :</strong><br> <?php echo $totalVolumes != '' ? $totalVolumes : 'Non spécifié'; ?></p>
+            <p class="card-text"><strong>Maison d'édition :</strong><br> <?php echo $publisher !== null ? $publisher : ''; ?></p>
         </div>
         <div class="card-footer text-center d-flex justify-content-center gap-2">
             <!-- Bouton "Bibliothèque" -->
@@ -45,23 +45,22 @@ $ecole = isset($row['ecole']) && $row['ecole'] == 1 ? 'checked' : '';
             <!-- Bouton "Modifier" -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal_<?php echo $id; ?>"><i class="bi bi-pencil"></i></button>
             <!-- Formulaire de suppression -->
-            <form method="POST" action="supprimer_livre.php">
+            <form id="deleteForm_<?php echo $id; ?>" method="POST" action="supprimer_livre.php">
                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
-                <button type="button" class="btn btn-danger" onclick="confirmDelete('<?php echo addslashes($title); ?>')"><i class="bi bi-trash3"></i></button>
+                <button type="button" class="btn btn-danger" onclick="confirmDelete('<?php echo addslashes($title); ?>', <?php echo $id; ?>)"><i class="bi bi-trash3"></i></button>
             </form>
         </div>
     </div>
 </div>
 
-
 <?php include 'modifier_modale.php'; ?>
 <?php include 'view_modale.php'; ?>
 
 <script>
-    function confirmDelete(title) {
+    function confirmDelete(title, id) {
         if (confirm("Êtes-vous sûr de vouloir supprimer le livre suivant : " + title + " ?")) {
             // Si l'utilisateur confirme, soumettre le formulaire
-            event.target.closest('form').submit();
+            document.getElementById('deleteForm_' + id).submit();
         }
     }
 </script>

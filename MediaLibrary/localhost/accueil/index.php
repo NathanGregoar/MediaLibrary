@@ -2,13 +2,9 @@
 require_once '../utils/auth.php';
 include '../utils/bootstrap.php';
 
-// Vérification si le bouton de déconnexion a été cliqué
 if (isset($_POST['logout'])) {
-    // Suppression de toutes les variables de session
     session_unset();
-    // Destruction de la session
     session_destroy();
-    // Redirection vers la page de connexion
     header("Location: ../login.php");
     exit();
 }
@@ -20,59 +16,78 @@ $email = $_SESSION['email'];
 
 <!DOCTYPE html>
 <html>
+
 <head>
     <title>Accueil</title>
-    <link rel="stylesheet" type="text/css" href="./accueil.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- <link rel="stylesheet" type="text/css" href="./accueil.css"> -->
 </head>
-<body>
-    <header>
-        <h1 class="welcome-message">Bienvenue, <?php echo $username;?> !</h1>
-        <form method="post" action="" class="logout-form">
-            <input type="submit" name="logout" value="Déconnexion">
+
+<body class="align-items-center justify-content-center bg-secondary text-white overflow-hidden" style="min-height: 100vh;">
+    <header class="bg-dark text-white text-center py-3 d-md-flex justify-content-between align-items-center">
+        <h1 class="welcome-message mx-auto mb-3 mb-md-0">Bienvenue, <?php echo $username; ?> !</h1>
+        <form method="post" action="" class="logout-form ml-auto">
+            <button type="submit" name="logout" class="btn btn-danger">
+                Déconnexion <i class="bi bi-door-closed"></i>
+            </button>
         </form>
     </header>
 
-    <div class="container">
-        <div class="section-links">
-            <a href="../film/film.php" class="section-link">
-                <span class="section-link-text">Section Films</span>
-            </a>
-            <a href="../series/series.php" class="section-link">
-                <span class="section-link-text">Section Séries / Drama</span>
-            </a>
-            <a href="../livres/ajouter_livres.php" class="section-link">
-                <span class="section-link-text">Section Livres</span>
-            </a>
-            <a href="concert/concert.php" class="section-link">
-                <span class="section-link-text">Section Concerts</span>
-            </a>
-            <a href="documentaire/documentaire.php" class="section-link">
-                <span class="section-link-text">Section Documentaires</span>
-            </a>
-            <a href="documentaire/documentaire.php" class="section-link">
-                <span class="section-link-text">Section Manhwa / Manga</span>
-            </a>
-            <!-- Ajoutez ici d'autres liens vers vos différentes sections -->
-
-            <?php
-            // Vérification si l'utilisateur à accès a la page
-            if ($loggedInUser['role'] == "admin") {
-                echo '<a href="../admin/admin.php" class="section-link admin-link">';
-                echo '<span class="section-link-text">Section Admin</span>';
-                echo '</a>';
-            }
-            ?>
-
-            <?php
-            // Vérification si l'utilisateur a accès a la page
-            $allowedRoles = ["admin", "olympe"]; // Rôles autorisés
-            if (in_array($loggedInUser['role'], $allowedRoles)) {
-                echo '<a href="../olympe/olympe.php" class="olympe">';
-                echo '<img src="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png" alt="olympe">';
-                echo '</a>';
-            }
-            ?>
+    <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
+    <div class="row justify-content-center text-center">
+        <div class="col-md-4 mb-3">
+            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../film/ajouter_films.php'">
+                <span class="section-link-text fs-3">Section Films</span>
+            </button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../series/ajouter_series.php'">
+                <span class="section-link-text fs-3">Section Séries / Drama</span>
+            </button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../livres/ajouter_livres.php'">
+                <span class="section-link-text fs-3">Section Livres</span>
+            </button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='concert/concert.php'">
+                <span class="section-link-text fs-3">Section Concerts</span>
+            </button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='documentaire/documentaire.php'">
+                <span class="section-link-text fs-3">Section Documentaires</span>
+            </button>
+        </div>
+        <div class="col-md-4 mb-3">
+            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='documentaire/documentaire.php'">
+                <span class="section-link-text fs-3">Section Manhwa / Manga</span>
+            </button>
         </div>
     </div>
+</div>
+
+
+
+    <?php
+    if ($loggedInUser['role'] == "admin") {
+        echo '<div class="position-fixed bottom-0 end-0 mb-4 me-4">';
+        echo '<a href="../admin/admin.php" class="btn btn-warning admin-link" style="border-radius: 5px; padding: 10px; box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);">';
+        echo '<span class="section-link-text">Section Admin</span>';
+        echo '</a>';
+        echo '</div>';
+    }
+
+    $allowedRoles = ["admin", "olympe"];
+    if (in_array($loggedInUser['role'], $allowedRoles)) {
+        echo '<div class="position-fixed bottom-0 start-0 mb-4 ms-4">';
+        echo '<a href="../olympe/olympe.php" class="olympe">';
+        echo '<img src="https://static.vecteezy.com/system/resources/thumbnails/009/399/550/small/sun-icon-set-clipart-design-illustration-free-png.png" alt="olympe" class="img-fluid" style="max-width: 10vh;">';
+        echo '</a>';
+        echo '</div>';
+    }
+    ?>
 </body>
+
 </html>

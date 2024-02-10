@@ -57,16 +57,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <form method="POST" action="" class="col-md-6 mx-auto pb-5">
             <div class="form-group pb-3">
                 <label for="username">Pseudo:</label>
-                <input type="text" name="username" id="username" class="form-control" required>
+                <input type="text" name="username" id="username" class="form-control text-center" required>
             </div>
 
             <div class="form-group pb-3">
                 <label for="password">Mot de passe:</label>
-                <input type="password" name="password" id="password" class="form-control" required>
+                <input type="password" name="password" id="password" class="form-control text-center" required>
             </div>
 
             <div class="form-group pb-3">
-                <button type="submit" class="btn btn-primary">Se connecter</button>
+                <button type="submit" class="btn btn-primary">Se connecter <i class="bi bi-door-open"></i></button>
             </div>
         </form>
 
