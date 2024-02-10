@@ -45,7 +45,7 @@ $ecole = isset($row['ecole']) && $row['ecole'] == 1 ? 'checked' : '';
             <!-- Bouton "Modifier" -->
             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal_<?php echo $id; ?>"><i class="bi bi-pencil"></i></button>
             <!-- Formulaire de suppression -->
-            <form id="deleteForm_<?php echo $id; ?>" method="POST" action="supprimer_livre.php">
+            <form id="deleteForm_<?php echo $id; ?>" method="POST" action="./blocks/supprimer_livre.php">
                 <input type="hidden" name="delete" value="<?php echo $id; ?>">
                 <button type="button" class="btn btn-danger" onclick="confirmDelete('<?php echo addslashes($title); ?>', <?php echo $id; ?>)"><i class="bi bi-trash3"></i></button>
             </form>

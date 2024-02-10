@@ -21,7 +21,7 @@ video {
   z-index: 9999;
 }
 
-.flash-button{
+.flash-button {
   position: absolute;
   top: 24vh;
   right: 28vw;
@@ -35,15 +35,14 @@ video {
 
 @media screen and (max-width: 600px) {
   .close-button {
-      top: 16vh;
-      right: 17vw;
-      font-size: 2vh;
+    top: 16vh;
+    right: 17vw;
+    font-size: 2vh;
   }
 
   .flash-button {
     top: 16vh;
     right: 23vw;
     font-size: 2vh;
+  }
 }
-}
-

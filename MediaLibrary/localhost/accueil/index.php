@@ -34,39 +34,39 @@ $email = $_SESSION['email'];
     </header>
 
     <div class="container-fluid vh-100 d-flex justify-content-center align-items-center">
-    <div class="row justify-content-center text-center">
-        <div class="col-md-4 mb-3">
-            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../film/ajouter_films.php'">
-                <span class="section-link-text fs-3">Section Films</span>
-            </button>
-        </div>
-        <div class="col-md-4 mb-3">
-            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../series/ajouter_series.php'">
-                <span class="section-link-text fs-3">Section Séries / Drama</span>
-            </button>
-        </div>
-        <div class="col-md-4 mb-3">
-            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../livres/ajouter_livres.php'">
-                <span class="section-link-text fs-3">Section Livres</span>
-            </button>
-        </div>
-        <div class="col-md-4 mb-3">
-            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='concert/concert.php'">
-                <span class="section-link-text fs-3">Section Concerts</span>
-            </button>
-        </div>
-        <div class="col-md-4 mb-3">
-            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='documentaire/documentaire.php'">
-                <span class="section-link-text fs-3">Section Documentaires</span>
-            </button>
-        </div>
-        <div class="col-md-4 mb-3">
-            <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='documentaire/documentaire.php'">
-                <span class="section-link-text fs-3">Section Manhwa / Manga</span>
-            </button>
+        <div class="row justify-content-center text-center">
+            <div class="col-md-4 mb-3">
+                <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../film/ajouter_films.php'">
+                    <span class="section-link-text fs-3">Section Films</span>
+                </button>
+            </div>
+            <div class="col-md-4 mb-3">
+                <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../series/ajouter_series.php'">
+                    <span class="section-link-text fs-3">Section Séries / Drama</span>
+                </button>
+            </div>
+            <div class="col-md-4 mb-3">
+                <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='../livres/ajouter_livres.php'">
+                    <span class="section-link-text fs-3">Section Livres</span>
+                </button>
+            </div>
+            <div class="col-md-4 mb-3">
+                <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='concert/concert.php'">
+                    <span class="section-link-text fs-3">Section Concerts</span>
+                </button>
+            </div>
+            <div class="col-md-4 mb-3">
+                <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='documentaire/documentaire.php'">
+                    <span class="section-link-text fs-3">Section Documentaires</span>
+                </button>
+            </div>
+            <div class="col-md-4 mb-3">
+                <button class="section-link btn btn-primary btn-block p-4 w-100 h-100" onclick="window.location.href='documentaire/documentaire.php'">
+                    <span class="section-link-text fs-3">Section Manhwa / Manga</span>
+                </button>
+            </div>
         </div>
     </div>
-</div>
 
 
 
