@@ -1,0 +1,50 @@
+canvas {
+  display: none;
+}
+
+video {
+  border-radius: 5px 35px 5px 35px;
+  max-width: 60%;
+  position: absolute;
+  z-index: 9000;
+}
+
+.close-button {
+  position: absolute;
+  top: 21vh;
+  right: 24vw;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
+}
+
+.flash-button {
+  position: absolute;
+  top: 22vh;
+  right: 26vw;
+  background-color: transparent;
+  color: white;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  z-index: 9999;
+  display: none;
+}
+
+@media screen and (max-width: 600px) {
+  .close-button {
+    top: 16vh;
+    right: 17vw;
+    font-size: 2vh;
+  }
+
+  .flash-button {
+    top: 16vh;
+    right: 23vw;
+    font-size: 2vh;
+    display: block;
+  }
+}
