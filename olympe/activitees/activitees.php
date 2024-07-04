@@ -69,7 +69,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         <a href="../../olympe/olympe.php">L'Olympe</a>
         <a href="../../olympe/modifdispo/modifdispo.php">Modifier mes dispo</a> 
         <a href="../../olympe/activitees/activitees.php" style="color: #D7EBF3;">Activités souhaitées</a>  
-        <a href="../../ecollyday/ecollyday.php">Ecollyday</a>        
+        <a href="../../ecollyday/ecollyday.php">Ecollyday</a>       
+        <link rel="manifest" href="/manifest.json"> 
     </div>
     <h1>Bienvenue dans l'Olympe <?= $username; ?> - Activités souhaitées</h1>
 

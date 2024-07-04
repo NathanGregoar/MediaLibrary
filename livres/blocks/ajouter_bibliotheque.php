@@ -7,12 +7,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     global $connect;
 
     $id = $_POST['id'];
-    $sql_select_info = "SELECT titre, auteur, numero_tome, nombre_total_tomes, prix, format, maison_edition, resume_livre FROM livres_souhaites WHERE id = ?";
+    $sql_select_info = "SELECT titre, auteur, numero_tome, nombre_total_tomes, prix, format, maison_edition, resume_livre, cover FROM livres_souhaites WHERE id = ?";
     $stmt_select_info = mysqli_prepare($connect, $sql_select_info);
     mysqli_stmt_bind_param($stmt_select_info, 'i', $id);
     mysqli_stmt_execute($stmt_select_info);
     mysqli_stmt_store_result($stmt_select_info);
-    mysqli_stmt_bind_result($stmt_select_info, $title, $author, $volumeNumber, $totalVolumes, $price, $format, $publisher, $summary);
+    mysqli_stmt_bind_result($stmt_select_info, $title, $author, $volumeNumber, $totalVolumes, $price, $format, $publisher, $summary, $cover);
     mysqli_stmt_fetch($stmt_select_info);
     mysqli_stmt_close($stmt_select_info);
 
@@ -25,11 +25,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 
-    $sql_insert = "INSERT INTO livres_possedes (titre, auteur, numero_tome, nombre_total_tomes, prix, format, maison_edition, resume_livre, added_by)
-            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+    $sql_insert = "INSERT INTO livres_possedes (titre, auteur, numero_tome, nombre_total_tomes, prix, format, maison_edition, resume_livre, cover, added_by)
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
     $stmt_insert = mysqli_prepare($connect, $sql_insert);
-    mysqli_stmt_bind_param($stmt_insert, 'ssiiisssi', $title, $author, $volumeNumber, $totalVolumes, $price, $format, $publisher, $summary, $added_by);
+    mysqli_stmt_bind_param($stmt_insert, 'ssiiissssi', $title, $author, $volumeNumber, $totalVolumes, $price, $format, $publisher, $summary, $cover, $added_by);
 
     try {
         if (mysqli_stmt_execute($stmt_insert)) {
@@ -49,3 +49,4 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         exit();
     }
 }
+?>

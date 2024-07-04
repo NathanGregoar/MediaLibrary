@@ -30,6 +30,7 @@ $connect->close();
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" href="../utils/global.css">
     <link rel="icon" href="../images/icon.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body class="bg-secondary">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">

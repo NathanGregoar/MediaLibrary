@@ -175,7 +175,7 @@ $connect->close();
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.0/main.min.js"></script>
-
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
     <div class="navbar">

@@ -108,7 +108,8 @@ CREATE TABLE `livres_possedes` (
   `favori` tinyint(1) DEFAULT 0,
   `notation_piments` int(11) DEFAULT NULL,
   `ecole` tinyint(1) DEFAULT 0,
-  `added_by` int(11) DEFAULT NULL
+  `added_by` int(11) DEFAULT NULL,
+  `cover` LONGBLOB DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------
@@ -127,7 +128,8 @@ CREATE TABLE `livres_souhaites` (
   `format` varchar(50) DEFAULT NULL,
   `maison_edition` varchar(255) DEFAULT NULL,
   `resume_livre` text DEFAULT NULL,
-  `added_by` int(11) DEFAULT NULL
+  `added_by` int(11) DEFAULT NULL,
+  `cover` LONGBLOB DEFAULT NULL,
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 -- --------------------------------------------------------

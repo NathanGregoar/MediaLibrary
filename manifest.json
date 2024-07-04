@@ -1,6 +1,6 @@
 {
-  "name": "Media Library",
-  "short_name": "Library",
+  "name": "MediaLibrary",
+  "short_name": "MediaLibrary",
   "start_url": "/index.html",
   "display": "standalone",
   "background_color": "#ffffff",

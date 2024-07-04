@@ -55,6 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="./tools/auto_completion.js"></script>
     <link rel="icon" href="../images/icon.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
     <style>
         .autocomplete-suggestions {
             border: 1px solid #e4e4e4;

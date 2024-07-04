@@ -40,6 +40,7 @@ $connect->close();
     <link rel="stylesheet" type="text/css" href="../utils/global.css">
     <link rel="stylesheet" type="text/css" href="livres.css">
     <link rel="icon" href="../images/icon.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body class="bg-secondary">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">
@@ -57,6 +58,13 @@ $connect->close();
             </div>
         </div>
     </nav>
+
+    <!-- <div class="container mt-4">
+        <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            <strong>Information :</strong> La copie des couvertures de livres ne se fait pas encore lors du déplacement vers "Ma bibliothèque".
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    </div> -->
 
     <div class="container_search container bg-dark text-light p-4 mt-4 rounded">
         <h1 class="display-5 text-center text-decoration-underline mb-4">Mes envies</h1>

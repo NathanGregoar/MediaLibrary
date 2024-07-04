@@ -72,6 +72,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="icon" href="images/icon.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body class="d-flex align-items-center justify-content-center bg-dark text-white" style="min-height: 100vh;">
 

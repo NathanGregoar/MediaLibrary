@@ -23,6 +23,7 @@ if ($connect->connect_error) {
     <title>L'Olympe - Anniversaires</title>
     <link rel="icon" type="image/png" href="https://i.goopics.net/oqioit.png">
     <link rel="stylesheet" type="text/css" href="./anniversaire.css">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body>
     <div class="navbar">

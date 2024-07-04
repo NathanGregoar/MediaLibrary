@@ -126,7 +126,7 @@
     <img class="cat-image" src="https://static.vecteezy.com/system/resources/previews/011/662/655/original/cute-cat-3d-rendering-free-png.png" alt="Cat">
     <h1 class="text-fade-in">Erreur Cat cent Cat - 404</h1>
     <p class="text-fade-in">Désolé, la page que vous recherchez est introuvable.</p>
-    <p class="text-fade-in">Retournez à <a href="javascript:history.back()">la page précédente</a></p>
+    <p class="text-fade-in">Retournez à <a href="../accueil/index.php">la page d'accueil</a></p>
   </div>
   <!-- New element to contain the cat images -->
   <div class="cat-images-container"></div>

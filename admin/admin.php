@@ -72,6 +72,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <title>Admin</title>
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="manifest" href="/manifest.json">
     <link rel="icon" type="image/png" href="../images/icon.png">
     <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
 </head>

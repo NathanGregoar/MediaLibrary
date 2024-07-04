@@ -22,8 +22,15 @@
                 <!-- Contenu des onglets -->
                 <div class="tab-content" id="editTabsContent_<?php echo $id; ?>">
                     <!-- Formulaire de modification dans Mes Envies -->
-                    <div class="tab-pane fade show active" id="form_non_lu_<?php echo $id; ?>" role="tabpanel" aria-labelledby="form_non_lu-tab_<?php echo $id; ?>">
-                        <form method="POST" action="./blocks/modifier_livre.php" class="mt-4 text-secondary pb-2" id="form_non_lu">
+                    <div class="tab-pane fade show active" id="form_non_lu_<?php echo $id; ?>" role="tabpanel" aria-labelledby="form_non_lu-tab_<?php echo $id; ?>">    
+                        <form method="POST" action="./blocks/modifier_livre.php" class="mt-4 text-secondary pb-2" id="form_non_lu" enctype="multipart/form-data">
+                            <!-- Prévisualisation de l'image de couverture -->
+                            <div class="text-center mb-4">
+                                <img id="preview_cover_<?php echo $id; ?>" src="<?php echo $coverImage; ?>" alt="Prévisualisation de la couverture" style="object-fit: cover; height: 150px; cursor: pointer;">
+                                <input type="file" id="cover_input_<?php echo $id; ?>" name="cover" style="display: none;" accept="image/*">
+                                <input type="hidden" id="cover_base64_<?php echo $id; ?>" name="cover_base64" value="">
+                            </div>    
+                        
                             <input type="hidden" name="id" value="<?php echo $id; ?>">
                             <div class="row mb-3">
                                 <div class="col-md-6 mb-2 mb-md-0">
@@ -98,13 +105,12 @@
                     <!-- Formulaire de modification dans Ma Bibliothèque -->
                     <?php if (strpos($_SERVER['REQUEST_URI'], 'ma_bibliotheque.php') !== false) { ?>
                         <div class="tab-pane fade" id="form_lu_<?php echo $id; ?>" role="tabpanel" aria-labelledby="form_lu-tab_<?php echo $id; ?>">
-                            <form method="POST" action="./blocks/avis_livre.php" class="mt-4 text-secondary pb-2" id="form_lu">
+                            <form method="POST" action="./blocks/avis_livre.php" class="mt-4 text-secondary pb-2" id="form_lu" enctype="multipart/form-data">
                                 <input type="hidden" name="id" value="<?php echo $id; ?>">
                                 <div class="row mb-3">
                                     <div class="col-md-4 pb-3">
-                                        <div class="d-flex justify-content-center"> <!-- Ajout de cette classe -->
+                                        <div class="d-flex justify-content-center">
                                             <div>
-                                                <!-- <label for="edit_notation_etoile_<?php echo $id; ?>">Évaluation :</label><br> -->
                                                 <div class="notation_etoile">
                                                     <input type="radio" id="star1_<?php echo $id; ?>" name="notation_etoile" value="1" style="display: none;" <?php if ($notation_etoile == 1) echo 'checked'; ?>>
                                                     <label for="star1_<?php echo $id; ?>"><img src="https://cdn.iconscout.com/icon/free/png-256/free-star-3661048-3095468.png" alt="1" style="max-width: 35px;"></label>
@@ -121,9 +127,8 @@
                                         </div>
                                     </div>
                                     <div class="col-md-4 pb-3">
-                                        <div class="d-flex justify-content-center"> <!-- Ajout de cette classe -->
+                                        <div class="d-flex justify-content-center">
                                             <div>
-                                                <!-- <label for="notation_piments_<?php echo $id; ?>">Notation Piments :</label><br> -->
                                                 <div class="notation_etoile">
                                                     <input type="radio" id="piment1_<?php echo $id; ?>" name="notation_piments" value="1" style="display: none;" <?php if ($notation_piments == 1) echo 'checked'; ?>>
                                                     <label for="piment1_<?php echo $id; ?>"><img src="https://cdn-icons-png.flaticon.com/512/3412/3412950.png" alt="1" style="max-width: 35px;"></label>
@@ -140,7 +145,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2 pb-3">
-                                        <div class="d-flex justify-content-center"> <!-- Ajout de cette classe -->
+                                        <div class="d-flex justify-content-center">
                                             <div class="form-check">
                                                 <input style="display: none;" type="checkbox" id="favori_<?php echo $id; ?>" name="favori" class="form-check-input" <?php if ($favori) echo 'checked'; ?>>
                                                 <label for="favori_<?php echo $id; ?>" class="form-check-label">
@@ -150,7 +155,7 @@
                                         </div>
                                     </div>
                                     <div class="col-md-2 pb-3">
-                                        <div class="d-flex justify-content-center"> <!-- Ajout de cette classe -->
+                                        <div class="d-flex justify-content-center">
                                             <div class="form-check">
                                                 <input type="checkbox" id="ecole_<?php echo $id; ?>" name="ecole" class="form-check-input" style="display: none;" <?php if ($ecole) echo 'checked'; ?>>
                                                 <label for="ecole_<?php echo $id; ?>" class="form-check-label">
@@ -176,13 +181,12 @@
                                 </div>
                                 <div class="row mb-3">
                                     <div class="col-md-12">
-                                        <div class="d-flex justify-content-center"> <!-- Ajout de cette classe -->
+                                        <div class="d-flex justify-content-center">
                                             <input type="submit" value="Enregistrer les modifications" class="btn btn-primary">
                                         </div>
                                     </div>
                                 </div>
                             </form>
-
                         </div>
                     <?php } ?>
                 </div>
@@ -195,6 +199,23 @@
     document.addEventListener('DOMContentLoaded', function() {
         updateImages_<?php echo $id; ?>();
         updateEvaluationImages_<?php echo $id; ?>();
+        
+        // Ajouter l'événement pour l'image de couverture
+        document.getElementById('preview_cover_<?php echo $id; ?>').addEventListener('click', function() {
+            document.getElementById('cover_input_<?php echo $id; ?>').click();
+        });
+
+        document.getElementById('cover_input_<?php echo $id; ?>').addEventListener('change', function(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.getElementById('preview_cover_<?php echo $id; ?>').src = e.target.result;
+                    document.getElementById('cover_base64_<?php echo $id; ?>').value = e.target.result;
+                }
+                reader.readAsDataURL(file);
+            }
+        });
     });
 
     function toggleTabs_<?php echo $id; ?>(tabId) {

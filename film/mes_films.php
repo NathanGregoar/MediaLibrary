@@ -50,6 +50,7 @@ $connect->close();
     <link rel="stylesheet" type="text/css" href="../utils/global.css">
     <script src="./tools/auto_completion.js"></script>
     <link rel="icon" href="../images/icon.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
 </head>
 <body class="bg-secondary">
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark px-5">

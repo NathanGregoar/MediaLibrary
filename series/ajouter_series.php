@@ -58,6 +58,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <script src="https://cdn.jsdelivr.net/npm/quagga@0.12.1/dist/quagga.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <link rel="icon" href="../images/icon.png" type="image/x-icon">
+    <link rel="manifest" href="/manifest.json">
 </head>
 
 <body class="bg-secondary">

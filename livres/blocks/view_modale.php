@@ -9,7 +9,7 @@
             <div class="modal-body pb-3 pb-md-0">
                 <div class="row">
                     <div class="col-md-2">
-                        <img src="<?php echo $bookCover ? $bookCover : 'https://e0.pxfuel.com/wallpapers/1021/882/desktop-wallpaper-dual-monitor-firewatch-wengerluggagesave-vertical-dual-monitor.jpg'; ?>" class="img-fluid mb-3" alt="Couverture du livre" style="object-fit: cover; max-height: 200px;">
+                        <img data-bs-toggle="modal" data-bs-target="#viewModal_<?php echo $id; ?>" src="<?php echo $coverImage; ?>" class="card-img-top lazyload" alt="Couverture du livre" style="object-fit: cover; max-height: 200px;" loading="lazy">
                     </div>
                     <div class="col-md-5">
                         <p><strong>Titre :</strong> <?php echo $title; ?></p>
